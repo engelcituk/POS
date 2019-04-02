@@ -411,3 +411,7 @@
         top: 80px;
     }
 }
+.modal-header-personalizado{    
+    background-color: rgba(34,34,34,0.90) !important;
+    color: #fafafa ;
+}

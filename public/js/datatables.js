@@ -49,6 +49,7 @@ $(document).ready(function() {
     $('.card .material-roles label').addClass('form-group');
 
     //para el datatable de Usuarios
+    
     // $('#usuarios').DataTable({
     //     processing: true,
     //     serverSide: true,

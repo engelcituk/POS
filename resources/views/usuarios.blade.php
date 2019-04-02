@@ -1,8 +1,11 @@
 @extends('layouts.dashboard')
 
 @section('content')
+
 <div class="content">
     <div class="container-fluid">
+        <!-- Botón para dar de alto un usuario -->
+        <a class="btn btn-success regUsuario"><i class="fas fa-user"></i> Nuevo usuario</a>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -35,29 +38,6 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <!-- <tr>
-                                        <td>Tiger Nixon</td>
-                                        <td>System Architect</td>
-                                        <td>Edinburgh</td>
-                                        
-                                        <td class="text-right">
-                                            <a href="#" class="btn btn-simple btn-info btn-icon like"><i class="material-icons">favorite</i></a>
-                                            <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">dvr</i></a>
-                                            <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="material-icons">close</i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Garrett Winters</td>
-                                        <td>Accountant</td>
-                                        <td>Tokyo</td>
-                                        
-                                        <td class="text-right">
-                                            <a href="#" class="btn btn-simple btn-info btn-icon like"><i class="material-icons">favorite</i></a>
-                                            <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="material-icons">dvr</i></a>
-                                            <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="material-icons">close</i></a>
-                                        </td>
-                                    </tr> -->
-
                                 </tbody>
                             </table>
                         </div>
@@ -69,6 +49,7 @@
             <!-- end col-md-12 -->
         </div>
         <!-- end row -->
+        @include('modales/modalRegistro')
     </div>
 </div>
 @endsection

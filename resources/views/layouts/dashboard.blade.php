@@ -6,6 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('img/apple-icon.png')}}" />
     <link rel="icon" type="image/png" href="{{asset('img/favicon.png')}}" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Administrador</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
@@ -483,6 +484,7 @@
 <script src="{{asset('js/perfect-scrollbar.jquery.min.js')}}" type="text/javascript"></script>
 <!-- Forms Validations Plugin -->
 <script src="{{asset('js/jquery.validate.min.js')}}"></script>
+<script src="{{asset('js/validator.min.js') }}"></script>
 <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
 <script src="{{asset('js/moment.min.js')}}"></script>
 <!--  Charts Plugin -->
@@ -516,28 +518,35 @@
 <!-- Material Dashboard javascript methods -->
 <script src="{{asset('js/material-dashboard.js')}}"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<script src="{{asset('js/demo.js')}}"></script>
-<script src="{{asset('js/init.js')}}"></script>
+<!-- <script src="{{asset('js/demo.js')}}"></script> -->
+<!-- <script src="{{asset('js/init.js')}}"></script> -->
 
 <script src="{{asset('js/datatables.js')}}"></script>
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
 <script type="text/javascript">
-    $('#usuarios').DataTable({
+    var table1 = $('#usuarios').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('all/usuarios') }}",
+        ajax: "{{ route('all.usuarios') }}",
         columns: [{
-                data: 'id',name: 'id' /*El primer valor del atributo data es muy importante que
-                coincida con el campo de la tabla de la DB*/
+                data: 'id',
+                name: 'id'
+                /*El primer valor del atributo data es muy importante que
+                               coincida con el campo de la tabla de la DB*/
             },
             {
-                data: 'name',name: 'name'
+                data: 'name',
+                name: 'name'
             },
             {
-                data: 'email',name: 'email'
+                data: 'email',
+                name: 'email'
             },
             {
-                data: 'action',name: 'action',orderable: false,searchable: false
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false
             }
         ],
         "pagingType": "full_numbers",
@@ -558,6 +567,54 @@
                 "sPrevious": "Anterior"
             }
         }
+    });
+    //funcion addform
+    // function addForm() {
+    //     save_method = "add";
+    //     $('input[name]').val('POST');
+    //     $('#modalRegistro').modal('show');
+    //     $('#modalRegistro form')[0].reset();
+    //     $('.modal-title').html('<i class="fas fa-edit"></i> Registrar usuario');
+    //     $('#btnRegistrar').html('<i class="fas fa-save"></i> Guardar');
+    // }
+    // //inserta datos con ajax desde laravel
+    $(document).on("click", ".regUsuario", function(e) {
+        e.preventDefault();
+        $('#modalRegistro').modal('show');
+        $('.modal-title').html('<i class="fas fa-edit"></i> Registrar usuario');
+        $('#btnRegistrar').html('<i class="fas fa-save"></i> Guardar');
+    });
+    $(document).on("click", "#btnRegistrar", function(e) {
+        console.log("clic");
+        $.ajax({
+            url: "{{ route('usuarios')}}",
+            type: "POST",
+            headers: {
+                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                info: $("#formUsuario").serialize()
+            },
+             
+            success: function(data) {
+                $('#modalRegistro').modal('hide');
+                table.ajax.reload();
+                swal({
+                    title: 'Success!',
+                    text: 'Data has been created!',
+                    type: 'success',
+                    timer: '1500'
+                })
+            },
+            error: function() {
+                swal({
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    type: 'error',
+                    timer: '4500'
+                })
+            }
+        })
     });
 </script>
 
