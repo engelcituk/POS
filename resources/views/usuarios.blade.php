@@ -5,7 +5,10 @@
 <div class="content">
     <div class="container-fluid">
         <!-- Botón para dar de alto un usuario -->
-        <a class="btn btn-success regUsuario"><i class="fas fa-user"></i> Nuevo usuario</a>
+        @can('usuarios .create')
+        <!--can y end can es para imprimir si se tiene roles  -->
+        <a href="{{ route('usuarios.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo usuario</a>
+        @endcan
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -24,7 +27,7 @@
                                         <th>ID</th>
                                         <th>Nombre</th>
                                         <th>Email</th>
-
+                                        <th>enlaces</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
@@ -33,7 +36,7 @@
                                         <th>ID</th>
                                         <th>Nombre</th>
                                         <th>Email</th>
-
+                                        <th>enlaces</th>
                                         <th class="text-right">Acciones</th>
                                     </tr>
                                 </tfoot>
@@ -49,6 +52,7 @@
             <!-- end col-md-12 -->
         </div>
         <!-- end row -->
+        
         @include('modales/modalRegistro')
     </div>
 </div>

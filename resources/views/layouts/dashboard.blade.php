@@ -89,10 +89,10 @@
                         <div class="collapse" id="pagesExamples">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ route('ordenar') }}">Tomar orden</a>
+                                    <a href="{{ route('ordenar.index') }}">Tomar orden</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('historico') }}">Historico</a>
+                                    <a href="{{ route('historico.index') }}">Historico</a>
                                 </li>
                             </ul>
                         </div>
@@ -105,16 +105,24 @@
                             </p>
                         </a>
                         <div class="collapse" id="pagesUsers">
+
                             <ul class="nav">
+                                @can('roles.index')
+                                <!--can y end can es para imprimir si se tiene roles  -->
                                 <li>
-                                    <a href="{{ route('roles') }}">Roles</a>
+                                    <a href="{{ route('roles.index') }}">Roles</a>
                                 </li>
+                                @endcan
+                                @can('usuarios.index')
                                 <li>
-                                    <a href="{{ route('usuarios') }}">Usuarios</a>
+                                    <a href="{{ route('usuarios.index') }}">Usuarios</a>
                                 </li>
+                                @endcan
+
                             </ul>
                         </div>
                     </li>
+                    <!--  -->
                     <li>
                         <a data-toggle="collapse" href="#componentsExamples">
                             <i class="fas fa-cogs"></i>
@@ -125,28 +133,30 @@
                         <div class="collapse" id="componentsExamples">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ route('hoteles') }}">Hoteles</a>
+                                    <a href="{{ route('hoteles.index') }}">Hoteles</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('restaurantes') }}">Restaurantes</a>
+                                    <a href="{{ route('restaurantes.index') }}">Restaurantes</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('zonas') }}">Zonas</a>
+                                    <a href="{{ route('zonas.index') }}">Zonas</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('mesas') }}">Mesas</a>
+                                    <a href="{{ route('mesas.index') }}">Mesas</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('impresoras') }}">Impresoras</a>
+                                    <a href="{{ route('impresoras.index') }}">Impresoras</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('categorias') }}">Categorias</a>
+                                    <a href="{{ route('categorias.index') }}">Categorias</a>
                                 </li>
+                                @can('productos.index')
                                 <li>
-                                    <a href="{{ route('productos') }}">Productos</a>
+                                    <a href="{{ route('productos.index') }}">Productos</a>
                                 </li>
+                                @endcan
                                 <li>
-                                    <a href="{{ route('formaspago') }}">Formas de pago</a>
+                                    <a href="{{ route('formaspago.index') }}">Formas de pago</a>
                                 </li>
                                 <!-- <li>
                                     <a href="components/sweet-alert.html">Sweet Alert</a>
@@ -543,16 +553,19 @@
                 name: 'email'
             },
             {
-                data: 'action',
-                name: 'action',
+                data: 'enlaces',
+                name: 'enlaces',                
+            }, {
+                data: 'actions',
+                name: 'actions',
                 orderable: false,
                 searchable: false
             }
         ],
         "pagingType": "full_numbers",
         "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
+            [5, 10, 25, 50, -1],
+            [5, 10, 25, 50, "Todos"]
         ],
         responsive: true,
         language: {
@@ -578,44 +591,44 @@
     //     $('#btnRegistrar').html('<i class="fas fa-save"></i> Guardar');
     // }
     // //inserta datos con ajax desde laravel
-    $(document).on("click", ".regUsuario", function(e) {
-        e.preventDefault();
-        $('#modalRegistro').modal('show');
-        $('.modal-title').html('<i class="fas fa-edit"></i> Registrar usuario');
-        $('#btnRegistrar').html('<i class="fas fa-save"></i> Guardar');
-    });
-    $(document).on("click", "#btnRegistrar", function(e) {
-        console.log("clic");
-        $.ajax({
-            url: "{{ route('usuarios')}}",
-            type: "POST",
-            headers: {
-                'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
-            },
-            data: {
-                info: $("#formUsuario").serialize()
-            },
-             
-            success: function(data) {
-                $('#modalRegistro').modal('hide');
-                table.ajax.reload();
-                swal({
-                    title: 'Success!',
-                    text: 'Data has been created!',
-                    type: 'success',
-                    timer: '1500'
-                })
-            },
-            error: function() {
-                swal({
-                    title: 'Oops...',
-                    text: 'Something went wrong!',
-                    type: 'error',
-                    timer: '4500'
-                })
-            }
-        })
-    });
+    // $(document).on("click", ".regUsuario", function(e) {
+    //     e.preventDefault();
+    //     $('#modalRegistro').modal('show');
+    //     $('.modal-title').html('<i class="fas fa-edit"></i> Registrar usuario');
+    //     $('#btnRegistrar').html('<i class="fas fa-save"></i> Guardar');
+    // });
+    // $(document).on("click", "#btnRegistrar", function(e) {
+    //     console.log("clic");
+    //     $.ajax({
+    //         url: "{{ route('usuarios.index')}}",
+    //         type: "POST",
+    //         headers: {
+    //             'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
+    //         },
+    //         data: {
+    //             info: $("#formUsuario").serialize()
+    //         },
+
+    //         success: function(data) {
+    //             $('#modalRegistro').modal('hide');
+    //             table.ajax.reload();
+    //             swal({
+    //                 title: 'Success!',
+    //                 text: 'Data has been created!',
+    //                 type: 'success',
+    //                 timer: '1500'
+    //             })
+    //         },
+    //         error: function() {
+    //             swal({
+    //                 title: 'Oops...',
+    //                 text: 'Something went wrong!',
+    //                 type: 'error',
+    //                 timer: '4500'
+    //             })
+    //         }
+    //     })
+    // });
 </script>
 
 </html> 

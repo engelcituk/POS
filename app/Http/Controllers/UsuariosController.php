@@ -27,14 +27,22 @@ class UsuariosController extends Controller
     //Para obtener todos los usuarios y cargarlos en un datatable
     public function AllUser()
     {
-        $usuario=User::all() ; 
+        $usuario=User::all() ;
 
+        // return Datatables::of($usuario)
+        //     ->addColumn('actions', function($usuario){
+        //           return '<a onclick="showData('.$usuario->id.')" class= "btn btn-sm btn-success"><i class="fas fa-info-circle"></i></a>'.' '.
+        //                '<a onclick="editForm('.$usuario->id.')" class= "btn btn-sm btn-info"><i class="fas fa-edit"></i> </a>'.' '.
+        //                '<a onclick="deleteData('.$usuario->id.')" class= "btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>';
+        //     })->make(true);
+        $enlaces= '<a href="home">h</a>';
+        $actions= 'usuarios.datatables.botones';/**Tengo 
+        una vista con botones de acciones */
         return Datatables::of($usuario)
-            ->addColumn('action', function($usuario){
-                  return '<a onclick="showData('.$usuario->id.')" class= "btn btn-sm btn-success"><i class="fas fa-info-circle"></i></a>'.' '.
-                       '<a onclick="editForm('.$usuario->id.')" class= "btn btn-sm btn-info"><i class="fas fa-edit"></i> </a>'.' '.
-                       '<a onclick="deleteData('.$usuario->id.')" class= "btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>';
-            })->make(true);
+                          ->addColumn('enlaces', $enlaces)
+                          ->addColumn('actions',$actions)
+                          ->rawColumns(['enlaces','actions'])->make(true);
+
     }
     /**
      * Show the form for creating a new resource.
