@@ -280,40 +280,6 @@
                     </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
-                            <!-- <li>
-                                <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="material-icons">dashboard</i>
-                                    <p class="hidden-lg hidden-md">Dashboard</p>
-                                </a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="material-icons">notifications</i>
-                                    <span class="notification">5</span>
-                                    <p class="hidden-lg hidden-md">
-                                        Notifications
-                                        <b class="caret"></b>
-                                    </p>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#">Mike John responded to your email</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">You have 5 new tasks</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">You're now friend with Andrew</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Another Notification</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Another One</a>
-                                    </li>
-                                </ul>
-
-                            </li> -->
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="material-icons">person</i>
@@ -337,12 +303,6 @@
                                 </ul>
 
                             </li>
-                            <!-- <li>
-                                <a href=" #pablo" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="material-icons">person</i>
-                                    <p class="hidden-lg hidden-md">Profile</p>
-                                </a>
-                            </li> -->
                             <li class="separator hidden-lg hidden-md"></li>
                         </ul>
                         <form class="navbar-form navbar-right" role="search">
@@ -396,95 +356,6 @@
             </footer>
         </div>
     </div>
-    <div class="fixed-plugin">
-        <!-- <div class="dropdown show-dropdown">
-            <a href="#" data-toggle="dropdown">
-                <i class="fa fa-cog fa-2x"> </i>
-            </a>
-            <ul class="dropdown-menu">
-                <li class="header-title"> Sidebar Filters</li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger active-color">
-                        <div class="badge-colors text-center">
-                            <span class="badge filter badge-purple" data-color="purple"></span>
-                            <span class="badge filter badge-blue" data-color="blue"></span>
-                            <span class="badge filter badge-green" data-color="green"></span>
-                            <span class="badge filter badge-orange" data-color="orange"></span>
-                            <span class="badge filter badge-red" data-color="red"></span>
-                            <span class="badge filter badge-rose active" data-color="rose"></span>
-                        </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="header-title">Sidebar Background</li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger background-color">
-                        <div class="text-center">
-                            <span class="badge filter badge-white" data-color="white"></span>
-                            <span class="badge filter badge-black active" data-color="black"></span>
-                        </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger">
-                        <p>Sidebar Mini</p>
-                        <div class="togglebutton switch-sidebar-mini">
-                            <label>
-                                <input type="checkbox" unchecked="">
-                            </label>
-                        </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="adjustments-line">
-                    <a href="javascript:void(0)" class="switch-trigger">
-                        <p>Sidebar Image</p>
-                        <div class="togglebutton switch-sidebar-image">
-                            <label>
-                                <input type="checkbox" checked="">
-                            </label>
-                        </div>
-                        <div class="clearfix"></div>
-                    </a>
-                </li>
-                <li class="header-title">Images</li>
-                <li class="active">
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="{{asset('')}}img/sidebar-1.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="{{asset('')}}img/sidebar-2.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="{{asset('')}}img/sidebar-3.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a class="img-holder switch-trigger" href="javascript:void(0)">
-                        <img src="{{asset('')}}img/sidebar-4.jpg" alt="" />
-                    </a>
-                </li>
-                <li class="button-container">
-                    <div class="">
-                        <a href="http://www.creative-tim.com/product/material-dashboard-pro" target="_blank" class="btn btn-rose btn-block">Buy Now</a>
-                    </div>
-                    <div class="">
-                        <a href="http://www.creative-tim.com/product/material-dashboard" target="_blank" class="btn btn-info btn-block">Get Free Demo</a>
-                    </div>
-                </li>
-                <li class="header-title">Thank you for 95 shares!</li>
-                <li class="button-container">
-                    <button id="twitter" class="btn btn-social btn-twitter btn-round"><i class="fa fa-twitter"></i> &middot; 45</button>
-                    <button id="facebook" class="btn btn-social btn-facebook btn-round"><i class="fa fa-facebook-square"> &middot;</i>50</button>
-                </li>
-            </ul>
-        </div> -->
-    </div>
 </body>
 <!--   Core JS Files   -->
 <script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>
@@ -530,105 +401,8 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <!-- <script src="{{asset('js/demo.js')}}"></script> -->
 <!-- <script src="{{asset('js/init.js')}}"></script> -->
-
 <script src="{{asset('js/datatables.js')}}"></script>
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
-<script type="text/javascript">
-    var table1 = $('#usuarios').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.usuarios') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-                /*El primer valor del atributo data es muy importante que
-                               coincida con el campo de la tabla de la DB*/
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'email',
-                name: 'email'
-            },
-            {
-                data: 'enlaces',
-                name: 'enlaces',                
-            }, {
-                data: 'actions',
-                name: 'actions',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [5, 10, 25, 50, -1],
-            [5, 10, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
-    //funcion addform
-    // function addForm() {
-    //     save_method = "add";
-    //     $('input[name]').val('POST');
-    //     $('#modalRegistro').modal('show');
-    //     $('#modalRegistro form')[0].reset();
-    //     $('.modal-title').html('<i class="fas fa-edit"></i> Registrar usuario');
-    //     $('#btnRegistrar').html('<i class="fas fa-save"></i> Guardar');
-    // }
-    // //inserta datos con ajax desde laravel
-    // $(document).on("click", ".regUsuario", function(e) {
-    //     e.preventDefault();
-    //     $('#modalRegistro').modal('show');
-    //     $('.modal-title').html('<i class="fas fa-edit"></i> Registrar usuario');
-    //     $('#btnRegistrar').html('<i class="fas fa-save"></i> Guardar');
-    // });
-    // $(document).on("click", "#btnRegistrar", function(e) {
-    //     console.log("clic");
-    //     $.ajax({
-    //         url: "{{ route('usuarios.index')}}",
-    //         type: "POST",
-    //         headers: {
-    //             'x-csrf-token': $('meta[name="csrf-token"]').attr('content')
-    //         },
-    //         data: {
-    //             info: $("#formUsuario").serialize()
-    //         },
+@include('scriptjs/scriptsUsuarios')
 
-    //         success: function(data) {
-    //             $('#modalRegistro').modal('hide');
-    //             table.ajax.reload();
-    //             swal({
-    //                 title: 'Success!',
-    //                 text: 'Data has been created!',
-    //                 type: 'success',
-    //                 timer: '1500'
-    //             })
-    //         },
-    //         error: function() {
-    //             swal({
-    //                 title: 'Oops...',
-    //                 text: 'Something went wrong!',
-    //                 type: 'error',
-    //                 timer: '4500'
-    //             })
-    //         }
-    //     })
-    // });
-</script>
-
-</html> 
+</html>

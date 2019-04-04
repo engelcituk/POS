@@ -9,7 +9,7 @@ use App\User;
 
 class UsuariosController extends Controller
 {
-    //
+    
     public function __construct()
     {
         // $this->middleware('auth');
@@ -27,21 +27,21 @@ class UsuariosController extends Controller
     //Para obtener todos los usuarios y cargarlos en un datatable
     public function AllUser()
     {
-        $usuario=User::all() ;
+        $usuarios=User::all();
+        // $usuarios = User::paginate(100);
+        // return view( "usuarios.index")->with("usuarios", $usuarios);
+        // return view('usuarios', ['usuarios' => $usuarios]);
 
         // return Datatables::of($usuario)
         //     ->addColumn('actions', function($usuario){
         //           return '<a onclick="showData('.$usuario->id.')" class= "btn btn-sm btn-success"><i class="fas fa-info-circle"></i></a>'.' '.
         //                '<a onclick="editForm('.$usuario->id.')" class= "btn btn-sm btn-info"><i class="fas fa-edit"></i> </a>'.' '.
         //                '<a onclick="deleteData('.$usuario->id.')" class= "btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>';
-        //     })->make(true);
-        $enlaces= '<a href="home">h</a>';
-        $actions= 'usuarios.datatables.botones';/**Tengo 
-        una vista con botones de acciones */
-        return Datatables::of($usuario)
-                          ->addColumn('enlaces', $enlaces)
+        //     })->make(true);       
+        $actions= 'usuarios.datatables.botones';
+        return Datatables::of($usuarios)                          
                           ->addColumn('actions',$actions)
-                          ->rawColumns(['enlaces','actions'])->make(true);
+                          ->rawColumns(['actions'])->make(true);
 
     }
     /**
@@ -49,10 +49,7 @@ class UsuariosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -61,12 +58,12 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        $data =[
-            'name'=>$request['nombreCompleto'],
-            'email'=>$request['email'],
-            'password' => Hash::make($data['password']),
-        ];
-        return User::create($data);
+        // $data =[
+        //     'name'=>$request['nombreCompleto'],
+        //     'email'=>$request['email'],
+        //     'password' => Hash::make($data['password']),
+        // ];
+        // return User::create($data);
 
         // return User::create([
         //     'name' => $data['name'],
@@ -81,9 +78,10 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show(User $usuario)
+    {   
+        //mando llamar mi archivo partial donde cargo los datos del usuario
+        return view('usuarios.partials.show',compact('usuario'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -93,7 +91,8 @@ class UsuariosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario = User::find($id);
+        return view('usuarios.partials.edit', compact('usuario'));
     }
     /**
      * Update the specified resource in storage.
@@ -102,11 +101,6 @@ class UsuariosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     /**
      * Remove the specified resource from storage.
      *
@@ -115,7 +109,9 @@ class UsuariosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // $usuario = User::find($id)->delete();
+        return User::destroy($id);
+        
     }        
 }
 

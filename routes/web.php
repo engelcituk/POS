@@ -79,16 +79,16 @@ Route::middleware(['auth'])->group(function(){
 
     // Route::get('productos/{producto}/edit','ProductosController@edit')->name('productos.edit')
     //     ->middleware('permission:productos.edit');
-
+ 
     //usuarios    
     // Route::post('usuarios/store','UsuariosController@store')->name('usuarios.store')
     //     ->middleware('permission:usuarios.create');
-
+    
     Route::get('usuarios','UsuariosController@index')->name('usuarios.index')
     ->middleware('permission:usuarios.index');
 
-    Route::post('usuarios/create','UsuariosController@create')->name('usuarios.create')
-        ->middleware('permission:usuarios.create');
+    // Route::post('usuarios/create','UsuariosController@create')->name('usuarios.create')
+    //     ->middleware('permission:usuarios.create');
 
     Route::get('usuarios/{usuario}','UsuariosController@show')->name('usuarios.show')
         ->middleware('permission:usuarios.show');
