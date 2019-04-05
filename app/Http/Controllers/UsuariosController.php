@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use Caffeinated\Shinobi\Models\Role;/* Proveedor/nombreDelPaquete/CarpetaModelo/entidaRole o Archivo*/
 
 class UsuariosController extends Controller
 {
@@ -15,11 +16,7 @@ class UsuariosController extends Controller
         // $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+   
     public function index()
     {
         return view('usuarios');
@@ -27,86 +24,40 @@ class UsuariosController extends Controller
     //Para obtener todos los usuarios y cargarlos en un datatable
     public function AllUser()
     {
-        $usuarios=User::all();
-        // $usuarios = User::paginate(100);
-        // return view( "usuarios.index")->with("usuarios", $usuarios);
-        // return view('usuarios', ['usuarios' => $usuarios]);
-
-        // return Datatables::of($usuario)
-        //     ->addColumn('actions', function($usuario){
-        //           return '<a onclick="showData('.$usuario->id.')" class= "btn btn-sm btn-success"><i class="fas fa-info-circle"></i></a>'.' '.
-        //                '<a onclick="editForm('.$usuario->id.')" class= "btn btn-sm btn-info"><i class="fas fa-edit"></i> </a>'.' '.
-        //                '<a onclick="deleteData('.$usuario->id.')" class= "btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>';
-        //     })->make(true);       
-        $actions= 'usuarios.datatables.botones';
+        $usuarios=User::all();/*obtengo todos los usuarios*/
+              
+        $actions= 'usuarios.datatables.botones';/*creo los botones de acciones en una vista*/
         return Datatables::of($usuarios)                          
                           ->addColumn('actions',$actions)
-                          ->rawColumns(['actions'])->make(true);
+                          ->rawColumns(['actions'])->make(true);/*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
 
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // $data =[
-        //     'name'=>$request['nombreCompleto'],
-        //     'email'=>$request['email'],
-        //     'password' => Hash::make($data['password']),
-        // ];
-        // return User::create($data);
-
-        // return User::create([
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'password' => Hash::make($data['password']),
-        // ]);
-        // return response()->json(['res'=> false]);
-    }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+  
     public function show(User $usuario)
-    {   
-        //mando llamar mi archivo partial donde cargo los datos del usuario
-        return view('usuarios.partials.show',compact('usuario'));
+    {           
+        return view('usuarios.partials.show',compact('usuario'));/*mando llamar mi archivo partial donde cargo los datos del usuario*/
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+ 
+    public function edit(User $usuario) /*tambien funciona si le paso solo el $id como parametro */
     {
-        $usuario = User::find($id);
-        return view('usuarios.partials.edit', compact('usuario'));
+        // $usuario = User::find($id);
+        $roles = Role::get();//obtengo todos los roles del usuario
+        return view('usuarios.partials.edit', compact('usuario','roles'));
+        //compact es para enviar la variable usuario y roles
     }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
+    /*para actualizar los permisos del usuario*/
+    public function update(Request $request,User $usuario) /*tambien funciona si le paso solo el $id como parametro */
+    {
+        /*actualiza los datos del usuario*/        
+        $usuario->update($request->all());
+        
+        // actualiza los roles
+        $usuario->roles()->sync($request->get('roles'));/*Se sincroniza con todo lo que le pasamos al controlador name="roles"*/
+        
+        return redirect()->route('usuarios.edit', $usuario->id);
+    }
+
     public function destroy($id)
     {
         // $usuario = User::find($id)->delete();

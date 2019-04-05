@@ -73,7 +73,7 @@
                 error: function() {
                     swal({
                         title: 'Oops...',
-                        text: '¡Algo malo pasó!',
+                        text: '¡Algo salió mal!',
                         type: 'error',
                         timer: '1500'
                     })
@@ -81,4 +81,6 @@
             });
         });
     }
+
+   
 </script>

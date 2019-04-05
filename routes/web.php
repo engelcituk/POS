@@ -26,6 +26,7 @@ Route::middleware(['auth'])->group(function(){
     // Route::resource('usuarios', 'UsuariosController');
     // Route::get('/usuarios', 'UsuariosController@index')->name('usuarios.index');
     Route::get('all/usuarios', 'UsuariosController@AllUser')->name('all.usuarios');
+    Route::get('all/roles', 'RolesController@AllRole')->name('all.roles');
     // Route::post('/usuarios', 'UsuariosController@store')->name('usuarios');
     Route::get('/hoteles', 'HotelesController@index')->name('hoteles.index');
     Route::get('/restaurantes', 'RestaurantesController@index')->name('restaurantes.index');
