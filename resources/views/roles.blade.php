@@ -7,7 +7,9 @@
         <!-- Botón para dar de alto un usuario -->
 
         <!--can y end can es para imprimir si se tiene roles  -->
-        <!-- <a  class="btn btn-success"><i class="fas fa-user"></i> Nuevo usuario</a>s -->
+        @can('roles.create')
+        <a href="{{ route('roles.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo Rol</a>
+        @endcan
 
         <div class="row">
             <div class="col-md-12">
@@ -27,6 +29,7 @@
                                         <th>ID</th>
                                         <th>Nombre</th>
                                         <th>Slug</th>
+                                        <th>Descripción</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
@@ -35,6 +38,7 @@
                                         <th>ID</th>
                                         <th>Nombre</th>
                                         <th>Slug</th>
+                                        <th>Descripción</th>
                                         <th class="text-right">Acciones</th>
                                     </tr>
                                 </tfoot>
@@ -53,4 +57,5 @@
         <!-- end row -->
     </div>
 </div>
+
 @endsection

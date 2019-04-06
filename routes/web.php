@@ -38,26 +38,26 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/formaspago', 'FormaspagoController@index')->name('formaspago.index');
 
     //roles
-    // Route::post('roles/store','RolesController@store')->name('roles.store')
-    //     ->middleware('permission:roles.create');
+    Route::post('roles/store','RolesController@store')->name('roles.store')
+        ->middleware('permission:roles.create');
 
     Route::get('/roles','RolesController@index')->name('roles.index')
     ->middleware('permission:roles.index');
 
-    // Route::post('roles/create','RolesController@create')->name('roles.create')
-    //     ->middleware('permission:roles.create');
+    Route::post('roles/create','RolesController@create')->name('roles.create')
+        ->middleware('permission:roles.create');
 
-    // Route::put('roles/{role}','RolesController@update')->name('roles.update')
-    //     ->middleware('permission:roles.edit');
+    Route::put('roles/{role}','RolesController@update')->name('roles.update')
+        ->middleware('permission:roles.edit');
 
-    // Route::get('roles/{role}','RolesController@show')->name('roles.show')
-    //     ->middleware('permission:roles.show');
+    Route::get('roles/{role}','RolesController@show')->name('roles.show')
+        ->middleware('permission:roles.show');
 
-    // Route::delete('roles/{role}','RolesController@destroy')->name('roles.destroy')
-    //     ->middleware('permission:roles.destroy');
+    Route::delete('roles/{role}','RolesController@destroy')->name('roles.destroy')
+        ->middleware('permission:roles.destroy');
 
-    // Route::get('roles/{role}/edit','RolesController@edit')->name('roles.edit')
-    //     ->middleware('permission:roles.edit');
+    Route::get('roles/{role}/edit','RolesController@edit')->name('roles.edit')
+        ->middleware('permission:roles.edit');
 
     //Productos
     // Route::post('productos/store','ProductosController@store')->name('productos.store')
@@ -88,8 +88,8 @@ Route::middleware(['auth'])->group(function(){
     Route::get('usuarios','UsuariosController@index')->name('usuarios.index')
     ->middleware('permission:usuarios.index');
 
-    // Route::post('usuarios/create','UsuariosController@create')->name('usuarios.create')
-    //     ->middleware('permission:usuarios.create');
+    Route::post('usuarios/create','UsuariosController@create')->name('usuarios.create')
+        ->middleware('permission:usuarios.create');
 
     Route::get('usuarios/{usuario}','UsuariosController@show')->name('usuarios.show')
         ->middleware('permission:usuarios.show');

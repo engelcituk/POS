@@ -7,8 +7,8 @@
 @endcan
 @php
     $cadenaObtenerNumero="{{ route('roles.destroy', ['role' => $id])}}";
-    $idUsuario = intval(preg_replace('/[^0-9]+/', '', $cadenaObtenerNumero), 10);
+    $idRole = intval(preg_replace('/[^0-9]+/', '', $cadenaObtenerNumero), 10);
 @endphp
 @can('roles.destroy')
-<a onclick="deleteData({{$idUsuario}})" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+<a onclick="deleteData({{$idRole}})" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
 @endcan

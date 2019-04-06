@@ -2,7 +2,7 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-        <a href="{{ route('usuarios.index') }}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
+        <a href="{{ route('roles.index') }}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-profile">
@@ -12,11 +12,11 @@
                         </a>
                     </div>
                     <div class="card-content">
-                        <h6 class="card-title"><strong>Nombre Completo:</strong> {{ $usuario->name }}</h6>
-                        <h4 class="card-title"><strong>Email:</strong> {{ $usuario->email }}</h4>
+                        <h6 class="card-title"><strong>Nombre Completo:</strong> {{ $role->name }}</h6>
+                        <h4 class="card-title"><strong>Email:</strong> {{ $role->slug }}</h4>
                         <hr>
                         <p class="description">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima quos dolor, omnis harum neque dignissimos laborum magni culpa tempora. Consequatur, officia quod fugiat quo quis quam reprehenderit distinctio accusamus a.
+                            <strong>Descripcion:</strong> {{ $role->description }}
                         </p>
                         <!-- <a href="#pablo" class="btn btn-rose btn-round">Follow</a> -->
                     </div>

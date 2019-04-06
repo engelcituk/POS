@@ -5,10 +5,12 @@
 <div class="content">
     <div class="container-fluid">
         <!-- Botón para dar de alto un usuario -->
-        
+
         <!--can y end can es para imprimir si se tiene roles  -->
-        <!-- <a  class="btn btn-success"><i class="fas fa-user"></i> Nuevo usuario</a>s -->
-        
+        <!-- <a  class="btn btn-success"><i class="fas fa-user"></i> Nuevo usuario</a> -->
+        @can('usuarios.create')
+        <!-- <a href="{{ route('usuarios.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo Rol</a> -->
+        @endcan
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -26,7 +28,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Nombre</th>
-                                        <th>Email</th>                                        
+                                        <th>Email</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
@@ -34,12 +36,12 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Nombre</th>
-                                        <th>Email</th>                                        
+                                        <th>Email</th>
                                         <th class="text-right">Acciones</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    
+
                                 </tbody>
                             </table>
                         </div>

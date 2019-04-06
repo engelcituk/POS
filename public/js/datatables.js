@@ -1,7 +1,7 @@
 $(document).ready(function() {   
           
     $('#historico').DataTable({
-        ajax: "{{route('all/usuarios')}}",        
+        // ajax: "{{route('all/usuarios')}}",        
         "pagingType": "full_numbers",
         "lengthMenu": [
             [10, 25, 50, -1],

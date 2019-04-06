@@ -21,27 +21,42 @@ class RolesController extends Controller
     {
         return view('roles');
     }
-    //Para obtener todos los usuarios y cargarlos en un datatable
+    
     public function AllRole()
     {
         $roles = Role::all(); /*obtengo todos los usuarios*/
 
-        $actions = 'roles.datatables.botones'; /*creo los botones de acciones en una vista*/
+        $acciones = 'roles.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($roles)
-            ->addColumn('actions', $actions)
-            ->rawColumns(['actions'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
+            ->addColumn('acciones', $acciones)
+            ->rawColumns(['acciones'])->make(true); 
     }
+   
 
+    public function store(Request $request)
+    {
+        // $role = Role::create($request->all());
+        // $role->permissions()->sync($request->get('permissions'));
+        // return redirect()->route('roles.edit', $role->id)
+        //     ->with('info', 'Rol guardado con éxito');
+    }
     public function show(Role $role)
     {
-        return view('roles.partials.show', compact('usuario')); /*mando llamar mi archivo partial donde cargo los datos del usuario*/
+        return view('roles.partials.show', compact('role')); /*mando llamar mi archivo partial donde cargo los datos del usuario*/
     }
-
+    protected function create(array $data)
+    {
+        return Role::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+    }
     public function edit(Role $role) /*tambien funciona si le paso solo el $id como parametro */
     {
         // $role = Role::find($id);
         $roles = Role::get(); //obtengo todos los roles del usuario
-        return view('roles.partials.edit', compact('usuario', 'roles'));
+        return view('roles.partials.edit', compact('role'));
         //compact es para enviar la variable usuario y roles
     }
 
