@@ -9,7 +9,7 @@
         <!--can y end can es para imprimir si se tiene roles  -->
         <!-- <a  class="btn btn-success"><i class="fas fa-user"></i> Nuevo usuario</a> -->
         @can('usuarios.create')
-        <!-- <a href="{{ route('usuarios.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo Rol</a> -->
+        <a href="{{ route('usuarios.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo Usuario</a>
         @endcan
         <div class="row">
             <div class="col-md-12">

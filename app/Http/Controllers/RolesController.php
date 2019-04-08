@@ -33,42 +33,44 @@ class RolesController extends Controller
     }
    
 
-    public function store(Request $request)
-    {
-        // $role = Role::create($request->all());
-        // $role->permissions()->sync($request->get('permissions'));
-        // return redirect()->route('roles.edit', $role->id)
-        //     ->with('info', 'Rol guardado con éxito');
-    }
+  
     public function show(Role $role)
     {
         return view('roles.partials.show', compact('role')); /*mando llamar mi archivo partial donde cargo los datos del usuario*/
     }
-    protected function create(array $data)
+
+    protected function create()
     {
-        return Role::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $permisos = Permission::get();
+
+        return view('roles.partials.create', compact('permisos'));
     }
-    public function edit(Role $role) /*tambien funciona si le paso solo el $id como parametro */
+    public function store(Request $request)
     {
-        // $role = Role::find($id);
-        $roles = Role::get(); //obtengo todos los roles del usuario
-        return view('roles.partials.edit', compact('role'));
+        $role = Role::create($request->all());
+
+        $role->permissions()->sync($request->get('permissions'));
+
+        return redirect()->route('roles.edit', $role->id);
+    }
+
+    public function edit($id) /*tambien funciona si le paso solo el $id como parametro */
+    {
+        $role = Role::find($id);
+        
+        $permisos = Permission::get();
+       
+        return view('roles.partials.edit', compact('role','permisos'));
         //compact es para enviar la variable usuario y roles
     }
 
     /*para actualizar los permisos del usuario*/
     public function update(Request $request, Role $role) /*tambien funciona si le paso solo el $id como parametro */
     {
-        /*actualiza los datos del usuario*/
+        /*actualiza los datos del rol*/
         $role->update($request->all());
-
-        // actualiza los roles
-        $role->roles()->sync($request->get('roles')); /*Se sincroniza con todo lo que le pasamos al controlador name="roles"*/
-
+        // actualiza los permisos del rol
+        $role->permissions()->sync($request->get('permisos')); /*Se sincroniza con todo lo que le pasamos al controlador name="roles"*/
         return redirect()->route('roles.edit', $role->id);
     }
 

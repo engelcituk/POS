@@ -32,7 +32,11 @@ class UsuariosController extends Controller
                           ->rawColumns(['actions'])->make(true);/*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
 
     }
-  
+    protected function create()
+    {
+        // $permissions = Permission::get();
+        return view('usuarios.partials.create', compact('permissions'));
+    }
     public function show(User $usuario)
     {           
         return view('usuarios.partials.show',compact('usuario'));/*mando llamar mi archivo partial donde cargo los datos del usuario*/

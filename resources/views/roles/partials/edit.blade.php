@@ -58,7 +58,16 @@
                                 </div>
                             </div>
                             <!-- <hr> -->
-
+                            <h4 class="card-title">Asignar roles al permiso</h4>
+                            @foreach($permisos as $permiso)
+                            <div class="col-md-6">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="permisos[]" value="{{$permiso->id}}" > <strong>{{$permiso->name}}</strong>
+                                    </label>
+                                </div>
+                            </div>
+                            @endforeach
                             <br><br>
                             <button type="submit" class="btn btn-primary">{{ __('Guardar Cambios') }}</button>
                         </div>

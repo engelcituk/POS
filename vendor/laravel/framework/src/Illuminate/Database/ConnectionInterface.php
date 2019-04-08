@@ -60,6 +60,7 @@ interface ConnectionInterface
      * @return bool
      */
     public function insert($query, $bindings = []);
+   
 
     /**
      * Run an update statement against the database.

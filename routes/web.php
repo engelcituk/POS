@@ -44,7 +44,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/roles','RolesController@index')->name('roles.index')
     ->middleware('permission:roles.index');
 
-    Route::post('roles/create','RolesController@create')->name('roles.create')
+    Route::get('roles/create','RolesController@create')->name('roles.create')
         ->middleware('permission:roles.create');
 
     Route::put('roles/{role}','RolesController@update')->name('roles.update')
@@ -82,13 +82,13 @@ Route::middleware(['auth'])->group(function(){
     //     ->middleware('permission:productos.edit');
  
     //usuarios    
-    // Route::post('usuarios/store','UsuariosController@store')->name('usuarios.store')
-    //     ->middleware('permission:usuarios.create');
+    Route::post('usuarios/store','UsuariosController@store')->name('usuarios.store')
+        ->middleware('permission:usuarios.create');
     
     Route::get('usuarios','UsuariosController@index')->name('usuarios.index')
     ->middleware('permission:usuarios.index');
 
-    Route::post('usuarios/create','UsuariosController@create')->name('usuarios.create')
+    Route::get('usuarios/create','UsuariosController@create')->name('usuarios.create')
         ->middleware('permission:usuarios.create');
 
     Route::get('usuarios/{usuario}','UsuariosController@show')->name('usuarios.show')
