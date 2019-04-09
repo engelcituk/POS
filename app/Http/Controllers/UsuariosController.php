@@ -35,8 +35,11 @@ class UsuariosController extends Controller
     protected function create()
     {
         // $permissions = Permission::get();
-        return view('usuarios.partials.create', compact('permissions'));
+        $roles = Role::get();//obtengo todos los roles del usuario
+        return view('usuarios.partials.create', compact( 'roles'));
     }
+    
+    
     public function show(User $usuario)
     {           
         return view('usuarios.partials.show',compact('usuario'));/*mando llamar mi archivo partial donde cargo los datos del usuario*/
@@ -47,7 +50,7 @@ class UsuariosController extends Controller
         // $usuario = User::find($id);
         $roles = Role::get();//obtengo todos los roles del usuario
         return view('usuarios.partials.edit', compact('usuario','roles'));
-        //compact es para enviar la variable usuario y roles
+        //compact es para enviar la variable usuario y roles 
     }
 
     /*para actualizar los permisos del usuario*/
@@ -61,7 +64,7 @@ class UsuariosController extends Controller
         
         return redirect()->route('usuarios.edit', $usuario->id);
     }
-
+ 
     public function destroy($id)
     {
         // $usuario = User::find($id)->delete();

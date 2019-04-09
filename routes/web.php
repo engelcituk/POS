@@ -58,6 +58,7 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('roles/{role}/edit','RolesController@edit')->name('roles.edit')
         ->middleware('permission:roles.edit');
+    
 
     //Productos
     // Route::post('productos/store','ProductosController@store')->name('productos.store')

@@ -31,9 +31,7 @@ class RolesController extends Controller
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); 
     }
-   
-
-  
+     
     public function show(Role $role)
     {
         return view('roles.partials.show', compact('role')); /*mando llamar mi archivo partial donde cargo los datos del usuario*/
@@ -45,6 +43,7 @@ class RolesController extends Controller
 
         return view('roles.partials.create', compact('permisos'));
     }
+    
     public function store(Request $request)
     {
         $role = Role::create($request->all());
@@ -54,16 +53,21 @@ class RolesController extends Controller
         return redirect()->route('roles.edit', $role->id);
     }
 
-    public function edit($id) /*tambien funciona si le paso solo el $id como parametro */
+    public function edit($id) 
     {
-        $role = Role::find($id);
-        
-        $permisos = Permission::get();
-       
-        return view('roles.partials.edit', compact('role','permisos'));
+        $role = Role::find($id);       
+         
+        $permisos = Permission::get(); //obtengo todos los permisos      
+        $obtenerPermisosRol=$role->getPermissions();//obtengo todos los permisos de ese rol
+        $permisosDelRol = collect($obtenerPermisosRol);//lo convierto en una coleccion
+                
+        return view('roles.partials.edit', compact('role','permisos', 'permisosDelRol'));
         //compact es para enviar la variable usuario y roles
     }
-
+    public function tienePermisos($idRol){
+        return $idRol;
+    }
+    
     /*para actualizar los permisos del usuario*/
     public function update(Request $request, Role $role) /*tambien funciona si le paso solo el $id como parametro */
     {

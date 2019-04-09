@@ -6,11 +6,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-profile">
-                    <div class="card-avatar">
-                        <a href="#">
-                            <img src="{{asset('img/default-avatar.png')}}" />
-                        </a>
-                    </div>
                     <form method="POST" action="{{ route('roles.update',['usuario' => $role])}}">
                         @method('PUT')
                         @csrf
@@ -57,18 +52,23 @@
                                     @endif
                                 </div>
                             </div>
-                            <!-- <hr> -->
-                            <h4 class="card-title">Asignar roles al permiso</h4>
-                            @foreach($permisos as $permiso)
-                            <div class="col-md-6">
-                                <div class="checkbox">
+                            <hr>
+                            <h4 class="card-title">Asignar roles al permiso </h4><br><br>
+                            <div class="row">
+                                @foreach($permisos as $permiso)
+                                @php
+                                $collection= $permisosDelRol;
+                                $resultado= $collection->contains($permiso->slug);
+                                $checked = ($resultado == 1) ? "checked" : "";
+                                @endphp
+                                <div class="col-md-4 checkbox">
                                     <label>
-                                        <input type="checkbox" name="permisos[]" value="{{$permiso->id}}" > <strong>{{$permiso->name}}</strong>
+                                        <input type="checkbox" name="permisos[]" value="{{$permiso->id}}" {{$checked}}> <strong>{{$permiso->name}} </strong>
                                     </label>
                                 </div>
+                                @endforeach
                             </div>
-                            @endforeach
-                            <br><br>
+                            <br>
                             <button type="submit" class="btn btn-primary">{{ __('Guardar Cambios') }}</button>
                         </div>
                     </form>
