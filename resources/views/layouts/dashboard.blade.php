@@ -404,6 +404,8 @@
 <script src="{{asset('js/datatables.js')}}"></script>
 <!-- <script src="{{asset('js/crudUsuarios.js')}}"></script> -->
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
-@include('scriptjs/scriptsUsuarios')
+@include('scriptjs/orden')
+@include('scriptjs/datatables')
+@include('scriptjs/sweetalerts')
 
 </html>
