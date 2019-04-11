@@ -64,10 +64,7 @@ class RolesController extends Controller
         return view('roles.partials.edit', compact('role','permisos', 'permisosDelRol'));
         //compact es para enviar la variable usuario y roles
     }
-    public function tienePermisos($idRol){
-        return $idRol;
-    }
-    
+   
     /*para actualizar los permisos del usuario*/
     public function update(Request $request, Role $role) /*tambien funciona si le paso solo el $id como parametro */
     {

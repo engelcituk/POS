@@ -38,11 +38,14 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/formaspago', 'FormaspagoController@index')->name('formaspago.index');
 
     //roles
+   
     Route::post('roles/store','RolesController@store')->name('roles.store')
         ->middleware('permission:roles.create');
 
     Route::get('/roles','RolesController@index')->name('roles.index')
     ->middleware('permission:roles.index');
+
+    
 
     Route::get('roles/create','RolesController@create')->name('roles.create')
         ->middleware('permission:roles.create');
@@ -67,20 +70,22 @@ Route::middleware(['auth'])->group(function(){
     Route::get('productos','ProductosController@index')->name('productos.index')
     ->middleware('permission:productos.index');
 
-    // Route::post('productos/create','ProductosController@create')->name('productos.create')
-    //     ->middleware('permission:productos.create');
+    Route::get('all/productos', 'ProductosController@AllProduct')->name('all.productos');
 
-    // Route::put('productos/{producto}','ProductosController@update')->name('productos.update')
-    //     ->middleware('permission:productos.edit');
+    Route::get('productos/create','ProductosController@create')->name('productos.create')
+        ->middleware('permission:productos.create');
 
-    // Route::get('productos/{producto}','ProductosController@show')->name('productos.show')
-    //     ->middleware('permission:productos.show');
+    Route::put('productos/{producto}','ProductosController@update')->name('productos.update')
+        ->middleware('permission:productos.edit');
 
-    // Route::delete('productos/{producto}','ProductosController@destroy')->name('productos.destroy')
-    //     ->middleware('permission:productos.destroy');
+    Route::get('productos/{producto}','ProductosController@show')->name('productos.show')
+        ->middleware('permission:productos.show');
 
-    // Route::get('productos/{producto}/edit','ProductosController@edit')->name('productos.edit')
-    //     ->middleware('permission:productos.edit');
+    Route::delete('productos/{producto}','ProductosController@destroy')->name('productos.destroy')
+        ->middleware('permission:productos.destroy');
+
+    Route::get('productos/{producto}/edit','ProductosController@edit')->name('productos.edit')
+        ->middleware('permission:productos.edit');
  
     //usuarios    
     Route::post('usuarios/store','UsuariosController@store')->name('usuarios.store')
