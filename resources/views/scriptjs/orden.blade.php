@@ -95,9 +95,15 @@
             $("#zonaMesas").addClass("hidden");
             $(".listaZonas").addClass("hidden");
             $(".actualizarMesas").addClass("hidden");
-            
-            
 
         }).catch(swal.noop);
+    })
+    //volver a las mesas
+    $(document).on("click", ".volverMesas", function(e) {
+        event.preventDefault();
+        $("#zonaMesas").removeClass("hidden");
+        $("#zonaTomarOrden").addClass("hidden");
+        $(".listaZonas").removeClass("hidden");
+        $(".actualizarMesas").removeClass("hidden");
     })
 </script>

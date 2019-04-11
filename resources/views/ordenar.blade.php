@@ -161,10 +161,87 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-content">
-                        <a href="{{ route('ordenar.index') }}" class="btn btn-warning btn-sm pull-right"><i class="fas fa-undo-alt"></i></i> Volver</a>
+                        <a href="#" class="btn btn-warning btn-sm pull-right volverMesas"><i class="fas fa-undo-alt"></i></i> Volver</a>
                         <h4 class="card-title">Tomar Orden</h4>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta cum deserunt voluptatibus doloremque, expedita dicta sint earum libero ipsam porro excepturi esse, tenetur, dolorum labore eaque, recusandae quos voluptate saepe!</p>
+                            </div>
+                            <div class="col-md-5">
+                                <div id="wrapper">
+                                    <div id="receiptData" style="width: auto; max-width: 580px; min-width: 250px; margin: 0 auto;">
+                                        <div class="no-print">
+                                        </div>
+                                        <div id="receipt-data">
+                                            <div>                                                
+                                                <div style="clear:both;"></div>
+                                                <table class="table table-striped table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;">Description</th>
+                                                            <th class="text-center" style="width: 12%; border-bottom: 2px solid #ddd;">Quantity</th>
+                                                            <th class="text-center" style="width: 24%; border-bottom: 2px solid #ddd;">Price</th>
+                                                            <th class="text-center" style="width: 26%; border-bottom: 2px solid #ddd;">Subtotal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>Minion Hi</td>
+                                                            <td style="text-align:center;">1.00</td>
+                                                            <td class="text-right">15.00</td>
+                                                            <td class="text-right">15.00</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Minion Banana</td>
+                                                            <td style="text-align:center;">1.00</td>
+                                                            <td class="text-right">15.00</td>
+                                                            <td class="text-right">15.00</td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th colspan="2">Total</th>
+                                                            <th colspan="2" class="text-right">30.00</th>
+                                                        </tr>                                                        
+                                                    </tfoot>
+                                                </table>
+                                                <table class="table table-striped table-condensed" style="margin-top:10px;">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="text-right">Paid by :</td>
+                                                            <td>Cash</td>
+                                                            <td class="text-right">Amount :</td>
+                                                            <td>31.50</td>
+                                                            <td class="text-right">Change :</td>
+                                                            <td>0</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="well well-sm" style="margin-top:10px;">
+                                                    <div style="text-align: center;">This is receipt footer for store</div>
+                                                </div>
+                                            </div>
+                                            <div style="clear:both;"></div>
+                                        </div>
 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta cum deserunt voluptatibus doloremque, expedita dicta sint earum libero ipsam porro excepturi esse, tenetur, dolorum labore eaque, recusandae quos voluptate saepe!</p>
+                                        <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">                                       
+                                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                                <div class="btn-group" role="group">
+                                                    <button onclick="window.print();" class="btn btn-block btn-primary">Print</button> </div>
+                                                <div class="btn-group" role="group">
+                                                    <a class="btn btn-block btn-success" href="#" id="email">Email</a>
+                                                </div>
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                            <div style="clear:both;"></div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- end content-->
                 </div>
