@@ -57,12 +57,7 @@
                                 </li>
                                 <li class="abrirMesa" idMesa="5">
                                     <a href="#mesa-6" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 6
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="6">
-                                    <a href="#mesa-6" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 6
+                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 5
                                     </a>
                                 </li>
                                 <li class="abrirMesa" idMesa="7">
@@ -85,33 +80,33 @@
                         <div id="zona2">
                             <strong>Zona 2</strong>
                             <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                                <li class="abrirMesa" idMesa="1">
+                                <li class="abrirMesa" idMesa="10">
                                     <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="true">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 1
 
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="2">
+                                <li class="abrirMesa" idMesa="11">
                                     <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="false">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 2
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="3">
+                                <li class="abrirMesa" idMesa="12">
                                     <a href="#mesa-3" role="tab" data-toggle="tab" aria-expanded="false">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 3
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="4">
+                                <li class="abrirMesa" idMesa="13">
                                     <a href="#mesa-4" role="tab" data-toggle="tab" aria-expanded="false">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 4
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="5">
+                                <li class="abrirMesa" idMesa="14">
                                     <a href="#mesa-6" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 6
+                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 5
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="6">
+                                <li class="abrirMesa" idMesa="15">
                                     <a href="#mesa-6" role="tab" data-toggle="tab" aria-expanded="false">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 6
                                     </a>
@@ -121,28 +116,28 @@
                         <div id="zona3">
                             <strong>Zona 3</strong>
                             <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                                <li class="abrirMesa" idMesa="1">
+                                <li class="abrirMesa" idMesa="16">
                                     <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="true">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 1
 
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="2">
+                                <li class="abrirMesa" idMesa="17">
                                     <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="false">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 2
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="3">
+                                <li class="abrirMesa" idMesa="18">
                                     <a href="#mesa-3" role="tab" data-toggle="tab" aria-expanded="false">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 3
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="4">
+                                <li class="abrirMesa" idMesa="19">
                                     <a href="#mesa-4" role="tab" data-toggle="tab" aria-expanded="false">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 4
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="5">
+                                <li class="abrirMesa" idMesa="20">
                                     <a href="#mesa-6" role="tab" data-toggle="tab" aria-expanded="false">
                                         <img src="{{asset('img/mesa2.png')}}"> Mesa 5
                                     </a>
@@ -173,25 +168,28 @@
                                         <div class="no-print">
                                         </div>
                                         <div id="receipt-data">
-                                            <div>                                                
+                                            <div>
                                                 <div style="clear:both;"></div>
                                                 <table class="table table-striped table-condensed">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;">Description</th>
-                                                            <th class="text-center" style="width: 12%; border-bottom: 2px solid #ddd;">Quantity</th>
-                                                            <th class="text-center" style="width: 24%; border-bottom: 2px solid #ddd;">Price</th>
+                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;"><i class="fas fa-table"></i> <strong><span id="mesaTablaProductos"></span></strong></th>
+                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;">Descripción</th>
+                                                            <th class="text-center" style="width: 12%; border-bottom: 2px solid #ddd;">Cantidad</th>
+                                                            <th class="text-center" style="width: 24%; border-bottom: 2px solid #ddd;">Precio</th>
                                                             <th class="text-center" style="width: 26%; border-bottom: 2px solid #ddd;">Subtotal</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
+                                                            <td><button class="btn btn-danger btn-xs"><i class="fas fa-times"></i></button></td>
                                                             <td>Minion Hi</td>
                                                             <td style="text-align:center;">1.00</td>
                                                             <td class="text-right">15.00</td>
                                                             <td class="text-right">15.00</td>
                                                         </tr>
                                                         <tr>
+                                                            <td><button class="btn btn-danger btn-xs"><i class="fas fa-times"></i></button></td>
                                                             <td>Minion Banana</td>
                                                             <td style="text-align:center;">1.00</td>
                                                             <td class="text-right">15.00</td>
@@ -201,22 +199,11 @@
                                                     <tfoot>
                                                         <tr>
                                                             <th colspan="2">Total</th>
-                                                            <th colspan="2" class="text-right">30.00</th>
-                                                        </tr>                                                        
+                                                            <th colspan="3" class="text-right">30.00</th>
+                                                        </tr>
                                                     </tfoot>
                                                 </table>
-                                                <table class="table table-striped table-condensed" style="margin-top:10px;">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td class="text-right">Paid by :</td>
-                                                            <td>Cash</td>
-                                                            <td class="text-right">Amount :</td>
-                                                            <td>31.50</td>
-                                                            <td class="text-right">Change :</td>
-                                                            <td>0</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+
                                                 <div class="well well-sm" style="margin-top:10px;">
                                                     <div style="text-align: center;">This is receipt footer for store</div>
                                                 </div>
@@ -224,13 +211,13 @@
                                             <div style="clear:both;"></div>
                                         </div>
 
-                                        <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">                                       
+                                        <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
                                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                                <div class="btn-group" role="group">
+                                                <!-- <div class="btn-group" role="group">
                                                     <button onclick="window.print();" class="btn btn-block btn-primary">Print</button> </div>
                                                 <div class="btn-group" role="group">
                                                     <a class="btn btn-block btn-success" href="#" id="email">Email</a>
-                                                </div>
+                                                </div> -->
                                                 <div class="btn-group" role="group">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                 </div>

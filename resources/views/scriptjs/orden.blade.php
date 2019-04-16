@@ -90,7 +90,7 @@
             confirmButtonText: '¡Sí, Abrir!',
             cancelButtonText: '¡No, desistir!'
         }).then(function() {
-
+            generarVariableMesa(idMesa); //genero las variables localstorage    
             $("#zonaTomarOrden").removeClass("hidden");
             $("#zonaMesas").addClass("hidden");
             $(".listaZonas").addClass("hidden");
@@ -106,4 +106,27 @@
         $(".listaZonas").removeClass("hidden");
         $(".actualizarMesas").removeClass("hidden");
     })
+    var listaMesas = [];
+    var listaProductosMesa = [];
+
+    function generarVariableMesa(idMesa) {
+        var numeroMesa = idMesa;
+        var lsMesaIdNumero = "mesaIdNumero" + numeroMesa;
+
+        listaMesas.push(lsMesaIdNumero);
+        var sinRepetidos = listaMesas.filter((valor, indiceActual, arreglo) => arreglo.indexOf(valor) === indiceActual);
+
+        sinRepetidos.forEach(function(variableLS) { //recorro los array y genero variables localstorage  
+            valorIdMesaLS = obtenerNumeroDeCadena(variableLS);
+
+            listaProductosMesa.push({
+                "idMesa": valorIdMesaLS
+
+            })
+            localStorage.setItem(variableLS,JSON.stringify(listaProductosMesa));
+            $("#mesaTablaProductos").html(valorIdMesaLS);
+            // localStorage.getItem("mesaIdNumero8");
+            return console.log(variableLS + " ");
+        });
+    }
 </script>
