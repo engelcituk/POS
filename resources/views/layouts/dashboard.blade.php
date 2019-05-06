@@ -111,9 +111,9 @@
                                 <li>
                                     <a href="{{ route('hoteles.index') }}">Hoteles</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a data-toggle="collapse" href="#pagesUsers">
-                                        <!-- <i class="fas fa-users"></i> -->
+                                        <i class="fas fa-users"></i>
                                         <p>Usuarios
                                             <b class="caret"></b>
                                         </p>
@@ -122,7 +122,7 @@
 
                                         <ul class="nav">
                                             @can('roles.index')
-                                            <!--can y end can es para imprimir si se tiene roles  -->
+                                            can y end can es para imprimir si se tiene roles 
                                             <li>
                                                 <a href="{{ route('roles.index') }}">Roles</a>
                                             </li>
@@ -133,6 +133,27 @@
                                             </li>
                                             @endcan
 
+                                        </ul>
+                                    </div>
+                                </li> -->
+                                <li>
+                                    <a data-toggle="collapse" href="#pagesUsersApi">
+                                        <!-- <i class="fas fa-users"></i> -->
+                                        <p>UsuariosAPI
+                                            <b class="caret"></b>
+                                        </p>
+                                    </a>
+                                    <div class="collapse" id="pagesUsersApi">
+
+                                        <ul class="nav">
+                                            <!--can y end can es para imprimir si se tiene roles  -->
+                                            <li>
+                                                <a href="{{ route('rolesapi.index') }}">Roles</a>
+                                            </li>
+
+                                            <li>
+                                                <a href="{{ route('users.index') }}">Usuarios</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </li>
@@ -160,10 +181,10 @@
                                     <a href="{{ route('metodospago.index') }}">Métodos de pago</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('metodospago.index') }}">Modos</a>
+                                    <a href="{{ route('modos.index') }}">Modos</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('metodospago.index') }}">Alergénos</a>
+                                    <a href="{{ route('alergenos.index') }}">Alergénos</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('metodospago.index') }}">Carta</a>

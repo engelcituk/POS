@@ -42,7 +42,23 @@ Route::middleware(['auth'])->group(function(){
     Route::get('hoteles/store', 'HotelesController@store')->name('hoteles.store');
     Route::get('hoteles/{hotel}', 'hotelesController@show')->name('hoteles.show');
     Route::get('hoteles/{hotel}/edit' ,'hotelesController@edit')->name('hoteles.edit');
-    
+
+    //rutas de menu configuracion-->usuarios
+    Route::get('all/users', 'ApiUsuarioController@AllApiUsuario')->name('all.users');
+    Route::get('/users', 'ApiUsuarioController@index')->name( 'users.index');
+    Route::get('users/create', 'ApiUsuarioController@create')->name('users.create');
+    Route::get('users/store', 'ApiUsuarioController@store')->name('users.store');
+    Route::get('users/{user}', 'ApiUsuarioController@show')->name('users.show');
+    Route::get('users/{user}/edit', 'ApiUsuarioController@edit')->name('users.edit');
+
+    //rutas de menu configuracion-->apiRoles
+    Route::get('all/rolesapi', 'ApiRolController@AllApiRoll')->name('all.rolesapi');
+    Route::get('/rolesapi', 'ApiRolController@index')->name('rolesapi.index');
+    Route::get('rolesapi/create', 'ApiRolController@create')->name('rolesapi.create');
+    Route::get('rolesapi/store', 'ApiRolController@store')->name('rolesapi.store');
+    Route::get('rolesapi/{rolapi}', 'ApiRolController@show')->name('rolesapi.show');
+    Route::get('rolesapi/{rolapi}/edit', 'ApiRolController@edit')->name('rolesapi.edit');
+
     //rutas de menu configuracion-->restaurantes 
     Route::get('all/restaurantes', 'RestaurantesController@AllRestaurantes')->name('all.restaurantes');
     Route::get('/restaurantes', 'RestaurantesController@index')->name('restaurantes.index');
@@ -83,13 +99,30 @@ Route::middleware(['auth'])->group(function(){
     Route::get('metodospago/{metodopago}', 'MetodosPagoController@show')->name('metodospago.show');
     Route::get('metodospago/{metodopago}/edit', 'MetodosPagoController@edit')->name('metodospago.edit');
 
-    //rutas de menu configuracion-->productos
-    Route::get('all/metodospago', 'MetodosPagoController@AllMetodosPago')->name('all.metodospago');
-    Route::get('/metodospago', 'MetodosPagoController@index')->name('metodospago.index');
-    Route::get('metodospago/create', 'MetodosPagoController@create')->name('metodospago.create');
-    Route::get('metodospago/store', 'MetodosPagoController@store')->name('metodospago.store');
-    Route::get('metodospago/{metodopago}', 'MetodosPagoController@show')->name('metodospago.show');
-    Route::get('metodospago/{metodopago}/edit', 'MetodosPagoController@edit')->name('metodospago.edit');
+    //rutas de menu configuracion-->modos
+    Route::get('all/modos', 'ModosController@AllModos')->name('all.modos');
+    Route::get('/modos', 'ModosController@index')->name('modos.index');
+    Route::get('modos/create', 'ModosController@create')->name('modos.create');
+    Route::get('modos/store', 'ModosController@store')->name('modos.store');
+    Route::get('modos/{modos}', 'ModosController@show')->name('modos.show');
+    Route::get('modos/{modos}/edit', 'ModosController@edit')->name('modos.edit');
+   
+    //rutas de menu configuracion-->alergenos
+    Route::get('all/alergenos', 'AlergenoController@AllAlergenos')->name('all.alergenos');
+    Route::get('/alergenos', 'AlergenoController@index')->name('alergenos.index');
+    Route::get('alergenos/create', 'AlergenoController@create')->name('alergenos.create');
+    Route::get('alergenos/store', 'AlergenoController@store')->name('alergenos.store');
+    Route::get('alergenos/{alergeno}', 'AlergenoController@show')->name('alergenos.show');
+    Route::get('alergenos/{alergeno}/edit', 'AlergenoController@edit')->name('alergenos.edit');
+
+    //rutas de menu configuracion-->carta
+    Route::get('all/cartas', 'CartaController@AllCartas')->name('all.cartas');
+    Route::get('/cartas', 'CartaController@index')->name('cartas.index');
+    Route::get('cartas/create', 'CartaController@create')->name('cartas.create');
+    Route::get('cartas/store', 'CartaController@store')->name('cartas.store');
+    Route::get('cartas/{carta}', 'CartaController@show')->name('cartas.show');
+    Route::get('cartas/{carta}/edit', 'CartaController@edit')->name('cartas.edit');
+    
 
     //roles
 
