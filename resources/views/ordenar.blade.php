@@ -159,9 +159,6 @@
                         <a href="#" class="btn btn-warning btn-sm pull-right volverMesas"><i class="fas fa-undo-alt"></i></i> Volver</a>
                         <h4 class="card-title">Tomar Orden</h4>
                         <div class="row">
-                            <div class="col-md-7">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta cum deserunt voluptatibus doloremque, expedita dicta sint earum libero ipsam porro excepturi esse, tenetur, dolorum labore eaque, recusandae quos voluptate saepe!</p>
-                            </div>
                             <div class="col-md-5">
                                 <div id="wrapper">
                                     <div id="receiptData" style="width: auto; max-width: 580px; min-width: 250px; margin: 0 auto;">
@@ -226,6 +223,33 @@
                                         </div>
 
                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div id="zonaProductos">
+                                    <strong>carta</strong>
+                                    <ul class="nav nav-pills nav-pills-icons" role="tablist">
+                                        <li class="addProducto" idProducto="1">
+                                            <a href="#producto-1" role="tab" data-toggle="tab" aria-expanded="true">
+                                                <i class="fab fa-product-hunt"></i> producto 1
+                                            </a>
+                                        </li>
+                                        <li class="addProducto" idProducto="2">
+                                            <a href="#producto-2" role="tab" data-toggle="tab" aria-expanded="false">
+                                                <i class="fab fa-product-hunt"></i> producto 2
+                                            </a>
+                                        </li>
+                                        <li class="addProducto" idProducto="3">
+                                            <a href="#producto-3" role="tab" data-toggle="tab" aria-expanded="false">
+                                                <i class="fab fa-product-hunt"></i> producto 3
+                                            </a>
+                                        </li>
+                                        <li class="addProducto" idProducto="4">
+                                            <a href="#producto-4" role="tab" data-toggle="tab" aria-expanded="false">
+                                                <i class="fab fa-product-hunt"></i> producto 4
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

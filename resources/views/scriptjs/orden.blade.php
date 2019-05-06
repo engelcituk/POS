@@ -117,16 +117,54 @@
         var sinRepetidos = listaMesas.filter((valor, indiceActual, arreglo) => arreglo.indexOf(valor) === indiceActual);
 
         sinRepetidos.forEach(function(variableLS) { //recorro los array y genero variables localstorage  
-            valorIdMesaLS = obtenerNumeroDeCadena(variableLS);
+            valorIdMesaLS = obtenerNumeroDeCadena(variableLS); //obtengo el numero de la variable
+            var productosIdMesa = "productosMesaIdNum" + valorIdMesaLS;
+            localStorage.setItem(variableLS, valorIdMesaLS);
+            // var duplicadosEliminados = eliminarObjetosDuplicados(listaProductosMesa, 'idMesa');
+            var arrayVariableProductos = "arrayProductos" + numeroMesa;
+            var arrayProductos = [];
 
-            listaProductosMesa.push({
-                "idMesa": valorIdMesaLS
-
-            })
-            localStorage.setItem(variableLS,JSON.stringify(listaProductosMesa));
-            $("#mesaTablaProductos").html(valorIdMesaLS);
+            // localStorage.setItem(productosIdMesa, JSON.stringify(listaProductosMesa));
+            $("#mesaTablaProductos").html(numeroMesa);
+            console.log("su array es", arrayProductos);
             // localStorage.getItem("mesaIdNumero8");
-            return console.log(variableLS + " ");
+            // return console.log(variableLS + " ");
         });
     }
+    //elimina propiedades duplicadas en un array
+    function eliminarObjetosDuplicados(arr, prop) {
+        var nuevoArray = [];
+        var lookup = {};
+
+        for (var i in arr) {
+            lookup[arr[i][prop]] = arr[i];
+        }
+
+        for (i in lookup) {
+            nuevoArray.push(lookup[i]);
+        }
+
+        return nuevoArray;
+    }
+
+    $(document).on("click", ".addProducto", function() {
+        var idProducto = $(this).attr("idProducto");
+        var numeroDeMesa = $("#mesaTablaProductos").text();
+        var productosMesa = "productosEnlaMesa" + numeroDeMesa;
+        var productosMesa = [];
+        var mesaIdNumero = "mesaIdNumero" + numeroDeMesa;
+        var variableLSMesaId = "productosMesaIdNum" + numeroDeMesa;
+        valorIdMesa = localStorage.getItem(mesaIdNumero);
+
+        productosMesa.push({
+            "idMesa": numeroDeMesa,
+            "idProducto": idProducto
+        })
+        localStorage.setItem(variableLSMesaId, JSON.stringify(productosMesa));
+        arrayLSProductos = localStorage.getItem(variableLSMesaId); 
+        // console.log("arrayLSProductos", arrayLSProductos);
+        console.log("valorIDMESA", valorIdMesa);
+        console.log("productosenlamesa" + numeroDeMesa, productosMesa);
+
+    })
 </script>

@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Traits;
+
+trait AuthorizesApiRequests
+{
+
+    public function resolveAuthorization(&$queryParams, &$formParams, &$headers)
+    {
+
+        $accessToken = $this->resolveAccessToken();
+
+        $headers['Authorization'] = $accessToken;
+    }
+
+    public function resolveAccessToken()
+    {
+
+        return 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjkzMjgxZTIzODBlMzE4NWI2YTk4ZTkxNTljNmRkNzcwYjJjNDc1MTU1YWQyMzEzZmNhNzBmMDdhMmM1ZTVjZTBmY2FhNTIyM2QzYjlkNWE1In0.eyJhdWQiOiIyIiwianRpIjoiOTMyODFlMjM4MGUzMTg1YjZhOThlOTE1OWM2ZGQ3NzBiMmM0NzUxNTVhZDIzMTNmY2E3MGYwN2EyYzVlNWNlMGZjYWE1MjIzZDNiOWQ1YTUiLCJpYXQiOjE1NTY1NjYxNDgsIm5iZiI6MTU1NjU2NjE0OCwiZXhwIjoxNTg4MTg4NTQ4LCJzdWIiOiIxMDE5Iiwic2NvcGVzIjpbInJlYWQtZ2VuZXJhbCIsIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLXByb2R1Y3RzIiwicHVyY2hhc2UtcHJvZHVjdCJdfQ.QVQP1ilD7iMaQIJi87N8RQ14M6zRIOEbgBp6GNnBZpZVr_H2ipfRbQ2fhci4XG7Mc0SoTTmcPRxsdqxhnyHGn4JGZUDy76qqz0gHTFkqZeE0xRznvB0K2w9DUSYnl9h7zloEbGveQRvzVqucdU2_IRT_ifPTk6MsjKUSvJVq5BM4RpSdVN7_nCh03SBh7CSES8d0lXm9WpVGsNMyY3MaC4eXF6a9ckEeOvtyPxkM6E52PcZj1rkzVfMZyldptDaGNYR3pTD5w2Y7BDzAT47ucbh3i68XvcfIRdkR7PeXFtg6gMtlH61Rfc5N5NQZD5Avd6J0gfvuRzV2p4hytVCb-B6uQvb8eZYKfKdPZwd9SiBZwMzKk5ecW6oLUShOlIrfxrUlv9erTvwWgpSvUuKZ9lX46_zd_w7-kBLNed57WLpzIA1OJlGSWO4qHANPeYEpjnNuU_Ix_w58M6FAIz48GqPYv2BSwHNRzbKUbUBtqmUioy82N5eyHLLNK7bCmz2F8adrRs13zOh6_AYW1nkPCN2iNqpO7n5BTk1wJJVVOumByzVKcglADnp4lkoNPlJM54NUPrv4VgMy6N9NB1XZBm7GWb4yA-L7teFt-EQB1sds3Ky5rTGZNpr4CeY-Dk-fwUdpuqck3F6TU3B0ywWqy5qwYB4hU_RJgKClhjUbtLA';
+    }
+}

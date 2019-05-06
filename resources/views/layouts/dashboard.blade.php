@@ -97,31 +97,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li>
-                        <a data-toggle="collapse" href="#pagesUsers">
-                            <i class="fas fa-users"></i>
-                            <p>Usuarios
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="pagesUsers">
 
-                            <ul class="nav">
-                                @can('roles.index')
-                                <!--can y end can es para imprimir si se tiene roles  -->
-                                <li>
-                                    <a href="{{ route('roles.index') }}">Roles</a>
-                                </li>
-                                @endcan
-                                @can('usuarios.index')
-                                <li>
-                                    <a href="{{ route('usuarios.index') }}">Usuarios</a>
-                                </li>
-                                @endcan
-
-                            </ul>
-                        </div>
-                    </li>
                     <!--  -->
                     <li>
                         <a data-toggle="collapse" href="#componentsExamples">
@@ -136,7 +112,32 @@
                                     <a href="{{ route('hoteles.index') }}">Hoteles</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('restaurantes.index') }}">Restaurantes</a>
+                                    <a data-toggle="collapse" href="#pagesUsers">
+                                        <!-- <i class="fas fa-users"></i> -->
+                                        <p>Usuarios
+                                            <b class="caret"></b>
+                                        </p>
+                                    </a>
+                                    <div class="collapse" id="pagesUsers">
+
+                                        <ul class="nav">
+                                            @can('roles.index')
+                                            <!--can y end can es para imprimir si se tiene roles  -->
+                                            <li>
+                                                <a href="{{ route('roles.index') }}">Roles</a>
+                                            </li>
+                                            @endcan
+                                            @can('usuarios.index')
+                                            <li>
+                                                <a href="{{ route('usuarios.index') }}">Usuarios</a>
+                                            </li>
+                                            @endcan
+
+                                        </ul>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="{{ route('restaurantes.index') }}">Puntos de venta</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('zonas.index') }}">Zonas</a>
@@ -156,7 +157,19 @@
                                 </li>
                                 @endcan
                                 <li>
-                                    <a href="{{ route('formaspago.index') }}">Formas de pago</a>
+                                    <a href="{{ route('metodospago.index') }}">Métodos de pago</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('metodospago.index') }}">Modos</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('metodospago.index') }}">Alergénos</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('metodospago.index') }}">Carta</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('metodospago.index') }}">Categoria</a>
                                 </li>
                                 <!-- <li>
                                     <a href="components/sweet-alert.html">Sweet Alert</a>

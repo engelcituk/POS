@@ -3,6 +3,9 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
+
+        <a href="{{ route('productos.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo producto</a>
+
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -19,23 +22,29 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
+                                        <th>codProducto</th>
                                         <th>Nombre</th>
-                                        <th>Telefono</th>
-                                        <th>Carrera</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
+                                        <th>fechaAlta</th>
+                                        <th>propina</th>
+                                        <th>Complemento</th>
+                                        <th>Estado</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
+                                        <th>codProducto</th>
                                         <th>Nombre</th>
-                                        <th>Telefono</th>
-                                        <th>Carrera</th>
-                                        <th class="text-right">Actions</th>
+                                        <th>fechaAlta</th>
+                                        <th>propina</th>
+                                        <th>Complemento</th>
+                                        <th>Estado</th>
+                                        <th class="text-right">Acciones</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                   
+
                                 </tbody>
                             </table>
                         </div>

@@ -43,5 +43,16 @@ return [
             'tolerance' => env('STRIPE_WEBHOOK_TOLERANCE', 300),
         ],
     ],
-
+    //nuestro propio servicio para nuestra api
+    'tpvSandos' =>[
+        'base_uri'=> env('TPVSANDOS_BASE_URI'),
+        'client_id' => env('TPVSANDOS_CLIENT_ID'),
+        'client_secret' => env('TPVSANDOS_CLIENT_SECRET'),
+        'password_client_id' => env('TPVSANDOS_PASSWORD_CLIENT_ID'),
+        'password_client_secret' => env('TPVSANDOS_PASSWORD_CLIENT_SECRET'),
+    ],
+    //client id client secret       
+    'client_id' => env('CLIENT_ID'),
+    'client_secret' => env('CLIENT_SECRET'), 
+    'grant_type' => 'client_credentials',
 ];

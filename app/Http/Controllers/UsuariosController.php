@@ -30,9 +30,9 @@ class UsuariosController extends Controller
         return Datatables::of($usuarios)                          
                           ->addColumn('actions',$actions)
                           ->rawColumns(['actions'])->make(true);/*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
-
+ 
     }
-    protected function create()
+    protected function create() 
     {
         // $permissions = Permission::get();
         $roles = Role::get();//obtengo todos los roles del usuario

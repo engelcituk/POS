@@ -6,14 +6,11 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-profile">
-                    <div class="card-avatar">
-                        <a href="#">
-                            <img src="{{asset('img/default-avatar.png')}}" />
-                        </a>
-                    </div>
+
+
                     <div class="card-content">
-                        {{$producto->id}} {{$producto->nombre}} {{$producto->telefono}}
-                        {{$producto->carrera}} {{$producto->direccion}}
+                        <i class="fas fa-h-square"></i>
+                        El id del producto {{$producto}}
                         <!-- <a href="#pablo" class="btn btn-rose btn-round">Follow</a> -->
                     </div>
                 </div>

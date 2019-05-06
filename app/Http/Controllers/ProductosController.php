@@ -26,6 +26,10 @@ class ProductosController extends Controller
         return view('productos', compact('productos'));
         
     }
+    protected function create()
+    {        
+        return view('productos.partials.create');
+    }
     public function AllProduct()
     {
         $productos = $this->obtenerTodosLosProductos();
@@ -37,23 +41,42 @@ class ProductosController extends Controller
     }   
     protected function obtenerTodosLosProductos(){
        //es una funcion que esta en el controller principal
-       $respuesta = $this->realizarPeticion('GET','https://apilumen.juandmegon.com/estudiantes');
+       $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/ks42s');
 
        $datos = json_decode($respuesta);
 
-       $productos = $datos->data;
+       $productos = $datos->productos;
 
        return $productos;
     }
     
     public function show($id){
 
-        $respuesta = $this->realizarPeticion('GET', "https://apilumen.juandmegon.com/estudiantes/{$id}");
+        $producto = $id;
 
-        $datos = json_decode($respuesta);
+        return view('productos.partials.show', ['producto' => $producto]);
 
-        $producto = $datos->data;
+        // $respuesta = $this->realizarPeticion('GET', "https://apilumen.juandmegon.com/estudiantes/{$id}");
+
+        // $datos = json_decode($respuesta);
+
+        // $producto = $datos->productos;
        
-        return view('productos.partials.show', ['producto' => $producto]);        
-    }    
+        // return view('productos.partials.show', ['producto' => $producto]);        
+    }
+    public function edit($id)
+    {
+        $producto = $id;
+        return view('productos.partials.edit', ['producto' => $producto]);
+    }
+
+    public function store(Request $request){
+
+        $accessToken = 'Bearer '.$this->obtenerAccessToken();
+
+        $respuesta = $this->realizarPeticion('POST', 'https://apilumen.juandmegon.com/estudiantes', ['headers'=> ['Authorization' => $accessToken], 'form_params' => $request->all()]); 
+          
+        return redirect('/productos');
+    }
 }
+ 

@@ -12,7 +12,7 @@
             confirmButtonText: '¡Sí, borrarlo!',
             cancelButtonText: '¡No, desistir!'
         }).then(function() {
-            $.ajax({
+            $.ajax({ 
                 url: "{{ url('usuarios') }}" + '/' + id,
                 type: "POST",
                 data: {
