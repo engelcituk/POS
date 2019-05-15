@@ -29,7 +29,7 @@ class ApiUsuarioController extends Controller
     protected function obtenerTodosLosUsuarios()
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/lllt0');
+        $respuesta = $this->realizarPeticion('GET', 'http://api.myjson.com/bins/lllt0');
 
         $datos = json_decode($respuesta);
 

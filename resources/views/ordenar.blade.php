@@ -12,10 +12,11 @@
                         <li class="breadcrumb-item"><a href="#"><i class="fas fa-concierge-bell"></i> CentroConsumo</a></li>
                         <li class="breadcrumb-item active listaZonas" aria-current="page"> <i class="fas fa-map-marker-alt"></i> Zonas <i class="fas fa-hand-point-right"></i>
                             <select id="zonaElige">
-                                <option value="zona0">Elija un area</option>
+                                <option value="">Elija un area</option>
                                 <option value="zona1">zona 1</option>
                                 <option value="zona2">zona 2</option>
                                 <option value="zona3">zona 3</option>
+                                <option value="todos">MOSTRAR TODOS</option>
                             </select>
                         </li>
                         <li class="breadcrumb-item actualizarMesas"><a href="#"><i class="fas fa-sync-alt"></i> Actualizar</a></li>
@@ -31,7 +32,7 @@
                     </div>
                     <div class="card-content">
                         <h4 class="card-title">Tomar Orden</h4>
-                        <div id="zona1">
+                        <div id="zona1" class="zonas">
                             <strong>Zona 1</strong>
                             <ul class="nav nav-pills nav-pills-icons" role="tablist">
                                 <li class="abrirMesa" idMesa="1">
@@ -77,7 +78,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div id="zona2">
+                        <div id="zona2" class="zonas">
                             <strong>Zona 2</strong>
                             <ul class="nav nav-pills nav-pills-icons" role="tablist">
                                 <li class="abrirMesa" idMesa="10">
@@ -113,7 +114,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div id="zona3">
+                        <div id="zona3" class="zonas">
                             <strong>Zona 3</strong>
                             <ul class="nav nav-pills nav-pills-icons" role="tablist">
                                 <li class="abrirMesa" idMesa="16">
@@ -226,7 +227,7 @@
                                 </div>
                             </div>
                             <div class="col-md-7">
-                                <div id="zonaProductos">
+                                <div id="zonaPr class=" zonas"oductos">
                                     <strong>carta</strong>
                                     <ul class="nav nav-pills nav-pills-icons" role="tablist">
                                         <li class="addProducto" idProducto="1">

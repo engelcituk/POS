@@ -31,7 +31,7 @@ class ApiRolController extends Controller
     protected function obtenerTodosLosRoles()
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/11d5wk');
+        $respuesta = $this->realizarPeticion('GET', 'http://api.myjson.com/bins/11d5wk');
 
         $datos = json_decode($respuesta);
 

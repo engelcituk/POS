@@ -41,9 +41,9 @@ class ImpresorasController extends Controller
 
         $impresoras = $datos->impresoras;
 
-        return $impresoras;
+        return $impresoras; 
     }
-    protected function create()
+    protected function create() 
     {
         return view('impresoras.partials.create');
     }

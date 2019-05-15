@@ -6,11 +6,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card card-profile">
-                   
-                    
                     <div class="card-content">
-                            <i class="fas fa-h-square"></i>
-                        El id del hotel {{$hotel}}
+                        <div class="well well-sm">
+                            <p>El id del hotel {{$hotel->id}}</p>
+                        </div>
+                        <div class="well well-sm">
+                            <p>El nombre del hotel {{$hotel->name}}</p>
+                        </div>
+                        <div class="well well-sm">
+                            <p>La empresa es {{$hotel->empresa}}</p>
+                        </div>                        
                         <!-- <a href="#pablo" class="btn btn-rose btn-round">Follow</a> -->
                     </div>
                 </div>

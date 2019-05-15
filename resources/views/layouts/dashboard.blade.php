@@ -67,13 +67,13 @@
                     </div>
                 </div>
                 <ul class="nav">
-                    <li class="">
+                   <!--  <li class="">
                         <a href="home">
                             <i class="fas fa-home"></i>
                             <p>Inicio</p>
                         </a>
                     </li>
-                    <!-- <li>
+                    <li>
                         <a href="home">
                             <i class="fas fa-users"></i>
                             <p>Usuarios</p>
@@ -169,9 +169,7 @@
                                 <li>
                                     <a href="{{ route('impresoras.index') }}">Impresoras</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('categorias.index') }}">Categorias</a>
-                                </li>
+                                
                                 @can('productos.index')
                                 <li>
                                     <a href="{{ route('productos.index') }}">Productos</a>
@@ -187,11 +185,9 @@
                                     <a href="{{ route('alergenos.index') }}">Alergénos</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('metodospago.index') }}">Carta</a>
+                                    <a href="{{ route('cartas.index') }}">Carta</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('metodospago.index') }}">Categoria</a>
-                                </li>
+                                
                                 <!-- <li>
                                     <a href="components/sweet-alert.html">Sweet Alert</a>
                                 </li>

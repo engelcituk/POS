@@ -26,7 +26,6 @@ class HotelesController extends Controller
     public function AllHoteles()
     {
         $hoteles = $this->obtenerTodosLosHoteles();
-
         $acciones = 'hoteles.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($hoteles)
             ->addColumn('acciones', $acciones)
@@ -35,11 +34,11 @@ class HotelesController extends Controller
     protected function obtenerTodosLosHoteles()
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/fy774');
+        $respuesta = $this->realizarPeticion('GET', 'http://localhost/TPVApi/Hoteles/GetHoteles');
 
         $datos = json_decode($respuesta);
 
-        $hoteles = $datos->hoteles;
+        $hoteles = $datos->objeto;
 
         return $hoteles;
     }
@@ -48,23 +47,43 @@ class HotelesController extends Controller
         return view('hoteles.partials.create');
     }
     public function show($id)
-    {      
-        $hotel = $id;
-
-        return view('hoteles.partials.show', ['hotel' => $hotel]);
+    {             
+        $idHotel= $id;
+        $hotel = $this->obtenerUnHotel($idHotel);
+        return view('hoteles.partials.show',['hotel'=> $hotel]);
     }
     public function edit($id)
     {
-        $hotel =$id;
+        $idHotel = $id;
+        $hotel = $this->obtenerUnHotel($idHotel);
         return view('hoteles.partials.edit',['hotel' => $hotel]);
+    }    
+    //metodo que se ocupara para obtener el dato de un hotel, se ocupa para show y edit
+    protected function obtenerUnHotel($idHotel){
+        $respuesta = $this->realizarPeticion('GET', "http://localhost/TPVApi/Hoteles/GetHotel/{$idHotel}");
+        $datos = json_decode($respuesta);
+        $hotel = $datos->objeto;
+        return $hotel;
     }
     public function store(Request $request)
     {
+        // $accessToken = 'Bearer ' . $this->obtenerAccessToken();
+        $respuesta = $this->realizarPeticion('POST', 'http://localhost/TPVApi/Hoteles/AddHotel', ['form_params' => $request->all()]);
 
-        $accessToken = 'Bearer ' . $this->obtenerAccessToken();
+        return redirect('/hoteles');
+    }
 
-        $respuesta = $this->realizarPeticion('POST', 'https://apilumen.juandmegon.com/estudiantes', ['headers' => ['Authorization' => $accessToken], 'form_params' => $request->all()]);
+    public function actualizar(Request $request)
+    {
+        $idHotel= $request->get('id');
 
-        return redirect('/productos');
+        $respuesta = $this->realizarPeticion('PUT', "http://localhost/TPVApi/Hoteles/UpdateHotel/{$idHotel}", ['form_params' => $request->except('id')]);
+        return redirect('/hoteles');
+    }
+    public function destroy($id)
+    {
+        $idHotel = $id;
+        $respuesta = $this->realizarPeticion('DELETE', "http://localhost/TPVApi/Hoteles/DeleteHotel/{$idHotel}");
+        return redirect('/hoteles');
     }
 }

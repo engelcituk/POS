@@ -5,55 +5,12 @@
     })
     $("#zonaElige").change(function() {
         var nombreZona = $("option:selected", this).val(); //obtener el value de un select
-        if (nombreZona != "") {
-            var numero = parseInt(obtenerNumeroDeCadena(nombreZona));
-            switch (numero) {
-                case 0:
-                    $("#zona1").removeClass("hidden");
-                    $("#zona2").removeClass("hidden");
-                    $("#zona3").removeClass("hidden");
-                    $("#zona4").removeClass("hidden");
-                    $("#zona5").removeClass("hidden");
-                    break;
-                case 1:
-                    $("#zona1").removeClass("hidden");
-                    $("#zona2").addClass("hidden");
-                    $("#zona3").addClass("hidden");
-                    $("#zona4").addClass("hidden");
-                    $("#zona5").addClass("hidden");
-                    break;
-                case 2:
-                    $("#zona1").addClass("hidden");
-                    $("#zona2").removeClass("hidden");
-                    $("#zona3").addClass("hidden");
-                    $("#zona4").addClass("hidden");
-                    $("#zona5").addClass("hidden");
-                    break;
-                case 3:
-                    $("#zona1").addClass("hidden");
-                    $("#zona2").addClass("hidden");
-                    $("#zona3").removeClass("hidden");
-                    $("#zona4").addClass("hidden");
-                    $("#zona5").addClass("hidden");
-                    break;
-                case 4:
-                    $("#zona1").addClass("hidden");
-                    $("#zona2").addClass("hidden");
-                    $("#zona3").addClass("hidden");
-                    $("#zona4").removeClass("hidden");
-                    $("#zona5").addClass("hidden");
-                    break;
-                case 5:
-                    $("#zona1").addClass("hidden");
-                    $("#zona2").addClass("hidden");
-                    $("#zona3").addClass("hidden");
-                    $("#zona4").addClass("hidden");
-                    $("#zona5").removeClass("hidden");
-                    break;
-                default:
-                    console.log("default");
-                    break;
-            }
+        if (nombreZona != "") {            
+            $(".zonas").hide();
+            $("#" + nombreZona).show();
+                if (nombreZona == "todos") {
+                    $(".zonas").show();
+                }
         } else {
             swal({
                 title: 'Oopss...',
@@ -161,7 +118,7 @@
             "idProducto": idProducto
         })
         localStorage.setItem(variableLSMesaId, JSON.stringify(productosMesa));
-        arrayLSProductos = localStorage.getItem(variableLSMesaId); 
+        arrayLSProductos = localStorage.getItem(variableLSMesaId);
         // console.log("arrayLSProductos", arrayLSProductos);
         console.log("valorIDMESA", valorIdMesa);
         console.log("productosenlamesa" + numeroDeMesa, productosMesa);

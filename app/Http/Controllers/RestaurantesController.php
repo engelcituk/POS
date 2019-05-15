@@ -35,7 +35,7 @@ class RestaurantesController extends Controller
     protected function obtenerTodosLosRestaurantes()
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/x80b0');
+        $respuesta = $this->realizarPeticion('GET', 'http://api.myjson.com/bins/x80b0');
 
         $datos = json_decode($respuesta);
 

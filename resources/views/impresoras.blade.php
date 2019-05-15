@@ -4,6 +4,7 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
+            <a href="{{ route('impresoras.create') }}" class="btn btn-success"><i class="fas fa-print"></i> Nueva impresora</a>
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="purple">

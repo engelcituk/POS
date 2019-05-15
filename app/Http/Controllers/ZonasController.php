@@ -35,7 +35,7 @@ class ZonasController extends Controller
     protected function obtenerTodosLasZonas()
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/zfiyk');
+        $respuesta = $this->realizarPeticion('GET', 'http://api.myjson.com/bins/zfiyk');
 
         $datos = json_decode($respuesta);
 
