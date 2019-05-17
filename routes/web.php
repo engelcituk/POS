@@ -97,9 +97,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('all/metodospago', 'MetodosPagoController@AllMetodosPago')->name('all.metodospago');
     Route::get('/metodospago', 'MetodosPagoController@index')->name('metodospago.index');    
     Route::get('metodospago/create', 'MetodosPagoController@create')->name('metodospago.create');
-    Route::get('metodospago/store', 'MetodosPagoController@store')->name('metodospago.store');
-    Route::get('metodospago/{metodopago}', 'MetodosPagoController@show')->name('metodospago.show');
+    Route::post('metodospago/store', 'MetodosPagoController@store')->name('metodospago.store');
+    Route::get('metodospago/{metodopago}',  'MetodosPagoController@show')->name('metodospago.show'); 
     Route::get('metodospago/{metodopago}/edit', 'MetodosPagoController@edit')->name('metodospago.edit');
+    Route::put('metodospago/actualizar','MetodosPagoController@actualizar')->name('metodospago.actualizar');
+    Route::delete( 'metodospago/{metodopago}','MetodosPagoController@destroy')->name('metodospago.destroy');
 
     //rutas de menu configuracion-->modos
     Route::get('all/modos', 'ModosController@AllModos')->name('all.modos');

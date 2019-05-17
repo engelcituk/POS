@@ -7,39 +7,36 @@
             <div class="col-md-12">
                 <div class="card card-profile">
 
-                    <form method="POST" action="{{ route('metodospago.store')}}">
+                    <form method="POST" action="{{ route('metodospago.actualizar')}}">
                         @csrf
+                        {{ method_field('PUT') }}
+                        <input id="name" type="hidden" class="form-control" name="id" value="{{$metodoPago->id}}" required>
                         <div class="card-content">
-                            El id del metodosPago {{$metodosPago}}
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="material-icons">create</i>
-                                </span>
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Nombre zona</label>
-                                    <input id="nombre" type="text" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" required autofocus>
-                                    @if ($errors->has('nombre'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nombre') }}</strong>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fas fa-money-bill"></i>
                                     </span>
-                                    @endif
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Nombre metodo de pago</label>
+                                        <input id="name" type="text" class="form-control" name="name" value="{{$metodoPago->name}}" required autofocus>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="material-icons">create</i>
-                                </span>
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Empresa</label>
-                                    <input id="direccion" type="text" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }}" name="empresa" required>
-                                    @if ($errors->has('empresa'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('empresa') }}</strong>
+
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fas fa-file-signature"></i>
                                     </span>
-                                    @endif
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Descripción</label>
+                                        <input id="descripcion" type="text" class="form-control" name="descripcion" value="{{$metodoPago->descripcion}}" required>
+
+                                    </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
+                            <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                         </div>
                     </form>
                 </div>

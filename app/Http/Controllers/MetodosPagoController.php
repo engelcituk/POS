@@ -18,9 +18,10 @@ class MetodosPagoController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public $urlBase = "http://localhost/TPVApi/MetodosPago/";
     public function index()
     {
-        return view('metodospago');
+        return view('metodospago'); 
     }
     public function AllMetodosPago()
     {
@@ -34,11 +35,11 @@ class MetodosPagoController extends Controller
     protected function obtenerTodosLosMetodosPagos()
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/1bayb0');
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetMetodosPago');
 
         $datos = json_decode($respuesta);
 
-        $metodosPago = $datos->metodospago;
+        $metodosPago = $datos->objeto;
 
         return $metodosPago;
     }
@@ -46,24 +47,47 @@ class MetodosPagoController extends Controller
     {
         return view('metodospago.partials.create');
     }
+    
     public function show($id)
     {
-        $metodosPago = $id;
+        $idMetodoPago = $id;
+        $metodoPago = $this->obtenerUnMetodoPago($idMetodoPago);
 
-        return view('metodospago.partials.show', ['metodosPago' => $metodosPago]);
+        return view('metodospago.partials.show', ['metodoPago' => $metodoPago]);
     }
     public function edit($id)
     {
-        $metodosPago = $id;
-        return view('metodospago.partials.edit', ['metodosPago' => $metodosPago]);
+        $idMetodoPago = $id;
+        $metodoPago = $this->obtenerUnMetodoPago($idMetodoPago);
+        return view('metodospago.partials.edit', ['metodoPago' => $metodoPago]);
+    }
+     
+    //metodo que se ocupa para obtener el dato de un metodo de pago, se usa para show y edit
+    protected function obtenerUnMetodoPago($idMetodoPago)
+    {
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetMetodoPago/{$idMetodoPago}");
+        $datos = json_decode($respuesta);
+        $hotel = $datos->objeto;
+        return $hotel;
     }
     public function store(Request $request)
+    {        
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddMetodoPago', ['form_params' => $request->all()]);
+
+        return redirect('/metodospago');
+    }
+    public function actualizar(Request $request)
     {
-
-        $accessToken = 'Bearer ' . $this->obtenerAccessToken();
-
-        $respuesta = $this->realizarPeticion('POST', 'https://apilumen.juandmegon.com/estudiantes', ['headers' => ['Authorization' => $accessToken], 'form_params' => $request->all()]);
-
-        return redirect('/productos');
+        $idMetodoPago = $request->get('id');
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateMetodoPago/{$idMetodoPago}", ['form_params' => $request->except('id')]);
+        return redirect('/metodospago');
+    }
+    
+    public function destroy($id)
+    {
+        $idMetodoPago = $id;
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteMetodoPago/{$idMetodoPago}");
+        return redirect( '/metodospago');
     }
 }
+ 

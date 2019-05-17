@@ -7,17 +7,17 @@ use Yajra\DataTables\DataTables;
 
 class HotelesController extends Controller
 {
-    //
+    
     public function __construct()
     {
         // $this->middleware('auth');
     }
-
-    /**
+        /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public $urlBase = "http://localhost/TPVApi/Hoteles/";
     public function index()
     {
         return view('hoteles');
@@ -34,7 +34,7 @@ class HotelesController extends Controller
     protected function obtenerTodosLosHoteles()
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'http://localhost/TPVApi/Hoteles/GetHoteles');
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetHoteles');
 
         $datos = json_decode($respuesta);
 
@@ -60,7 +60,7 @@ class HotelesController extends Controller
     }    
     //metodo que se ocupara para obtener el dato de un hotel, se ocupa para show y edit
     protected function obtenerUnHotel($idHotel){
-        $respuesta = $this->realizarPeticion('GET', "http://localhost/TPVApi/Hoteles/GetHotel/{$idHotel}");
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetHotel/{$idHotel}");
         $datos = json_decode($respuesta);
         $hotel = $datos->objeto;
         return $hotel;
@@ -68,7 +68,7 @@ class HotelesController extends Controller
     public function store(Request $request)
     {
         // $accessToken = 'Bearer ' . $this->obtenerAccessToken();
-        $respuesta = $this->realizarPeticion('POST', 'http://localhost/TPVApi/Hoteles/AddHotel', ['form_params' => $request->all()]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase .'AddHotel', ['form_params' => $request->all()]);
 
         return redirect('/hoteles');
     }
@@ -77,13 +77,13 @@ class HotelesController extends Controller
     {
         $idHotel= $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', "http://localhost/TPVApi/Hoteles/UpdateHotel/{$idHotel}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateHotel/{$idHotel}", ['form_params' => $request->except('id')]);
         return redirect('/hoteles');
     }
     public function destroy($id)
     {
         $idHotel = $id;
-        $respuesta = $this->realizarPeticion('DELETE', "http://localhost/TPVApi/Hoteles/DeleteHotel/{$idHotel}");
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteHotel/{$idHotel}");
         return redirect('/hoteles');
     }
 }
