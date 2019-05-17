@@ -18,6 +18,9 @@ class RestaurantesController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public $urlBase = "http://localhost/TPVApi/PuntosVenta/";
+    
+
     public function index()
     {
         return view('restaurantes');
@@ -32,21 +35,21 @@ class RestaurantesController extends Controller
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    protected function obtenerTodosLosRestaurantes()
+    public function obtenerTodosLosRestaurantes()/*metodo no protected porque lo ocuparé en otros metodos de otros controladores */
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'http://api.myjson.com/bins/x80b0');
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetPuntosVenta');
 
         $datos = json_decode($respuesta);
-
-        $restaurantes = $datos->puntosVenta;
-
+        $restaurantes = $datos->objeto;
         return $restaurantes;
     }
     protected function create()
     {
-        return view('restaurantes.partials.create');
-    }
+        /*Obtendo todos los hoteles que me trae mi controlador HOTELESCONTROLLER con su metodo OBTENERTODOSLOSHOTELES*/
+        $hoteles =\App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');        
+        return view('restaurantes.partials.create',['hoteles'=> $hoteles]);
+    }   
     public function show($id)
     {
         $restaurante = $id;
@@ -55,16 +58,24 @@ class RestaurantesController extends Controller
     }
     public function edit($id)
     {
-        $restaurante = $id;
-        return view('restaurantes.partials.edit', ['restaurante' => $restaurante]);
+        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles'); 
+        $idRestaurante = $id;
+        $restaurante = $this->obtenerUnRestaurante($idRestaurante);
+        return view('restaurantes.partials.edit', ['restaurante' => $restaurante, 'hoteles' => $hoteles]);
     }
-    public function store(Request $request)
+    //metodo que se ocupara para obtener el dato de un hotel, se ocupa para show y edit
+    protected function obtenerUnRestaurante($idRestaurante)
     {
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetPuntoVenta/{$idRestaurante}");
+        $datos = json_decode($respuesta);
+        $hotel = $datos->objeto;
+        return $hotel;
+    }
+    
+    public function store(Request $request)
+    {       
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddPuntoVenta', ['form_params' => $request->all()]);
 
-        $accessToken = 'Bearer ' . $this->obtenerAccessToken();
-
-        $respuesta = $this->realizarPeticion('POST', 'https://apilumen.juandmegon.com/estudiantes', ['headers' => ['Authorization' => $accessToken], 'form_params' => $request->all()]);
-
-        return redirect('/productos');
+        return redirect('/restaurantes');
     }
 }

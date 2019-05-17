@@ -140,7 +140,7 @@
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    tablaRoles.ajax.reload();
+                    tablaMetodosPago.ajax.reload();
                     swal({
                         title: '¡Exito!',
                         text: '¡Su dato ha sido borrado!',

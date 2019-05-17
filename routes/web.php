@@ -65,7 +65,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('all/restaurantes', 'RestaurantesController@AllRestaurantes')->name('all.restaurantes');
     Route::get('/restaurantes', 'RestaurantesController@index')->name('restaurantes.index');
     Route::get('restaurantes/create', 'RestaurantesController@create')->name('restaurantes.create');
-    Route::get('restaurantes/store', 'RestaurantesController@store')->name('restaurantes.store');
+    Route::post('restaurantes/store', 'RestaurantesController@store')->name('restaurantes.store');
     Route::get('restaurantes/{restaurante}', 'RestaurantesController@show')->name('restaurantes.show');
     Route::get('restaurantes/{restaurante}/edit', 'RestaurantesController@edit')->name('restaurantes.edit');
 

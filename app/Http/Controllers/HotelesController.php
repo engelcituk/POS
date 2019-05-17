@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-
+ 
 class HotelesController extends Controller
 {
     
@@ -31,7 +31,7 @@ class HotelesController extends Controller
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    protected function obtenerTodosLosHoteles()
+    public function obtenerTodosLosHoteles()//siel metodo es protected no lo puedo usar en otro lado, como en restaurantes
     {
         //es una funcion que esta en el controller principal
         $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetHoteles');

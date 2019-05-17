@@ -340,7 +340,7 @@
     });
 
     //tabla de MetodosPAgo    
-    var tablaMetodosPAgo = $('#metodosPago').DataTable({
+    var tablaMetodosPago = $('#metodosPago').DataTable({
         processing: true,
         serverSide: true,
         ajax: "{{ route('all.metodospago') }}",
