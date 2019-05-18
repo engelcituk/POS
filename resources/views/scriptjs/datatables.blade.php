@@ -185,7 +185,7 @@
     });
 
     //tabla de Restaurantes    
-    var tablaRestaurantes = $('#zonas').DataTable({
+    var tablaZonas = $('#zonas').DataTable({
         processing: true,
         serverSide: true,
         ajax: "{{ route('all.zonas') }}",

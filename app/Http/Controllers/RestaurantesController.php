@@ -18,9 +18,7 @@ class RestaurantesController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public $urlBase = "http://localhost/TPVApi/PuntosVenta/";
-    
-
+    public $urlBase = "http://localhost/TPVApi/PuntosVenta/";    
     public function index()
     {
         return view('restaurantes');
@@ -51,22 +49,31 @@ class RestaurantesController extends Controller
         return view('restaurantes.partials.create',['hoteles'=> $hoteles]);
     }   
     public function show($id)
-    {
-        $restaurante = $id;
+    {        
+        $idRestaurante = $id;
+        $restaurante = $this->obtenerUnRestaurante($idRestaurante);
+        $idHotel= $restaurante->idHotel;
+        $datosHotel = new HotelesController();
+        $hotel=$datosHotel->obtenerUnHotel($idHotel);
 
-        return view('restaurantes.partials.show', ['restaurante' => $restaurante]);
+        return view('restaurantes.partials.show', ['restaurante' => $restaurante, 'hotel' => $hotel]);
     }
     public function edit($id)
     {
         $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles'); 
         $idRestaurante = $id;
         $restaurante = $this->obtenerUnRestaurante($idRestaurante);
-        return view('restaurantes.partials.edit', ['restaurante' => $restaurante, 'hoteles' => $hoteles]);
+        //obtengo los datos del hotel para cargarlo en un select
+        $idHotel = $restaurante->idHotel;
+        $datosHotel = new HotelesController();
+        $hotelRestaurante = $datosHotel->obtenerUnHotel($idHotel);
+
+        return view('restaurantes.partials.edit', ['restaurante' => $restaurante, 'hoteles' => $hoteles, 'hotelRestaurante'=> $hotelRestaurante]);
     }
     //metodo que se ocupara para obtener el dato de un hotel, se ocupa para show y edit
     protected function obtenerUnRestaurante($idRestaurante)
     {
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetPuntoVenta/{$idRestaurante}");
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetPuntoVenta/{$idRestaurante}");
         $datos = json_decode($respuesta);
         $hotel = $datos->objeto;
         return $hotel;
@@ -77,5 +84,19 @@ class RestaurantesController extends Controller
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddPuntoVenta', ['form_params' => $request->all()]);
 
         return redirect('/restaurantes');
+    }
+    public function actualizar(Request $request)
+    {
+        $idRestaurante = $request->get('id');
+
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdatePuntoVenta/{$idRestaurante}", ['form_params' => $request->except('id')]);
+        return redirect('/restaurantes');
+    }
+    
+    public function destroy($id)
+    {
+        $idRestaurante = $id;
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeletePuntoVenta/{$idRestaurante}");
+        return redirect( '/restaurantes');
     }
 }

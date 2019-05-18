@@ -40,10 +40,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/hoteles', 'HotelesController@index')->name('hoteles.index');
     Route::get('hoteles/create', 'HotelesController@create')->name('hoteles.create');
     Route::post('hoteles/store', 'HotelesController@store')->name('hoteles.store');
-    Route::get('hoteles/{hotel}', 'hotelesController@show')->name('hoteles.show');
-    Route::get('hoteles/{hotel}/edit' ,'hotelesController@edit')->name('hoteles.edit');
-    Route::put('hoteles/actualizar', 'hotelesController@actualizar')->name('hoteles.actualizar');
-    Route::delete('hoteles/{hotel}', 'hotelesController@destroy')->name('hoteles.destroy');
+    Route::get('hoteles/{hotel}', 'HotelesController@show')->name('hoteles.show');
+    Route::get('hoteles/{hotel}/edit' ,'HotelesController@edit')->name('hoteles.edit');
+    Route::put('hoteles/actualizar', 'HotelesController@actualizar')->name('hoteles.actualizar');
+    Route::delete('hoteles/{hotel}', 'HotelesController@destroy')->name('hoteles.destroy');
 
     //rutas de menu configuracion-->usuarios
     Route::get('all/users', 'ApiUsuarioController@AllApiUsuario')->name('all.users');
@@ -68,6 +68,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('restaurantes/store', 'RestaurantesController@store')->name('restaurantes.store');
     Route::get('restaurantes/{restaurante}', 'RestaurantesController@show')->name('restaurantes.show');
     Route::get('restaurantes/{restaurante}/edit', 'RestaurantesController@edit')->name('restaurantes.edit');
+    Route::put('restaurantes/actualizar', 'RestaurantesController@actualizar')->name('restaurantes.actualizar');
+    Route::delete('restaurantes/{restaurante}', 'RestaurantesController@destroy')->name('restaurantes.destroy');
 
     //rutas de menu configuracion-->zonas 
     Route::get('all/zonas', 'ZonasController@AllZonas')->name('all.zonas');

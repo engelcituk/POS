@@ -59,7 +59,7 @@ class HotelesController extends Controller
         return view('hoteles.partials.edit',['hotel' => $hotel]);
     }    
     //metodo que se ocupara para obtener el dato de un hotel, se ocupa para show y edit
-    protected function obtenerUnHotel($idHotel){
+    public function obtenerUnHotel($idHotel){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetHotel/{$idHotel}");
         $datos = json_decode($respuesta);
         $hotel = $datos->objeto;
