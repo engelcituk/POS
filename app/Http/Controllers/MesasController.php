@@ -54,9 +54,22 @@ class MesasController extends Controller
     }
     public function show($id)
     {
-        $mesa = $id;
+        $idMesa = $id;
+        $mesa = $this->obtenerUnaMesa($idMesa);
 
-        return view('mesas.partials.show', ['mesa' => $mesa]);
+        $idZona =$mesa->idZona;
+        $datosZona = new ZonasController(); //para obtener los datos de la zona
+        $datosZonaMesa = $datosZona->obtenerUnaZona($idZona); //los datos de la zona lo envio a la vista
+
+        $idPuntoVenta = $datosZonaMesa->idPuntoVenta; //obtengo el idRestaurante de la zona 
+        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
+        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
+
+        $idHotel = $datosRestaurantePV->idHotel;
+        $datosHotel = new HotelesController();
+        $hotelRestaurante = $datosHotel->obtenerUnHotel($idHotel);
+
+        return view('mesas.partials.show', ['mesa' => $mesa, 'datosZonaMesa'=>$datosZonaMesa, 'datosRestaurantePV'=>$datosRestaurantePV, 'hotelRestaurante'=> $hotelRestaurante]);
     }
     public function edit($id){
 

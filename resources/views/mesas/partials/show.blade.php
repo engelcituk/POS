@@ -10,14 +10,16 @@
                         <img class="img" src="{{asset('img/faces/zona.png')}}">
                     </div>
                     <div class="card-content">
-                        <h3 class="category text-black">Hotel al que pertenece: </h3><br>
-                        <h4 class="card-title">Pertenece al punto de venta : </h4><br>
-                        <h4 class="card-title">Pertenece a la zona : </h4><br>
+                        <h3 class="category text-black">Pertenece al hotel: {{$hotelRestaurante->name}} </h3><br>
+                        <h4 class="card-title">Pertenece al punto de venta : {{$datosRestaurantePV->name}}</h4><br>
+                        <h4 class="card-title">Pertenece a la zona : {{$datosZonaMesa->name}}</h4><br>
+                        <h4 class="card-title">Nombre : {{$mesa->name}}</h4><br>
+                        @php
+                        $estado= $mesa->status;//para obtener el estado de la zona
+                        $resultadoEstado = ($estado == 1) ? "Activo" : "Desactivado";
+                        @endphp
+                        <h4 class="card-title">Estado : {{$resultadoEstado}}</h4><br>
 
-                        <h4 class="card-title">Estado : </h4><br>
-                        <p class="description">
-                            <strong> Descripcion: </strong>
-                        </p>
                         <a href="{{ route('mesas.index') }}" class="btn btn-rose btn-round"><i class="fas fa-arrow-left"></i> Volver</a>
                     </div>
                 </div>
