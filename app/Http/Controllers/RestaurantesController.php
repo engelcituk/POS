@@ -23,7 +23,7 @@ class RestaurantesController extends Controller
     {
         return view('restaurantes');
     }
-
+ 
     public function AllRestaurantes()
     {
         $restaurantes = $this->obtenerTodosLosRestaurantes();
@@ -42,7 +42,7 @@ class RestaurantesController extends Controller
         $restaurantes = $datos->objeto;
         return $restaurantes;
     }
-    protected function create()
+    protected function create() 
     {
         /*Obtendo todos los hoteles que me trae mi controlador HOTELESCONTROLLER con su metodo OBTENERTODOSLOSHOTELES*/
         $hoteles =\App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');        
@@ -71,12 +71,12 @@ class RestaurantesController extends Controller
         return view('restaurantes.partials.edit', ['restaurante' => $restaurante, 'hoteles' => $hoteles, 'hotelRestaurante'=> $hotelRestaurante]);
     }
     //metodo que se ocupara para obtener el dato de un hotel, se ocupa para show y edit
-    protected function obtenerUnRestaurante($idRestaurante)
+    public function obtenerUnRestaurante($idRestaurante)
     {
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetPuntoVenta/{$idRestaurante}");
         $datos = json_decode($respuesta);
-        $hotel = $datos->objeto;
-        return $hotel;
+        $restaurante = $datos->objeto;
+        return $restaurante;
     }
     
     public function store(Request $request)

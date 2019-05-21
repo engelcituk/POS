@@ -75,15 +75,17 @@ Route::middleware(['auth'])->group(function(){
     Route::get('all/zonas', 'ZonasController@AllZonas')->name('all.zonas');
     Route::get('/zonas', 'ZonasController@index')->name('zonas.index');
     Route::get('zonas/create', 'ZonasController@create')->name('zonas.create');
-    Route::get('zonas/store', 'ZonasController@store')->name('zonas.store');
+    Route::post('zonas/store', 'ZonasController@store')->name('zonas.store');
     Route::get('zonas/{zona}', 'ZonasController@show')->name('zonas.show');
     Route::get('zonas/{zona}/edit', 'ZonasController@edit')->name('zonas.edit');
+    Route::put('zonas/actualizar', 'ZonasController@actualizar')->name('zonas.actualizar');
+    Route::delete('zonas/{zona}', 'ZonasController@destroy')->name('zonas.destroy');
 
     //rutas de menu configuracion-->mesas 
-    Route::get('all/mesas', 'MesasController@AllMesas')->name('all.mesas');
+    Route::get('all/mesas', 'MesasController@AllMesas')->name('all.mesas'); 
     Route::get('/mesas', 'MesasController@index')->name('mesas.index');
     Route::get('mesas/create', 'MesasController@create')->name('mesas.create');
-    Route::get('mesas/store', 'MesasController@store')->name('mesas.store');
+    Route::post('mesas/store', 'MesasController@store')->name('mesas.store'); 
     Route::get('mesas/{mesa}', 'MesasController@show')->name('mesas.show');
     Route::get('mesas/{mesa}/edit', 'MesasController@edit')->name('mesas.edit');
 
@@ -91,7 +93,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('all/impresoras', 'ImpresorasController@AllImpresoras')->name('all.impresoras');
     Route::get('/impresoras', 'ImpresorasController@index')->name('impresoras.index');
     Route::get('impresoras/create', 'ImpresorasController@create')->name('impresoras.create');
-    Route::get('impresoras/store', 'ImpresorasController@store')->name('impresoras.store');
+    Route::post('impresoras/store', 'ImpresorasController@store')->name('impresoras.store');
     Route::get('impresoras/{impresora}', 'ImpresorasController@show')->name('impresoras.show');
     Route::get('impresoras/{impresora}/edit', 'ImpresorasController@edit')->name('impresoras.edit');
 
@@ -109,7 +111,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('all/modos', 'ModosController@AllModos')->name('all.modos');
     Route::get('/modos', 'ModosController@index')->name('modos.index');
     Route::get('modos/create', 'ModosController@create')->name('modos.create');
-    Route::get('modos/store', 'ModosController@store')->name('modos.store');
+    Route::post('modos/store', 'ModosController@store')->name('modos.store');
     Route::get('modos/{modos}', 'ModosController@show')->name('modos.show');
     Route::get('modos/{modos}/edit', 'ModosController@edit')->name('modos.edit');
    
@@ -117,7 +119,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('all/alergenos', 'AlergenoController@AllAlergenos')->name('all.alergenos');
     Route::get('/alergenos', 'AlergenoController@index')->name('alergenos.index');
     Route::get('alergenos/create', 'AlergenoController@create')->name('alergenos.create');
-    Route::get('alergenos/store', 'AlergenoController@store')->name('alergenos.store');
+    Route::post('alergenos/store', 'AlergenoController@store')->name('alergenos.store');
     Route::get('alergenos/{alergeno}', 'AlergenoController@show')->name('alergenos.show');
     Route::get('alergenos/{alergeno}/edit', 'AlergenoController@edit')->name('alergenos.edit');
 
@@ -125,7 +127,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('all/cartas', 'CartaController@AllCartas')->name('all.cartas');
     Route::get('/cartas', 'CartaController@index')->name('cartas.index');
     Route::get('cartas/create', 'CartaController@create')->name('cartas.create');
-    Route::get('cartas/store', 'CartaController@store')->name('cartas.store');
+    Route::post('cartas/store', 'CartaController@store')->name('cartas.store');
     Route::get('cartas/{carta}', 'CartaController@show')->name('cartas.show');
     Route::get('cartas/{carta}/edit', 'CartaController@edit')->name('cartas.edit');
     

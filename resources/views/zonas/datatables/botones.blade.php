@@ -5,6 +5,6 @@
 <a href="{{ route('zonas.edit', ['zona' => $id])}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
 @php
 $cadenaObtenerNumero="{{ route('zonas.destroy', ['zona' => $id])}}";
-$idProducto = intval(preg_replace('/[^0-9]+/', '', $cadenaObtenerNumero), 10);
+$idZona = intval(preg_replace('/[^0-9]+/', '', $cadenaObtenerNumero), 10);
 @endphp
-<a onclick="deleteProducto({{$idProducto}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>
+<a onclick="deleteZona({{$idZona}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>

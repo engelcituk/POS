@@ -1,9 +1,10 @@
 @extends('layouts.dashboard')
+
 @section('content')
 <div class="content">
     <div class="container-fluid">
         <a href="{{ route('zonas.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <form method="POST" action="{{ route('restaurantes.store')}}">
+        <form method="POST" action="{{ route('zonas.store')}}">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-profile">
@@ -29,29 +30,34 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="fas fa-user-cog"></i>
+                                            <i class="fas fa-utensils"></i>
                                         </span>
                                         <div class="form-group">
-                                            <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" id="sel1">
-                                                <option>Seleccione punto de venta</option>
-                                                <option>PV 1</option>
-                                                <option>PV 2</option>
-                                                <option>PV 3</option>
-                                                <option>PV 4</option>
+                                            <select class="form-control" name="idPuntoVenta" required>
+                                                <option value="">Seleccione punto de venta</option>
+                                                @foreach($hoteles as $hotel)
+                                                <optgroup label="{{$hotel->name}}">
+                                                    @foreach($restaurantes as $restaurante)
+                                                        @php
+                                                            $collection = collect(['idHotel' => $restaurante->idHotel, 'idHotel' => $hotel->id]);
+                                                            $respuesta = $collection->contains($restaurante->idHotel);
+                                                        @endphp
+                                                        @if($respuesta==1)
+                                                        <option value="{{$restaurante->id}}">{{$restaurante->name}}</option>
+                                                        @endif
+                                                    @endforeach
+                                                </optgroup>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <!-- <span class="input-group-addon">
-                                            <i class="fas fa-user-cog"></i>
-                                        </span> -->
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="status" checked onclick="return false;"> Estado activo
-                                            </label>
+                                        <div class="radio">
+                                            <strong>Estado</strong>
+                                            <label><input type="radio" name="status" value="True" checked>Activado</label>
+                                            <label><input type="radio" name="status" value="False">Desactivado</label>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +67,7 @@
                                         <textarea class="form-control" rows="1" name="descripcion"></textarea>
                                     </div>
                                 </div>
-                                <small>En la api se registra el <cite title="idPuntoVenta">idPuntoVenta y status </cite></small>
+                                <!-- <small>En la api se registra el <cite title="idPuntoVenta">idPuntoVenta y status </cite></small> -->
                                 <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
                             </div>
                         </div>

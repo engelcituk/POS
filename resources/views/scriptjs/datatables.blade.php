@@ -6,7 +6,7 @@
         serverSide: true,
         ajax: "{{ route('all.usuarios') }}",
         columns: [{
-                data: 'id',
+                data: 'id', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
                 name: 'id'
             },
             {
@@ -53,7 +53,7 @@
                 name: 'id'
             },
             {
-                data: 'name',
+                data: 'name', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
                 name: 'name'
             },
             {
@@ -100,7 +100,7 @@
                 name: 'id'
             },
             {
-                data: 'name',
+                data: 'name', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
                 name: 'name'
             },
             {
@@ -198,7 +198,7 @@
                 name: 'name'
             },
             {
-                data: 'idPuntoVenta',
+                data: 'idPuntoVenta', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
                 name: 'idPuntoVenta'
             },
             {

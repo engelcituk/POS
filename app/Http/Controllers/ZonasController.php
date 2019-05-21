@@ -12,12 +12,13 @@ class ZonasController extends Controller
     {
         // $this->middleware('auth');
     }
-
+ 
     /**
      * Show the application dashboard.
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public $urlBase = "http://localhost/TPVApi/Zonas/"; 
     public function index()
     {
         return view('zonas');
@@ -35,36 +36,79 @@ class ZonasController extends Controller
     protected function obtenerTodosLasZonas()
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'http://api.myjson.com/bins/zfiyk');
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetZonas');
 
         $datos = json_decode($respuesta);
 
-        $zonas = $datos->zonas;
+        $zonas = $datos->objeto;
 
         return $zonas;
     }
     protected function create()
     {
-        return view('zonas.partials.create');
+        $hoteles =\App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+        $restaurantes = \App::call( 'App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+        // $idHotel = $hotel->id;  
+        return view('zonas.partials.create',['hoteles' => $hoteles, 'restaurantes'=>$restaurantes]);
+        
     }
     public function show($id)
-    {
-        $zona = $id;
+    {        
+        $idZona = $id;
+        $zona = $this->obtenerUnaZona($idZona);
+        //para obtener el nombre del restaurante al que corresponde la zona        
+        $idPuntoVenta = $zona->idPuntoVenta;//obtengo el idRestaurante de la zona 
 
-        return view('zonas.partials.show', ['zona' => $zona]);
+        $datosPuntoVenta= new RestaurantesController();//para obtener los datos del restaurante
+        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
+
+        $idHotel = $datosRestaurantePV->idHotel;
+        $datosHotel = new HotelesController();
+        $hotelRestaurante = $datosHotel->obtenerUnHotel($idHotel);
+
+        return view('zonas.partials.show', ['zona' => $zona, 'datosRestaurantePV'=> $datosRestaurantePV, 'hotelRestaurante' => $hotelRestaurante]);
     }
     public function edit($id)
     {
-        $zona = $id;
-        return view('zonas.partials.edit', ['zona' => $zona]);
+        $idZona = $id;
+        $zona = $this->obtenerUnaZona($idZona);
+        //para obtener el nombre del restaurante al que corresponde la zona        
+        $idPuntoVenta = $zona->idPuntoVenta; //obtengo el idRestaurante de la zona 
+
+        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
+        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
+
+        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+
+        return view('zonas.partials.edit', ['zona' => $zona, 'datosRestaurantePV' => $datosRestaurantePV, 'hoteles' => $hoteles, 'restaurantes' => $restaurantes]);
     }
+    
     public function store(Request $request)
     {
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddZona', ['form_params' => $request->all()]);
 
-        $accessToken = 'Bearer ' . $this->obtenerAccessToken();
-
-        $respuesta = $this->realizarPeticion('POST', 'https://apilumen.juandmegon.com/estudiantes', ['headers' => ['Authorization' => $accessToken], 'form_params' => $request->all()]);
-
-        return redirect('/productos');
+        return redirect('/zonas');
     }
+    public function obtenerUnaZona($idZona)
+    {
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetZona/{$idZona}");
+        $datos = json_decode($respuesta);
+        $zona = $datos->objeto;
+        return $zona;
+    }
+    public function actualizar(Request $request)
+    {
+        $idZona = $request->get('id');
+
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateZona/{$idZona}", ['form_params' => $request->except('id')]);
+        return redirect('/zonas');
+    }
+    public function destroy($id)
+    {
+        $idZona = $id;
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteZona/{$idZona}");
+        return redirect('/zonas');
+    }
+    
 }
