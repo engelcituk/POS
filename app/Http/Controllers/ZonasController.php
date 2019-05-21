@@ -26,14 +26,14 @@ class ZonasController extends Controller
 
     public function AllZonas()
     {
-        $zonas = $this->obtenerTodosLasZonas();
+        $zonas = $this->obtenerTodasLasZonas();
 
         $acciones = 'zonas.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($zonas)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    protected function obtenerTodosLasZonas()
+    public function obtenerTodasLasZonas()
     {
         //es una funcion que esta en el controller principal
         $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetZonas');

@@ -88,6 +88,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('mesas/store', 'MesasController@store')->name('mesas.store'); 
     Route::get('mesas/{mesa}', 'MesasController@show')->name('mesas.show');
     Route::get('mesas/{mesa}/edit', 'MesasController@edit')->name('mesas.edit');
+    Route::put('mesas/actualizar', 'MesasController@actualizar')->name('mesas.actualizar');
+    Route::delete('mesas/{mesa}', 'MesasController@destroy')->name('mesas.destroy');
 
     //rutas de menu configuracion-->impmresoras 
     Route::get('all/impresoras', 'ImpresorasController@AllImpresoras')->name('all.impresoras');

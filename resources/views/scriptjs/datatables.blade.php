@@ -237,7 +237,7 @@
         }
     });
 
-    //tabla de Mesas    
+    //tabla de Mesas     
     var tablaMesas = $('#mesas').DataTable({
         processing: true,
         serverSide: true,

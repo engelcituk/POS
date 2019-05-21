@@ -38,13 +38,13 @@
                                                 @foreach($hoteles as $hotel)
                                                 <optgroup label="{{$hotel->name}}">
                                                     @foreach($restaurantes as $restaurante)
-                                                        @php
-                                                            $collection = collect(['idHotel' => $restaurante->idHotel, 'idHotel' => $hotel->id]);
-                                                            $respuesta = $collection->contains($restaurante->idHotel);
-                                                        @endphp
-                                                        @if($respuesta==1)
-                                                        <option value="{{$restaurante->id}}">{{$restaurante->name}}</option>
-                                                        @endif
+                                                    @php
+                                                    $collection = collect(['idHotel' => $restaurante->idHotel, 'idHotel' => $hotel->id]);
+                                                    $respuesta = $collection->contains($restaurante->idHotel);
+                                                    @endphp
+                                                    @if($respuesta==1)
+                                                    <option value="{{$restaurante->id}}">{{$restaurante->name}}</option>
+                                                    @endif
                                                     @endforeach
                                                 </optgroup>
                                                 @endforeach
@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <!-- <small>En la api se registra el <cite title="idPuntoVenta">idPuntoVenta y status </cite></small> -->
-                                <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
+                                <button type="submit" class="btn btn-primary pull-right"><i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>
                     </div>

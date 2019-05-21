@@ -17,12 +17,21 @@
                                         </span>
                                         <div class="form-group">
                                             <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" id="sel1">
-                                                <option>Seleccione zona</option>
-                                                <option>zona 1</option>
-                                                <option>zona 2</option>
-                                                <option>zona 3</option>
-                                                <option>zona 4</option>
+                                            <select class="form-control" name="idZona" required>
+                                                <option value="">Seleccione zona para la mesa</option>
+                                                @foreach($restaurantes as $restaurante)
+                                                <optgroup label="{{$restaurante->name}}">
+                                                    @foreach($zonas as $zona)
+                                                    @php
+                                                    $collection = collect(['idPV' => $zona->idPuntoVenta, 'idPV' => $restaurante->id]);
+                                                    $respuesta = $collection->contains($zona->idPuntoVenta);
+                                                    @endphp
+                                                    @if($respuesta==1)
+                                                    <option value="{{$zona->id}}">{{$zona->name}}</option>
+                                                    @endif
+                                                    @endforeach
+                                                </optgroup>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -43,21 +52,17 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-md-12">
-                                    <div class="form-group">
-                                        <!-- <span class="input-group-addon">
-                                            <i class="fas fa-user-cog"></i>
-                                        </span> -->
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox" name="status" checked onclick="return false;"> Estado activo
-                                            </label>
+                                    <div class="form-group">                                       
+                                        <strong>Estado</strong>
+                                        <div class="radio">
+                                            <label><input type="radio" name="status" value="True" checked>Activado</label>
+                                            <label><input type="radio" name="status" value="False">Desactivado</label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <small>En la api se registra el <cite title="idPuntoVenta">idZona y status </cite></small>
+                                <!-- <small>En la api se registra el <cite title="idPuntoVenta">idZona y status </cite></small> -->
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>

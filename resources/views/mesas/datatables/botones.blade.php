@@ -5,6 +5,6 @@
 <a href="{{ route('mesas.edit', ['mesa' => $id])}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
 @php
 $cadenaObtenerNumero="{{ route('mesas.destroy', ['mesa' => $id])}}";
-$idProducto = intval(preg_replace('/[^0-9]+/', '', $cadenaObtenerNumero), 10);
+$idMesa = intval(preg_replace('/[^0-9]+/', '', $cadenaObtenerNumero), 10);
 @endphp
-<a onclick="deleteProducto({{$idProducto}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>
+<a onclick="deleteMesa({{$idMesa}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>

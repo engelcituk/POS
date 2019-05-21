@@ -7,7 +7,7 @@ use Yajra\DataTables\DataTables;
 
 class MesasController extends Controller
 {
-    //
+    // 
     public function __construct()
     {
         // $this->middleware('auth');
@@ -18,6 +18,7 @@ class MesasController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public $urlBase = "http://localhost/TPVApi/Mesas/"; 
     public function index()
     {       
         
@@ -36,17 +37,20 @@ class MesasController extends Controller
     protected function obtenerTodosLasMesas()
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/xy5nw');
-
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetMesas');
+       
         $datos = json_decode($respuesta);
 
-        $mesas = $datos->mesas;
+        $mesas = $datos->objeto;
 
-        return $mesas;
+        return $mesas;       
     }
     protected function create()
-    {
-        return view('mesas.partials.create');
+    {        
+        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+        $zonas = \App::call('App\Http\Controllers\ZonasController@obtenerTodasLasZonas');
+          
+        return view('mesas.partials.create', ['restaurantes' => $restaurantes, 'zonas' => $zonas]);        
     }
     public function show($id)
     {
@@ -54,18 +58,48 @@ class MesasController extends Controller
 
         return view('mesas.partials.show', ['mesa' => $mesa]);
     }
-    public function edit($id)
-    {
-        $mesa = $id;
-        return view('mesas.partials.edit', ['mesa' => $mesa]);
+    public function edit($id){
+
+        $idMesa = $id;
+        $mesa = $this->obtenerUnaMesa($idMesa);//obtengo los datos de la mesa
+
+        $idZona = $mesa->idZona; //obtengo el idZona de la mesa que ocupo para obtener los datos de la zona
+
+        $datosZona = new ZonasController(); //para obtener los datos de la zona
+        $datosZonaMesa = $datosZona->obtenerUnaZona($idZona); //los datos de la zona lo envio a la vista
+
+        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+        $zonas = \App::call('App\Http\Controllers\ZonasController@obtenerTodasLasZonas');
+
+        return view('mesas.partials.edit', ['mesa'=> $mesa,'datosZonaMesa'=>$datosZonaMesa, 'restaurantes' => $restaurantes, 'zonas' => $zonas]); 
+        
     }
     public function store(Request $request)
     {
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddMesa', ['form_params' => $request->all()]);
 
-        $accessToken = 'Bearer ' . $this->obtenerAccessToken();
+        return redirect('/mesas');
+    }
+    public function obtenerUnaMesa($idMesa)
+    {
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetMesa/{$idMesa}");
+        $datos = json_decode($respuesta);
+        $mesa = $datos->objeto;
+        return $mesa;
+    }
+    public function actualizar(Request $request)
+    {
+        $idMesa = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('POST', 'https://apilumen.juandmegon.com/estudiantes', ['headers' => ['Authorization' => $accessToken], 'form_params' => $request->all()]);
-
-        return redirect('/productos');
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase . "UpdateMesa/{$idMesa}", ['form_params' => $request->except('id')]);
+        return redirect('/mesas');
+    }
+    //metodo para borrar mesas
+    public function destroy($id)
+    {
+        $idMesa = $id;
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteMesa/{$idMesa}");
+        return redirect('/mesas');
     }
 }
+ 
