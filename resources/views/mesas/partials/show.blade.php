@@ -7,18 +7,18 @@
             <div class="col-md-12">
                 <div class="card card-profile">
                     <div class="card-avatar">
-                        <img class="img" src="{{asset('img/faces/zona.png')}}">
+                        <img class="img" src="{{asset('img/faces/mesa.jpg')}}">
                     </div>
                     <div class="card-content">
-                        <h3 class="category text-black">Pertenece al hotel: {{$hotelRestaurante->name}} </h3><br>
-                        <h4 class="card-title">Pertenece al punto de venta : {{$datosRestaurantePV->name}}</h4><br>
-                        <h4 class="card-title">Pertenece a la zona : {{$datosZonaMesa->name}}</h4><br>
-                        <h4 class="card-title">Nombre : {{$mesa->name}}</h4><br>
+                        <h3 class="category text-black"><strong>Nombre del hotel:</strong> {{$hotelRestaurante->name}} </h3><br>
+                        <h4 class="card-title"> <strong>Punto de venta:</strong> {{$datosRestaurantePV->name}}</h4><br>
+                        <h4 class="card-title"> <strong>Zona:</strong> {{$datosZonaMesa->name}}</h4><br>
+                        <h4 class="card-title"> <strong>Nombre:</strong> {{$mesa->name}}</h4><br>
                         @php
                         $estado= $mesa->status;//para obtener el estado de la zona
                         $resultadoEstado = ($estado == 1) ? "Activo" : "Desactivado";
                         @endphp
-                        <h4 class="card-title">Estado : {{$resultadoEstado}}</h4><br>
+                        <h4 class="card-title"><strong>Estado:</strong> {{$resultadoEstado}}</h4><br>
 
                         <a href="{{ route('mesas.index') }}" class="btn btn-rose btn-round"><i class="fas fa-arrow-left"></i> Volver</a>
                     </div>

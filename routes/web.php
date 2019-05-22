@@ -71,6 +71,16 @@ Route::middleware(['auth'])->group(function(){
     Route::put('restaurantes/actualizar', 'RestaurantesController@actualizar')->name('restaurantes.actualizar');
     Route::delete('restaurantes/{restaurante}', 'RestaurantesController@destroy')->name('restaurantes.destroy');
 
+    //rutas de menu configuracion-->Turnos de punto de venta 
+    Route::get('all/turnos', 'TurnosController@AllTurnos')->name('all.turnos');
+    Route::get('/turnos', 'TurnosController@index')->name('turnos.index');
+    Route::get('turnos/create', 'TurnosController@create')->name('turnos.create');
+    Route::post('turnos/store', 'TurnosController@store')->name('turnos.store');
+    Route::get('turnos/{turno}', 'TurnosController@show')->name('turnos.show');
+    Route::get('turnos/{turno}/edit', 'TurnosController@edit')->name('turnos.edit');
+    Route::put('turnos/actualizar', 'TurnosController@actualizar')->name('turnos.actualizar');
+    Route::delete('turnos/{turno}', 'TurnosController@destroy')->name('turnos.destroy');
+
     //rutas de menu configuracion-->zonas 
     Route::get('all/zonas', 'ZonasController@AllZonas')->name('all.zonas');
     Route::get('/zonas', 'ZonasController@index')->name('zonas.index');
@@ -98,6 +108,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('impresoras/store', 'ImpresorasController@store')->name('impresoras.store');
     Route::get('impresoras/{impresora}', 'ImpresorasController@show')->name('impresoras.show');
     Route::get('impresoras/{impresora}/edit', 'ImpresorasController@edit')->name('impresoras.edit');
+    Route::put('impresoras/actualizar', 'ImpresorasController@actualizar')->name('impresoras.actualizar');
+    Route::delete('impresoras/{impresora}', 'ImpresorasController@destroy')->name('impresoras.destroy');
 
     //rutas de menu configuracion-->metodos de pago 
     Route::get('all/metodospago', 'MetodosPagoController@AllMetodosPago')->name('all.metodospago');

@@ -15,7 +15,7 @@ class ModosController extends Controller
      */
     public function index()
     {
-        return view('modos');
+        return view('modos'); 
     }
 
     public function AllModos()

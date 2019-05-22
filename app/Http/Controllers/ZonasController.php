@@ -56,9 +56,9 @@ class ZonasController extends Controller
     {        
         $idZona = $id;
         $zona = $this->obtenerUnaZona($idZona);
-        //para obtener el nombre del restaurante al que corresponde la zona        
-        $idPuntoVenta = $zona->idPuntoVenta;//obtengo el idRestaurante de la zona 
+        //para obtener el nombre del restaurante al que corresponde la zona
 
+        $idPuntoVenta = $zona->idPuntoVenta;//obtengo el idRestaurante de la zona 
         $datosPuntoVenta= new RestaurantesController();//para obtener los datos del restaurante
         $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
 

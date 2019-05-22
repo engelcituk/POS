@@ -10,14 +10,14 @@
                         <img class="img" src="{{asset('img/faces/zona.png')}}">
                     </div>
                     <div class="card-content">
-                        <h3 class="category text-black">Hotel al que pertenece: {{$hotelRestaurante->name}}</h3><br>
-                        <h4 class="card-title">Pertenece al punto de venta : {{$datosRestaurantePV->name}}</h4><br>
-                        <h4 class="card-title">Nombre de la zona : {{$zona->name}}</h4><br>
-                            @php
-                            $estado= $zona->status;//para obtener el estado de la zona
-                            $resultadoEstado = ($estado == 1) ? "Activo" : "Desactivado";
-                            @endphp
-                        <h4 class="card-title">Estado : {{$resultadoEstado}}</h4><br>
+                        <h3 class="category text-black"><strong>Nombre del hotel:</strong> {{$hotelRestaurante->name}}</h3><br>
+                        <h4 class="card-title"><strong>Punto de venta:</strong> {{$datosRestaurantePV->name}}</h4><br>
+                        <h4 class="card-title"><strong>Zona:</strong>{{$zona->name}}</h4><br>
+                        @php
+                        $estado= $zona->status;//para obtener el estado de la zona
+                        $resultadoEstado = ($estado == 1) ? "Activo" : "Desactivado";
+                        @endphp
+                        <h4 class="card-title"><strong>Estado: </strong> {{$resultadoEstado}}</h4><br>
                         <p class="description">
                             <strong> Descripcion: {{$zona->descripcion}} </strong>
                         </p>

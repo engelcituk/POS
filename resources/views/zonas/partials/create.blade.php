@@ -34,7 +34,7 @@
                                         </span>
                                         <div class="form-group">
                                             <select class="form-control" name="idPuntoVenta" required>
-                                                <option value="">Seleccione punto de venta</option>
+                                                <option value="">Seleccione punto de venta </option>
                                                 @foreach($hoteles as $hotel)
                                                 <optgroup label="{{$hotel->name}}">
                                                     @foreach($restaurantes as $restaurante)
@@ -51,7 +51,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                </div>
+                                </div> 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="radio">

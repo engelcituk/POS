@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <ul class="nav">
-                   <!--  <li class="">
+                    <!--  <li class="">
                         <a href="home">
                             <i class="fas fa-home"></i>
                             <p>Inicio</p>
@@ -88,7 +88,7 @@
                         </a>
                         <div class="collapse" id="pagesExamples">
                             <ul class="nav">
-                                <li>
+                                <li class="">
                                     <a href="{{ route('ordenar.index') }}">Tomar orden</a>
                                 </li>
                                 <li>
@@ -111,54 +111,18 @@
                                 <li>
                                     <a href="{{ route('hoteles.index') }}">Hoteles</a>
                                 </li>
-                                <!-- <li>
-                                    <a data-toggle="collapse" href="#pagesUsers">
-                                        <i class="fas fa-users"></i>
-                                        <p>Usuarios
-                                            <b class="caret"></b>
-                                        </p>
-                                    </a>
-                                    <div class="collapse" id="pagesUsers">
-
-                                        <ul class="nav">
-                                            @can('roles.index')
-                                            can y end can es para imprimir si se tiene roles 
-                                            <li>
-                                                <a href="{{ route('roles.index') }}">Roles</a>
-                                            </li>
-                                            @endcan
-                                            @can('usuarios.index')
-                                            <li>
-                                                <a href="{{ route('usuarios.index') }}">Usuarios</a>
-                                            </li>
-                                            @endcan
-
-                                        </ul>
-                                    </div>
-                                </li> -->
                                 <li>
-                                    <a data-toggle="collapse" href="#pagesUsersApi">
-                                        <!-- <i class="fas fa-users"></i> -->
-                                        <p>UsuariosAPI
-                                            <b class="caret"></b>
-                                        </p>
-                                    </a>
-                                    <div class="collapse" id="pagesUsersApi">
+                                    <a href="{{ route('rolesapi.index') }}">Roles</a>
+                                </li>
 
-                                        <ul class="nav">
-                                            <!--can y end can es para imprimir si se tiene roles  -->
-                                            <li>
-                                                <a href="{{ route('rolesapi.index') }}">Roles</a>
-                                            </li>
-
-                                            <li>
-                                                <a href="{{ route('users.index') }}">Usuarios</a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                <li>
+                                    <a href="{{ route('users.index') }}">Usuarios</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('restaurantes.index') }}">Puntos de venta</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('turnos.index') }}">Turnos PV</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('zonas.index') }}">Zonas</a>
@@ -169,7 +133,7 @@
                                 <li>
                                     <a href="{{ route('impresoras.index') }}">Impresoras</a>
                                 </li>
-                                
+
                                 @can('productos.index')
                                 <li>
                                     <a href="{{ route('productos.index') }}">Productos</a>
@@ -187,7 +151,7 @@
                                 <li>
                                     <a href="{{ route('cartas.index') }}">Carta</a>
                                 </li>
-                                
+
                                 <!-- <li>
                                     <a href="components/sweet-alert.html">Sweet Alert</a>
                                 </li>
@@ -432,10 +396,12 @@
 <!-- <script src="{{asset('js/demo.js')}}"></script> -->
 <!-- <script src="{{asset('js/init.js')}}"></script> -->
 <script src="{{asset('js/datatables.js')}}"></script>
+<script src="{{asset('js/bootstrap-timepicker.js')}}"></script>
 <!-- <script src="{{asset('js/crudUsuarios.js')}}"></script> -->
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
 @include('scriptjs/orden')
 @include('scriptjs/datatables')
 @include('scriptjs/sweetalerts')
+@include('scriptjs/validaciones')
 
 </html>

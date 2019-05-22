@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
 class ImpresorasController extends Controller
 {
     //
-    public function __construct()
+    public function __construct() 
     {
         // $this->middleware('auth');
     }
@@ -18,6 +18,7 @@ class ImpresorasController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public $urlBase = "http://localhost/TPVApi/Impresoras/";
     public function index()
     {
         return view('impresoras');
@@ -34,37 +35,76 @@ class ImpresorasController extends Controller
     }
     protected function obtenerTodasLasImpresoras()
     {
-        //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/qzffg');
+        //es una funcion que esta en el controller principal        
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetImpresoras');
 
         $datos = json_decode($respuesta);
 
-        $impresoras = $datos->impresoras;
+        $impresoras = $datos->objeto;
 
         return $impresoras; 
     }
     protected function create() 
     {
-        return view('impresoras.partials.create');
+        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+        // $idHotel = $hotel->id;  
+        return view('impresoras.partials.create', ['hoteles' => $hoteles, 'restaurantes' => $restaurantes]);      
     }
     public function show($id)
-    {
-        $impresora = $id;
+    {        
+        $idImpresora = $id;
+        $impresora = $this->obtenerUnaImpresora($idImpresora);
 
-        return view('impresoras.partials.show', ['impresora' => $impresora]);
+        $idPuntoVenta = $impresora->idPuntoVenta; //obtengo el idRestaurante de la impresora 
+        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
+        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
+
+        $idHotel = $datosRestaurantePV->idHotel;
+        $datosHotel = new HotelesController();
+        $hotelRestaurante = $datosHotel->obtenerUnHotel($idHotel);
+
+        return view('impresoras.partials.show', ['impresora' => $impresora, 'datosRestaurantePV' => $datosRestaurantePV, 'hotelRestaurante'=> $hotelRestaurante]);
     }
     public function edit($id)
     {
-        $impresora = $id;
-        return view('impresoras.partials.edit', ['impresora' => $impresora]);
+        $idImpresora = $id;
+        $impresora = $this->obtenerUnaImpresora($idImpresora);
+
+        $idPuntoVenta = $impresora->idPuntoVenta; //obtengo el idRestaurante de la impresora 
+        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
+        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
+
+        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+
+        return view('impresoras.partials.edit', ['impresora' => $impresora, 'datosRestaurantePV'=>$datosRestaurantePV, 'hoteles' => $hoteles, 'restaurantes' => $restaurantes]); 
+        
     }
     public function store(Request $request)
     {
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddImpresora', ['form_params' => $request->all()]);
 
-        $accessToken = 'Bearer ' . $this->obtenerAccessToken();
+        return redirect('/impresoras');
+    }
+    public function obtenerUnaImpresora($idImpresora)
+    {
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetImpresora/{$idImpresora}");
+        $datos = json_decode($respuesta);
+        $impresora = $datos->objeto;
+        return $impresora;
+    }
+    public function actualizar(Request $request)
+    {
+        $idImpresora = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('POST', 'https://apilumen.juandmegon.com/estudiantes', ['headers' => ['Authorization' => $accessToken], 'form_params' => $request->all()]);
-
-        return redirect('/productos');
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateImpresora/{$idImpresora}", ['form_params' =>$request->except('id')]);
+        return redirect('/impresoras');
+    }
+    public function destroy($id)
+    {
+        $idImpresora = $id;
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase ."DeleteImpresora/{$idImpresora}");
+        return redirect('/impresoras');
     }
 }
