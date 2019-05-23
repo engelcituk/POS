@@ -20,7 +20,7 @@
                                 <thead>
                                     <tr>
                                         <th>id</th>
-                                        <th>idPV</th>
+                                        
                                         <th>name</th>
                                         <th>ipImpresora</th>
                                         <th>status</th>
@@ -30,7 +30,7 @@
                                 <tfoot>
                                     <tr>
                                         <th>id</th>
-                                        <th>idPV</th>
+                                        
                                         <th>name</th>
                                         <th>ipImpresora</th>
                                         <th>status</th>

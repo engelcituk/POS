@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 @section('content')
-<div class="content">
+<div class="content"> 
     <div class="container-fluid">
         <a href="{{ route('impresoras.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
         <form method="POST" action="{{ route('impresoras.store')}}">
@@ -21,37 +21,12 @@
                                             @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
-                                            </span>
+                                            </span>|
                                             @endif
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-utensils"></i>
-                                        </span>
-                                        <div class="form-group">
-                                            <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" name="idPuntoVenta" required>
-                                                <option value="">Seleccione PV para la impresora</option>
-                                                @foreach($hoteles as $hotel)
-                                                <optgroup label="{{$hotel->name}}">
-                                                    @foreach($restaurantes as $restaurante)
-                                                    @php
-                                                    $collection = collect(['idHotel' => $restaurante->idHotel, 'idHotel' => $hotel->id]);
-                                                    $respuesta = $collection->contains($restaurante->idHotel);
-                                                    @endphp
-                                                    @if($respuesta==1)
-                                                    <option value="{{$restaurante->id}}">{{$restaurante->name}}</option>
-                                                    @endif
-                                                    @endforeach
-                                                </optgroup>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">

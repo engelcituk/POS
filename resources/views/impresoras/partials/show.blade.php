@@ -9,9 +9,7 @@
                     <div class="card-avatar">
                         <img class="img" src="{{asset('img/faces/impresora.jpg')}}">
                     </div>
-                    <div class="card-content">
-                        <h3 class="category text-black"><strong>Nombre hotel:</strong> {{$hotelRestaurante->name}}</h3><br>
-                        <h4 class="card-title"> <strong>Punto de venta: </strong> {{$datosRestaurantePV->name}} </h4><br>
+                    <div class="card-content">                        
                         <h4 class="card-title"> <strong>Nombre impresora:</strong> {{$impresora->name}}</h4><br>
                         <h4 class="card-title"> <strong>IP impresora: </strong> {{$impresora->ipImpresora}}</h4><br>
 

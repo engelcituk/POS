@@ -122,18 +122,24 @@
                                     <a href="{{ route('restaurantes.index') }}">Puntos de venta</a>
                                 </li>
                                 <li>
+                                    <a href="{{ route('impresoras.index') }}">Impresoras</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('centrospreparacion.index') }}">Centros de preparación</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('turnos.index') }}">Turnos PV</a>
                                 </li>
+                                <li>
                                 <li>
                                     <a href="{{ route('zonas.index') }}">Zonas</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('mesas.index') }}">Mesas</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('impresoras.index') }}">Impresoras</a>
+                                <li>                               
+                                    <a href="{{ route('cartas.index') }}">Cartas</a>
                                 </li>
-
                                 @can('productos.index')
                                 <li>
                                     <a href="{{ route('productos.index') }}">Productos</a>
@@ -147,9 +153,6 @@
                                 </li>
                                 <li>
                                     <a href="{{ route('alergenos.index') }}">Alergénos</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('cartas.index') }}">Carta</a>
                                 </li>
 
                                 <!-- <li>

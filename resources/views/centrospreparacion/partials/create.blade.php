@@ -5,7 +5,7 @@
         <a href="{{ route('cartas.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
         <form method="POST" action="{{ route('cartas.store')}}">
             <div class="row">
-                <div class="col-md-12"> 
+                <div class="col-md-12">
                     <div class="card card-profile">
                         @csrf
                         <div class="row">

@@ -26,7 +26,7 @@ class TurnosController extends Controller
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    protected function obtenerTodosLosTurnos()
+    public function obtenerTodosLosTurnos()
     {
         //es una funcion que esta en el controller principal        
         $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetTurnos');
@@ -102,7 +102,7 @@ class TurnosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function obtenerUnTurno( $idTurno)
+    public function obtenerUnTurno($idTurno)
     {
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetTurno/{$idTurno}");
         $datos = json_decode($respuesta);

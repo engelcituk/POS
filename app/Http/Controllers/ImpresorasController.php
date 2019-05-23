@@ -21,7 +21,7 @@ class ImpresorasController extends Controller
     public $urlBase = "http://localhost/TPVApi/Impresoras/";
     public function index()
     {
-        return view('impresoras');
+        return view('impresoras'); 
     }
 
     public function AllImpresoras()
@@ -33,7 +33,7 @@ class ImpresorasController extends Controller
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    protected function obtenerTodasLasImpresoras()
+    public function obtenerTodasLasImpresoras()
     {
         //es una funcion que esta en el controller principal        
         $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetImpresoras');
@@ -46,39 +46,22 @@ class ImpresorasController extends Controller
     }
     protected function create() 
     {
-        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
-        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
-        // $idHotel = $hotel->id;  
-        return view('impresoras.partials.create', ['hoteles' => $hoteles, 'restaurantes' => $restaurantes]);      
+         
+        return view('impresoras.partials.create');      
     }
     public function show($id)
     {        
         $idImpresora = $id;
-        $impresora = $this->obtenerUnaImpresora($idImpresora);
+        $impresora = $this->obtenerUnaImpresora($idImpresora);        
 
-        $idPuntoVenta = $impresora->idPuntoVenta; //obtengo el idRestaurante de la impresora 
-        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
-        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
-
-        $idHotel = $datosRestaurantePV->idHotel;
-        $datosHotel = new HotelesController();
-        $hotelRestaurante = $datosHotel->obtenerUnHotel($idHotel);
-
-        return view('impresoras.partials.show', ['impresora' => $impresora, 'datosRestaurantePV' => $datosRestaurantePV, 'hotelRestaurante'=> $hotelRestaurante]);
+        return view('impresoras.partials.show', ['impresora' => $impresora]);
     }
     public function edit($id)
     {
         $idImpresora = $id;
         $impresora = $this->obtenerUnaImpresora($idImpresora);
 
-        $idPuntoVenta = $impresora->idPuntoVenta; //obtengo el idRestaurante de la impresora 
-        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
-        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
-
-        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
-        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
-
-        return view('impresoras.partials.edit', ['impresora' => $impresora, 'datosRestaurantePV'=>$datosRestaurantePV, 'hoteles' => $hoteles, 'restaurantes' => $restaurantes]); 
+        return view('impresoras.partials.edit', ['impresora' => $impresora]); 
         
     }
     public function store(Request $request)

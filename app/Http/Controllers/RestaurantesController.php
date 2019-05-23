@@ -41,7 +41,7 @@ class RestaurantesController extends Controller
         $datos = json_decode($respuesta);
         $restaurantes = $datos->objeto;
         return $restaurantes;
-    }
+    } 
     protected function create() 
     {
         /*Obtendo todos los hoteles que me trae mi controlador HOTELESCONTROLLER con su metodo OBTENERTODOSLOSHOTELES*/

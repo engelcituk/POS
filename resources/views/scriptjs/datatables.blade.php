@@ -1,5 +1,510 @@
 <script>
     $.fn.dataTableExt.sErrMode = 'throw'; /*para eliminar el warning de DataTables warning: table id=roles - Cannot reinitialise DataTable.*/
+    //tabla de Hoteles    
+    var tablaHoteles = $('#hoteles').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.hoteles') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'name', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
+                name: 'name'
+            },
+            {
+                data: 'empresa',
+                name: 'empresa'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+//tabla de rolesAPi  
+    var tablaApiRoles = $('#rolesapi').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.rolesapi') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'descripcion',
+                name: 'descripcion'
+            },
+            {
+                data: 'fechaAlta',
+                name: 'fechaAlta'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+//tabla de UsuariosAPi  
+    var tablaUsuariosApi= $('#users').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.users') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'usuario',
+                name: 'usuario'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'fechaAlta',
+                name: 'fechaAlta'
+            },
+            {
+                data: 'idRol',
+                name: 'idRol'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+ //tabla de Restaurantes o puntos de venta   
+    var tablaRestaurantes = $('#restaurantes').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.restaurantes') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'idHotel',
+                name: 'idHotel'
+            },
+            {
+                data: 'descripcion',
+                name: 'descripcion'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+
+    //tabla de Impresoras    
+    var tablaImpresoras = $('#impresoras').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.impresoras') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },            
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'ipImpresora',
+                name: 'ipImpresora'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+
+    //tabla de Centros de preparacion    
+    var tablaCentrosPreparacion = $('#centrosPreparacion').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.centrospreparacion') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },            
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'idImpresora',
+                name: 'idImpresora'
+            },
+            {
+                data: 'descripcion',
+                name: 'descripcion'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+     //tabla de Turnos    
+    var tablaTurnos = $('#turnos').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.turnos') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'idPuntoVenta',
+                name: 'idPuntoVenta'
+            },
+            {
+                data: 'horaInicio',
+                name: 'horaInicio'
+            },
+            {
+                data: 'turno',
+                name: 'turno'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    
+    //tabla de Zonas    
+    var tablaZonas = $('#zonas').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.zonas') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'idPuntoVenta', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
+                name: 'idPuntoVenta'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'descripcion',
+                name: 'descripcion'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    //tabla de Mesas     
+    var tablaMesas = $('#mesas').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.mesas') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'idZona',
+                name: 'idZona'
+            },
+            {
+                data: 'name',
+                name: 'name'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+//tabla de cartas  
+    var tablaCartas = $('#cartas').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('all.cartas') }}",
+        columns: [{
+                data: 'id',
+                name: 'id'
+            },
+            {
+                data: 'name',
+                name: 'name'
+            },            
+            {
+                data: 'idTurno',
+                name: 'idTurno'
+            },
+            {
+                data: 'fechaAlta',
+                name: 'fechaAlta'
+            },
+            {
+                data: 'horaAlta',
+                name: 'horaAlta'
+            },
+            {
+                data: 'status',
+                name: 'status'
+            },
+            {
+                data: 'acciones',
+                name: 'acciones',
+                orderable: false,
+                searchable: false
+            }
+        ],
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [15, 25, 50, -1],
+            [15, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            processing: "Procesando",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    
+
     //tabla de usuarios
     var tablaUsuarios = $('#usuarios').DataTable({
         processing: true,
@@ -90,302 +595,7 @@
             }
         }
     });
-    //tabla de Hoteles    
-    var tablaHoteles = $('#hoteles').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.hoteles') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'name', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
-                name: 'name'
-            },
-            {
-                data: 'empresa',
-                name: 'empresa'
-            },
-            {
-                data: 'acciones',
-                name: 'acciones',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            processing: "Procesando",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
-
-    //tabla de Restaurantes    
-    var tablaRestaurantes = $('#restaurantes').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.restaurantes') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'idHotel',
-                name: 'idHotel'
-            },
-            {
-                data: 'descripcion',
-                name: 'descripcion'
-            },
-            {
-                data: 'acciones',
-                name: 'acciones',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            processing: "Procesando",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
-    //tabla de Restaurantes    
-    var tablaTurnos = $('#turnos').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.turnos') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'idPuntoVenta',
-                name: 'idPuntoVenta'
-            },
-            {
-                data: 'horaInicio',
-                name: 'horaInicio'
-            },
-            {
-                data: 'turno',
-                name: 'turno'
-            },
-            {
-                data: 'acciones',
-                name: 'acciones',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            processing: "Procesando",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
-    //tabla de Restaurantes    
-    var tablaZonas = $('#zonas').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.zonas') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'idPuntoVenta', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
-                name: 'idPuntoVenta'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'descripcion',
-                name: 'descripcion'
-            },
-            {
-                data: 'acciones',
-                name: 'acciones',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            processing: "Procesando",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
-
-    //tabla de Mesas     
-    var tablaMesas = $('#mesas').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.mesas') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'idZona',
-                name: 'idZona'
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'acciones',
-                name: 'acciones',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            processing: "Procesando",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
-
-    //tabla de Impresoras    
-    var tablaImpresoras = $('#impresoras').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.impresoras') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'idPuntoVenta',
-                name: 'idPuntoVenta'
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'ipImpresora',
-                name: 'ipImpresora'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'acciones',
-                name: 'acciones',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            processing: "Procesando",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
-
+    
     //tabla de MetodosPAgo    
     var tablaMetodosPago = $('#metodosPago').DataTable({
         processing: true,
@@ -490,111 +700,8 @@
             }
         }
     });
-    //tabla de rolesAPi  
-    var tablaApiRoles = $('#rolesapi').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.rolesapi') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'descripcion',
-                name: 'descripcion'
-            },
-            {
-                data: 'fechaAlta',
-                name: 'fechaAlta'
-            },
-            {
-                data: 'acciones',
-                name: 'acciones',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            processing: "Procesando",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
-
-    //tabla de UsuariosAPi  
-    var tablaApiRoles = $('#users').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.users') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'usuario',
-                name: 'usuario'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'fechaAlta',
-                name: 'fechaAlta'
-            },
-            {
-                data: 'idRol',
-                name: 'idRol'
-            },
-            {
-                data: 'acciones',
-                name: 'acciones',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            processing: "Procesando",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
+    
+    
 
     //tabla de Modos  
     var tablaModos = $('#modos').DataTable({
@@ -693,64 +800,5 @@
         }
     });
 
-    //tabla de cartas  
-    var tablaAlergenos = $('#cartas').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: "{{ route('all.cartas') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
-            {
-                data: 'idPuntoVenta',
-                name: 'idPuntoVenta'
-            },
-            {
-                data: 'idTurno',
-                name: 'idTurno'
-            },
-            {
-                data: 'fechaAlta',
-                name: 'fechaAlta'
-            },
-            {
-                data: 'horaAlta',
-                name: 'horaAlta'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
-            {
-                data: 'acciones',
-                name: 'acciones',
-                orderable: false,
-                searchable: false
-            }
-        ],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            processing: "Procesando",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
-    });
+    
 </script>

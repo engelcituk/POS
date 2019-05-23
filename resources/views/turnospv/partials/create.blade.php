@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <!-- <small>En la api se registar el <cite title="idHotel">idHotel</cite></small> -->
-                                <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
+                                <button type="submit" class="btn btn-primary pull-right"><i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>
                     </div>

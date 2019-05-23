@@ -111,6 +111,16 @@ Route::middleware(['auth'])->group(function(){
     Route::put('impresoras/actualizar', 'ImpresorasController@actualizar')->name('impresoras.actualizar');
     Route::delete('impresoras/{impresora}', 'ImpresorasController@destroy')->name('impresoras.destroy');
 
+    //rutas de menu configuracion-->centros de preparacion
+    Route::get('all/centrospreparacion', 'CentrosPreparacionController@AllCentrosPreparacion')->name('all.centrospreparacion');
+    Route::get('/centrospreparacion', 'CentrosPreparacionController@index')->name('centrospreparacion.index');
+    Route::get('centrospreparacion/create', 'CentrosPreparacionController@create')->name('centrospreparacion.create');
+    Route::post('centrospreparacion/store', 'CentrosPreparacionController@store')->name('centrospreparacion.store');
+    Route::get('centrospreparacion/{cpreparacion}', 'CentrosPreparacionController@show')->name('centrospreparacion.show');
+    Route::get('centrospreparacion/{cpreparacion}/edit', 'CentrosPreparacionController@edit')->name('centrospreparacion.edit');
+    Route::put('centrospreparacion/actualizar', 'CentrosPreparacionController@actualizar')->name('centrospreparacion.actualizar');
+    Route::delete('centrospreparacion/{cpreparacion}', 'CentrosPreparacionController@destroy')->name('centrospreparacion.destroy');
+
     //rutas de menu configuracion-->metodos de pago 
     Route::get('all/metodospago', 'MetodosPagoController@AllMetodosPago')->name('all.metodospago');
     Route::get('/metodospago', 'MetodosPagoController@index')->name('metodospago.index');    
@@ -144,6 +154,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('cartas/store', 'CartaController@store')->name('cartas.store');
     Route::get('cartas/{carta}', 'CartaController@show')->name('cartas.show');
     Route::get('cartas/{carta}/edit', 'CartaController@edit')->name('cartas.edit');
+    Route::put('cartas/actualizar', 'CartaController@actualizar')->name('cartas.actualizar');
+    Route::delete('cartas/{carta}', 'CartaController@destroy')->name('cartas.destroy');
     
 
     //roles

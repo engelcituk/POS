@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
+use Carbon\Carbon;
 
 class CartaController extends Controller
 {
@@ -13,6 +14,7 @@ class CartaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $urlBase = "http://localhost/TPVApi/Cartas/";
     public function index()
     {
         return view('cartas');
@@ -28,12 +30,12 @@ class CartaController extends Controller
     }
     protected function obtenerTodosLasCartas()
     {
-        //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/x69w2');
+        //es una funcion que esta en el controller principal        
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase . 'GetCartas');
 
         $datos = json_decode($respuesta);
 
-        $cartas = $datos->cartas;
+        $cartas = $datos->objeto;
 
         return $cartas;
     }
@@ -42,23 +44,20 @@ class CartaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() 
     {
-        return view('cartas.partials.create');
+        $fechaAlta= Carbon::now();//ocupo carbon para obtener fecha actual
+        $horaAlta = $fechaAlta->toTimeString(); //obtengo la hora de la fecha
+
+        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+        $turnos = \App::call( 'App\Http\Controllers\TurnosController@obtenerTodosLosTurnos');
+
+
+        return view('cartas.partials.create',compact('fechaAlta', 'horaAlta','restaurantes','turnos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
+    
+       /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -66,9 +65,22 @@ class CartaController extends Controller
      */
     public function show($id)
     {
-        $carta = $id;
+        $idCarta = $id;
+        $carta = $this->obtenerUnaCarta($idCarta);
 
-        return view('cartas.partials.show', ['carta' => $carta]);
+        $idTurno = $carta->idTurno;
+        $datosTurno = new TurnosController();
+        $datosTurnoPV = $datosTurno->obtenerUnTurno($idTurno);
+
+        $idPuntoVenta = $datosTurnoPV->idPuntoVenta; //obtengo el idRestaurante del turno
+        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
+        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
+
+        $idHotel = $datosRestaurantePV->idHotel;
+        $datosHotel = new HotelesController();
+        $hotelRestaurante = $datosHotel->obtenerUnHotel($idHotel);
+        
+        return view('cartas.partials.show', ['carta' => $carta, 'datosTurnoPV'=> $datosTurnoPV, 'datosRestaurantePV'=>$datosRestaurantePV, 'hotelRestaurante'=> $hotelRestaurante]);
     }
 
     /**
@@ -77,11 +89,19 @@ class CartaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $carta = $id;
+    public function edit($id){
+        $idCarta = $id;
+        $carta = $this->obtenerUnaCarta($idCarta);
 
-        return view('cartas.partials.edit', ['carta' => $carta]);
+        $idTurno = $carta->idTurno;
+        $datosTurno = new TurnosController();
+        $datosTurnoPV = $datosTurno->obtenerUnTurno($idTurno);
+
+        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+        $turnos = \App::call('App\Http\Controllers\TurnosController@obtenerTodosLosTurnos');
+
+
+        return view('cartas.partials.edit', compact('carta', 'datosTurnoPV', 'restaurantes', 'turnos'));       
     }
 
     /**
@@ -91,11 +111,33 @@ class CartaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function obtenerUnaCarta($idCarta)
     {
-        //
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetCarta/{$idCarta}");
+        $datos = json_decode($respuesta);
+        $carta = $datos->objeto;
+        return $carta;
     }
+    public function actualizar(Request $request)
+    {
+        $idCarta = $request->get('id');
 
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateCarta/{$idCarta}", ['form_params' => $request->except('id')]);
+
+        return redirect('/cartas');
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddCarta', ['form_params' => $request->all()]);
+
+        return redirect('/cartas');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -104,6 +146,9 @@ class CartaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $idCarta = $id;
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase . "DeleteCarta/{$idCarta}");
+
+        return redirect('/cartas');
     }
 }

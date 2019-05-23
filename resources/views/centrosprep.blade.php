@@ -3,9 +3,7 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-
-        <a href="{{ route('cartas.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nueva carta</a>
-
+        <a href="{{ route('centrospreparacion.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nuevo Centro Prep</a>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -13,20 +11,18 @@
                         <i class="material-icons">assignment</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">Lista de cartas</h4>
+                        <h4 class="card-title">Lista de centros de preparación</h4>
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
-                            <table id="cartas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="centrosPreparacion" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>name</th>
-                                        <!-- <th>idPuntoVenta</th> -->
-                                        <th>idTurno</th>
-                                        <th>fechaAlta</th>
-                                        <th>horaAlta</th>
+                                        <th>name</th>                                        
+                                        <th>idImpresora</th>
+                                        <th>descripción</th>                                        
                                         <th>estado</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
@@ -34,11 +30,9 @@
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
-                                        <th>name</th>
-                                        <!-- <th>idPuntoVenta</th> -->
-                                        <th>idTurno</th>
-                                        <th>fechaAlta</th>
-                                        <th>horaAlta</th>
+                                        <th>name</th>                                        
+                                        <th>idImpresora</th>
+                                        <th>descripción</th>                                        
                                         <th>estado</th>
                                         <th class="text-right">Acciones</th>
                                     </tr>

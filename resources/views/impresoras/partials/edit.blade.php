@@ -22,33 +22,7 @@
                                             <input id="name" type="text" class="form-control" value="{{$impresora->name}}" name="name" required autofocus>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-utensils"></i>
-                                        </span>
-                                        <div class="form-group">
-                                            <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" name="idPuntoVenta" required>
-                                                <option value="{{$datosRestaurantePV->id}}">{{$datosRestaurantePV->name}}</option>
-                                                @foreach($hoteles as $hotel)
-                                                <optgroup label="{{$hotel->name}}">
-                                                    @foreach($restaurantes as $restaurante)
-                                                    @php
-                                                    $collection = collect(['idHotel' => $restaurante->idHotel, 'idHotel' => $hotel->id]);
-                                                    $respuesta = $collection->contains($restaurante->idHotel);
-                                                    @endphp
-                                                    @if($respuesta==1)
-                                                    <option value="{{$restaurante->id}}">{{$restaurante->name}}</option>
-                                                    @endif
-                                                    @endforeach
-                                                </optgroup>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>                                
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
