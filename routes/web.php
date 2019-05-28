@@ -54,7 +54,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('users/{user}/edit', 'ApiUsuarioController@edit')->name('users.edit');
 
     //rutas de menu configuracion-->apiRoles
-    Route::get('all/rolesapi', 'ApiRolController@AllApiRoll')->name('all.rolesapi');
+    Route::get('all/rolesapi', 'ApiRolController@AllApiRol')->name('all.rolesapi');
     Route::get('/rolesapi', 'ApiRolController@index')->name('rolesapi.index');
     Route::get('rolesapi/create', 'ApiRolController@create')->name('rolesapi.create');
     Route::post('rolesapi/store', 'ApiRolController@store')->name('rolesapi.store');
@@ -62,6 +62,17 @@ Route::middleware(['auth'])->group(function(){
     Route::get('rolesapi/{rolapi}/edit', 'ApiRolController@edit')->name('rolesapi.edit');
     Route::put('rolesapi/actualizar', 'ApiRolController@actualizar')->name('rolesapi.actualizar');
     Route::delete('rolesapi/{rolapi}', 'ApiRolController@destroy')->name('rolesapi.destroy');
+
+    //rutas de menu configuracion-->PermisosRolesApi
+    Route::get('all/permisos', 'PermisosController@AllPermisos')->name('all.permisos');
+    Route::get('/permisos', 'PermisosController@index')->name('permisos.index');
+    Route::get('permisos/create', 'PermisosController@create')->name('permisos.create');
+    Route::post('permisos/store', 'PermisosController@store')->name('permisos.store');
+    Route::get('permisos/{permiso}', 'PermisosController@show')->name('permisos.show');
+    Route::get('permisos/{permiso}/edit', 'PermisosController@edit')->name('permisos.edit');
+    Route::put('permisos/actualizar', 'PermisosController@actualizar')->name('permisos.actualizar');
+    Route::delete('permisos/{permiso}', 'PermisosController@destroy')->name('permisos.destroy');
+
 
     //rutas de menu configuracion-->restaurantes 
     Route::get('all/restaurantes', 'RestaurantesController@AllRestaurantes')->name('all.restaurantes');

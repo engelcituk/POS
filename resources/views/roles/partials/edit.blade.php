@@ -56,8 +56,7 @@
                             <h4 class="card-title">Asignar roles al permiso </h4><br><br>
                             <div class="row">
                                 @foreach($permisos as $permiso)
-                                @php
-                                
+                                @php                                
                                 $resultado= contains($permiso->slug);
                                 $checked = ($resultado == 1) ? "checked" : "";
                                 @endphp

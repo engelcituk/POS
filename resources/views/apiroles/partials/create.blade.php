@@ -10,7 +10,6 @@
                         @csrf
                         <div class="row">
                             <div class="card-content">
-
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -18,7 +17,7 @@
                                         </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Nombre Rol</label>
-                                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required autofocus>
+                                            <input id="nameRol" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required autofocus>
                                             @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
@@ -34,7 +33,7 @@
                                         </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Descripción</label>
-                                            <input id="descripcion" type="text" class="form-control{{ $errors->has('descripcion') ? ' is-invalid' : '' }}" name="descripcion" required>                                            
+                                            <input id="descripcionRol" type="text" class="form-control{{ $errors->has('descripcion') ? ' is-invalid' : '' }}" name="descripcion" required>                                            
                                             @if ($errors->has('descripcion'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('descripcion') }}</strong>
@@ -42,9 +41,19 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
+                                </div> 
+                                <h4>Asignar permisos de acceso para el rol:</h4>
+                                @foreach($listaPermisos as $permiso)
+                                    <div class="col-md-4">
+                                        <div class="checkbox checkbox-group required"> 
+                                            <label>
+                                                <input type="checkbox" name="idPermiso[]" value="{{$permiso->id}}"><strong>{{$permiso->name}}</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach                                
                                 {{-- <small>En la api se requiere registar el <cite title="idUsuarioAlta y la fechaalta">idUsuarioAlta y la fechaalta</cite></small> --}}
-                                <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
+                                <button type="submit" class="btn btn-primary pull-right saveRolPermisos">{{ __('Guardar') }}</button>
 
                             </div>
 
