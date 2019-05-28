@@ -34,7 +34,7 @@
                                         </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Descripción</label>
-                                            <input id="descripcion" type="text" class="form-control{{ $errors->has('descripcion') ? ' is-invalid' : '' }}" name="descripcion" required>
+                                            <input id="descripcion" type="text" class="form-control{{ $errors->has('descripcion') ? ' is-invalid' : '' }}" name="descripcion" required>                                            
                                             @if ($errors->has('descripcion'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('descripcion') }}</strong>
@@ -43,7 +43,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <small>En la api se requiere registar el <cite title="idUsuarioAlta y la fechaalta">idUsuarioAlta y la fechaalta</cite></small>
+                                {{-- <small>En la api se requiere registar el <cite title="idUsuarioAlta y la fechaalta">idUsuarioAlta y la fechaalta</cite></small> --}}
                                 <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
 
                             </div>

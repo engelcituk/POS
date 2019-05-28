@@ -755,7 +755,7 @@
             }
         }
     });
-    //tabla de Alergennos  
+    //tabla de Alergenos  
     var tablaAlergenos = $('#alergenos').DataTable({
         processing: true,
         serverSide: true,
@@ -767,11 +767,7 @@
             {
                 data: 'name',
                 name: 'name'
-            },
-            {
-                data: 'icono',
-                name: 'icono'
-            },
+            },            
             {
                 data: 'acciones',
                 name: 'acciones',

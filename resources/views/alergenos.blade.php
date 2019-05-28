@@ -22,16 +22,14 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>name</th>
-                                        <th>icono</th>
+                                        <th>name</th>                                        
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>Id</th>
-                                        <th>name</th>
-                                        <th>icono</th>
+                                        <th>name</th>                                        
                                         <th class="text-right">Acciones</th>
                                     </tr>
                                 </tfoot>

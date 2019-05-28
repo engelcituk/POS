@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
+use Carbon\Carbon;
 
 
 class ApiRolController extends Controller
@@ -14,6 +15,8 @@ class ApiRolController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $urlBase = "http://localhost/TPVApi/Roles/";
+    
     public function index()
     {
         return view('apiroles');
@@ -30,12 +33,11 @@ class ApiRolController extends Controller
     }
     protected function obtenerTodosLosRoles()
     {
-        //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'http://api.myjson.com/bins/11d5wk');
-
+        //es una funcion que esta en el controller principal        
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase . 'GetRoles');
         $datos = json_decode($respuesta);
 
-        $roles = $datos->roles;
+        $roles = $datos->objeto;
 
         return $roles;
     }
@@ -46,18 +48,9 @@ class ApiRolController extends Controller
      */
     public function create()
     {
+        //$fechaAlta = Carbon::now(); //ocupo carbon para obtener fecha actual
+        
         return view('apiroles.partials.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -66,11 +59,12 @@ class ApiRolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $apiRol = $id;
+    public function show($id){
 
-        return view( 'apiroles.partials.show', ['apiRol' => $apiRol]);
+        $idRol= $id;
+        $rol = $this->obtenerUnRol($idRol);
+        
+        return view( 'apiroles.partials.show', ['rol' => $rol]);
     }
 
     /**
@@ -81,10 +75,31 @@ class ApiRolController extends Controller
      */
     public function edit($id)
     {
-       $apiRol = $id;
-       return view('apiroles.partials.edit', ['apiRol' => $apiRol]);        
-    }
+        $idRol = $id;
+        $rol = $this->obtenerUnRol($idRol);
 
+       return view('apiroles.partials.edit', ['rol' => $rol]);        
+    }
+     
+    public function obtenerUnRol($idRol)
+    {
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetRol/{$idRol}");
+        $datos = json_decode($respuesta);
+        $rol = $datos->objeto;
+        return $rol;
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddRol', ['form_params' => $request->all()]);
+
+        return redirect('/rolesapi');
+    }
     /**
      * Update the specified resource in storage.
      *
@@ -92,9 +107,13 @@ class ApiRolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function actualizar(Request $request)
     {
-        //
+        $idRol = $request->get('id');
+
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase . "UpdateRol/{$idRol}", ['form_params' => $request->except('id')]);
+
+        return redirect('/rolesapi');
     }
 
     /**
@@ -105,6 +124,8 @@ class ApiRolController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $idRol = $id;
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteRol/{$idRol}");
+        return redirect('/rolesapi');
     }
 }

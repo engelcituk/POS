@@ -57,9 +57,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('all/rolesapi', 'ApiRolController@AllApiRoll')->name('all.rolesapi');
     Route::get('/rolesapi', 'ApiRolController@index')->name('rolesapi.index');
     Route::get('rolesapi/create', 'ApiRolController@create')->name('rolesapi.create');
-    Route::get('rolesapi/store', 'ApiRolController@store')->name('rolesapi.store');
+    Route::post('rolesapi/store', 'ApiRolController@store')->name('rolesapi.store');
     Route::get('rolesapi/{rolapi}', 'ApiRolController@show')->name('rolesapi.show');
     Route::get('rolesapi/{rolapi}/edit', 'ApiRolController@edit')->name('rolesapi.edit');
+    Route::put('rolesapi/actualizar', 'ApiRolController@actualizar')->name('rolesapi.actualizar');
+    Route::delete('rolesapi/{rolapi}', 'ApiRolController@destroy')->name('rolesapi.destroy');
 
     //rutas de menu configuracion-->restaurantes 
     Route::get('all/restaurantes', 'RestaurantesController@AllRestaurantes')->name('all.restaurantes');
@@ -146,6 +148,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('alergenos/store', 'AlergenoController@store')->name('alergenos.store');
     Route::get('alergenos/{alergeno}', 'AlergenoController@show')->name('alergenos.show');
     Route::get('alergenos/{alergeno}/edit', 'AlergenoController@edit')->name('alergenos.edit');
+    Route::put('alergenos/actualizar', 'AlergenoController@actualizar')->name('alergenos.actualizar');
+    Route::delete('alergenos/{alergeno}', 'AlergenoController@destroy')->name('alergenos.destroy');
 
     //rutas de menu configuracion-->carta
     Route::get('all/cartas', 'CartaController@AllCartas')->name('all.cartas');

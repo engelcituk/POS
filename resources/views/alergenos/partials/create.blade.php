@@ -3,7 +3,7 @@
 <div class="content">
     <div class="container-fluid">
         <a href="{{ route('alergenos.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <form method="POST" action="{{ route('productos.store')}}">
+        <form method="POST" action="{{ route('alergenos.store')}}" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-profile">
@@ -32,15 +32,14 @@
                                             <i class="fas fa-file-image"></i>
                                         </span>
                                         <div class="form-group">
-                                            <!-- <label for="sel1">Select list:</label> -->
+                                             {{-- <label for="sel1">Subir icono:</label> --}}
                                             <div class="fileinput fileinput-new text-center" data-provides="fileinput">
-
                                                 <div class="fileinput-preview fileinput-exists thumbnail"></div>
                                                 <div>
                                                     <span class="btn btn-rose btn-round btn-file">
                                                         <span class="fileinput-new"> <i class="fas fa-file-image"></i> Subir icono</span>
                                                         <span class="fileinput-exists">Change</span>
-                                                        <input type="file" name="..." />
+                                                        <input type="file" name="icono"/>
                                                     </span>
                                                     <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                                                 </div>
@@ -48,8 +47,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <small>En la api se registra el <cite title="idPuntoVenta">fechaAlta/horaAlta/idReceta/status </cite></small>
+                                {{-- <small>En la api se registra el <cite title="idPuntoVenta">fechaAlta/horaAlta/idReceta/status </cite></small> --}}
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>

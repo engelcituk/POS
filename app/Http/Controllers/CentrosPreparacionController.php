@@ -22,7 +22,7 @@ class CentrosPreparacionController extends Controller
     {
         $impresoras = $this-> obtenerTodosLosCentrosDePreparacion();
 
-        $acciones = 'impresoras.datatables.botones'; /*creo los botones de acciones en una vista*/
+        $acciones = 'centrospreparacion.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($impresoras)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
@@ -47,7 +47,9 @@ class CentrosPreparacionController extends Controller
      */
     public function create()
     {
-        //
+              
+        $impresoras = \App::call( 'App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');  
+        return view('centrospreparacion.partials.create', compact('impresoras'));   
     }
 
     /**
@@ -56,9 +58,18 @@ class CentrosPreparacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request){
+        
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddCentroPreparacion', [
+            'form_params' => [
+                'name' => $request->get('name'),
+                'idImpresora' => $request->get('idImpresora'),
+                'descripcion' => $request->get('descripcion'),
+                'status' => $request->get('status')
+                ]
+            ]);
+
+        return redirect( '/centrospreparacion');
     }
 
     /**
@@ -69,7 +80,16 @@ class CentrosPreparacionController extends Controller
      */
     public function show($id)
     {
-        //
+        $idCentroPreparacion = $id;
+        $centroPreparacion = $this->obtenerUnCentroDePreparación($idCentroPreparacion);
+
+        $idImpresora= $centroPreparacion->idImpresora;
+        $datosImpresora= new ImpresorasController(); //para obtener los datos de la zona
+        $datosImpresoraCP= $datosImpresora->obtenerUnaImpresora($idImpresora); //los datos de la zona lo envio a la vista
+
+        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
+
+        return view('centrospreparacion.partials.show', compact('impresoras', 'centroPreparacion', 'datosImpresoraCP')); 
     }
 
     /**
@@ -80,19 +100,39 @@ class CentrosPreparacionController extends Controller
      */
     public function edit($id)
     {
-        //
-    }
+        $idCentroPreparacion = $id;
+        $centroPreparacion = $this->obtenerUnCentroDePreparación($idCentroPreparacion);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+        $idImpresora = $centroPreparacion->idImpresora;
+        $datosImpresora = new ImpresorasController(); //para obtener los datos de la zona
+        $datosImpresoraCP = $datosImpresora->obtenerUnaImpresora($idImpresora); //los datos de la zona lo envio a la vista
+
+        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
+
+        return view('centrospreparacion.partials.edit', compact('impresoras', 'centroPreparacion', 'datosImpresoraCP')); 
+    }
+    public function obtenerUnCentroDePreparación($idCentroPreparacion)
     {
-        //
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetCentroPreparacion/{$idCentroPreparacion}");
+        $datos = json_decode($respuesta);
+        $centroPreparacion = $datos->objeto;
+        return $centroPreparacion;
+    }
+    
+    public function actualizar(Request $request)
+    {
+        $idCentroPreparacion = $request->get('id');
+        
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateCentroPreparacion/{$idCentroPreparacion}", [
+            'form_params' =>[
+                'name' => $request->get('name'),
+                'idImpresora' => $request->get('idImpresora'),
+                'descripcion' => $request->get('descripcion'),
+                'status' => $request->get('status')
+            ]            
+        ]);
+
+        return redirect('/centrospreparacion');
     }
 
     /**
@@ -101,8 +141,11 @@ class CentrosPreparacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function destroy($id)
     {
-        //
+        $idCentroPreparacion = $id;
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteCentroPreparacion/{$idCentroPreparacion}");
+        return redirect( '/centrospreparacion');
     }
 }

@@ -7,4 +7,4 @@
 $cadenaObtenerNumero="{{ route('alergenos.destroy', ['alergeno' => $id])}}";
 $idAlergeno = intval(preg_replace('/[^0-9]+/', '', $cadenaObtenerNumero), 10);
 @endphp
-<a onclick="deleteProducto({{$idAlergeno}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>
+<a onclick="deleteAlergeno({{$idAlergeno}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>

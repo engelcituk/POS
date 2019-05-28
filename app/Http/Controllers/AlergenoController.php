@@ -8,11 +8,13 @@ use Yajra\DataTables\DataTables;
 
 class AlergenoController extends Controller
 {
+   
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public $urlBase = "http://localhost/TPVApi/Alergenos/";
     public function index()
     {
         return view('alergenos');
@@ -30,12 +32,12 @@ class AlergenoController extends Controller
     }
     protected function obtenerTodosLosAlergenos()
     {
-        //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/hgfiq');
+        //es una funcion que esta en el controller principal    
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetAlergenos');
 
         $datos = json_decode($respuesta);
 
-        $alergenos = $datos->alergenos;
+        $alergenos = $datos->objeto;
 
         return $alergenos;
     }
@@ -49,18 +51,6 @@ class AlergenoController extends Controller
     {
         return view('alergenos.partials.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      *
@@ -69,8 +59,9 @@ class AlergenoController extends Controller
      */
     public function show($id)
     {
-        $alergeno = $id;
-
+        $idAlergeno = $id;
+        $alergeno = $this->obtenerUnAlergeno($idAlergeno);
+             
         return view('alergenos.partials.show', ['alergeno' => $alergeno]);
     }
 
@@ -80,9 +71,12 @@ class AlergenoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $alergeno = $id;
+    public function edit($id){
+
+        $idAlergeno = $id;
+        $alergeno = $this->obtenerUnAlergeno($idAlergeno);
+
+        
         return view('alergenos.partials.edit', ['alergeno' => $alergeno]);
     }
 
@@ -93,11 +87,35 @@ class AlergenoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function actualizar(Request $request)
     {
         //
     }
-
+    public function obtenerUnAlergeno($idAlergeno)
+    {
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetAlergeno/{$idAlergeno}");
+        $datos = json_decode($respuesta);
+        $alergeno = $datos->objeto;
+        return $alergeno;
+    }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        
+        $icono = base64_encode(file_get_contents($request->file('icono')->path()));        
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddAlergeno', [
+            'form_params' => [
+                'name' => $request->get('name'),
+                'icono' => $icono
+            ] 
+        ]);        
+        return redirect('/alergenos');
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -106,6 +124,8 @@ class AlergenoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $idAlergeno = $id;
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteAlergeno/{$idAlergeno}");
+        return redirect('/centrospreparacion');
     }
 }

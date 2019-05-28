@@ -39,11 +39,11 @@
             });
         });
     }
-    //funcion con sweetalert para borrar usuarios
-    function deleteData(id) {
+    //funcion con sweetalert para borrar roles
+    function deleteRol(id) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         swal({
-            title: '¿Seguro de borrar este usuario?',
+            title: '¿Seguro de borrar este rol?',
             text: "¡No podrás revertir esto!",
             type: 'warning',
             showCancelButton: true,
@@ -53,54 +53,14 @@
             cancelButtonText: '¡No, desistir!'
         }).then(function() {
             $.ajax({
-                url: "{{ url('usuarios') }}" + '/' + id,
+                url: "{{ url('rolesapi') }}" + '/' + id,
                 type: "POST",
                 data: {
                     '_method': 'DELETE',
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    tablaUsuarios.ajax.reload();
-                    swal({
-                        title: '¡Exito!',
-                        text: '¡Su dato ha sido borrado!',
-                        type: 'success',
-                        timer: '1500'
-                    })
-                },
-                error: function() {
-                    swal({
-                        title: 'Oops...',
-                        text: '¡Algo salió mal!',
-                        type: 'error',
-                        timer: '1500'
-                    })
-                }
-            });
-        });
-    }
-    //funcion con sweetalert para metodos de pago
-    function deleteMetodoPago(id) {
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');
-        swal({
-            title: '¿Borrar este metodo de pago?',
-            text: "¡No podrás revertir esto!",
-            type: 'warning',
-            showCancelButton: true,
-            cancelButtonColor: '#d33',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: '¡Sí, borrarlo!',
-            cancelButtonText: '¡No, desistir!'
-        }).then(function() {
-            $.ajax({
-                url: "{{ url('metodospago') }}" + '/' + id,
-                type: "POST",
-                data: {
-                    '_method': 'DELETE',
-                    '_token': csrf_token
-                },
-                success: function(data) {
-                    tablaMetodosPago.ajax.reload();
+                    tablaApiRoles.ajax.reload();
                     swal({
                         title: '¡Exito!',
                         text: '¡Su dato ha sido borrado!',
@@ -159,6 +119,86 @@
             });
         });
     }
+     //funcion con sweetalert para borrar una impresora
+    function deleteImpresora(id) {
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: '¿Seguro de borrar esta impresora?',
+            text: "¡No podrás revertir esto!",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '¡Sí, borrarlo!',
+            cancelButtonText: '¡No, desistir!'
+        }).then(function() {
+            $.ajax({
+                url: "{{ url('impresoras') }}" + '/' + id,
+                type: "POST",
+                data: {
+                    '_method': 'DELETE',
+                    '_token': csrf_token
+                },
+                success: function(data) {
+                    tablaImpresoras.ajax.reload();
+                    swal({
+                        title: '¡Exito!',
+                        text: '¡Su dato ha sido borrado!',
+                        type: 'success',
+                        timer: '1500'
+                    })
+                },
+                error: function() {
+                    swal({
+                        title: 'Oops...',
+                        text: '¡Algo salió mal!',
+                        type: 'error',
+                        timer: '1500'
+                    })
+                }
+            });
+        });
+    }
+    //funcion con sweetalert para un restaurante
+    function deleteCentroPreparacion(id) {
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: '¿Seguro de borrar este centro de preparación?',
+            text: "¡No podrás revertir esto!",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '¡Sí, borrarlo!',
+            cancelButtonText: '¡No, desistir!'
+        }).then(function() {
+            $.ajax({
+                url: "{{ url('centrospreparacion') }}" + '/' + id,
+                type: "POST",
+                data: {
+                    '_method': 'DELETE',
+                    '_token': csrf_token
+                },
+                success: function(data) {
+                    tablaCentrosPreparacion.ajax.reload();
+                    swal({
+                        title: '¡Exito!',
+                        text: '¡Su dato ha sido borrado!',
+                        type: 'success',
+                        timer: '1500'
+                    })
+                },
+                error: function() {
+                    swal({
+                        title: 'Oops...',
+                        text: '¡Algo salió mal!',
+                        type: 'error',
+                        timer: '1500'
+                    })
+                }
+            });
+        });
+    }
     //funcion con sweetalert para borrar un turno
     function deleteTurno(id) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -199,47 +239,7 @@
             });
         });
     }
-     //funcion con sweetalert para borrar un turno
-    function deleteCarta(id) {
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');
-        swal({
-            title: '¿Seguro de borrar esta carta?',
-            text: "¡No podrás revertir esto!",
-            type: 'warning',
-            showCancelButton: true,
-            cancelButtonColor: '#d33',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: '¡Sí, borrarlo!',
-            cancelButtonText: '¡No, desistir!'
-        }).then(function() {
-            $.ajax({
-                url: "{{ url('cartas') }}" + '/' + id,
-                type: "POST",
-                data: {
-                    '_method': 'DELETE',
-                    '_token': csrf_token
-                },
-                success: function(data) {
-                    tablaCartas.ajax.reload();
-                    swal({
-                        title: '¡Exito!',
-                        text: '¡Su dato ha sido borrado!',
-                        type: 'success',
-                        timer: '1500'
-                    })
-                },
-                error: function() {
-                    swal({
-                        title: 'Oops...',
-                        text: '¡Algo salió mal!',
-                        type: 'error',
-                        timer: '1500'
-                    })
-                }
-            });
-        });
-    }
-    //funcion con sweetalert para borrar una zona
+     //funcion con sweetalert para borrar una zona
     function deleteZona(id) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         swal({
@@ -279,7 +279,7 @@
             });
         });
     }
-    //funcion con sweetalert para borrar una mesa
+     //funcion con sweetalert para borrar una mesa
     function deleteMesa(id) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         swal({
@@ -319,12 +319,11 @@
             });
         });
     }
-
-    //funcion con sweetalert para borrar una impresora
-    function deleteImpresora(id) {
+     //funcion con sweetalert para borrar una carta
+    function deleteCarta(id) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         swal({
-            title: '¿Seguro de borrar esta impresora?',
+            title: '¿Seguro de borrar esta carta?',
             text: "¡No podrás revertir esto!",
             type: 'warning',
             showCancelButton: true,
@@ -334,14 +333,94 @@
             cancelButtonText: '¡No, desistir!'
         }).then(function() {
             $.ajax({
-                url: "{{ url('impresoras') }}" + '/' + id,
+                url: "{{ url('cartas') }}" + '/' + id,
                 type: "POST",
                 data: {
                     '_method': 'DELETE',
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    tablaImpresoras.ajax.reload();
+                    tablaCartas.ajax.reload();
+                    swal({
+                        title: '¡Exito!',
+                        text: '¡Su dato ha sido borrado!',
+                        type: 'success',
+                        timer: '1500'
+                    })
+                },
+                error: function() {
+                    swal({
+                        title: 'Oops...',
+                        text: '¡Algo salió mal!',
+                        type: 'error',
+                        timer: '1500'
+                    })
+                }
+            });
+        });
+    }   
+    //funcion con sweetalert para metodos de pago
+    function deleteMetodoPago(id) {
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: '¿Borrar este metodo de pago?',
+            text: "¡No podrás revertir esto!",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '¡Sí, borrarlo!',
+            cancelButtonText: '¡No, desistir!'
+        }).then(function() {
+            $.ajax({
+                url: "{{ url('metodospago') }}" + '/' + id,
+                type: "POST",
+                data: {
+                    '_method': 'DELETE',
+                    '_token': csrf_token
+                },
+                success: function(data) {
+                    tablaMetodosPago.ajax.reload();
+                    swal({
+                        title: '¡Exito!',
+                        text: '¡Su dato ha sido borrado!',
+                        type: 'success',
+                        timer: '1500'
+                    })
+                },
+                error: function() {
+                    swal({
+                        title: 'Oops...',
+                        text: '¡Algo salió mal!',
+                        type: 'error',
+                        timer: '1500'
+                    })
+                }
+            });
+        });
+    }
+     //funcion con sweetalert para borrar un turno
+    function deleteAlergeno(id) {
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: '¿Seguro de borrar este alergeno?',
+            text: "¡No podrás revertir esto!",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '¡Sí, borrarlo!',
+            cancelButtonText: '¡No, desistir!'
+        }).then(function() {
+            $.ajax({
+                url: "{{ url('alergenos') }}" + '/' + id,
+                type: "POST",
+                data: {
+                    '_method': 'DELETE',
+                    '_token': csrf_token
+                },
+                success: function(data) {
+                    tablaAlergenos.ajax.reload();
                     swal({
                         title: '¡Exito!',
                         text: '¡Su dato ha sido borrado!',
@@ -382,6 +461,46 @@
                 },
                 success: function(data) {
                     tablaRoles.ajax.reload();
+                    swal({
+                        title: '¡Exito!',
+                        text: '¡Su dato ha sido borrado!',
+                        type: 'success',
+                        timer: '1500'
+                    })
+                },
+                error: function() {
+                    swal({
+                        title: 'Oops...',
+                        text: '¡Algo salió mal!',
+                        type: 'error',
+                        timer: '1500'
+                    })
+                }
+            });
+        });
+    }
+    //funcion con sweetalert para borrar usuarios
+    function deleteData(id) {
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: '¿Seguro de borrar este usuario?',
+            text: "¡No podrás revertir esto!",
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '¡Sí, borrarlo!',
+            cancelButtonText: '¡No, desistir!'
+        }).then(function() {
+            $.ajax({
+                url: "{{ url('usuarios') }}" + '/' + id,
+                type: "POST",
+                data: {
+                    '_method': 'DELETE',
+                    '_token': csrf_token
+                },
+                success: function(data) {
+                    tablaUsuarios.ajax.reload();
                     swal({
                         title: '¡Exito!',
                         text: '¡Su dato ha sido borrado!',
