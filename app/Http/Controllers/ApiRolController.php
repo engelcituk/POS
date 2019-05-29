@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Collection;
 // use Carbon\Carbon;
 
 
@@ -59,12 +60,20 @@ class ApiRolController extends Controller
 
         $idRol= $id;
         $rol = $this->obtenerUnRol($idRol);
-        $permisosRol = $this->obtenerPermisosPorRol($idRol);
 
-        $listaPermisos = new PermisosController(); //para obtener los permisos
-        $listaPermisos = $listaPermisos->obtenerTodosLosPermisos(); //los datos lo envio a la vista
+        $permisos = new PermisosController(); //para obtener los permisos
+        $permisos = $permisos->obtenerTodosLosPermisos(); //los datos lo envio a la vista
+
+        $permisosRol = $this->obtenerPermisosPorRol($idRol);
+        $permisosDelRol = collect($permisosRol); //lo convierto en una coleccion
         
-        return view( 'apiroles.partials.show', ['rol' => $rol, 'listaPermisos'=> $listaPermisos, 'permisosRol' => $permisosRol]);
+        //del objeto PermisoRol me creo una colección con los idPermisos del rol
+        $idPermisosRolColeccion = new Collection([]);
+        foreach ($permisosDelRol as $permisoRol) {        
+            $idPermisosRolColeccion->push($permisoRol->idPermiso);
+        }
+                
+        return view('apiroles.partials.show', compact('rol', 'permisos', 'idPermisosRolColeccion'));
     }
 
     public function edit($id)
@@ -72,7 +81,19 @@ class ApiRolController extends Controller
         $idRol = $id;
         $rol = $this->obtenerUnRol($idRol);
 
-       return view('apiroles.partials.edit', ['rol' => $rol]);        
+        $permisos = new PermisosController(); //para obtener los permisos
+        $permisos = $permisos->obtenerTodosLosPermisos(); //los datos lo envio a la vista
+
+        $permisosRol = $this->obtenerPermisosPorRol($idRol);
+        $permisosDelRol = collect($permisosRol); //lo convierto en una coleccion
+
+        //del objeto PermisoRol me creo una colección con los idPermisos del rol
+        $idPermisosRolColeccion = new Collection([]);
+        foreach ($permisosDelRol as $permisoRol) {
+            $idPermisosRolColeccion->push($permisoRol->idPermiso);
+        }
+
+       return view('apiroles.partials.edit',compact('rol', 'permisos', 'idPermisosRolColeccion'));        
     }
      
     public function obtenerUnRol($idRol)

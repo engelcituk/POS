@@ -44,6 +44,20 @@
                                         </div>
                                     </div>
                                 </div>
+                                <h4><strong>Editar permisos asignados al rol:</strong></h4> 
+                                @foreach($permisos as $permiso)
+                                @php                                	
+                                    $resultado = $idPermisosRolColeccion->contains($permiso->id);
+                                    $checked = ($resultado == 1) ? "checked" : "";
+                                @endphp                              
+                                    <div class="col-md-4">
+	                                    <div class="checkbox checkbox-group required">                              
+                                            <label>
+                                            <input type="checkbox" name="idPermiso[]" value="{{$permiso->id}}" {{$checked}}><strong>{{$permiso->name}}</strong>
+                                            </label>                                            
+                                        </div>
+                                    </div>                                         
+                                @endforeach
                                 {{-- <small>En la api se requiere registar el <cite title="idUsuarioAlta y la fechaalta">idUsuarioAlta y la fechaalta</cite></small> --}}
                                 <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
 

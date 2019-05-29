@@ -57,8 +57,10 @@
                             <div class="row">
                                 @foreach($permisos as $permiso)
                                 @php                                
-                                $resultado= contains($permiso->slug);
+                                // $collection= $permisosDelRol;
+                                $resultado= $permisosDelRol->contains($permiso->slug);
                                 $checked = ($resultado == 1) ? "checked" : "";
+
                                 @endphp
                                 <div class="col-md-4 checkbox">
                                     <label>

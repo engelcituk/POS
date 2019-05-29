@@ -57,10 +57,11 @@ class RolesController extends Controller
     {
         $role = Role::find($id);       
          
-        $permisos = Permission::get(); //obtengo todos los permisos      
+        $permisos = Permission::get(); //obtengo todos los permisos
+             
         $obtenerPermisosRol=$role->getPermissions();//obtengo todos los permisos de ese rol
         $permisosDelRol = collect($obtenerPermisosRol);//lo convierto en una coleccion
-                
+        // dd($permisosDelRol);   
         return view('roles.partials.edit', compact('role','permisos', 'permisosDelRol'));
         //compact es para enviar la variable usuario y roles
     }
