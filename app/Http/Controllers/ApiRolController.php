@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Collection;
+use Alert;
+
+
 // use Carbon\Carbon;
 
 
@@ -55,7 +58,7 @@ class ApiRolController extends Controller
         
         return view('apiroles.partials.create',['listaPermisos' => $listaPermisos]);
     }
-
+    
     public function show($id){
 
         $idRol= $id;
@@ -93,9 +96,10 @@ class ApiRolController extends Controller
             $idPermisosRolColeccion->push($permisoRol->idPermiso);
         }
 
-       return view('apiroles.partials.edit',compact('rol', 'permisos', 'idPermisosRolColeccion'));        
+        // dd($idPermisosColeccion);
+       return view('apiroles.partials.edit',compact('rol', 'permisos','idPermisosRolColeccion'));        
     }
-     
+    
     public function obtenerUnRol($idRol)
     {
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetRol/{$idRol}");
@@ -123,8 +127,12 @@ class ApiRolController extends Controller
         foreach ($arrayIdPermisos as $idPermiso) {
             $this->guardarPermisosRol($idRol, $idPermiso);
         }
+
+        Alert::success('Exito', 'El rol y sus permisos se han creado exitosamente');
+
         return redirect('/rolesapi');
     }
+    
     public function guardarPermisosRol($idRol, $idPermiso){
         
         $respuesta = $this->realizarPeticion('POST', $this->urlBaseRolPermisos.'AddPermisosRol', [
@@ -140,7 +148,7 @@ class ApiRolController extends Controller
     {
         $idRol = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase . "UpdateRol/{$idRol}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateRol/{$idRol}", ['form_params' => $request->except('id')]);
 
         return redirect('/rolesapi');
     }
@@ -150,5 +158,10 @@ class ApiRolController extends Controller
         $idRol = $id;
         $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteRol/{$idRol}");
         return redirect('/rolesapi');
+    }
+    public function destroyPermiso($idRol, $idPermiso)
+    {
+        
+       return "Datos a borrar: idRol".$idRol." Su idPermiso ".$idPermiso;
     }
 }

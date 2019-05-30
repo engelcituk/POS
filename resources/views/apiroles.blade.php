@@ -5,7 +5,7 @@
     <div class="container-fluid">
 
         <a href="{{ route('rolesapi.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nuevo Rol</a>
-
+        
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

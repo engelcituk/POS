@@ -21,7 +21,7 @@
                                 @endphp                              
                                     <div class="col-md-4">
 	                                    <div class="checkbox checkbox-group required">                              
-                                            <label>
+                                            <label class="labelCheckbox ">
                                             <input type="checkbox" name="idPermiso[]" value="{{$permisoItem->id}}" {{$checked}} onclick="return false;"><strong>{{$permisoItem->name}}</strong>
                                             </label>                                            
                                         </div>

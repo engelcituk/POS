@@ -56,12 +56,14 @@ Route::middleware(['auth'])->group(function(){
     //rutas de menu configuracion-->apiRoles
     Route::get('all/rolesapi', 'ApiRolController@AllApiRol')->name('all.rolesapi');
     Route::get('/rolesapi', 'ApiRolController@index')->name('rolesapi.index');
-    Route::get('rolesapi/create', 'ApiRolController@create')->name('rolesapi.create');
+    Route::get('rolesapi/create', 'ApiRolController@create')->name('rolesapi.create');    
     Route::post('rolesapi/store', 'ApiRolController@store')->name('rolesapi.store');
+    Route::post('rolesapi/{idRol}/{idpermiso}', 'ApiRolController@guardarPermisosRol')->name('rolesapi.storepermiso');
     Route::get('rolesapi/{rolapi}', 'ApiRolController@show')->name('rolesapi.show');
     Route::get('rolesapi/{rolapi}/edit', 'ApiRolController@edit')->name('rolesapi.edit');
     Route::put('rolesapi/actualizar', 'ApiRolController@actualizar')->name('rolesapi.actualizar');
     Route::delete('rolesapi/{rolapi}', 'ApiRolController@destroy')->name('rolesapi.destroy');
+    Route::delete('rolesapi/{idRol}/{idPermiso}', 'ApiRolController@destroyPermiso')->name('rolesapi.destroypermiso');
 
     //rutas de menu configuracion-->PermisosRolesApi
     Route::get('all/permisos', 'PermisosController@AllPermisos')->name('all.permisos');

@@ -415,3 +415,7 @@
     background-color: rgba(34,34,34,0.90) !important;
     color: #fafafa ;
 }
+.labelCheckbox{
+    float: left; 
+    /* width: calc(100%/3) */
+}

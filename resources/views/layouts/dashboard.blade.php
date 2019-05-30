@@ -14,13 +14,14 @@
     <!-- Bootstrap core CSS     -->
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" />
     <!--  Material Dashboard CSS    -->
-    <link href="{{asset('css/material-dashboard.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/material-dashboard.css')}}" rel="stylesheet" />    
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{asset('css/demo.css')}}" rel="stylesheet" />
     <!--     Fonts and icons     -->
     <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="{{asset('css/google-roboto-300-700.cs')}}s" rel="stylesheet" />
+    
 </head>
 
 <body>
@@ -353,6 +354,8 @@
             </footer> -->
         </div>
     </div>
+    <script src="{{asset('sweetalert/dist/sweetalert.min.js')}}" type="text/javascript"></script>
+    @include('sweet::alert')
 </body>
 <!--   Core JS Files   -->
 <script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>
@@ -395,6 +398,9 @@
 <script src="{{asset('js/jquery.tagsinput.js')}}"></script>
 <!-- Material Dashboard javascript methods -->
 <script src="{{asset('js/material-dashboard.js')}}"></script>
+{{-- para alertas de notificaciones --}}
+<script src="{{asset('js/bootstrap-notify.min.js')}}"></script>
+
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <!-- <script src="{{asset('js/demo.js')}}"></script> -->
 <!-- <script src="{{asset('js/init.js')}}"></script> -->
@@ -405,6 +411,7 @@
 @include('scriptjs/orden')
 @include('scriptjs/datatables')
 @include('scriptjs/sweetalerts')
+@include('scriptjs/permisosRol')
 @include('scriptjs/validaciones')
 
 </html>
