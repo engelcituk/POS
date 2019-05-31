@@ -42,14 +42,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-key"></i>
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Contraseña</label>
-                                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" password="password" required autofocus>
+                                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required autofocus>
                                                 @if ($errors->has('password'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('password') }}</strong>
@@ -58,23 +58,31 @@
                                             </div>
                                         </div>
                                     </div>                                    
-                                    <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                                <i class="fas fa-user-cog"></i>
-                                            </span>
-                                        <div class="form-group">
-                                            <select class="form-control" name="idRol" required>
-                                                <option value="">Seleccione un rol para el usuario</option>
-                                                @foreach($roles as $rol)
-                                                    <option value="{{$rol->id}}">{{$rol->name}}</option>
-                                                @endforeach
-                                            </select>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                    <i class="fas fa-user-cog"></i>
+                                                </span>
+                                            <div class="form-group">
+                                                <select class="form-control" name="idRol" required>
+                                                    <option value="">Seleccione un rol para el usuario</option>
+                                                    @foreach($roles as $rol)
+                                                        <option value="{{$rol->id}}">{{$rol->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="radio">
+                                            <strong>Estado</strong>
+                                            <label><input type="radio" name="status" value="True" checked=""><span class="circle"></span><span class="check"></span>Activado</label>
+                                            <label><input type="radio" name="status" value="False"><span class="circle"></span><span class="check"></span>Desactivado</label>
                                         </div>
                                     </div>
                                 </div>
-                                    <small>En la api se requiere registar el <cite title="idUsuarioAlta y la fechaalta">idRol y la fechaAlta</cite></small>
-                                    <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
+                                    <button type="submit" class="btn btn-primary pull-right"><i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                                 </div>
                             </div>
                         </div>

@@ -44,14 +44,7 @@ Route::middleware(['auth'])->group(function(){
     Route::get('hoteles/{hotel}/edit' ,'HotelesController@edit')->name('hoteles.edit');
     Route::put('hoteles/actualizar', 'HotelesController@actualizar')->name('hoteles.actualizar');
     Route::delete('hoteles/{hotel}', 'HotelesController@destroy')->name('hoteles.destroy');
-
-    //rutas de menu configuracion-->usuarios
-    Route::get('all/users', 'ApiUsuarioController@AllApiUsuario')->name('all.users');
-    Route::get('/users', 'ApiUsuarioController@index')->name( 'users.index');
-    Route::get('users/create', 'ApiUsuarioController@create')->name('users.create');
-    Route::get('users/store', 'ApiUsuarioController@store')->name('users.store');
-    Route::get('users/{user}', 'ApiUsuarioController@show')->name('users.show');
-    Route::get('users/{user}/edit', 'ApiUsuarioController@edit')->name('users.edit');
+    
 
     //rutas de menu configuracion-->apiRoles
     Route::get('all/rolesapi', 'ApiRolController@AllApiRol')->name('all.rolesapi');
@@ -64,6 +57,16 @@ Route::middleware(['auth'])->group(function(){
     Route::put('rolesapi/actualizar', 'ApiRolController@actualizar')->name('rolesapi.actualizar');
     Route::delete('rolesapi/{rolapi}', 'ApiRolController@destroy')->name('rolesapi.destroy');
     Route::delete('rolesapi/{idRol}/{idPermiso}', 'ApiRolController@destroyPermiso')->name('rolesapi.destroypermiso');
+
+    //rutas de menu configuracion-->usuarios con la api
+    Route::get('all/users', 'ApiUsuarioController@AllApiUsuario')->name('all.users');
+    Route::get('/users', 'ApiUsuarioController@index')->name('users.index');
+    Route::get('users/create', 'ApiUsuarioController@create')->name('users.create');
+    Route::post('users/store', 'ApiUsuarioController@store')->name('users.store');
+    Route::get('users/{user}', 'ApiUsuarioController@show')->name('users.show');
+    Route::get('users/{user}/edit', 'ApiUsuarioController@edit')->name('users.edit');
+    Route::put('users/actualizar', 'ApiUsuarioController@actualizar')->name('users.actualizar');
+    Route::delete('users/{user}', 'ApiUsuarioController@destroy')->name('users.destroy');
 
     //rutas de menu configuracion-->PermisosRolesApi
     Route::get('all/permisos', 'PermisosController@AllPermisos')->name('all.permisos');

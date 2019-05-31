@@ -13,7 +13,7 @@
                         <i class="material-icons">assignment</i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">Lista de Hoteles</h4>
+                        <h4 class="card-title">Lista de Usuarios</h4>
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>

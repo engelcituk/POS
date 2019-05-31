@@ -53,7 +53,7 @@
                                     </div>
                                 @endforeach                                
                                 {{-- <small>En la api se requiere registar el <cite title="idUsuarioAlta y la fechaalta">idUsuarioAlta y la fechaalta</cite></small> --}}
-                                <button type="submit" class="btn btn-primary pull-right saveRolPermisos">{{ __('Guardar') }}</button>
+                                <button type="submit" class="btn btn-primary pull-right saveRolPermisos"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
 
                             </div>
 

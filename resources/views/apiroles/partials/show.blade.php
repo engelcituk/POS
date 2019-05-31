@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <div class="card card-profile">
                     <div class="card-avatar">
-                        <img class="img" src="{{asset('img/faces/rol.png')}}">
+                        <img class="img" src="{{asset('img/faces/settings.png')}}">
                     </div>
                     <div class="card-content">                                                                                       
                     <h4 class="card-title"><strong>Nombre Rol: </strong> {{$rol->name}}</h4><br>

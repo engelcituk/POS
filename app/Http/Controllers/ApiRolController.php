@@ -59,9 +59,8 @@ class ApiRolController extends Controller
         return view('apiroles.partials.create',['listaPermisos' => $listaPermisos]);
     }
     
-    public function show($id){
-
-        $idRol= $id;
+    public function show($idRol){
+    
         $rol = $this->obtenerUnRol($idRol);
 
         $permisos = new PermisosController(); //para obtener los permisos

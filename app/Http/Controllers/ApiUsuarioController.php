@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Collection;
+use Alert;
 
 class ApiUsuarioController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
+    public $urlBase = "http://localhost/TPVApi/Usuarios/";
     public function index()
     {
         return view('users');
@@ -28,20 +27,16 @@ class ApiUsuarioController extends Controller
     }
     protected function obtenerTodosLosUsuarios()
     {
-        //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'http://api.myjson.com/bins/lllt0');
+        //es una funcion que esta en el controller principal        
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetUsuarios');
 
         $datos = json_decode($respuesta);
 
-        $users = $datos->usuarios;
+        $users = $datos->objeto;
 
         return $users;
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create(){
 
         $roles = new ApiRolController(); //para obtener los roles
@@ -49,63 +44,85 @@ class ApiUsuarioController extends Controller
 
         return view('users.partials.create', compact('roles'));
     }
+    
+    public function store(Request $request){
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddUsuario', ['form_params' => $request->all()]);
+        $datos = json_decode($respuesta);
+        $respuestaOk = $datos->ok; //obtengo la respuesta del la api con el rol creado
+        //$respuestaMensaje=$datos->mensaje;
+        
+        if($respuestaOk==1){
+            Alert::success('Exito', 'Usuario registrado exitosamente');
+        }else{
+            Alert::error('Error', 'El registro del usuario falló');
+        }
+        return redirect('/users');
+    }
+    
+    public function show($idUsuario){
+        $usuario = $this->obtenerUnUsuario($idUsuario);//obtengo los datos del usuario
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        
+        $idRolUser= $usuario->idRol;//para obtener los datos del rol que tiene asignado el usuario
+        $rolUsuario = new ApiRolController(); 
+        $rolUsuario = $rolUsuario->obtenerUnRol($idRolUser); //los datos lo envio a la vista
+
+        $permisos = new PermisosController(); //Traigo toda mi lista de permisos
+        $permisos = $permisos->obtenerTodosLosPermisos(); //los datos lo envio a la vista
+
+        $permisosRol = new ApiRolController(); //instancia para la lista de permisos del rol
+        $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUser); //los datos lo envio a la vista
+
+        //creo una colecion de los permisos del rol para enviarlos a la vista
+        $idPermisosRolColeccion = new Collection([]);
+        foreach ($permisosRol as $permisoRol) {
+            $idPermisosRolColeccion->push($permisoRol->idPermiso);
+        }
+        // dd($idPermisosRolColeccion);
+        return view('users.partials.show', compact('usuario', 'rolUsuario', 'permisos', 'idPermisosRolColeccion'));
+    }
+    
+    public function edit($idUsuario){
+        $usuario = $this->obtenerUnUsuario($idUsuario); //obtengo los datos del usuario
+
+        $roles = new ApiRolController(); //para obtener los roles
+        $roles = $roles->obtenerTodosLosRoles(); //los datos lo envio a la vista
+
+        $idRolUser = $usuario->idRol; //para obtener los datos del rol que tiene asignado el usuario
+        $rolUsuario = new ApiRolController();
+        $rolUsuario = $rolUsuario->obtenerUnRol($idRolUser); //los datos lo envio a la vista
+        
+        return view('users.partials.edit', ['usuario' => $usuario, 'rolUsuario' => $rolUsuario, 'roles' => $roles]);
+    }
+    public function obtenerUnUsuario($idUsuario){
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetUsuario/{$idUsuario}");
+        $datos = json_decode($respuesta);
+        $usuario = $datos->objeto;
+        return $usuario;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $user = $id;
 
-        return view('users.partials.show', ['user' => $user]);
+    public function actualizar(Request $request){
+
+        $idUsuario = $request->get('id');
+
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateUsuario/{$idUsuario}", ['form_params' => $request->except('id')]);
+        $datos = json_decode($respuesta);
+        $respuestaOk = $datos->ok; 
+
+        if ($respuestaOk == 1) {
+            Alert::success('Exito', 'Usuario modificado exitosamente');
+        } else {
+            Alert::error('Error', 'La actualización del usuario falló');
+        }
+
+        return redirect('/users');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $user = $id;
-        return view('users.partials.edit', ['user' => $user]);
-    }
+   
+    public function destroy($idUsuario){        
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteUsuario/{$idUsuario}");
+        return $respuesta;
     }
 }
