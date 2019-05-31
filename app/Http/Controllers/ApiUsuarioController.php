@@ -42,9 +42,12 @@ class ApiUsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('users.partials.create');
+    public function create(){
+
+        $roles = new ApiRolController(); //para obtener los roles
+        $roles = $roles->obtenerTodosLosRoles(); //los datos lo envio a la vista
+
+        return view('users.partials.create', compact('roles'));
     }
 
     /**

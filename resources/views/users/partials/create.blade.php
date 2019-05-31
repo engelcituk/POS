@@ -57,24 +57,22 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>                                    
                                     <div class="col-md-6">
-                                        <div class="input-group">
-                                            <span class="input-group-addon">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
                                                 <i class="fas fa-user-cog"></i>
                                             </span>
-                                            <div class="form-group">
-                                                <!-- <label for="sel1">Select list:</label> -->
-                                                <select class="form-control" id="sel1">
-                                                    <option>Seleccione un rol</option>
-                                                    <option>Admin</option>
-                                                    <option>Admin</option>
-                                                    <option>Admin</option>
-                                                    <option>Admin</option>
-                                                </select>
-                                            </div>
+                                        <div class="form-group">
+                                            <select class="form-control" name="idRol" required>
+                                                <option value="">Seleccione un rol para el usuario</option>
+                                                @foreach($roles as $rol)
+                                                    <option value="{{$rol->id}}">{{$rol->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
+                                </div>
                                     <small>En la api se requiere registar el <cite title="idUsuarioAlta y la fechaalta">idRol y la fechaAlta</cite></small>
                                     <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
                                 </div>

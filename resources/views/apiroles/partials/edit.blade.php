@@ -57,7 +57,7 @@
                                                         $idPermiso=$permiso->id;
                                                     @endphp                             
                                                     <label class="labelCheckbox checkbox-inline">
-                                                        <input type="checkbox" nombrePermiso="{{$permiso->name}}" id="chekPermiso{{$permiso->id}}" idRol="{{$rol->id}}" idPermiso="{{$permiso->id}}" name="idPermiso[]" value="{{$permiso->id}}" {{$checked}} onclick="AddDeletePermisoRol({{$idPermiso}})"><strong>{{$permiso->name}}</strong>
+                                                        <input type="checkbox" nombreRol="{{$rol->name}}" nombrePermiso="{{$permiso->name}}" id="chekPermiso{{$permiso->id}}" idRol="{{$rol->id}}" idPermiso="{{$permiso->id}}" name="idPermiso[]" value="{{$permiso->id}}" {{$checked}} onclick="AddDeletePermisoRol({{$idPermiso}})"><strong>{{$permiso->name}}</strong>
                                                     </label>                                            
                                                 </div>
                                             </div>                                 
