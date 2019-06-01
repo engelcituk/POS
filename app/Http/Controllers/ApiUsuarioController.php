@@ -12,6 +12,8 @@ class ApiUsuarioController extends Controller
 {
     
     public $urlBase = "http://localhost/TPVApi/Usuarios/";
+    public $urlBasePermisosUsuario = "http://localhost/TPVApi/PermisosUsuario/";
+
     public function index()
     {
         return view('users');
@@ -48,10 +50,23 @@ class ApiUsuarioController extends Controller
     public function store(Request $request){
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddUsuario', ['form_params' => $request->all()]);
         $datos = json_decode($respuesta);
-        $respuestaOk = $datos->ok; //obtengo la respuesta del la api con el rol creado
-        //$respuestaMensaje=$datos->mensaje;
-        
-        if($respuestaOk==1){
+
+        $respuestaOk = $datos->ok; //obtengo la respuesta del la api con el usuario creado->true/false
+        $respuestaObjeto= $datos->objeto;//obtengo el objeto, usuario registrado-> id,name, usuario, status,idRol
+
+        $idUsuario = $respuestaObjeto->id;//obtengo el id del usuario
+        $idRolUsuario= $respuestaObjeto->idRol;//el id del rol que se asignó al usuario
+
+        $permisosRol = new ApiRolController(); //instancia para trabajar con permisos del rol
+        $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUsuario); //los datos lo envio a la vista        
+               
+        if($respuestaOk==1){            
+            //con el ciclo foreach se va guardando los permisos del rol asignado al usuario 
+            foreach ($permisosRol as $permisoRol) {
+                $idPermiso = $permisoRol->idPermiso;
+
+                $this->guardarPermisosUsuario($idUsuario, $idPermiso);
+            }
             Alert::success('Exito', 'Usuario registrado exitosamente');
         }else{
             Alert::error('Error', 'El registro del usuario falló');
@@ -91,8 +106,20 @@ class ApiUsuarioController extends Controller
         $idRolUser = $usuario->idRol; //para obtener los datos del rol que tiene asignado el usuario
         $rolUsuario = new ApiRolController();
         $rolUsuario = $rolUsuario->obtenerUnRol($idRolUser); //los datos lo envio a la vista
-        
-        return view('users.partials.edit', ['usuario' => $usuario, 'rolUsuario' => $rolUsuario, 'roles' => $roles]);
+
+        $permisos = new PermisosController(); //Traigo toda mi lista de permisos
+        $permisos = $permisos->obtenerTodosLosPermisos(); //los datos lo envio a la vista
+
+        $permisosRol = new ApiRolController(); //instancia para la lista de permisos del rol
+        $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUser); //los datos lo envio a la vista
+
+        //creo una colecion de los permisos del rol para enviarlos a la vista
+        $idPermisosRolColeccion = new Collection([]);
+        foreach ($permisosRol as $permisoRol) {
+            $idPermisosRolColeccion->push($permisoRol->idPermiso);
+        }
+                
+        return view('users.partials.edit', compact('usuario', 'rolUsuario', 'roles','permisos', 'idPermisosRolColeccion'));
     }
     public function obtenerUnUsuario($idUsuario){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetUsuario/{$idUsuario}");
@@ -100,8 +127,16 @@ class ApiUsuarioController extends Controller
         $usuario = $datos->objeto;
         return $usuario;
     }
+    public function guardarPermisosUsuario($idUsuario, $idPermiso){
 
-
+        $respuesta = $this->realizarPeticion('POST', $this->urlBasePermisosUsuario.'AddPermisoUsuario', [
+            'form_params' => [
+                'idUsuario' => $idUsuario,
+                'idPermiso' => $idPermiso
+            ]
+        ]);
+        return $respuesta;;
+    }
     public function actualizar(Request $request){
 
         $idUsuario = $request->get('id');

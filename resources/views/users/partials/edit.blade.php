@@ -11,6 +11,7 @@
                             {{ method_field('PUT') }}
                             <input id="name" type="hidden" class="form-control" name="id" value="{{$usuario->id}}" required>
                             <div class="row">
+                                {{-- <h4><strong>Rol del usuario: </strong>{{$rolUsuario->name}}</h4>  --}}
                                 <div class="card-content">
                                     <div class="col-md-6">
                                         <div class="input-group">
@@ -73,8 +74,55 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div>                                        
                                     </div>                                    
+                                    <h4><strong>Permisos del rol del usuario: </strong>{{$rolUsuario->name}}</h4> 
+                                    @foreach($permisos as $permisoItem)
+                                        @php                                	
+                                            $resultado = $idPermisosRolColeccion->contains($permisoItem->id);
+                                            $checked = ($resultado == 1) ? "checked" : "";
+                                        @endphp                              
+                                        <div class="row"> 
+                                                                                       
+                                            <div class="col-md-2 col-md-offset-1">
+                                                <div class="checkbox checkbox-group required">                              
+                                                    <label class="labelCheckbox">
+                                                    <input type="checkbox" name="idPermiso[]" value="{{$permisoItem->id}}" {{$checked}} onclick="return false;"><strong>{{$permisoItem->name}}</strong>
+                                                    </label>                                            
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="checkbox checkbox-group required">
+                                                    <label>
+                                                    <input type="checkbox" name="idPermiso[]" value=""><strong>Crear</strong>
+                                                    </label>                                            
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="checkbox checkbox-group required">
+                                                    <label>
+                                                    <input type="checkbox" name="idPermiso[]" value=""><strong>Leer</strong>
+                                                    </label>                                            
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="checkbox checkbox-group required">
+                                                    <label>
+                                                    <input type="checkbox" name="idPermiso[]" value=""><strong>Actualizar</strong>
+                                                    </label>                                            
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="checkbox checkbox-group required">                                           
+                                                    <label>
+                                                    <input type="checkbox" name="idPermiso[]" value=""><strong>Borrar</strong>
+                                                    </label>                                            
+                                                </div>
+                                            </div>                                            
+                                        </div><br>                                        
+                                    @endforeach                                  
+                                       
+                                                                      
                                     <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
                                 </div>
                             </div>

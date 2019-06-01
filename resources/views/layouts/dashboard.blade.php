@@ -17,6 +17,8 @@
     <link href="{{asset('css/material-dashboard.css')}}" rel="stylesheet" />    
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{asset('css/demo.css')}}" rel="stylesheet" />
+    {{-- estilos swtiches --}}
+    <link href="{{asset('css/estilo.css')}}" rel="stylesheet" />
     <!--     Fonts and icons     -->
     <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
