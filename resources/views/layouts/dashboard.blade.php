@@ -414,6 +414,7 @@
 @include('scriptjs/datatables')
 @include('scriptjs/sweetalerts')
 @include('scriptjs/permisosRol')
+@include('scriptjs/permisosRolUsuario')
 @include('scriptjs/validaciones')
 
 </html>

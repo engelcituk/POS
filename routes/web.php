@@ -63,10 +63,13 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/users', 'ApiUsuarioController@index')->name('users.index');
     Route::get('users/create', 'ApiUsuarioController@create')->name('users.create');
     Route::post('users/store', 'ApiUsuarioController@store')->name('users.store');
+    Route::post('users/{idUsuario}/{idPermiso}', 'ApiUsuarioController@guardarPermisosUsuario')->name('users.storepermiso');
     Route::get('users/{user}', 'ApiUsuarioController@show')->name('users.show');
     Route::get('users/{user}/edit', 'ApiUsuarioController@edit')->name('users.edit');
     Route::put('users/actualizar', 'ApiUsuarioController@actualizar')->name('users.actualizar');
+    Route::put('users/{user}/{idpermiso}', 'ApiUsuarioController@guardarAccionPermisoUsuario')->name('users.storeaccionpermiso');
     Route::delete('users/{user}', 'ApiUsuarioController@destroy')->name('users.destroy');
+    Route::delete('users/{idUsuario}/{idpermiso}', 'ApiUsuarioController@destroyPermisoUsuario')->name('users.destroypermisouser');
 
     //rutas de menu configuracion-->PermisosRolesApi
     Route::get('all/permisos', 'PermisosController@AllPermisos')->name('all.permisos');

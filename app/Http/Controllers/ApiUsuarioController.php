@@ -13,6 +13,7 @@ class ApiUsuarioController extends Controller
     
     public $urlBase = "http://localhost/TPVApi/Usuarios/";
     public $urlBasePermisosUsuario = "http://localhost/TPVApi/PermisosUsuario/";
+    
 
     public function index()
     {
@@ -99,6 +100,7 @@ class ApiUsuarioController extends Controller
     
     public function edit($idUsuario){
         $usuario = $this->obtenerUnUsuario($idUsuario); //obtengo los datos del usuario
+        $usuarioPermisos = $this->obtenerDatosPermisosUsuario($idUsuario); //obtengo todos los datos permisos usuario
 
         $roles = new ApiRolController(); //para obtener los roles
         $roles = $roles->obtenerTodosLosRoles(); //los datos lo envio a la vista
@@ -118,14 +120,31 @@ class ApiUsuarioController extends Controller
         foreach ($permisosRol as $permisoRol) {
             $idPermisosRolColeccion->push($permisoRol->idPermiso);
         }
-                
-        return view('users.partials.edit', compact('usuario', 'rolUsuario', 'roles','permisos', 'idPermisosRolColeccion'));
+
+        $crearColeccion = new Collection([]);
+        $leerColeccion = new Collection([]);
+        $actualizarColeccion = new Collection([]);
+        $borrarColeccion = new Collection([]);
+        foreach ($usuarioPermisos as $usuarioPermiso) {
+            $crearColeccion->push($usuarioPermiso->crear);
+            $leerColeccion->push($usuarioPermiso->leer);
+            $actualizarColeccion->push($usuarioPermiso->actualizar);
+            $borrarColeccion->push($usuarioPermiso->borrar);
+        }
+        //  dd( $borrarColeccion);
+        return view('users.partials.edit', compact('usuario', 'rolUsuario', 'roles','permisos', 'idPermisosRolColeccion', 'crearColeccion', 'leerColeccion', 'actualizarColeccion','borrarColeccion'));
     }
     public function obtenerUnUsuario($idUsuario){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetUsuario/{$idUsuario}");
         $datos = json_decode($respuesta);
         $usuario = $datos->objeto;
         return $usuario;
+    }
+    public function obtenerDatosPermisosUsuario($idUsuario){
+        $respuesta = $this->realizarPeticion('GET', $this->urlBasePermisosUsuario."GetUsuarioAllPermisos/{$idUsuario}");
+        $datos = json_decode($respuesta);
+        $usuarioPermisos = $datos->objeto;
+        return $usuarioPermisos;
     }
     public function guardarPermisosUsuario($idUsuario, $idPermiso){
 
@@ -135,9 +154,34 @@ class ApiUsuarioController extends Controller
                 'idPermiso' => $idPermiso
             ]
         ]);
-        return $respuesta;;
+        $datos = json_decode($respuesta);
+        $respuesta = $datos->mensaje;
+        return $respuesta;
     }
-    public function actualizar(Request $request){
+    public function guardarAccionPermisoUsuario($idUsuario, $idPermiso, Request $request){
+        $opciones= $request->get('opciones');//traigo el array de checks
+                
+        $crear= $opciones[0][0];
+        $leer = $opciones[0][1];
+        $actualizar = $opciones[0][2];
+        $borrar = $opciones[0][3];
+               
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBasePermisosUsuario."UpdatePermisoUsuario/{$idUsuario}/{$idPermiso}", [
+            'form_params' => [
+                'idUsuario' => $idUsuario,
+                'idPermiso' => $idPermiso,
+                'crear' => $crear,//true o false
+                'leer' =>  $leer,
+                'actualizar' => $actualizar,
+                'borrar' =>  $borrar
+            ]
+        ]);
+        $datos = json_decode($respuesta);
+        $respuesta = $datos->mensaje; 
+                                     
+        return $respuesta;
+    }
+    public function actualizar(Request $request){//actualiza solo los datos del usuario
 
         $idUsuario = $request->get('id');
 
@@ -159,5 +203,13 @@ class ApiUsuarioController extends Controller
 
         $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteUsuario/{$idUsuario}");
         return $respuesta;
+    }
+    public function destroyPermisoUsuario($idUsuario, $idPermiso){
+
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBasePermisosUsuario."DeletePermisoUsuario/{$idUsuario}/{$idPermiso}");
+        $datos = json_decode($respuesta);
+
+        $respuesta = $datos->mensaje; 
+        return $respuesta;        
     }
 }
