@@ -51,26 +51,27 @@ class ApiUsuarioController extends Controller
     public function store(Request $request){
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddUsuario', ['form_params' => $request->all()]);
         $datos = json_decode($respuesta);
-
         $respuestaOk = $datos->ok; //obtengo la respuesta del la api con el usuario creado->true/false
-        $respuestaObjeto= $datos->objeto;//obtengo el objeto, usuario registrado-> id,name, usuario, status,idRol
+           
+        if($respuestaOk==1){
+            $respuestaObjeto= $datos->objeto; //obtengo el objeto, usuario registrado-> id,name, usuario, status,idRol
+            $respuestaMensaje = $datos->mensaje;
 
-        $idUsuario = $respuestaObjeto->id;//obtengo el id del usuario
-        $idRolUsuario= $respuestaObjeto->idRol;//el id del rol que se asignó al usuario
+            $idUsuario = $respuestaObjeto->id;//obtengo el id del usuario
+            $idRolUsuario= $respuestaObjeto->idRol;//el id del rol que se asignó al usuario
 
-        $permisosRol = new ApiRolController(); //instancia para trabajar con permisos del rol
-        $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUsuario); //los datos lo envio a la vista        
-               
-        if($respuestaOk==1){            
+            $permisosRol = new ApiRolController(); //instancia para trabajar con permisos del rol
+            $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUsuario); //los datos lo envio a la vista            
             //con el ciclo foreach se va guardando los permisos del rol asignado al usuario 
             foreach ($permisosRol as $permisoRol) {
                 $idPermiso = $permisoRol->idPermiso;
 
                 $this->guardarPermisosUsuario($idUsuario, $idPermiso);
             }
-            Alert::success('Exito', 'Usuario registrado exitosamente');
+            Alert::success('Exito', 'Usuario registrado exitosamente '.$respuestaMensaje);
         }else{
-            Alert::error('Error', 'El registro del usuario falló');
+            $respuestaMensaje = $datos->mensaje;
+            Alert::error('Error', 'El registro del usuario falló '.$respuestaMensaje);
         }
         return redirect('/users');
     }
@@ -115,11 +116,27 @@ class ApiUsuarioController extends Controller
         $permisosRol = new ApiRolController(); //instancia para la lista de permisos del rol
         $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUser); //los datos lo envio a la vista
 
-        //creo una colecion de los permisos del rol para enviarlos a la vista
         $idPermisosRolColeccion = new Collection([]);
         foreach ($permisosRol as $permisoRol) {
             $idPermisosRolColeccion->push($permisoRol->idPermiso);
         }
+        $p=[];
+        foreach ($permisosRol as $permisoRol) {
+            $p[] = [$permisoRol->idPermiso];
+        }
+        $crear = $p[0][0];
+        // dd( $crear);
+        $array = [];
+        $contador=-1;
+        foreach($permisos as $permiso) {
+            $contador++;
+            $array[]=['idPermiso'=> $permiso->id,'nombrePermiso'=>$permiso->name,'idUsuario'=> $usuario->id,'nUsuario' => $usuario->usuario, 'contador'=> $contador,'arP' => $crear];
+            
+        }
+        //$crear = $array[1];
+        // dd( $array);
+        //creo una colecion de los permisos del rol para enviarlos a la vista
+        
 
         $crearColeccion = new Collection([]);
         $leerColeccion = new Collection([]);
@@ -185,14 +202,24 @@ class ApiUsuarioController extends Controller
 
         $idUsuario = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateUsuario/{$idUsuario}", ['form_params' => $request->except('id')]);
+        $password =($request->get('password') == null) ? 'sinCambios' : $request->get('password');          
+        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateUsuario/{$idUsuario}", [
+            'form_params' => [
+                'name' => $request->get('name'),
+                'usuario' => $request->get('usuario'),
+                'password' => $password,
+                'status'=> $request->get('status'),
+                'idRol' => $request->get('idRol')                               
+            ]            
+        ]);
         $datos = json_decode($respuesta);
-        $respuestaOk = $datos->ok; 
+        $respuestaOk = $datos->ok;
+        $respuestaMensaje = $datos->mensaje; 
 
         if ($respuestaOk == 1) {
             Alert::success('Exito', 'Usuario modificado exitosamente');
         } else {
-            Alert::error('Error', 'La actualización del usuario falló');
+            Alert::error('Error', 'La actualización del usuario falló '.$respuestaMensaje);
         }
 
         return redirect('/users');

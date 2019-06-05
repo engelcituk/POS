@@ -45,14 +45,14 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-key"></i>
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Contraseña</label>
-                                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" value="{{$usuario->password}}" required autofocus>
+                                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" >
                                                 @if ($errors->has('password'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('password') }}</strong>
@@ -61,7 +61,7 @@
                                             </div>
                                         </div>
                                     </div>                                    
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                     <i class="fas fa-user-cog"></i>
@@ -75,22 +75,36 @@
                                                 </select>
                                             </div>
                                         </div>                                        
-                                    </div>                                    
+                                    </div>
+                                    <div class="col-md-4">
+                                    <div class="form-group">
+                                        <strong>Estado</strong>
+                                        <div class="radio">
+                                            @php
+                                            $estado= $usuario->status;//para obtener el estado de la impresora
+                                            $radios = ($estado == 1) ?
+                                            "<label><input type='radio' name='status' value='True' checked>Activado</label>
+                                            <label><input type='radio' name='status' value='False'>Desactivado</label>" :
+                                            "<label><input type='radio' name='status' value='True'>Activado</label>
+                                            <label><input type='radio' name='status' value='False' checked>Desactivado</label>";
+                                            echo $radios;
+                                            @endphp
+                                        </div>
+                                    </div>
+                                </div>
                                     <h4><strong>Permisos del rol del usuario: </strong>{{$rolUsuario->name}}</h4> 
+                                   
                                     @foreach($permisos as $permisoItem)
-                                        @php       
+                                        @php                                             
                                             $idUsuario=$usuario->id;
                                             $idPermiso=$permisoItem->id;
-                                            $resultado = $idPermisosRolColeccion->contains($permisoItem->id);
+                                            $result = $idPermisosRolColeccion->contains($permisoItem->id);
 
-                                            // dd($crearColeccion[1]);
-                                            $resultadoCrear = $crearColeccion->contains(true,false);
-                                            //  dd($resultadoCrear);
-                                            $checked = ($resultado == 1) ? "checked" : "";
-                                            $clickReturn= ($resultado == 1) ? "return false;" : "addQuitarPermisoUsuario($idUsuario,$idPermiso)";
-                                            $estadoPermisoPadre = ($resultado == 1) ? "estado=activo" : "estado=desactivado";
-
-                                            $checkCrear=($resultadoCrear == 1) ? "checked" : "";
+                                            $checked = ($result == 1) ? "checked" : "";
+                                           
+                                            $clickReturn= ($result == 1) ? "return false;" : "addQuitarPermisoUsuario($idUsuario,$idPermiso)";
+                                            $estadoPermisoPadre = ($result == 1) ? "estado=activo" : "estado=desactivado";
+                                            
                                             // dd($checkCrear);
                                         @endphp                              
                                         <div class="row">                                                                                   

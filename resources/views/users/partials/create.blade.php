@@ -74,14 +74,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                    <div class="form-group">
-                                        <div class="radio">
-                                            <strong>Estado</strong>
-                                            <label><input type="radio" name="status" value="True" checked=""><span class="circle"></span><span class="check"></span>Activado</label>
-                                            <label><input type="radio" name="status" value="False"><span class="circle"></span><span class="check"></span>Desactivado</label>
+                                        <div class="form-group">
+                                            <div class="radio">
+                                                <strong>Estado</strong>
+                                                <label><input type="radio" name="status" value="True" checked=""><span class="circle"></span><span class="check"></span>Activado</label>
+                                                <label><input type="radio" name="status" value="False"><span class="circle"></span><span class="check"></span>Desactivado</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                     <button type="submit" class="btn btn-primary pull-right"><i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                                 </div>
                             </div>
