@@ -31,7 +31,7 @@
                         <i class="fas fa-concierge-bell"></i>
                     </div>
                     <div class="card-content">
-                        <h4 class="card-title">Tomar Orden</h4>
+                    <h4 class="card-title">Tomar Orden </h4>
                         <div id="zona1" class="zonas">
                             <strong>Zona 1</strong>
                             <ul class="nav nav-pills nav-pills-icons" role="tablist">

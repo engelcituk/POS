@@ -66,5 +66,9 @@ $(document).on("click", ".saveRolPermisos", function(){
         })						
         return false;
     }  			
-})        
+})  
+//bloqueo no escribir numero en categorias/create  
+$(document).on("input", "#ordenCategoria", function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    })  
 </script>

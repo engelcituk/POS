@@ -51,7 +51,7 @@
                     </div>
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                            {{ Auth::user()->name }}
+                            {{-- {{ Auth::user()->name }} --}}
                             <b class="caret"></b>
                         </a>
                         <div class="collapse" id="collapseExample">
@@ -143,11 +143,16 @@
                                 <li>                               
                                     <a href="{{ route('cartas.index') }}">Cartas</a>
                                 </li>
-                                @can('productos.index')
+                               <li>                               
+                                    <a href="{{ route('categorias.index') }}">Categorias</a>
+                                </li>
+                                <li>                               
+                                    <a href="{{ route('subcategorias.index') }}">Subcategorias</a>
+                                </li>
                                 <li>
                                     <a href="{{ route('productos.index') }}">Productos</a>
                                 </li>
-                                @endcan
+                                
                                 <li>
                                     <a href="{{ route('metodospago.index') }}">Métodos de pago</a>
                                 </li>
@@ -305,7 +310,7 @@
                             </li>
                             <li class="separator hidden-lg hidden-md"></li>
                         </ul>
-                        <form class="navbar-form navbar-right" role="search">
+                        {{-- <form class="navbar-form navbar-right" role="search">
                             <div class="form-group form-search is-empty">
                                 <input type="text" class="form-control" placeholder="Buscar">
                                 <span class="material-input"></span>
@@ -314,7 +319,7 @@
                                 <i class="material-icons">search</i>
                                 <div class="ripple-container"></div>
                             </button>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </nav>

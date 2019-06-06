@@ -53,7 +53,7 @@ trait AuthenticatesUsers
         return $this->sendFailedLoginResponse($request);
     }
 
-    /**
+    /** 
      * Validate the user login request.
      *
      * @param  \Illuminate\Http\Request  $request

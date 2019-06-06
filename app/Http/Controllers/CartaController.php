@@ -9,11 +9,7 @@ use Carbon\Carbon;
 
 class CartaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public $urlBase = "http://localhost/TPVApi/Cartas/";
     public function index()
     {
@@ -39,11 +35,7 @@ class CartaController extends Controller
 
         return $cartas;
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create() 
     {
         $fechaAlta= Carbon::now();//ocupo carbon para obtener fecha actual
@@ -55,14 +47,6 @@ class CartaController extends Controller
 
         return view('cartas.partials.create',compact('fechaAlta', 'horaAlta','restaurantes','turnos'));
     }
-
-    
-       /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $idCarta = $id;
@@ -82,13 +66,6 @@ class CartaController extends Controller
         
         return view('cartas.partials.show', ['carta' => $carta, 'datosTurnoPV'=> $datosTurnoPV, 'datosRestaurantePV'=>$datosRestaurantePV, 'hotelRestaurante'=> $hotelRestaurante]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id){
         $idCarta = $id;
         $carta = $this->obtenerUnaCarta($idCarta);
@@ -103,14 +80,7 @@ class CartaController extends Controller
 
         return view('cartas.partials.edit', compact('carta', 'datosTurnoPV', 'restaurantes', 'turnos'));       
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function obtenerUnaCarta($idCarta)
     {
         $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetCarta/{$idCarta}");
@@ -126,24 +96,14 @@ class CartaController extends Controller
 
         return redirect('/cartas');
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddCarta', ['form_params' => $request->all()]);
 
         return redirect('/cartas');
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function destroy($id)
     {
         $idCarta = $id;

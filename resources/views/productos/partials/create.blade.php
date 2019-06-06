@@ -120,33 +120,16 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-grip-horizontal"></i>
-                                        </span>
-                                        <div class="form-group">
-                                            <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" id="receta">
-                                                <option>Seleccione receta</option>
-                                                <option>receta 1</option>
-                                                <option>receta 2</option>
-                                                <option>receta 3</option>
-                                                <option>receta 4</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                                </div>                                
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         Complemento
                                         <div class="radio">
                                             <label>
-                                                <input type="radio" name="complemento" checked="true" value="true"> Sí
+                                                <input type="radio" name="complemento" value="true"> Sí
                                             </label>
                                             <label>
-                                                <input type="radio" name="complemento" value="false"> No
+                                                <input type="radio" name="complemento" checked="true"  value="false"> No
                                             </label>
                                         </div>
 
@@ -167,7 +150,7 @@
                                     </div>
                                 </div>
 
-                                <small>En la api se registra el <cite title="idPuntoVenta">fechaAlta/horaAlta/idReceta/status </cite></small>
+                                {{-- <small>En la api se registra el <cite title="idPuntoVenta">fechaAlta/horaAlta/idReceta/status </cite></small> --}}
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>

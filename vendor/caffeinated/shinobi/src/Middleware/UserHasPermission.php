@@ -21,7 +21,7 @@ class UserHasPermission
     public function __construct(Guard $auth)
     {
         $this->auth = $auth;
-    } 
+    }
 
     /**
      * Run the request filter.
@@ -30,7 +30,7 @@ class UserHasPermission
      * @param \Closure                 $closure
      * @param array|string             $permissions
      *
-     * @return mixed 
+     * @return mixed
      */
     public function handle($request, Closure $next, $permissions)
     {

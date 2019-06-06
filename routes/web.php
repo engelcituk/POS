@@ -1,55 +1,48 @@
 <?php
-use TCG\Voyager\Http\Controllers\Controller;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+// Auth::routes();
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-Auth::routes();
-Route::get('/prueba','Controller@obtenerAccessToken');
+Route::middleware(['filtroAcceso'])->group(function () {
+Route::get('ordenar', 'OrdenController@index')->name('ordenar.index');
+// Route::get('/prueba','Controller@obtenerAccessToken');
 
 //Hago que mis rutas sean validados con el middleware (auth) para el login
-Route::middleware(['auth'])->group(function(){
-    Route::get('/home', 'HomeController@index','HomeController@index')->name('home.index');
-    Route::get('/ordenar', 'OrdenController@index')->name('ordenar.index');
+// Route::middleware(['auth'])->group(function () {  
+    // Route::get('/home', 'HomeController@index')->name('home.index');
+    // Route::get('/ordenar', 'OrdenController@index')->name('ordenar.index');
     Route::get('/historico', 'HistoricoController@index')->name('historico.index');
+});
     // Route::get('/roles', 'RolesController@index')->name('roles.index');
     // Route::resource('usuarios', 'UsuariosController');
     // Route::get('/usuarios', 'UsuariosController@index')->name('usuarios.index');
     Route::get('all/usuarios', 'UsuariosController@AllUser')->name('all.usuarios');
     Route::get('all/roles', 'RolesController@AllRole')->name('all.roles');
     // Route::post('/usuarios', 'UsuariosController@store')->name('usuarios');
-        
+
     Route::get('/categorias', 'CategoriasController@index')->name('categorias.index');
     // Route::get('/productos', 'ProductosController@index')->name('productos.index');
-    
-    
+
+
     //rutas de menu configuracion -->hoteles
     Route::get('all/hoteles', 'HotelesController@AllHoteles')->name('all.hoteles');
     Route::get('/hoteles', 'HotelesController@index')->name('hoteles.index');
     Route::get('hoteles/create', 'HotelesController@create')->name('hoteles.create');
     Route::post('hoteles/store', 'HotelesController@store')->name('hoteles.store');
     Route::get('hoteles/{hotel}', 'HotelesController@show')->name('hoteles.show');
-    Route::get('hoteles/{hotel}/edit' ,'HotelesController@edit')->name('hoteles.edit');
+    Route::get('hoteles/{hotel}/edit', 'HotelesController@edit')->name('hoteles.edit');
     Route::put('hoteles/actualizar', 'HotelesController@actualizar')->name('hoteles.actualizar');
     Route::delete('hoteles/{hotel}', 'HotelesController@destroy')->name('hoteles.destroy');
-    
+
 
     //rutas de menu configuracion-->apiRoles
     Route::get('all/rolesapi', 'ApiRolController@AllApiRol')->name('all.rolesapi');
     Route::get('/rolesapi', 'ApiRolController@index')->name('rolesapi.index');
-    Route::get('rolesapi/create', 'ApiRolController@create')->name('rolesapi.create');    
+    Route::get('rolesapi/create', 'ApiRolController@create')->name('rolesapi.create');
     Route::post('rolesapi/store', 'ApiRolController@store')->name('rolesapi.store');
     Route::post('rolesapi/{idRol}/{idpermiso}', 'ApiRolController@guardarPermisosRol')->name('rolesapi.storepermiso');
     Route::get('rolesapi/{rolapi}', 'ApiRolController@show')->name('rolesapi.show');
@@ -113,10 +106,10 @@ Route::middleware(['auth'])->group(function(){
     Route::delete('zonas/{zona}', 'ZonasController@destroy')->name('zonas.destroy');
 
     //rutas de menu configuracion-->mesas 
-    Route::get('all/mesas', 'MesasController@AllMesas')->name('all.mesas'); 
+    Route::get('all/mesas', 'MesasController@AllMesas')->name('all.mesas');
     Route::get('/mesas', 'MesasController@index')->name('mesas.index');
     Route::get('mesas/create', 'MesasController@create')->name('mesas.create');
-    Route::post('mesas/store', 'MesasController@store')->name('mesas.store'); 
+    Route::post('mesas/store', 'MesasController@store')->name('mesas.store');
     Route::get('mesas/{mesa}', 'MesasController@show')->name('mesas.show');
     Route::get('mesas/{mesa}/edit', 'MesasController@edit')->name('mesas.edit');
     Route::put('mesas/actualizar', 'MesasController@actualizar')->name('mesas.actualizar');
@@ -144,13 +137,13 @@ Route::middleware(['auth'])->group(function(){
 
     //rutas de menu configuracion-->metodos de pago 
     Route::get('all/metodospago', 'MetodosPagoController@AllMetodosPago')->name('all.metodospago');
-    Route::get('/metodospago', 'MetodosPagoController@index')->name('metodospago.index');    
+    Route::get('/metodospago', 'MetodosPagoController@index')->name('metodospago.index');
     Route::get('metodospago/create', 'MetodosPagoController@create')->name('metodospago.create');
     Route::post('metodospago/store', 'MetodosPagoController@store')->name('metodospago.store');
-    Route::get('metodospago/{metodopago}',  'MetodosPagoController@show')->name('metodospago.show'); 
+    Route::get('metodospago/{metodopago}',  'MetodosPagoController@show')->name('metodospago.show');
     Route::get('metodospago/{metodopago}/edit', 'MetodosPagoController@edit')->name('metodospago.edit');
-    Route::put('metodospago/actualizar','MetodosPagoController@actualizar')->name('metodospago.actualizar');
-    Route::delete( 'metodospago/{metodopago}','MetodosPagoController@destroy')->name('metodospago.destroy');
+    Route::put('metodospago/actualizar', 'MetodosPagoController@actualizar')->name('metodospago.actualizar');
+    Route::delete('metodospago/{metodopago}', 'MetodosPagoController@destroy')->name('metodospago.destroy');
 
     //rutas de menu configuracion-->modos
     Route::get('all/modos', 'ModosController@AllModos')->name('all.modos');
@@ -159,7 +152,7 @@ Route::middleware(['auth'])->group(function(){
     Route::post('modos/store', 'ModosController@store')->name('modos.store');
     Route::get('modos/{modos}', 'ModosController@show')->name('modos.show');
     Route::get('modos/{modos}/edit', 'ModosController@edit')->name('modos.edit');
-   
+
     //rutas de menu configuracion-->alergenos
     Route::get('all/alergenos', 'AlergenoController@AllAlergenos')->name('all.alergenos');
     Route::get('/alergenos', 'AlergenoController@index')->name('alergenos.index');
@@ -179,83 +172,92 @@ Route::middleware(['auth'])->group(function(){
     Route::get('cartas/{carta}/edit', 'CartaController@edit')->name('cartas.edit');
     Route::put('cartas/actualizar', 'CartaController@actualizar')->name('cartas.actualizar');
     Route::delete('cartas/{carta}', 'CartaController@destroy')->name('cartas.destroy');
-    
+
+    //rutas de menu configuracion-->categorias
+    Route::get('all/categorias', 'CategoriaController@AllCategorias')->name('all.categorias');
+    Route::get('/categorias', 'CategoriaController@index')->name('categorias.index');
+    Route::get('categorias/create', 'CategoriaController@create')->name('categorias.create');
+    Route::post('categorias/store', 'CategoriaController@store')->name('categorias.store');
+    Route::get('categorias/{carta}', 'CategoriaController@show')->name('categorias.show');
+    Route::get('categorias/{carta}/edit', 'CategoriaController@edit')->name('categorias.edit');
+    Route::put('categorias/actualizar', 'CategoriaController@actualizar')->name('categorias.actualizar');
+    Route::delete('categorias/{carta}', 'CategoriaController@destroy')->name('categorias.destroy');
+
+    //rutas de menu configuracion-->subcategorias
+    Route::get('all/subcategorias', 'SubCategoriaController@AllSubCategorias')->name('all.subcategorias');
+    Route::get('/subcategorias', 'SubCategoriaController@index')->name('subcategorias.index');
+    Route::get('subcategorias/create', 'SubCategoriaController@create')->name('subcategorias.create');
+    Route::post('subcategorias/store', 'SubCategoriaController@store')->name('subcategorias.store');
+    Route::get('subcategorias/{carta}', 'SubCategoriaController@show')->name('subcategorias.show');
+    Route::get('subcategorias/{carta}/edit', 'SubCategoriaController@edit')->name('subcategorias.edit');
+    Route::put('subcategorias/actualizar', 'SubCategoriaController@actualizar')->name('subcategorias.actualizar');
+    Route::delete('subcategorias/{carta}', 'SubCategoriaController@destroy')->name('subcategorias.destroy');
 
     //roles
 
-    Route::get('/roles','RolesController@index')->name('roles.index')
-    ->middleware('permission:roles.index');
-    
-    Route::get('roles/create','RolesController@create')->name('roles.create')
-        ->middleware('permission:roles.create');
-    
-    Route::post('roles/store', 'RolesController@store')->name('roles.store')
-        ->middleware('permission:roles.create');
+    // Route::get('/roles', 'RolesController@index')->name('roles.index')
+    //     ->middleware('permission:roles.index');
 
-    Route::put('roles/{role}','RolesController@update')->name('roles.update')
-        ->middleware('permission:roles.edit');
+    // Route::get('roles/create', 'RolesController@create')->name('roles.create')
+    //     ->middleware('permission:roles.create');
 
-    Route::get('roles/{role}','RolesController@show')->name('roles.show')
-        ->middleware('permission:roles.show');
+    // Route::post('roles/store', 'RolesController@store')->name('roles.store')
+    //     ->middleware('permission:roles.create');
 
-    Route::delete('roles/{role}','RolesController@destroy')->name('roles.destroy')
-        ->middleware('permission:roles.destroy');
+    // Route::put('roles/{role}', 'RolesController@update')->name('roles.update')
+    //     ->middleware('permission:roles.edit');
 
-    Route::get('roles/{role}/edit','RolesController@edit')->name('roles.edit')
-        ->middleware('permission:roles.edit');
-    
+    // Route::get('roles/{role}', 'RolesController@show')->name('roles.show')
+    //     ->middleware('permission:roles.show');
 
-    //Productos
-    // Route::post('productos/store','ProductosController@store')->name('productos.store')
-    //     ->middleware('permission:productos.create');
+    // Route::delete('roles/{role}', 'RolesController@destroy')->name('roles.destroy')
+    //     ->middleware('permission:roles.destroy');
 
-    Route::get('productos','ProductosController@index')->name('productos.index')
-    ->middleware('permission:productos.index');
+    // Route::get('roles/{role}/edit', 'RolesController@edit')->name('roles.edit')
+    //     ->middleware('permission:roles.edit');
+
+
+    // //Productos
+    Route::post('productos/store','ProductosController@store')->name('productos.store');
+
+    Route::get('productos', 'ProductosController@index')->name('productos.index');
 
     Route::get('all/productos', 'ProductosController@AllProduct')->name('all.productos');
 
-    Route::get('productos/create','ProductosController@create')->name('productos.create')
-        ->middleware('permission:productos.create');
+    Route::get('productos/create', 'ProductosController@create')->name('productos.create');
 
-    Route::post('productos/store', 'ProductosController@store')->name('productos.store')
-        ->middleware('permission:productos.create');
+    Route::post('productos/store', 'ProductosController@store')->name('productos.store');
 
-    Route::put('productos/{producto}','ProductosController@update')->name('productos.update')
-        ->middleware('permission:productos.edit');
+    Route::put('productos/{producto}', 'ProductosController@update')->name('productos.update');
 
-    Route::get('productos/{producto}','ProductosController@show')->name('productos.show')
-        ->middleware('permission:productos.show');
+    Route::get('productos/{producto}', 'ProductosController@show')->name('productos.show');
 
-    Route::delete('productos/{producto}','ProductosController@destroy')->name('productos.destroy')
-        ->middleware('permission:productos.destroy');
+    Route::delete('productos/{producto}', 'ProductosController@destroy')->name('productos.destroy');
 
-    Route::get('productos/{producto}/edit','ProductosController@edit')->name('productos.edit')
-        ->middleware('permission:productos.edit');
- 
-    //usuarios    
-    Route::post('usuarios/store','UsuariosController@store')->name('usuarios.store')
-        ->middleware('permission:usuarios.create');
-    
-    Route::get('usuarios','UsuariosController@index')->name('usuarios.index')
-    ->middleware('permission:usuarios.index');
+    Route::get('productos/{producto}/edit', 'ProductosController@edit')->name('productos.edit');
 
-    Route::get('usuarios/create','UsuariosController@create')->name('usuarios.create')
-        ->middleware('permission:usuarios.create');
+    // //usuarios    
+    // Route::post('usuarios/store', 'UsuariosController@store')->name('usuarios.store')
+    //     ->middleware('permission:usuarios.create');
 
-    Route::get('usuarios/{usuario}','UsuariosController@show')->name('usuarios.show')
-        ->middleware('permission:usuarios.show');
+    // Route::get('usuarios', 'UsuariosController@index')->name('usuarios.index')
+    //     ->middleware('permission:usuarios.index');
 
-    Route::get('usuarios/{usuario}/edit','UsuariosController@edit')->name('usuarios.edit')
-        ->middleware('permission:roles.edit');
+    // Route::get('usuarios/create', 'UsuariosController@create')->name('usuarios.create')
+    //     ->middleware('permission:usuarios.create');
 
-    Route::put('usuarios/{usuario}','UsuariosController@update')->name('usuarios.update')
-        ->middleware('permission:usuarios.edit');
+    // Route::get('usuarios/{usuario}', 'UsuariosController@show')->name('usuarios.show')
+    //     ->middleware('permission:usuarios.show');
 
-    Route::delete('usuarios/{usuario}','UsuariosController@destroy')->name('usuarios.destroy')
-        ->middleware('permission:usuarios.destroy');
+    // Route::get('usuarios/{usuario}/edit', 'UsuariosController@edit')->name('usuarios.edit')
+    //     ->middleware('permission:roles.edit');
 
-    
-});
+    // Route::put('usuarios/{usuario}', 'UsuariosController@update')->name('usuarios.update')
+    //     ->middleware('permission:usuarios.edit');
+
+    // Route::delete('usuarios/{usuario}', 'UsuariosController@destroy')->name('usuarios.destroy')
+    //     ->middleware('permission:usuarios.destroy');
+// });
 
 // Route::resource('usuarios', 'UsuariosController');
 // Route::get('all/usuarios', 'UsuariosController@AllUser','RolesController@store')->name('all/usuarios');

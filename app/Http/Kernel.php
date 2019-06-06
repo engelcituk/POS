@@ -62,8 +62,9 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         
         //agrego mis propios middleware relacionados a roles y permisos
-        'role'          => \Caffeinated\Shinobi\Middleware\UserHasRole::class,
-        'permission'    => \Caffeinated\Shinobi\Middleware\UserHasPermission::class
+        'role' => \Caffeinated\Shinobi\Middleware\UserHasRole::class,
+        'permission'=> \Caffeinated\Shinobi\Middleware\UserHasPermission::class,
+        'filtroAcceso' => \App\Http\Middleware\IngresoUser::class,
     ];
     // Caffeinated \Shinobi \Middleware;
     /**

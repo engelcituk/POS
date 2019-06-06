@@ -11,18 +11,7 @@
                         @csrf
                         <div class="card card-login card-hidden">
                             <div class="card-header text-center" data-background-color="blue">
-                                <h4 class="card-title">Inicio de sesión</h4>
-                                <!-- <div class="social-line">
-                                    <a href="#btn" class="btn btn-just-icon btn-simple">
-                                        <i class="fa fa-facebook-square"></i>
-                                    </a>
-                                    <a href="#pablo" class="btn btn-just-icon btn-simple">
-                                        <i class="fa fa-twitter"></i>
-                                    </a>
-                                    <a href="#eugen" class="btn btn-just-icon btn-simple">
-                                        <i class="fa fa-google-plus"></i>
-                                    </a>
-                                </div> -->
+                                <h4 class="card-title">Inicio de sesión</h4>                                
                             </div>
                             <p class="category text-center">
                                 Ingrese sus datos de ingreso
@@ -33,8 +22,8 @@
                                         <i class="material-icons">email</i>
                                     </span>
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Email address</label>
-                                        <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                        <label class="control-label">Nombre de usuario</label>
+                                        <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="usuario" value="{{ old('email') }}" required autofocus>
                                         @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('email') }}</strong>

@@ -1,39 +1,44 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
- 
+
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use function GuzzleHttp\json_decode;
+
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
+    public $urlBase = "http://localhost/TPVApi/Ingreso/";
 
-    use AuthenticatesUsers;
+    public function login(Request $request){
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/ordenar';
+        $usuario = $request->get('usuario');
+        $password = $request->get('password');
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
+        $respuesta = $this->ingresoUsuario($usuario, $password);
+        $respuestaOk = $respuesta->ok;
+
+        if ($respuestaOk == true) {
+            $usuario = $respuesta->objeto;
+
+            foreach ($usuario as $item) {
+              $idUsuario= $item->id;
+              $nombreCompleto = $item->name;
+              $nombreDeUsuario = $item->usuario;
+            } 
+
+            $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
+            $usuarioSesion = $request->session()->get('UsuarioLogueado'); 
+                     
+            return  redirect('ordenar');
+        }         
+        return back()->withErrors(['usuario'=>'Estas credenciales no coinciden con nuestros registros']);
+    }
+
+    public function ingresoUsuario($usuario, $password){
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."{$usuario}/{$password}");
+        $respuesta = json_decode($respuesta);        
+        return $respuesta;
     }
 }

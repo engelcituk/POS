@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Auth\Events\Lockout;
-use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Lang; 
 use Illuminate\Validation\ValidationException;
 
 trait ThrottlesLogins
@@ -91,7 +91,7 @@ trait ThrottlesLogins
 
     /**
      * Get the rate limiter instance.
-     *
+     * 
      * @return \Illuminate\Cache\RateLimiter
      */
     protected function limiter()
