@@ -9,8 +9,33 @@
                     <div class="card card-profile">
                         @csrf
                         <div class="row">
-                            <div class="card-content">
-                                <div class="col-md-6">
+                            <div class="card-content">                                
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-grip-horizontal"></i>
+                                        </span>
+                                        <div class="form-group">
+                                            <select class="form-control" name="idSubCategoria" required>
+                                                <option value="">Elija subcategoria del producto </option>
+                                                @foreach($categorias as $categoria)
+                                                <optgroup label="{{$categoria->name}}">
+                                                    @foreach($subcategorias as $subcategoria)
+                                                    @php
+                                                        $collection = collect(['idCategoria' => $subcategoria->idCategoria, 'idCategoria' => $categoria->id]);
+                                                        $respuesta = $collection->contains($subcategoria->idCategoria);
+                                                    @endphp
+                                                        @if($respuesta==1)
+                                                        <option value="{{$subcategoria->id}}">{{$subcategoria->name}}</option>
+                                                    @endif 
+                                                    @endforeach
+                                                </optgroup>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-code"></i>
@@ -26,24 +51,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-grip-horizontal"></i>
-                                        </span>
-                                        <div class="form-group">
-                                            <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" id="sel1">
-                                                <option>Seleccione Subcategoria</option>
-                                                <option>Subcategoria 1</option>
-                                                <option>Subcategoria 2</option>
-                                                <option>Subcategoria 3</option>
-                                                <option>Subcategoria 4</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-file-signature"></i>
@@ -58,8 +66,55 @@
                                             @endif
                                         </div>
                                     </div>
+                                </div>                                
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-file-signature"></i>
+                                        </span>
+                                        <div class="form-group">
+                                            <select class="form-control" name="tipoPropina" required>
+                                                <option value="">Seleccione tipo de propina </option>                    
+                                                    <option value="1">Porcentaje</option>
+                                                    <option value="2">Dinero</option>         
+                                                </optgroup>                                        
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fab fa-gratipay"></i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Monto propina</label>
+                                            <input id="montoPropina" type="number" class="form-control{{ $errors->has('montoPropina') ? ' is-invalid' : '' }}" name="montoPropina" required>
+                                            @if ($errors->has('montoPropina'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('montoPropina') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-money-bill-alt"></i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Precio</label>
+                                            <input id="precio" type="number" class="form-control{{ $errors->has('precio') ? ' is-invalid' : '' }}" name="precio" required>
+                                            @if ($errors->has('precio'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('precio') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         Con propina
                                         <div class="radio">
@@ -72,56 +127,8 @@
                                         </div>
 
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-file-signature"></i>
-                                        </span>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Tipo propina</label>
-                                            <input id="tipoPropina" type="text" class="form-control{{ $errors->has('tipoPropina') ? ' is-invalid' : '' }}" name="tipoPropina" required autofocus>
-                                            @if ($errors->has('tipoPropina'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('tipoPropina') }}</strong>
-                                            </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fab fa-gratipay"></i>
-                                        </span>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Monto propina</label>
-                                            <input id="montoPropina" type="text" class="form-control{{ $errors->has('montoPropina') ? ' is-invalid' : '' }}" name="montoPropina" required autofocus>
-                                            @if ($errors->has('montoPropina'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('montoPropina') }}</strong>
-                                            </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-money-bill-alt"></i>
-                                        </span>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Precio</label>
-                                            <input id="precio" type="text" class="form-control{{ $errors->has('precio') ? ' is-invalid' : '' }}" name="precio" required autofocus>
-                                            @if ($errors->has('precio'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('precio') }}</strong>
-                                            </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>                                
-                                <div class="col-md-6">
+                                </div>                               
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         Complemento
                                         <div class="radio">
@@ -135,7 +142,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         Estado
                                         <div class="radio">
@@ -146,11 +153,18 @@
                                                 <input type="radio" name="status" value="false">Desactivado
                                             </label>
                                         </div>
-
                                     </div>
-                                </div>
-
-                                {{-- <small>En la api se registra el <cite title="idPuntoVenta">fechaAlta/horaAlta/idReceta/status </cite></small> --}}
+                                </div>                                
+                                <h4>Seleccione un alergeno si el producto tiene alergenos</h4>
+                                @foreach($alergenos as $alergeno)                                
+                                    <div class="col-md-4">
+	                                    <div class="checkbox checkbox-group required">                              
+                                            <label class="labelCheckbox ">
+                                            <input type="checkbox" name="idAlergeno[]" value="{{$alergeno->id}}"><strong>{{$alergeno->name}}</strong>
+                                            </label>                                            
+                                        </div>
+                                    </div>                                         
+                                @endforeach 
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>

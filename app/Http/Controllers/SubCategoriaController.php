@@ -13,14 +13,14 @@ class SubCategoriaController extends Controller {
     }
 
     public function AllSubCategorias(){
-        $subcategorias = $this->obtenerTodasLasSubcCategorias();
+        $subcategorias = $this->obtenerTodasLasSubCategorias();
 
         $acciones = 'subcategorias.datatables.botones';
         return Datatables::of($subcategorias)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true);
     }
-    public function obtenerTodasLasSubcCategorias(){               
+    public function obtenerTodasLasSubCategorias(){               
         $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetSubCategoria');
 
         $datos = json_decode($respuesta);

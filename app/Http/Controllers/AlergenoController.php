@@ -30,7 +30,7 @@ class AlergenoController extends Controller
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    protected function obtenerTodosLosAlergenos()
+    public function obtenerTodosLosAlergenos()
     {
         //es una funcion que esta en el controller principal    
         $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetAlergenos');

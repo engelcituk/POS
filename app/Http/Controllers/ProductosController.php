@@ -8,7 +8,9 @@ use Yajra\DataTables\DataTables;
 
 class ProductosController extends Controller
 {
-    //
+    public $urlBase = "http://localhost/TPVApi/Producto/";
+    public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
+
     public function __construct()
     {
         // $this->middleware('auth');
@@ -23,12 +25,16 @@ class ProductosController extends Controller
     {
         // $productos = $this->obtenerTodosLosProductos();
 
-        return view('productos', compact('productos'));
+        return view('productos');
         
     }
-    protected function create()
-    {        
-        return view('productos.partials.create');
+    protected function create(){
+        
+        $categorias= \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
+        $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
+        $alergenos = \App::call( 'App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
+
+        return view('productos.partials.create', compact('categorias','subcategorias','alergenos'));  
     }
     public function AllProduct()
     {
@@ -39,22 +45,30 @@ class ProductosController extends Controller
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }   
-    protected function obtenerTodosLosProductos(){
+    public function obtenerTodosLosProductos(){
        //es una funcion que esta en el controller principal
-       $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/ks42s');
+       $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetProducto'); 
 
        $datos = json_decode($respuesta);
 
-       $productos = $datos->productos;
+       $productos = $datos->objeto;
 
        return $productos;
     }
     
-    public function show($id){
+    public function show($idProducto){
+        
+        $producto = $this->obtenerUnProducto($idProducto);
+        $idSubcategoria= $producto->idSubCategoria;
 
-        $producto = $id;
+        $subCategoria = new SubCategoriaController();
+        $subCategoria = $subCategoria->obtenerUnaSubCategoria($idSubcategoria);
+        $idCategoria = $subCategoria->idCategoria;
 
-        return view('productos.partials.show', ['producto' => $producto]);
+        $categoria = new CategoriaController();
+        $categoria = $categoria->obtenerUnaCategoria($idCategoria);
+
+        return view('productos.partials.show', compact('producto','subCategoria','categoria'));
 
         // $respuesta = $this->realizarPeticion('GET', "https://apilumen.juandmegon.com/estudiantes/{$id}");
 
@@ -64,19 +78,67 @@ class ProductosController extends Controller
        
         // return view('productos.partials.show', ['producto' => $producto]);        
     }
-    public function edit($id)
-    {
-        $producto = $id;
-        return view('productos.partials.edit', ['producto' => $producto]);
-    }
+    public function edit($idProducto){
 
+        $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
+        $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
+        $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
+
+        $producto = $this->obtenerUnProducto($idProducto);
+        $alergenos = $this->obtenerAlergenosProducto($idProducto);
+        dd($alergenos);
+        $idSubcategoria = $producto->idSubCategoria;
+
+        $subCategoria = new SubCategoriaController();
+        $subCategoria = $subCategoria->obtenerUnaSubCategoria($idSubcategoria);
+        $idCategoria = $subCategoria->idCategoria;
+
+        $idAlergenosColeccion = new Collection([]);
+        foreach ($alergenos as $alergeno) {
+            $idAlergenosColeccion->push($alergeno->idPermiso);
+        }
+
+        
+        return view('productos.partials.edit', compact('categorias', 'subcategorias', 'alergenos','producto', 'subCategoria')); 
+    }
+    public function obtenerUnProducto($idProducto){
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProducto/{$idProducto}");
+        $datos = json_decode($respuesta);
+        $producto = $datos->objeto;
+        return $producto;
+    }
+    
+    public function obtenerAlergenosProducto($idProducto){
+        $respuesta = $this->realizarPeticion('GET', $this->urlBaseProductoAlergeno."GetAlergenosProducto/{$idProducto}");
+        $datos = json_decode($respuesta);
+        $alergenos = $datos->objeto;
+        return $alergenos;
+    }
     public function store(Request $request){
 
-        $accessToken = 'Bearer '.$this->obtenerAccessToken();
+        $arrayIdAlergenos = $request->get('idAlergeno');
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddProducto', ['form_params' => $request->all()]);
+        $datos = json_decode($respuesta);
+        $respuestaObjeto = $datos->objeto; 
 
-        $respuesta = $this->realizarPeticion('POST', 'https://apilumen.juandmegon.com/estudiantes', ['headers'=> ['Authorization' => $accessToken], 'form_params' => $request->all()]); 
-          
+        $idProducto = $respuestaObjeto->id;
+
+        if($arrayIdAlergenos!=null){            
+            foreach ($arrayIdAlergenos as $idAlergeno) {
+                $this->guardarProductoAlergeno($idProducto, $idAlergeno);
+            }
+        }                         
         return redirect('/productos');
     }
+    public function guardarProductoAlergeno($idProducto, $idAlergeno){
+        $respuesta = $this->realizarPeticion('POST', $this->urlBaseProductoAlergeno.'AddProductoAlergeno', [
+            'form_params' => [
+                'idProducto' => $idProducto,
+                'idAlergeno' => $idAlergeno
+            ]
+        ]);
+        return $respuesta;
+    }
+
 }
  

@@ -12,7 +12,7 @@ class LoginController extends Controller
     public $urlBase = "http://localhost/TPVApi/Ingreso/";
 
     public function login(Request $request){
-
+ 
         $usuario = $request->get('usuario');
         $password = $request->get('password');
 
@@ -40,5 +40,17 @@ class LoginController extends Controller
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."{$usuario}/{$password}");
         $respuesta = json_decode($respuesta);        
         return $respuesta;
+    }
+
+    public function logout(Request $request){
+
+        // $usuario = $request->get('UsuarioLogueado');
+        //$usuarioLogueado = $request->session()->get('UsuarioLogueado');
+        // $password = $request->get('password');
+        // dd($usuarioLogueado);
+        $request->session()->forget('UsuarioLogueado');
+
+        
+        return redirect('/');
     }
 }

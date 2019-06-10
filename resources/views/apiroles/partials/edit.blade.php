@@ -49,8 +49,7 @@
                                     @php                                	
                                         $resultado = $idPermisosRolColeccion->contains($permiso->id);                                        
                                         $checked = ($resultado == 1) ? "checked" : "";
-                                    @endphp
-                                        
+                                    @endphp                                        
                                             <div class="col-md-4 col-sm-6 col-xs-6">
                                                 <div class="checkbox">
                                                     @php
