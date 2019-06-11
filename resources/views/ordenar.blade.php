@@ -10,12 +10,12 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="fas fa-hotel"></i> NombreHotel</a></li>
                         <li class="breadcrumb-item"><a href="#"><i class="fas fa-concierge-bell"></i> CentroConsumo</a></li>
-                        <li class="breadcrumb-item active listaZonas" aria-current="page"> <i class="fas fa-map-marker-alt"></i> Zonas <i class="fas fa-hand-point-right"></i>
-                            <select id="zonaElige">
+                        <li class="breadcrumb-item active listaZonas" aria-current="page"> <i class="fas fa-map-marker-alt"></i> Zonas <i class="fas fa-hand-point-right"></i>                            
+                            <select class="form-control" id="zonaElige">
                                 <option value="">Elija un area</option>
-                                <option value="zona1">zona 1</option>
-                                <option value="zona2">zona 2</option>
-                                <option value="zona3">zona 3</option>
+                                    @foreach($zonas as $zona)
+                                    <option value="zona{{$zona->id}}">{{$zona->name}}</option>
+                                    @endforeach
                                 <option value="todos">MOSTRAR TODOS</option>
                             </select>
                         </li>
@@ -31,120 +31,27 @@
                         <i class="fas fa-concierge-bell"></i>
                     </div>
                     <div class="card-content">
-                    <h4 class="card-title">Tomar Orden </h4>
-                        <div id="zona1" class="zonas">
-                            <strong>Zona 1</strong>
-                            <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                                <li class="abrirMesa" idMesa="1">
+                        <h4 class="card-title">Tomar Orden </h4>
+                         
+                        @foreach($zonas as $zona)                            
+                            <div id="zona{{$zona->id}}" class="zonas">
+                            <strong>{{$zona->name}}</strong>
+                            @php                                
+                               $idZona=$zona->id;                          
+                               $mesas=App\Http\Controllers\OrdenController::obtenerMesasPorZona($idZona); 
+                            @endphp                                                            
+                             <ul class="nav nav-pills nav-pills-icons" role="tablist">
+                                 @foreach($mesas as $mesa)
+                               <li class="abrirMesa" idMesa="1">
                                     <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="true">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 1
+                                        <img src="{{asset('img/mesa2.png')}}"> {{$mesa->name}}
 
                                     </a>
                                 </li>
-                                <li class="abrirMesa" idMesa="2">
-                                    <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 2
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="3">
-                                    <a href="#mesa-3" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 3
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="4">
-                                    <a href="#mesa-4" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 4
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="5">
-                                    <a href="#mesa-6" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 5
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="7">
-                                    <a href="#mesa-7" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 7
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="8">
-                                    <a href="#mesa-8" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 8
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="9">
-                                    <a href="#mesa-9" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 9
-                                    </a>
-                                </li>
-                            </ul>
+                            @endforeach                                
+                            </ul> 
                         </div>
-                        <div id="zona2" class="zonas">
-                            <strong>Zona 2</strong>
-                            <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                                <li class="abrirMesa" idMesa="10">
-                                    <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="true">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 1
-
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="11">
-                                    <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 2
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="12">
-                                    <a href="#mesa-3" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 3
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="13">
-                                    <a href="#mesa-4" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 4
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="14">
-                                    <a href="#mesa-6" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 5
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="15">
-                                    <a href="#mesa-6" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 6
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="zona3" class="zonas">
-                            <strong>Zona 3</strong>
-                            <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                                <li class="abrirMesa" idMesa="16">
-                                    <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="true">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 1
-
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="17">
-                                    <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 2
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="18">
-                                    <a href="#mesa-3" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 3
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="19">
-                                    <a href="#mesa-4" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 4
-                                    </a>
-                                </li>
-                                <li class="abrirMesa" idMesa="20">
-                                    <a href="#mesa-6" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <img src="{{asset('img/mesa2.png')}}"> Mesa 5
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        @endforeach
                     </div>
                     <!-- end content-->
                 </div>

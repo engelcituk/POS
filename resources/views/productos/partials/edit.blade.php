@@ -40,7 +40,7 @@
                                             <i class="fas fa-code"></i>
                                         </span>
                                         <div class="form-group label-floating">
-                                            <label class="control-label">Codigo producto</label>
+                                            <label class="control-label">Codigo producto </label>
                                         <input id="codigoProducto" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="codigoProducto" required value="{{$producto->codigoProducto}}">
                                             @if ($errors->has('codigoProducto'))
                                             <span class="invalid-feedback" role="alert">
@@ -166,14 +166,19 @@
 
                                 <h4>Seleccione un alergeno si el producto tiene alergenos</h4>
                                 @foreach($alergenos as $alergeno)
-                                {{-- @php                                	
-                                    $resultado = $idPermisosRolColeccion->contains($permisoItem->id);
+                                @php    
+                                                            	
+                                    $resultado = $idAlergenosColeccion->contains($alergeno->id);
                                     $checked = ($resultado == 1) ? "checked" : "";
-                                @endphp                               --}}
+                                    $idProducto =$producto->id;
+                                    $idAlergeno = $alergeno->id;
+                                    $nombreAlergeno=$alergeno->name;
+                                    $nombreProducto=$producto->nombreProducto;
+                                @endphp                              
                                     <div class="col-md-4">
 	                                    <div class="checkbox checkbox-group required">                              
                                             <label class="labelCheckbox ">
-                                            <input type="checkbox" name="idAlergeno[]"><strong>{{$alergeno->name}}</strong>
+                                            <input type="checkbox" nombreProducto={{$nombreProducto}} nombreAlergeno="{{$nombreAlergeno}}" name="idAlergeno[]" id="checkAlergeno{{$idAlergeno}}" idProducto="{{$idProducto}}" value="{{$idAlergeno}}" {{$checked}} onclick="AddDeleteProductoAlergeno({{$idAlergeno}})"><strong>{{$nombreAlergeno}}</strong>
                                             </label>                                            
                                         </div>
                                     </div>                                         

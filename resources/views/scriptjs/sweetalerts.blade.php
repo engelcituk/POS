@@ -540,7 +540,7 @@
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    tablaProductos.ajax.reload();
+                    tablaMenuCartas.ajax.reload();
                     swal({
                         title: '¡Exito!',
                         text: '¡Su dato ha sido borrado!',

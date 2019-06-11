@@ -4,11 +4,11 @@
         $("#zonaMesas").load(" #zonaMesas");
     })
     $("#zonaElige").change(function() {
-        var nombreZona = $("option:selected", this).val(); //obtener el value de un select
-        if (nombreZona != "") {            
+        var valorSelect = $("option:selected", this).val(); //obtener el value de un select
+        if (valorSelect != "") {            
             $(".zonas").hide();
-            $("#" + nombreZona).show();
-                if (nombreZona == "todos") {
+            $("#" + valorSelect).show();
+                if (valorSelect == "todos") {
                     $(".zonas").show();
                 }
         } else {

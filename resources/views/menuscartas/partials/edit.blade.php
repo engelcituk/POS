@@ -3,10 +3,13 @@
 <div class="content">
     <div class="container-fluid">
         <a href="{{ route('menuscartas.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <div class="row">
+        <form method="POST" action="{{ route('menuscartas.store')}}">
+            <div class="row">
                 <div class="col-md-12">
                     <div class="card card-profile">
-                        @csrf
+                       @csrf
+                        {{ method_field('PUT') }}
+                        <input id="name" type="hidden" class="form-control" name="id" value="{{$menucarta->id}}" required>
                         <div class="row">
                             <div class="card-content">                                
                                 <div class="col-md-6">
@@ -15,78 +18,67 @@
                                             <i class="fas fa-grip-horizontal"></i>
                                         </span>
                                         <div class="form-group">
-                                            <select class="form-control" name="idSubCategoria" required>
-                                                <option value="">Elija carta</option>
-                                                @foreach($categorias as $categoria)
-                                                <optgroup label="{{$categoria->name}}">
-                                                    @foreach($subcategorias as $subcategoria)
-                                                    @php
-                                                        $collection = collect(['idCategoria' => $subcategoria->idCategoria, 'idCategoria' => $categoria->id]);
-                                                        $respuesta = $collection->contains($subcategoria->idCategoria);
-                                                    @endphp
-                                                        @if($respuesta==1)
-                                                        <option value="{{$subcategoria->id}}">{{$subcategoria->name}}</option>
-                                                    @endif 
+                                            <select class="form-control" name="idCarta" required>
+                                            <option value="{{$datosCarta->id}}">{{$datosCarta->name}}</option>
+                                                    @foreach($cartas as $carta)
+                                                        <option value="{{$carta->id}}">{{$carta->name}}</option>
                                                     @endforeach
-                                                </optgroup>
-                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-file-signature"></i>
-                                        </span>
-                                        <div class="form-group">
-                                            <select class="form-control" name="tipoPropina" required>
-                                                <option value="">Seleccione producto </option>                    
-                                                    <option value="1">Porcentaje</option>
-                                                    <option value="2">Dinero</option>         
-                                                </optgroup>                                        
+                            <div class="panel-body">
+                                <div class="viewcontent">
+                                    <table id="tblMenuCartas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Producto</th>
+                                            <th>Precio</th>
+                                            <th>Centro Preparación</th>
+                                            <th></th>
+                
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr id="addr0" data-id="0">
+                                            <td data-name="idProducto">
+                                            <select class="form-control" name="idProducto" required>
+                                                <option value="{{$datosProducto->id}}">{{$datosProducto->nombreProducto}}</option>
+                                                    @foreach($productos as $producto)
+                                                        <option value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
+                                                    @endforeach
                                             </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-file-signature"></i>
-                                        </span>
-                                        <div class="form-group">
-                                            <select class="form-control" name="tipoPropina" required>
-                                                <option value="">Seleccione centro de preparación </option>                    
-                                                    <option value="1">Porcentaje</option>
-                                                    <option value="2">Dinero</option>         
-                                                </optgroup>                                        
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-code"></i>
-                                        </span>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Precio</label>
-                                            <input id="codigoProducto" type="number" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="codigoProducto" required autofocus>
-                                            @if ($errors->has('codigoProducto'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('codigoProducto') }}</strong>
-                                            </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>                                 
-                                <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
+                                            </td>
+                                            <td data-name="precio">
+                                            <input id="precio" type="number" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="precio" value="{{$menucarta->precio}}" required>
+                                            </td>
+                                            <td data-name="idCentroPrep">
+                                            <select class="form-control" name="idCentroPrep" required>
+                                                    <option value="{{$datosCP->id}}">{{$datosCP->name}}</option>
+                                                        @foreach($centrosPreparacion as $cp)
+                                                            <option value="{{$cp->id}}">{{$cp->name}}</option>
+                                                        @endforeach
+                                                </select>
+                                            </td> 
+                                            {{-- <td data-name="del">
+                                                <button name="del0" class='btn btn-danger fa fa-remove btn-sm row-remove'></button>
+                                            </td> --}}
+                                        </tr>
+                                   
+
+                                    </tbody>
+                                    </table>     
+                                </div>    
+                                {{-- <a id="add_row" class="btn btn-success btn-circle pull-right fa fa-plus" onclick="addrowTarifa()"></a>                     --}}
+                                <button type="submit" class="btn btn-primary pull-left"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
+                            </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-                
+        </form>                
     </div>
 </div>
 

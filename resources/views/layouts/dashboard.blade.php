@@ -325,6 +325,7 @@
 @include('scriptjs/datatables')
 @include('scriptjs/sweetalerts')
 @include('scriptjs/permisosRol')
+@include('scriptjs/productoAlergeno')
 @include('scriptjs/permisosRolUsuario')
 @include('scriptjs/validaciones')
 @include('scriptjs/cartas')

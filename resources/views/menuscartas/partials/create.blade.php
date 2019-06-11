@@ -41,9 +41,9 @@
                                         <tr id="addr0" data-id="0">
                                             <td data-name="idProducto">
                                             <select class="form-control" name="idProducto[]" required>
-                                                <option value="">Elija carta</option>
-                                                    @foreach($cartas as $carta)
-                                                        <option value="{{$carta->id}}">{{$carta->name}}</option>
+                                                <option value="">Elija producto</option>
+                                                    @foreach($productos as $producto)
+                                                        <option value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
                                                     @endforeach
                                             </select>
                                             </td>
@@ -52,9 +52,9 @@
                                             </td>
                                             <td data-name="idCentroPrep">
                                             <select class="form-control" name="idCentroPrep[]" required>
-                                                    <option value="">Elija carta</option>
-                                                        @foreach($cartas as $carta)
-                                                            <option value="{{$carta->id}}">{{$carta->name}}</option>
+                                                    <option value="">Centro Preparacion</option>
+                                                        @foreach($centrosPreparacion as $cp)
+                                                            <option value="{{$cp->id}}">{{$cp->name}}</option>
                                                         @endforeach
                                                 </select>
                                             </td> 

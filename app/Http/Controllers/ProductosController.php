@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Collection;
 
 class ProductosController extends Controller
 {
@@ -85,21 +86,28 @@ class ProductosController extends Controller
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
 
         $producto = $this->obtenerUnProducto($idProducto);
-        $alergenos = $this->obtenerAlergenosProducto($idProducto);
-        dd($alergenos);
+        $alergenosProducto = $this->obtenerAlergenosProducto($idProducto);//obtengo un objeto con una respuesta ok
+        $respuestaOk = $alergenosProducto->ok;
+
         $idSubcategoria = $producto->idSubCategoria;
 
         $subCategoria = new SubCategoriaController();
         $subCategoria = $subCategoria->obtenerUnaSubCategoria($idSubcategoria);
         $idCategoria = $subCategoria->idCategoria;
+ 
+        if ($respuestaOk== 1) {
+            $alergenosProducto = $alergenosProducto->objeto;
 
-        $idAlergenosColeccion = new Collection([]);
-        foreach ($alergenos as $alergeno) {
-            $idAlergenosColeccion->push($alergeno->idPermiso);
-        }
+            $idAlergenosColeccion = new Collection([]);
+            foreach ($alergenosProducto as $alergeno) {
+                $idAlergenosColeccion->push($alergeno->idAlergeno);
+            }
 
-        
-        return view('productos.partials.edit', compact('categorias', 'subcategorias', 'alergenos','producto', 'subCategoria')); 
+        } else {
+            $idAlergenosColeccion = new Collection([]);
+         }
+                               
+        return view('productos.partials.edit', compact('categorias', 'subcategorias', 'alergenos','producto', 'subCategoria', 'idAlergenosColeccion')); 
     }
     public function obtenerUnProducto($idProducto){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProducto/{$idProducto}");
@@ -111,8 +119,8 @@ class ProductosController extends Controller
     public function obtenerAlergenosProducto($idProducto){
         $respuesta = $this->realizarPeticion('GET', $this->urlBaseProductoAlergeno."GetAlergenosProducto/{$idProducto}");
         $datos = json_decode($respuesta);
-        $alergenos = $datos->objeto;
-        return $alergenos;
+        // $respuestaOK = $datos->objeto;
+        return $datos;
     }
     public function store(Request $request){
 
@@ -130,6 +138,7 @@ class ProductosController extends Controller
         }                         
         return redirect('/productos');
     }
+
     public function guardarProductoAlergeno($idProducto, $idAlergeno){
         $respuesta = $this->realizarPeticion('POST', $this->urlBaseProductoAlergeno.'AddProductoAlergeno', [
             'form_params' => [
@@ -137,6 +146,19 @@ class ProductosController extends Controller
                 'idAlergeno' => $idAlergeno
             ]
         ]);
+        return $respuesta;
+    }
+
+    public function destroy($idProducto){        
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteProducto/{$idProducto}");
+
+        return redirect('/productos');
+    }
+
+    public function destroyAlergeno($idProducto, $idAlergeno){
+
+        $respuesta = $this->realizarPeticion('DELETE', $this->urlBaseProductoAlergeno."DeleteProductoAlergeno/{$idProducto}/{$idAlergeno}");
+
         return $respuesta;
     }
 

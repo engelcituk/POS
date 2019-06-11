@@ -17,28 +17,24 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
-                            <table id="menucartas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="menucartas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%"> 
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>codProducto</th>
-                                        <th>Nombre</th>
-                                        <th>fechaAlta</th>
-                                        <th>propina</th>
-                                        <th>Complemento</th>
-                                        <th>Estado</th>
+                                        <th>id</th>
+                                        <th>idCarta</th>
+                                        <th>idProducto</th>
+                                        <th>precio</th>
+                                        <th>idCentroPrep</th>                                        
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>Id</th>
-                                        <th>codProducto</th>
-                                        <th>Nombre</th>
-                                        <th>fechaAlta</th>
-                                        <th>propina</th>
-                                        <th>Complemento</th>
-                                        <th>Estado</th>
+                                        <th>id</th>
+                                        <th>idCarta</th>
+                                        <th>idProducto</th>
+                                        <th>precio</th>
+                                        <th>idCentroPrep</th>                                        
                                         <th class="text-right">Acciones</th>
                                     </tr>
                                 </tfoot>

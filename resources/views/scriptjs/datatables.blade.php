@@ -817,28 +817,20 @@
                 name: 'id'
             },
             {
-                data: 'codigoProducto',
-                name: 'codigoProducto'
+                data: 'idCarta',
+                name: 'idCarta'
             },
             {
-                data: 'nombreProducto',
-                name: 'nombreProducto'
+                data: 'idProducto',
+                name: 'idProducto'
             },
             {
-                data: 'fechaAlta',
-                name: 'fechaAlta'
+                data: 'precio',
+                name: 'precio'
             },
             {
-                data: 'propina',
-                name: 'propina'
-            },
-            {
-                data: 'complemento',
-                name: 'complemento'
-            },
-            {
-                data: 'status',
-                name: 'status'
+                data: 'idCentroPrep',
+                name: 'idCentroPrep'
             },
             {
                 data: 'acciones',

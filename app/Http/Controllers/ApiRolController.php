@@ -158,8 +158,7 @@ class ApiRolController extends Controller
         $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteRol/{$idRol}");
         return $respuesta;
     }
-    public function destroyPermiso($idRol, $idPermiso)
-    {
+    public function destroyPermiso($idRol, $idPermiso){
         $respuesta = $this->realizarPeticion('DELETE', $this->urlBaseRolPermisos."DeletePermisoRol/{$idRol}/{$idPermiso}");
 
        return $respuesta;

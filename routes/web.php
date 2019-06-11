@@ -8,7 +8,16 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::middleware(['filtroAcceso'])->group(function () {
+
+// Route::get('all/zonaspv', 'OrdenController@AllZonasPV')->name('all.zonas');
 Route::get('ordenar', 'OrdenController@index')->name('ordenar.index');
+// Route::get('hoteles/create', 'HotelesController@create')->name('hoteles.create');
+// Route::post('hoteles/store', 'HotelesController@store')->name('hoteles.store');
+// Route::get('hoteles/{hotel}', 'HotelesController@show')->name('hoteles.show');
+// Route::get('hoteles/{hotel}/edit', 'HotelesController@edit')->name('hoteles.edit');
+// Route::put('hoteles/actualizar', 'HotelesController@actualizar')->name('hoteles.actualizar');
+// Route::delete('hoteles/{hotel}', 'HotelesController@destroy')->name('hoteles.destroy');
+
 // Route::get('/prueba','Controller@obtenerAccessToken');
 
 //Hago que mis rutas sean validados con el middleware (auth) para el login
@@ -195,10 +204,12 @@ Route::get('all/productos', 'ProductosController@AllProduct')->name('all.product
 Route::get('productos', 'ProductosController@index')->name('productos.index');
 Route::get('productos/create', 'ProductosController@create')->name('productos.create');
 Route::post('productos/store', 'ProductosController@store')->name('productos.store');
+Route::post('productos/{idProducto}/{idAlergeno}', 'ProductosController@guardarProductoAlergeno')->name('productos.storealergeno');
 Route::put('productos/{producto}', 'ProductosController@actualizar')->name('productos.actualizar');
 Route::get('productos/{producto}', 'ProductosController@show')->name('productos.show');
 Route::get('productos/{producto}/edit', 'ProductosController@edit')->name('productos.edit');        
 Route::delete('productos/{producto}', 'ProductosController@destroy')->name('productos.destroy');
+Route::delete('productos/{idProducto}/{idAlergeno}', 'ProductosController@destroyAlergeno')->name('rolesapi.destroyalergeno');
 
 //Productos    
 Route::get('all/menuscartas', 'MenusCartasController@AllMenuCartas')->name('all.menuscartas');
