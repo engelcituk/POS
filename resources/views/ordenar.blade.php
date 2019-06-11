@@ -9,18 +9,26 @@
                 <nav aria-label="breadcrumb" role="navigation">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="fas fa-hotel"></i> NombreHotel</a></li>
-                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-concierge-bell"></i> CentroConsumo</a></li>
-                        <li class="breadcrumb-item active listaZonas" aria-current="page"> <i class="fas fa-map-marker-alt"></i> Zonas <i class="fas fa-hand-point-right"></i>                            
-                            <select class="form-control" id="zonaElige">
-                                <option value="">Elija un area</option>
-                                    @foreach($zonas as $zona)
-                                    <option value="zona{{$zona->id}}">{{$zona->name}}</option>
-                                    @endforeach
-                                <option value="todos">MOSTRAR TODOS</option>
-                            </select>
-                        </li>
-                        <li class="breadcrumb-item actualizarMesas"><a href="#"><i class="fas fa-sync-alt"></i> Actualizar</a></li>
-                    </ol>
+                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-concierge-bell"></i> CentroConsumo</a></li>                 
+                        {{-- <li class="breadcrumb-item actualizarMesas"><a href="#"><i class="fas fa-sync-alt"></i> Actualizar</a></li> --}}
+                    </ol> 
+                    <div class="col-md-2">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="fas fa-h-square"></i>
+                            </span>
+                            <div class="form-group">
+                                <!-- <label for="sel1">Select list:</label> -->
+                                <select class="form-control" id="zonaElige">
+                                {{-- <option value="">Elija un area</option> --}}
+                                @foreach($zonas as $zona)
+                                <option value="zona{{$zona->id}}">{{$zona->name}}</option>
+                                @endforeach
+                                {{-- <option value="todos">MOSTRAR TODOS</option> --}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>                   
                 </nav>
             </div>
         </div>
@@ -41,14 +49,16 @@
                                $mesas=App\Http\Controllers\OrdenController::obtenerMesasPorZona($idZona); 
                             @endphp                                                            
                              <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                                 @foreach($mesas as $mesa)
-                               <li class="abrirMesa" idMesa="1">
-                                    <a href="#mesa-1" role="tab" data-toggle="tab" aria-expanded="true">
-                                        <img src="{{asset('img/mesa2.png')}}"> {{$mesa->name}}
-
-                                    </a>
-                                </li>
-                            @endforeach                                
+                                @foreach($mesas as $mesa)
+                                @php                                
+                                $idMesa=$mesa->id;
+                                @endphp
+                                    <li class="abrirMesa" idMesa="{{$mesa->id}}">
+                                        <a href="#mesa-{{$mesa->id}}" class="launch-modal" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})">
+                                            <img src="{{asset('img/mesa2.png')}}"> {{$mesa->name}}
+                                        </a>
+                                    </li>
+                                @endforeach                                
                             </ul> 
                         </div>
                         @endforeach
@@ -169,5 +179,6 @@
             <!-- end col-md-12 -->
         </div>
     </div>
+    @include('ordenar.partials.modalOpenMesa')
 </div>
 @endsection

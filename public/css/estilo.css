@@ -45,3 +45,18 @@
 }
 
 /* fin de css de switches */
+.modal-header-personalizado{    
+    background-color: #4db6ac !important;
+    color: #FEF9F9;
+}
+
+.navPersonalizado{    
+    background-color: #e0e0e0 !important;
+    color: #bdbdbd !important;
+}
+.nav-tabs > li > a, .nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+  /* background-color: transparent; */
+  /* border: 0 !important; */
+  color: #151313 !important;
+  font-weight: 500;
+}

@@ -1,127 +1,89 @@
 <script>
-    $(document).on("click", ".actualizarMesas", function(e) {
-        event.preventDefault();
-        $("#zonaMesas").load(" #zonaMesas");
-    })
-    $("#zonaElige").change(function() {
-        var valorSelect = $("option:selected", this).val(); //obtener el value de un select
-        if (valorSelect != "") {            
-            $(".zonas").hide();
-            $("#" + valorSelect).show();
-                if (valorSelect == "todos") {
-                    $(".zonas").show();
-                }
-        } else {
-            swal({
-                title: 'Oopss...',
-                text: '¡Por favor elija una zona!',
-                type: 'error',
-                timer: '1500'
-            })
-        }
-    });
-    //funcion obtener numero de un string
-    function obtenerNumeroDeCadena(cadena) {
-        var tmp = cadena.split("");
-        var map = tmp.map(function(current) {
-            if (!isNaN(parseInt(current))) {
-                return current;
-            }
-        });
-
-        var numbers = map.filter(function(value) {
-            return value != undefined;
-        });
-
-        return numbers.join("");
-    }
-    //Abrir mesa
-    $(document).on("click", ".abrirMesa", function() {
-        var idMesa = $(this).attr("idMesa");
+$( document ).ready(function() {
+    var valDefault = $("#zonaElige").children('option:first').val();    
+    if (valDefault != "") {                        
+        $(".zonas").hide();
+        $("#" + valDefault).show();
+        //     if (valDefault == "todos") {
+        //         $(".zonas").show();
+        // }
+    } 
+});
+//para mostrar zonas y sus mesas respectivamente
+$("#zonaElige").change(function() {
+    var valorSelect = $("option:selected", this).val(); //obtener el value de un select
+    if (valorSelect != "") {            
+        $(".zonas").hide();
+        $("#" + valorSelect).show();
+            // if (valorSelect == "todos") {
+            //     $(".zonas").show();
+            // }
+    } else {
         swal({
-            title: '¿Seguro de abrir la mesa ' + idMesa + ' ?',
-            type: 'warning',
-            showCancelButton: true,
-            cancelButtonColor: '#d33',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: '¡Sí, Abrir!',
-            cancelButtonText: '¡No, desistir!'
-        }).then(function() {
-            generarVariableMesa(idMesa); //genero las variables localstorage    
-            $("#zonaTomarOrden").removeClass("hidden");
-            $("#zonaMesas").addClass("hidden");
-            $(".listaZonas").addClass("hidden");
-            $(".actualizarMesas").addClass("hidden");
-
-        }).catch(swal.noop);
-    })
-    //volver a las mesas
-    $(document).on("click", ".volverMesas", function(e) {
-        event.preventDefault();
-        $("#zonaMesas").removeClass("hidden");
-        $("#zonaTomarOrden").addClass("hidden");
-        $(".listaZonas").removeClass("hidden");
-        $(".actualizarMesas").removeClass("hidden");
-    })
-    var listaMesas = [];
-    var listaProductosMesa = [];
-
-    function generarVariableMesa(idMesa) {
-        var numeroMesa = idMesa;
-        var lsMesaIdNumero = "mesaIdNumero" + numeroMesa;
-
-        listaMesas.push(lsMesaIdNumero);
-        var sinRepetidos = listaMesas.filter((valor, indiceActual, arreglo) => arreglo.indexOf(valor) === indiceActual);
-
-        sinRepetidos.forEach(function(variableLS) { //recorro los array y genero variables localstorage  
-            valorIdMesaLS = obtenerNumeroDeCadena(variableLS); //obtengo el numero de la variable
-            var productosIdMesa = "productosMesaIdNum" + valorIdMesaLS;
-            localStorage.setItem(variableLS, valorIdMesaLS);
-            // var duplicadosEliminados = eliminarObjetosDuplicados(listaProductosMesa, 'idMesa');
-            var arrayVariableProductos = "arrayProductos" + numeroMesa;
-            var arrayProductos = [];
-
-            // localStorage.setItem(productosIdMesa, JSON.stringify(listaProductosMesa));
-            $("#mesaTablaProductos").html(numeroMesa);
-            console.log("su array es", arrayProductos);
-            // localStorage.getItem("mesaIdNumero8");
-            // return console.log(variableLS + " ");
-        });
-    }
-    //elimina propiedades duplicadas en un array
-    function eliminarObjetosDuplicados(arr, prop) {
-        var nuevoArray = [];
-        var lookup = {};
-
-        for (var i in arr) {
-            lookup[arr[i][prop]] = arr[i];
-        }
-
-        for (i in lookup) {
-            nuevoArray.push(lookup[i]);
-        }
-
-        return nuevoArray;
-    }
-
-    $(document).on("click", ".addProducto", function() {
-        var idProducto = $(this).attr("idProducto");
-        var numeroDeMesa = $("#mesaTablaProductos").text();
-        var productosMesa = "productosEnlaMesa" + numeroDeMesa;
-        var productosMesa = [];
-        var mesaIdNumero = "mesaIdNumero" + numeroDeMesa;
-        var variableLSMesaId = "productosMesaIdNum" + numeroDeMesa;
-        valorIdMesa = localStorage.getItem(mesaIdNumero);
-
-        productosMesa.push({
-            "idMesa": numeroDeMesa,
-            "idProducto": idProducto
+            title: 'Oopss...',
+            text: '¡Por favor elija una zona!',
+            type: 'error',
+            timer: '1500'
         })
-        localStorage.setItem(variableLSMesaId, JSON.stringify(productosMesa));
-        arrayLSProductos = localStorage.getItem(variableLSMesaId);
-        // console.log("arrayLSProductos", arrayLSProductos);
-        console.log("valorIDMESA", valorIdMesa);
-        console.log("productosenlamesa" + numeroDeMesa, productosMesa);
+    }
+});
+ function aperturaMesa(idMesa) {
+    //muestro el modal pero no lo dejo salir al hacer click fuera de este
+    $('#myModal').modal({backdrop: 'static', keyboard: false }) 
+ }
+ function buscarHuesped(e){
+    //  e.preventDefault();
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     var codigoHotel= $("#codigoHotel").val().length > 0;
+     var numHabitacion= $("#numHabitacion").val().length > 0;      
+     var codhotel= $("#codigoHotel").val();
+     var room= $("#numHabitacion").val();
 
-    })
+     if(codigoHotel && numHabitacion){        
+        $.ajax({
+            url: "{{ url('ordenar') }}"+'/'+codhotel+'/'+room,
+            type: "GET",
+            data: {
+                '_method': 'GET',
+                '_token': csrf_token
+            },
+            success: function(respuesta) {
+                var resultado=JSON.parse(respuesta);                
+                var objeto = resultado["objeto"];
+                var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
+                var reserva=objeto["reserva"];
+                var nombre=objeto["nombre"];
+                var room=objeto["room"];
+                var ocupante=objeto["Ocupante"];
+                var fechaSalida=objeto["FechaSalida"];                
+                var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
+                
+                if(errorCode==0){
+                    $("#mensajeRespuesta").html('<div class="alert alert-success"><strong>Datos encontrados</strong></div>');
+                    $("#reserva").val(reserva);
+                    $("#nombre").val(nombre);
+                    $("#room").val(room);
+                    $("#ocupante").val(ocupante);
+                    $("#fechaSalida").val(fechaSalida);
+                    $("#brazalete").val(brazalete);
+                }else if(errorCode==401){
+                    $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontró el hotel</strong></div>');
+                }else if(errorCode==404){
+                    $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontro Información de Huesped</strong></div>');
+                }
+            },
+            error: function() {
+            console.log(respuesta);
+            }
+    });                    
+    }else{
+        swal({
+            title: 'Oops...',
+            text: '¡Por favor no deje campos vacios para la busqueda!',
+            type: 'error',
+            timer: '2000'
+        }) 
+    }    
+ }
+ 
 </script>
