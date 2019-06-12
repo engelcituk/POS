@@ -17,9 +17,10 @@ class OrdenController extends Controller
         // $respuesta = json_decode($respuesta);
         $zonas = $respuesta->objeto;
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
+        $categorias = \App::call( 'App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
                 
         // dd($zonas);
-        return view('ordenar', compact('zonas','alergenos'));
+        return view('ordenar', compact('zonas','alergenos','categorias'));
     }
    
     public function obtenerTodasLasZonasPV($idPuntoVenta){

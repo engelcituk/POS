@@ -18,18 +18,19 @@ $("#zonaElige").change(function() {
             // if (valorSelect == "todos") {
             //     $(".zonas").show();
             // }
-    } else {
-        swal({
-            title: 'Oopss...',
-            text: '¡Por favor elija una zona!',
-            type: 'error',
-            timer: '1500'
-        })
-    }
+    }// else {
+    //     swal({
+    //         title: 'Oopss...',
+    //         text: '¡Por favor elija una zona!',
+    //         type: 'error',
+    //         timer: '1500'
+    //     })
+    // }
 });
  function aperturaMesa(idMesa) {
     //muestro el modal pero no lo dejo salir al hacer click fuera de este
-    $('#myModal').modal({backdrop: 'static', keyboard: false }) 
+    $('#myModal').modal({backdrop: 'static', keyboard: false })
+    $("#idMesa").val(idMesa);//ponto el id de la mesa en un campo oculto
  }
  function buscarHuesped(){
     //  e.preventDefault();
@@ -46,6 +47,9 @@ $("#zonaElige").change(function() {
             data: {
                 '_method': 'GET',
                 '_token': csrf_token
+            },
+            beforeSend: function() {
+                $('#mensajeRespuesta').html("<div class='loader'></div>");
             },
             success: function(respuesta) {
                 var resultado=JSON.parse(respuesta);                
@@ -82,8 +86,30 @@ $("#zonaElige").change(function() {
             text: '¡Por favor no deje campos vacios para la busqueda!',
             type: 'error',
             timer: '2000'
-        }) 
+        });
     }    
  }
- 
-</script>
+ function abrirCuenta(){
+   var idMesa= $("#idMesa").val();
+
+   var reserva= $("#reserva").val().length > 0;
+   var nombre= $("#nombre").val().length > 0;
+   var room= $("#room").val().length > 0;
+   var pax= $("#ocupante").val().length > 0;
+   var fechaSalida= $("#fechaSalida").val().length > 0;   
+   var brazalete= $("#brazalete").val().length > 0;
+
+   if(reserva && nombre && room && pax && fechaSalida&& brazalete){
+        $("#zonaTomarOrden").removeClass("hidden");
+        $("#zonaMesas").addClass("hidden");
+        $('#myModal').modal('hide');
+   }else{
+       swal({
+            title: 'Oops...',
+            text: '¡NO se tiene datos de la habitación!',
+            type: 'error',
+            timer: '2500'
+        });
+   } 
+ }
+ </script>

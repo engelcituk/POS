@@ -63,11 +63,8 @@
                         </div>
                         @endforeach
                     </div>
-                    <!-- end content-->
                 </div>
-                <!--  end card  -->
-            </div>
-            <!-- end col-md-12 -->
+            </div>            
         </div>
         <!-- end row -->
         <div class="row hidden" id="zonaTomarOrden">
@@ -143,32 +140,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-7">
-                                <div id="zonaPr class=" zonas"oductos">
-                                    <strong>carta</strong>
-                                    <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                                        <li class="addProducto" idProducto="1">
-                                            <a href="#producto-1" role="tab" data-toggle="tab" aria-expanded="true">
-                                                <i class="fab fa-product-hunt"></i> producto 1
-                                            </a>
-                                        </li>
-                                        <li class="addProducto" idProducto="2">
-                                            <a href="#producto-2" role="tab" data-toggle="tab" aria-expanded="false">
-                                                <i class="fab fa-product-hunt"></i> producto 2
-                                            </a>
-                                        </li>
-                                        <li class="addProducto" idProducto="3">
-                                            <a href="#producto-3" role="tab" data-toggle="tab" aria-expanded="false">
-                                                <i class="fab fa-product-hunt"></i> producto 3
-                                            </a>
-                                        </li>
-                                        <li class="addProducto" idProducto="4">
-                                            <a href="#producto-4" role="tab" data-toggle="tab" aria-expanded="false">
-                                                <i class="fab fa-product-hunt"></i> producto 4
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="col-md-7">                                
+                                <ul class="nav nav-tabs navPersonalizado" id="tabs">
+                                    @foreach($categorias as $categoria) 
+                                        <li><a href="#cat{{$categoria->id}}" data-toggle="tab">{{$categoria->name}}</a></li>          
+                                    @endforeach
+                                </ul>                               
+                                {{-- <div class="tab-content">                                          
+                                    <div class="tab-pane active" id="Repository">                                                
+                                            <ul class="nav nav-tabs navPersonalizado" id="repoTabs">
+                                                <li><a href="#repoInfo" data-toggle="tab">Info</a></li>
+                                                <li><a href="#repoStats" data-toggle="tab">Stats</a></li>
+                                            </ul>                                                   
+                                        <div class="tab-content">
+                                            <div class="tab-pane active" id="repoInfo">info content</div>
+                                            <div class="tab-pane" id="repoStats">stats content</div>
+                                        </div>          
+                                    </div>
+                                    <div class="tab-pane" id="User">
+                                    <h2>User content</h2>
+                                    </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
