@@ -54,7 +54,7 @@
                                 $idMesa=$mesa->id;
                                 @endphp
                                     <li class="abrirMesa" idMesa="{{$mesa->id}}">
-                                        <a href="#mesa-{{$mesa->id}}" class="launch-modal" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})">
+                                        <a href="#" class="launch-modal" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})" >
                                             <img src="{{asset('img/mesa2.png')}}"> {{$mesa->name}}
                                         </a>
                                     </li>

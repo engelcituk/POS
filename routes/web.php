@@ -222,6 +222,7 @@ Route::get('menuscartas/{menuscarta}', 'MenusCartasController@show')->name('menu
 Route::get('menuscartas/{menuscarta}/edit', 'MenusCartasController@edit')->name('menuscartas.edit');
 Route::delete('menuscartas/{menuscarta}', 'MenusCartasController@destroy')->name('menuscartas.destroy');
 
+Route::post('printrecibo', 'ReciboTicketController@createRecibo')->name('imprimir.createrecibo');
     //roles
 
     // Route::get('/roles', 'RolesController@index')->name('roles.index')

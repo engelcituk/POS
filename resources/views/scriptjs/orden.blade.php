@@ -31,7 +31,7 @@ $("#zonaElige").change(function() {
     //muestro el modal pero no lo dejo salir al hacer click fuera de este
     $('#myModal').modal({backdrop: 'static', keyboard: false }) 
  }
- function buscarHuesped(e){
+ function buscarHuesped(){
     //  e.preventDefault();
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      var codigoHotel= $("#codigoHotel").val().length > 0;

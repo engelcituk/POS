@@ -36,7 +36,8 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                  <a href="#" class="btn btn-success pull-right" onclick="buscarHuesped()"><i class="fas fa-search"></i> Buscar</a>
+                  {{-- span de tipo button que ejecuta funcion que trae datos del huesped --}}
+                  <span class="btn btn-success pull-right" onclick="buscarHuesped()"><i class="fas fa-search"></i> Buscar</span>
                 </div>
                </div>        
               <div id="mensajeRespuesta"></div>                      
@@ -115,7 +116,7 @@
               </div>
             </div>
             <div id="alergenos" class="tab-pane fade">
-              <p>Seleccione un alergeno si el producto tiene alergenos</p>
+              <p>Seleccione alergenos</p>
                <div class="row">
                 @foreach($alergenos as $alergeno)                                
                   <div class="col-md-4">
@@ -134,7 +135,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning pull-left" data-dismiss="modal"> <i class="fas fa-undo"></i> Descartar</button>
-        <button type="button" class="btn btn-primary"> <i class="fas fa-sign-in-alt"></i> Abrir mesa</button>
+        <button type="button" class="btn btn-primary"><i class="fas fa-sign-in-alt" ></i> Abrir mesa</button>
+        
       </div>
     </div>
   </div>
