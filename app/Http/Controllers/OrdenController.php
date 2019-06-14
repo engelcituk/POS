@@ -10,7 +10,8 @@ class OrdenController extends Controller
 {
     public $urlBase = "http://localhost/TPVApi/Zonas/";
     public $urlHuesped= "http://localhost/TPVApi/Venta/"; //para obtener los datos del huesped para la venta
-    // public $urlT= "http://172.16.4.229/TPVApi/Venta/";
+    public $urlVenta= "http://localhost/TPVApi/Venta/";
+
     public function __construct(){
         // $this->middleware('auth');
     }
@@ -98,27 +99,39 @@ class OrdenController extends Controller
         return $productos;
     }
 
-    // public function guardarCuenta(Request $request){
-    //     $alergenos = $request->get('alergenos');                        
-    //     foreach ($alergenos as $alergeno) {
-    //         $array[]=array('idAlergeno'=>$alergeno);
-            
-    //     }                
-    //     $respuesta = $this->realizarPeticion('POST', $this->urlT.'AddCuenta', [
-    //         'form_params' => [
-    //             'idUsuarioAlta' => 34,
-    //             'idMesa' => 1,
-    //             'reserva' => "RSB",
-    //             'habitacion' => "123",
-    //             'nombreCliente' => "asd",
-    //             'idPuntoVenta' => 10,
-    //             'TPV_AlergenosCuenta' => 
-    //                 $array
-                                
-    //         ]
-    //     ]);
-    //     return $respuesta;
-    // }
+    public function guardarCuenta(Request $request){
+
+        $idMesa = $request->get('idMesa');//obtengo el id de la mesa del modal
+        $idUsuario = $request->session()->get('idUsuarioLogueado'); //obtengo el id de usuario logueado
+        $reserva = $request->get( 'reserva');
+        $habitacion = $request->get('habitacion');
+        $nombreCliente = $request->get('nombreCliente');
+        $idPuntoVenta = $request->session()->get('idPuntoVenta'); //obtengo el id del punto de venta
+
+        $alergenos = $request->get('alergenos'); //obtengo el array de alergenos desde ajax
+
+        if ($alergenos != null) {
+            foreach ($alergenos as $alergeno) {
+                $arrayAlergenos[] = array('idAlergeno' => $alergeno);
+            } 
+         }else{
+            $arrayAlergenos=array();
+         }                       
+        // return $alergenos;
+        $respuesta = $this->realizarPeticion('POST', $this->urlVenta.'AddCuenta', [
+            'form_params' => [
+
+                'idMesa' => $idMesa,
+                'idUsuarioAlta' => $idUsuario,
+                'reserva' => $reserva,
+                'habitacion' => $habitacion,
+                'nombreCliente' => $nombreCliente,
+                'idPuntoVenta' => $idPuntoVenta,
+                'TPV_AlergenosCuenta' => 
+                    $arrayAlergenos                                
+            ]
+        ]);
+        return $respuesta;
+    }
     
 }
-

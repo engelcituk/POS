@@ -52,7 +52,9 @@
                     <div class="info">
                         <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                             @if(Session::has('UsuarioLogueado'))
-                                {{Session::get('UsuarioLogueado')}}
+                                {{Session::get('UsuarioLogueado')}}-
+                                {{Session::get('idUsuarioLogueado')}}-
+                                {{Session::get('idPuntoVenta')}} 
                             @endif
                             <b class="caret"></b>
                         </a>

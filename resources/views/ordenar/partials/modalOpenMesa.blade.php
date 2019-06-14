@@ -21,7 +21,7 @@
                         <div class="form-group label-floating">
                             <label class="control-label">Codigo Hotel</label>
                             <input id="codigoHotel" type="text" class="form-control" name="codigoHotel" value="CARACOL">
-                            <input id="idMesaModal" type="number" class="form-control" name="codigoHotel">   
+                            <input id="idMesaModal" type="number" class="form-control" name="idMesaModal">   
                         </div>
                     </div>
                 </div>

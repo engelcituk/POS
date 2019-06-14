@@ -29,7 +29,9 @@ class LoginController extends Controller
             } 
 
             $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
-            $usuarioSesion = $request->session()->get('UsuarioLogueado'); 
+            $request->session()->put('idUsuarioLogueado', $idUsuario);
+            $request->session()->put('idPuntoVenta', 23);
+            // $usuarioSesion = $request->session()->get('UsuarioLogueado'); 
                      
             return  redirect('ordenar');
         }         
@@ -49,6 +51,8 @@ class LoginController extends Controller
         // $password = $request->get('password');
         // dd($usuarioLogueado);
         $request->session()->forget('UsuarioLogueado');
+        $request->session()->forget('idUsuarioLogueado');
+        $request->session()->forget('idPuntoVenta');
 
         
         return redirect('/');

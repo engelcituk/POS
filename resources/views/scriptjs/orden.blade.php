@@ -103,7 +103,10 @@ $("#zonaElige").change(function() {
      if(reserva && nombre && room && pax && fechaSalida && brazalete){
         $("#zonaTomarOrden").removeClass("hidden");
         $("#zonaMesas").addClass("hidden");
-        $("#myModal").modal("hide");        
+        $("#myModal").modal("hide"); 
+
+        guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta
+
      }else{
         swal({
             title: 'Oops...',
@@ -114,51 +117,55 @@ $("#zonaElige").change(function() {
      }
 
  }
-//  function guardarCuenta(){
-//      var csrf_token = $('meta[name="csrf-token"]').attr('content');
-//       alergenos = [];//
-//       var contador=0;
-//         $("input[name='idAlergeno[]']").each( function () {
-//             if($(this).prop("checked")){
-//             alergenos[contador]= $(this).val();
-//             contador++;
-//             }	
-//         });        
-//      $.ajax({
-//             url: "{{ url('ordenar/addcuenta') }}",
-//             type: "POST",
-//             data: {
-//                 '_method': 'POST',
-//                  'alergenos':alergenos,
-//                 '_token': csrf_token
-//             },
-//             beforeSend: function () {
-//                 $("#mensajeRespuesta").html('<div class="loader"></div>');
-//             },
-//             success: function(respuesta) {
-//                 console.log(respuesta);
-//             },
-//             error: function() {
-//             console.log(respuesta);
-//             }
-//     }); 
-//  }
- 
-//  function addProducto(idProducto) {
-//     var numeroDeMesa = $("#idMesaAddProducts").attr("idMesaValue");//obtengo el id de la mesa
+ function guardarCuenta(idMesa){
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     var reserva  = $("#reserva").val();
+     var nombreCliente  = $("#nombre").val();
+     var pax  = $("#ocupante").val();
+     var habitacion  = $("#room").val();
 
-//     var idProducto = $("#producto"+idProducto).attr("idProducto");
-//     var nombreProducto = $("#producto"+idProducto).attr("nProducto");
-//     //estructura html para agregar algo a la tabla
-//     var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>Minion Hi</td><td style='text-align:center;'>1.00</td><td class='text-right'>15.00</td><td class='text-right'>15.00</td></tr>";
-//     $("table tbody").append(filaTabla);    
-//     //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);
-//  }
-//  function deleteProductoItem(idProducto) {
-//     $("table tbody").find('button[name="itemProducto"]').each(function(){
-//         $(this).parents("tr").remove();
-//     });
-//  }
+
+      alergenos = [];//
+      var contador=0;
+        $("input[name='idAlergeno[]']").each( function () {
+            if($(this).prop("checked")){
+            alergenos[contador]= $(this).val();
+            contador++;
+            }	
+        });               
+     $.ajax({
+            url: "{{ url('ordenar/addcuenta') }}",
+            type: "POST",
+            data: {
+                '_method': 'POST',
+                'alergenos':alergenos,
+                'idMesa':idMesa,'reserva':reserva,'nombreCliente':nombreCliente,'habitacion':habitacion,
+                '_token': csrf_token
+            },        
+            success: function(respuesta) {
+                console.log(JSON.parse(respuesta));
+            },
+            error: function() {
+            console.log(JSON.parse(respuesta));
+        }
+    }); 
+ }
+ 
+function addProducto(idProducto) {
+    var numeroDeMesa = $("#idMesaAddProducts").attr("idMesaValue");//obtengo el id de la mesa
+
+    var idProducto = $("#producto"+idProducto).attr("idProducto");
+    var nombreProducto = $("#producto"+idProducto).attr("nProducto");
+    //estructura html para agregar algo a la tabla
+    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>Minion Hi</td><td style='text-align:center;'>1.00</td><td class='text-right'>15.00</td><td class='text-right'>15.00</td></tr>";
+    $("table tbody").append(filaTabla);    
+    //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);
+ }
+ function deleteProductoItem(idProducto) {
+    $("table tbody").find('#producto'+idProducto).each(function(){
+        $(this).parents("tr").remove();
+    });
+}
 // $(document).on("click", ".addProducto", function() {
    
 //   });
