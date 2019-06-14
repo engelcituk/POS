@@ -105,7 +105,7 @@ $("#zonaElige").change(function() {
         $("#zonaMesas").addClass("hidden");
         $("#myModal").modal("hide"); 
 
-        guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta
+       // guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta
 
      }else{
         swal({

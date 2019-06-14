@@ -173,11 +173,14 @@
                                                                     $nombreProducto=$producto->nombreProducto;
                                                                     @endphp
                                                                     @if($respuesta==1)
-                                                                    <li id="producto{{$idProducto}}" idProducto="{{$producto->id}}" nProducto="{{$nombreProducto}}" onclick="addProducto({{$idProducto}})">
-                                                                        <a href="#producto{{$idProducto}}" role="tab" data-toggle="tab" aria-expanded="true">
-                                                                            <i class="fab fa-product-hunt"></i> {{$nombreProducto}}
-                                                                        </a>
-                                                                    </li>                                                                    
+                                                                    <li>
+                                                                        <div class="well well-sm">
+                                                                            <div id="producto{{$idProducto}}" idProducto="{{$producto->id}}" nProducto="{{$nombreProducto}}" onclick="addProducto({{$idProducto}})" style="cursor: pointer;" ><strong>{{$nombreProducto}}</strong></div><br>
+                                                                            <div style="cursor: pointer;">
+                                                                                Alergenos   
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>                                                                   
                                                                     @endif
                                                                 @endforeach
                                                             </ul>
