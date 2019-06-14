@@ -5,31 +5,30 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <nav aria-label="breadcrumb" role="navigation">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#"><i class="fas fa-hotel"></i> NombreHotel</a></li>
                         <li class="breadcrumb-item"><a href="#"><i class="fas fa-concierge-bell"></i> CentroConsumo</a></li>                 
-                        {{-- <li class="breadcrumb-item actualizarMesas"><a href="#"><i class="fas fa-sync-alt"></i> Actualizar</a></li> --}}
-                    </ol> 
-                    <div class="col-md-2">
-                        <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="fas fa-h-square"></i>
-                            </span>
-                            <div class="form-group">
-                                <!-- <label for="sel1">Select list:</label> -->
-                                <select class="form-control" id="zonaElige">
-                                {{-- <option value="">Elija un area</option> --}}
-                                @foreach($zonas as $zona)
-                                <option value="zona{{$zona->id}}">{{$zona->name}}</option>
-                                @endforeach
-                                {{-- <option value="todos">MOSTRAR TODOS</option> --}}
-                                </select>
-                            </div>
-                        </div>
-                    </div>                   
+                        {{-- <li class="breadcrumb-item actualizarMesas"><a href="#"><i class="fas fa-sync-alt"></i> Actualizar</a></li>  --}}
+                    </ol>                                       
                 </nav>
+            </div>
+            <div class="col-md-offset-1 col-md-3">
+                <nav aria-label="breadcrumb" role="navigation">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </span>
+                        <div class="form-group">                               
+                            <select class="form-control" id="zonaElige">                             
+                            @foreach($zonas as $zona)
+                            <option value="zona{{$zona->id}}">{{$zona->name}}</option>
+                            @endforeach                                
+                            </select>
+                        </div>
+                    </div>
+                </nav>                                                
             </div>
         </div>
         <div class="row" id="zonaMesas">
@@ -96,20 +95,13 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
+                                                        {{-- <tr>
                                                             <td><button class="btn btn-danger btn-xs"><i class="fas fa-times"></i></button></td>
                                                             <td>Minion Hi</td>
                                                             <td style="text-align:center;">1.00</td>
                                                             <td class="text-right">15.00</td>
                                                             <td class="text-right">15.00</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><button class="btn btn-danger btn-xs"><i class="fas fa-times"></i></button></td>
-                                                            <td>Minion Banana</td>
-                                                            <td style="text-align:center;">1.00</td>
-                                                            <td class="text-right">15.00</td>
-                                                            <td class="text-right">15.00</td>
-                                                        </tr>
+                                                        </tr>                                                         --}}
                                                     </tbody>
                                                     <tfoot>
                                                         <tr>
@@ -143,31 +135,60 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-7">
-                                <div id="zonaPr class=" zonas"oductos">
-                                    <strong>carta</strong>
-                                    <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                                        <li class="addProducto" idProducto="1">
-                                            <a href="#producto-1" role="tab" data-toggle="tab" aria-expanded="true">
-                                                <i class="fab fa-product-hunt"></i> producto 1
-                                            </a>
-                                        </li>
-                                        <li class="addProducto" idProducto="2">
-                                            <a href="#producto-2" role="tab" data-toggle="tab" aria-expanded="false">
-                                                <i class="fab fa-product-hunt"></i> producto 2
-                                            </a>
-                                        </li>
-                                        <li class="addProducto" idProducto="3">
-                                            <a href="#producto-3" role="tab" data-toggle="tab" aria-expanded="false">
-                                                <i class="fab fa-product-hunt"></i> producto 3
-                                            </a>
-                                        </li>
-                                        <li class="addProducto" idProducto="4">
-                                            <a href="#producto-4" role="tab" data-toggle="tab" aria-expanded="false">
-                                                <i class="fab fa-product-hunt"></i> producto 4
-                                            </a>
-                                        </li>
-                                    </ul>
+                            <div class="col-md-7" id="idMesaAddProducts">                              
+                                <ul class="nav nav-tabs navPersonalizado" id="tabs">
+                                    @foreach($categorias as $categoria)
+                                    <li><a href="#cate{{$categoria->id}}" data-toggle="tab">{{$categoria->name}}</a></li>                   
+                                    @endforeach
+                                </ul>
+                                <div class="tab-content">
+                                    @foreach($categorias as $categoria)                                        
+                                        <div class="tab-pane {{ $loop->first ? 'active' : '' }}" id="cate{{$categoria->id}}">                 
+                                            <ul class="nav nav-tabs navPersonalizado">
+                                                @php                                
+                                                    $idCategoria=$categoria->id;                          
+                                                    $subCats=App\Http\Controllers\OrdenController::getSCategoriasByCategoria($idCategoria); 
+                                                @endphp                                                    
+                                                    @if($subCats!=0)
+                                                        @foreach($subCats as $subCat) 
+                                                            <li><a href="#sub{{$subCat->id}}" data-toggle="tab">{{$subCat->name}}</a></li>
+                                                        @endforeach
+                                                        @else
+                                                           <p>Sin subcategorias</p>     
+                                                    @endif                                                            
+                                            </ul>           
+                                            <div class="tab-content">                                               
+                                                @if($subCats!=0)                                                
+                                                    @foreach($subCats as $subCat)
+                                                    @php                                
+                                                        $idSubCat=$subCat->id;                                                        
+                                                    @endphp                                                        
+                                                        <div class="tab-pane" id="sub{{$subCat->id}}">
+                                                            <ul class="nav nav-pills nav-pills-icons" role="tablist">
+                                                                @foreach($productos as $producto)
+                                                                    @php
+                                                                    $collection = collect(['idSubCat' => $producto->idSubCategoria, 'idSubCat' => $idSubCat]);
+                                                                    $respuesta = $collection->contains($producto->idSubCategoria);
+                                                                    $idProducto=$producto->id;
+                                                                    $nombreProducto=$producto->nombreProducto;
+                                                                    @endphp
+                                                                    @if($respuesta==1)
+                                                                    <li id="producto{{$idProducto}}" idProducto="{{$producto->id}}" nProducto="{{$nombreProducto}}" onclick="addProducto({{$idProducto}})">
+                                                                        <a href="#producto{{$idProducto}}" role="tab" data-toggle="tab" aria-expanded="true">
+                                                                            <i class="fab fa-product-hunt"></i> {{$nombreProducto}}
+                                                                        </a>
+                                                                    </li>                                                                    
+                                                                    @endif
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>                                                            
+                                                    @endforeach
+                                                @else
+                                                    <p>Sin productos para esta Subcategoria</p>     
+                                                @endif 
+                                            </div>  
+                                        </div>             
+                                    @endforeach                                                                        
                                 </div>
                             </div>
                         </div>

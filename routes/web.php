@@ -12,6 +12,7 @@ Route::middleware(['filtroAcceso'])->group(function () {
 // Route::get('all/zonaspv', 'OrdenController@AllZonasPV')->name('all.zonas');
 Route::get('ordenar', 'OrdenController@index')->name('ordenar.index');
 Route::get('ordenar/{codhotel}/{room}', 'OrdenController@obtenerDatosHuesped')->name('ordenar.obtenerhuesped');
+// Route::post('ordenar/addcuenta', 'OrdenController@guardarCuenta')->name( 'ordenar.addcuenta');
 // Route::get('hoteles/create', 'HotelesController@create')->name('hoteles.create');
 // Route::post('hoteles/store', 'HotelesController@store')->name('hoteles.store');
 // Route::get('hoteles/{hotel}', 'HotelesController@show')->name('hoteles.show');
@@ -211,7 +212,7 @@ Route::get('productos/{producto}', 'ProductosController@show')->name('productos.
 Route::get('productos/{producto}/edit', 'ProductosController@edit')->name('productos.edit');        
 Route::delete('productos/{producto}', 'ProductosController@destroy')->name('productos.destroy');
 Route::delete('productos/{idProducto}/{idAlergeno}', 'ProductosController@destroyAlergeno')->name('rolesapi.destroyalergeno');
-
+ 
 //Productos    
 Route::get('all/menuscartas', 'MenusCartasController@AllMenuCartas')->name('all.menuscartas');
 Route::get('menuscartas', 'MenusCartasController@index')->name('menuscartas.index');

@@ -20,7 +20,8 @@
                         </span>
                         <div class="form-group label-floating">
                             <label class="control-label">Codigo Hotel</label>
-                            <input id="codigoHotel" type="text" class="form-control" name="codigoHotel" value="CARACOL">  
+                            <input id="codigoHotel" type="text" class="form-control" name="codigoHotel" value="CARACOL">
+                            <input id="idMesaModal" type="number" class="form-control" name="codigoHotel">   
                         </div>
                     </div>
                 </div>
@@ -122,7 +123,7 @@
                   <div class="col-md-4">
                     <div class="checkbox checkbox-group required">                              
                           <label class="">
-                          <input type="checkbox" name="idAlergeno[]" value="{{$alergeno->id}}"><strong>{{$alergeno->name}}</strong>
+                          <input type="checkbox" id="idAlergenoCheck" name="idAlergeno[]" value="{{$alergeno->id}}"><strong>{{$alergeno->name}}</strong>
                           </label>                                            
                       </div>
                   </div>                                         
@@ -135,7 +136,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning pull-left" data-dismiss="modal"> <i class="fas fa-undo"></i> Descartar</button>
-        <button type="button" class="btn btn-primary"><i class="fas fa-sign-in-alt" ></i> Abrir mesa</button>
+        <button type="button" class="btn btn-primary" onclick="abrirCuenta()"><i class="fas fa-sign-in-alt" ></i> Abrir mesa</button>
         
       </div>
     </div>
