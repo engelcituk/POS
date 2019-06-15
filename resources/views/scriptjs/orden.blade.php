@@ -29,7 +29,7 @@ $("#zonaElige").change(function() {
 });
  function aperturaMesa(idMesa) {
     //muestro el modal pero no lo dejo salir al hacer click fuera de este
-    $('#myModal').modal({backdrop: 'static', keyboard: false })     
+    $('#myModal').modal({backdrop: 'static', keyboard: false });    
     $('#idMesaModal').val(idMesa);
  }
  function buscarHuesped(){
@@ -166,7 +166,67 @@ function addProducto(idProducto) {
         $(this).parents("tr").remove();
     });
 }
-// $(document).on("click", ".addProducto", function() {
-   
-//   });
+function verAlergenos(idProducto) {
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');    
+    $('#myModalAlergenos').modal('show');
+
+    $.ajax({
+            url: "{{ url('buscar/alergenos') }}"+'/'+idProducto,
+            type: "GET",
+            data: {
+                '_method': 'GET',
+                '_token': csrf_token
+            },            
+            success: function(respuesta) {
+                var resultado=JSON.parse(respuesta); 
+                var ok =resultado["ok"];                
+                if(ok){
+                    var objeto=resultado["objeto"];                                             
+                    // console.log(resultado.objeto[0].idAlergeno);
+                    alergenosID = [];
+                    for (i = 0; i < resultado.objeto.length; i++) {
+                        alergenosID[i]= resultado.objeto[i].idAlergeno;
+                    }
+                    var contador=0;    
+                    $("input[name='idAlergenoProducto[]']").each( function () {        
+                        if($(this).val().includes(alergenosID[contador])){               
+                        $(this).prop('checked', true);
+                        valorIdAlergeno= $(this).val();
+                        $("#labelCheck"+valorIdAlergeno).addClass("label label-success");
+                        contador++;
+                        }	
+                    });
+                    marcarAlergenosMatch(idProducto);
+                }
+            },
+            error: function(respuesta) {
+            resultado=JSON.parse(respuesta); 
+            console.log(resultado);
+            }
+    });    
+}
+function marcarAlergenosMatch(idProducto){
+    alergenosIdMatch = [8,9]; //aqui voy generando el array que recibo de los que tiene el huesped
+    var contador=0;
+    $("input[name='idAlergenoProducto[]']").each( function () {        
+        if($(this).val().includes(alergenosIdMatch[contador]) && $(this).prop("checked")){
+            valorIdAlergeno= $(this).val();
+            $("#labelCheck"+valorIdAlergeno).addClass("label label-warning"); 
+            contador++;
+        }	
+    });
+}
+//al cerrrar el modal myModalAlergenos quito los check previamente marcados en el modal
+$('#myModalAlergenos').on('hidden.bs.modal', function (e) {
+    $("input[name='idAlergenoProducto[]']").each( function () {        
+        if($(this).prop("checked")){ 
+            valorIdAlergeno= $(this).val();              
+            $(this).prop('checked', false);
+            $("#labelCheck"+valorIdAlergeno).removeClass("label label-success");
+            $("#labelCheck"+valorIdAlergeno).removeClass("label label-warning");                      
+        }	
+    });        
+});
 </script>
+
+                        

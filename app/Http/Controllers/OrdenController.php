@@ -11,6 +11,7 @@ class OrdenController extends Controller
     public $urlBase = "http://localhost/TPVApi/Zonas/";
     public $urlHuesped= "http://localhost/TPVApi/Venta/"; //para obtener los datos del huesped para la venta
     public $urlVenta= "http://localhost/TPVApi/Venta/";
+    public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
 
     public function __construct(){
         // $this->middleware('auth');
@@ -131,6 +132,10 @@ class OrdenController extends Controller
                     $arrayAlergenos                                
             ]
         ]);
+        return $respuesta;
+    }
+    public function obtenerAlergenosProducto($idProducto){
+        $respuesta = $this->realizarPeticion('GET', $this->urlBaseProductoAlergeno."GetAlergenosProducto/{$idProducto}");        
         return $respuesta;
     }
     

@@ -176,7 +176,7 @@
                                                                     <li>
                                                                         <div class="well well-sm">
                                                                             <div id="producto{{$idProducto}}" idProducto="{{$producto->id}}" nProducto="{{$nombreProducto}}" onclick="addProducto({{$idProducto}})" style="cursor: pointer;" ><strong>{{$nombreProducto}}</strong></div><br>
-                                                                            <div style="cursor: pointer;">
+                                                                            <div style="cursor: pointer;" onclick="verAlergenos({{$idProducto}})">
                                                                                 Alergenos   
                                                                             </div>
                                                                         </div>
@@ -204,5 +204,6 @@
         </div>
     </div>
     @include('ordenar.partials.modalOpenMesa')
+    @include('ordenar.partials.modalAlergenos')
 </div>
 @endsection
