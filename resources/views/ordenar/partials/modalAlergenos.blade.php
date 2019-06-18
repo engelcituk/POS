@@ -13,7 +13,7 @@
                   <div class="checkbox checkbox-group required">                              
                       <label class="">
                         <input type="checkbox" id="idAlergenoCheckProducto{{$alergeno->id}}" name="idAlergenoProducto[]" value="{{$alergeno->id}}" onclick="return false;">
-                        <span id="labelCheck{{$alergeno->id}}">{{$alergeno->name}}</span>                         
+                       <strong><span id="labelCheck{{$alergeno->id}}">{{$alergeno->name}}</span> </strong>                         
                       </label>                                            
                   </div>
               </div>                                         

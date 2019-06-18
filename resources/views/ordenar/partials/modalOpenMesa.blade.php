@@ -22,6 +22,7 @@
                             <label class="control-label">Codigo Hotel</label>
                             <input id="codigoHotel" type="text" class="form-control" name="codigoHotel" value="CARACOL">
                             <input id="idMesaModal" type="number" class="form-control" name="idMesaModal">   
+                            <input id="idPVModalOrdenar" type="number" class="form-control" name="idPVModalOrdenar" value="{{Session::get('idPuntoVenta')}}">  
                         </div>
                     </div>
                 </div>

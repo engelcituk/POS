@@ -51,10 +51,14 @@
                                 @foreach($mesas as $mesa)
                                 @php                                
                                 $idMesa=$mesa->id;
+                                $nombreMesa=$mesa->name;
+                                $estadoMesa= $mesa->status;
+                                $mesaStatus = ($estadoMesa == 1) ? "disponible" : "ocupado";
+                                $mesaCss = ($estadoMesa != 1) ? "bordeMesaOcupada" : "";
                                 @endphp
-                                    <li class="abrirMesa" idMesa="{{$mesa->id}}">
-                                        <a href="#" class="launch-modal" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})" >
-                                            <img src="{{asset('img/mesa2.png')}}"> {{$mesa->name}}
+                                    <li class="abrirMesa {{$mesaCss}}" idMesa="{{$idMesa}}">
+                                        <a href="#" id="mesaAbrir{{$idMesa}}" class="" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})" estadoMesa="{{$mesaStatus}}">
+                                            <img  class="{{$mesaStatus}}" src="{{asset('img/mesa.png')}}"> {{$nombreMesa}} 
                                         </a>
                                     </li>
                                 @endforeach                                
@@ -88,7 +92,7 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;"><i class="fas fa-table"></i> <strong><span id="mesaTablaProductos"></span></strong></th>
-                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;">Descripción</th>
+                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;">Nombre</th>
                                                             <th class="text-center" style="width: 12%; border-bottom: 2px solid #ddd;">Cantidad</th>
                                                             <th class="text-center" style="width: 24%; border-bottom: 2px solid #ddd;">Precio</th>
                                                             <th class="text-center" style="width: 26%; border-bottom: 2px solid #ddd;">Subtotal</th>
@@ -171,12 +175,13 @@
                                                                     $respuesta = $collection->contains($producto->idSubCategoria);
                                                                     $idProducto=$producto->id;
                                                                     $nombreProducto=$producto->nombreProducto;
+                                                                    $precio=$producto->precio;
                                                                     @endphp
                                                                     @if($respuesta==1)
                                                                     <li>
                                                                         <div class="well well-sm">
-                                                                            <div id="producto{{$idProducto}}" idProducto="{{$producto->id}}" nProducto="{{$nombreProducto}}" onclick="addProducto({{$idProducto}})" style="cursor: pointer;" ><strong>{{$nombreProducto}}</strong></div><br>
-                                                                            <div style="cursor: pointer;" onclick="verAlergenos({{$idProducto}})">
+                                                                        <div id="producto{{$idProducto}}" idProducto="{{$producto->id}}" nProducto="{{$nombreProducto}}" precio="{{$precio}}" onclick="addProducto({{$idProducto}})" style="cursor: pointer;" ><strong>{{$nombreProducto}}</strong></div><br>
+                                                                            <div style="cursor: pointer;" onload="cargaAlergeno({{$idProducto}})" onclick="verAlergenos({{$idProducto}})">
                                                                                 Alergenos   
                                                                             </div>
                                                                         </div>

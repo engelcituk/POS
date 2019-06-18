@@ -29,8 +29,18 @@ $("#zonaElige").change(function() {
 });
  function aperturaMesa(idMesa) {
     //muestro el modal pero no lo dejo salir al hacer click fuera de este
-    $('#myModal').modal({backdrop: 'static', keyboard: false });    
+    var estadoMesa = $("#mesaAbrir"+idMesa).attr("estadoMesa");//obtengo el id de la mesa
     $('#idMesaModal').val(idMesa);
+
+    if(estadoMesa=="disponible"){//si la mesa está disponible abro modal para obtener datos de huesped
+        $('#myModal').modal({backdrop: 'static', keyboard: false });
+    }else if(estadoMesa=="ocupado"){
+        $("#zonaTomarOrden").removeClass("hidden");
+        $("#zonaMesas").addClass("hidden");
+        $("#myModal").modal("hide"); 
+        localStorage.setItem("idMesaLS", idMesa);             
+    }
+
  }
  function buscarHuesped(){
     //  e.preventDefault();
@@ -39,7 +49,7 @@ $("#zonaElige").change(function() {
      var numHabitacion= $("#numHabitacion").val().length > 0;      
      var codhotel= $("#codigoHotel").val();
      var room= $("#numHabitacion").val();
-
+     
      if(codigoHotel && numHabitacion){        
         $.ajax({
             url: "{{ url('ordenar') }}"+'/'+codhotel+'/'+room,
@@ -55,7 +65,7 @@ $("#zonaElige").change(function() {
                 var resultado=JSON.parse(respuesta);                
                 var objeto = resultado["objeto"];
                 var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
-                var reserva=objeto["reserva"];
+                var reserva=objeto["reserva"];                
                 var nombre=objeto["nombre"];
                 var room=objeto["room"];
                 var ocupante=objeto["Ocupante"];
@@ -70,6 +80,7 @@ $("#zonaElige").change(function() {
                     $("#ocupante").val(ocupante);
                     $("#fechaSalida").val(fechaSalida);
                     $("#brazalete").val(brazalete);
+                     // creo el objeto lST para la cuenta
                 }else if(errorCode==401){
                     $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontró el hotel</strong></div>');
                 }else if(errorCode==404){
@@ -105,7 +116,7 @@ $("#zonaElige").change(function() {
         $("#zonaMesas").addClass("hidden");
         $("#myModal").modal("hide"); 
 
-       // guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta
+       guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta
 
      }else{
         swal({
@@ -124,15 +135,17 @@ $("#zonaElige").change(function() {
      var pax  = $("#ocupante").val();
      var habitacion  = $("#room").val();
 
+     var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
+     //var idMesa= $("#idMesaModal").val();//obtengo el id de la mesa
 
       alergenos = [];//
       var contador=0;
-        $("input[name='idAlergeno[]']").each( function () {
-            if($(this).prop("checked")){
+    $("input[name='idAlergeno[]']").each( function () {
+        if($(this).prop("checked")){
             alergenos[contador]= $(this).val();
             contador++;
-            }	
-        });               
+        }	
+    });               
      $.ajax({
             url: "{{ url('ordenar/addcuenta') }}",
             type: "POST",
@@ -143,7 +156,12 @@ $("#zonaElige").change(function() {
                 '_token': csrf_token
             },        
             success: function(respuesta) {
-                console.log(JSON.parse(respuesta));
+                var resultado = JSON.parse(respuesta);
+                var objeto = resultado["objeto"];
+                var folio=objeto["folio"];
+                // console.log("objeto", objeto);
+                // console.log("respuesta folio "+folio);
+                localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto
             },
             error: function() {
             console.log(JSON.parse(respuesta));
@@ -156,9 +174,20 @@ function addProducto(idProducto) {
 
     var idProducto = $("#producto"+idProducto).attr("idProducto");
     var nombreProducto = $("#producto"+idProducto).attr("nProducto");
-    //estructura html para agregar algo a la tabla
-    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>Minion Hi</td><td style='text-align:center;'>1.00</td><td class='text-right'>15.00</td><td class='text-right'>15.00</td></tr>";
-    $("table tbody").append(filaTabla);    
+    var precio = $("#producto"+idProducto).attr("precio");
+    var cantidad = prompt("Indique Cantidad", 1);
+    var cantidadIsNumber=Number.isInteger(cantidad);
+
+    if(cantidadIsNumber){
+        //estructura html para agregar algo a la tabla
+    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+precio+"</td></tr>";
+    $("table tbody").append(filaTabla);
+    }else{
+        console.log("no pusiste numero!!");
+    }
+
+          
+        
     //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);
  }
  function deleteProductoItem(idProducto) {
@@ -180,7 +209,7 @@ function verAlergenos(idProducto) {
             success: function(respuesta) {
                 var resultado=JSON.parse(respuesta); 
                 var ok =resultado["ok"];                
-                if(ok){
+                if(ok){//si ok es true obtengo los datos del objeto
                     var objeto=resultado["objeto"];                                             
                     // console.log(resultado.objeto[0].idAlergeno);
                     alergenosID = [];
@@ -190,10 +219,10 @@ function verAlergenos(idProducto) {
                     var contador=0;    
                     $("input[name='idAlergenoProducto[]']").each( function () {        
                         if($(this).val().includes(alergenosID[contador])){               
-                        $(this).prop('checked', true);
-                        valorIdAlergeno= $(this).val();
-                        $("#labelCheck"+valorIdAlergeno).addClass("label label-success");
-                        contador++;
+                            $(this).prop('checked', true);
+                            valorIdAlergeno= $(this).val();
+                            $("#labelCheck"+valorIdAlergeno).addClass("label label-success");
+                            contador++;
                         }	
                     });
                     marcarAlergenosMatch(idProducto);
@@ -206,17 +235,32 @@ function verAlergenos(idProducto) {
     });    
 }
 function marcarAlergenosMatch(idProducto){
-    alergenosIdMatch = [8,9]; //aqui voy generando el array que recibo de los que tiene el huesped
+    var idPV= $("#idPVModalOrdenar").val();
+    var idMesaLS = localStorage.getItem("idMesaLS");
+    var variableLS =idPV+idMesaLS;
+
+    var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
+    // console.log(variableLS);
+    var idAlergenos = datosCuentaObjeto["TPV_AlergenosCuenta"];
+   /* console.log(datosCuentaObjeto); console.log(idAlergenos[0].idAlergeno); alergenosIdHuesped = [8,9]; //aqui voy generando el array que recibo de los que tiene el huesped*/
+    alergenosIdHuesped = [];
+    for (i = 0; i < idAlergenos.length; i++) {
+        alergenosIdHuesped[i]= idAlergenos[i].idAlergeno;
+    }
+//    console.log(idAlergenos);
     var contador=0;
-    $("input[name='idAlergenoProducto[]']").each( function () {        
-        if($(this).val().includes(alergenosIdMatch[contador]) && $(this).prop("checked")){
-            valorIdAlergeno= $(this).val();
-            $("#labelCheck"+valorIdAlergeno).addClass("label label-warning"); 
-            contador++;
-        }	
+    $("input[name='idAlergenoProducto[]']").each( function () {
+        //    console.log(n)                        ;
+        if($(this).val().includes(alergenosIdHuesped[contador]) && $(this).prop("checked")){
+            valorIdAlergeno= $(this).val();            
+            $("#labelCheck"+valorIdAlergeno).addClass("label label-warning");             
+            contador++;	
+        }
     });
+    //$(this).val().includes(alergenosIdHuesped[contador]) 
 }
-//al cerrrar el modal myModalAlergenos quito los check previamente marcados en el modal
+/*al cerrrar el modal myModalAlergenos quito los check previamente marcados en el modal
+E igual quito los colores de los label*/
 $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
     $("input[name='idAlergenoProducto[]']").each( function () {        
         if($(this).prop("checked")){ 
@@ -227,6 +271,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
         }	
     });        
 });
+
 </script>
 
                         

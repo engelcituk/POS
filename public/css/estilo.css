@@ -73,3 +73,12 @@
     0% { transform: rotate(0deg);}
     100% { transform: rotate(360deg);}
 }
+/* img .bordeMesa {border:1px solid #f57c00 !important;} */
+
+.bordeMesaOcupada 
+{
+    border: 3px solid #f57c00;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
