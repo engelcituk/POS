@@ -88,7 +88,7 @@
                                         <div id="receipt-data">
                                             <div>
                                                 <div style="clear:both;"></div>
-                                                <table class="table table-striped table-condensed">
+                                                <table  class="table table-striped table-condensed">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;"><i class="fas fa-table"></i> <strong><span id="mesaTablaProductos"></span></strong></th>
@@ -99,6 +99,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        
                                                         {{-- <tr>
                                                             <td><button class="btn btn-danger btn-xs"><i class="fas fa-times"></i></button></td>
                                                             <td>Minion Hi</td>
@@ -108,16 +109,16 @@
                                                         </tr>                                                         --}}
                                                     </tbody>
                                                     <tfoot>
-                                                        <tr>
+                                                        {{-- <tr>
                                                             <th colspan="2">Total</th>
                                                             <th colspan="3" class="text-right">30.00</th>
-                                                        </tr>
+                                                        </tr> --}}
                                                     </tfoot>
                                                 </table>
 
-                                                <div class="well well-sm" style="margin-top:10px;">
+                                                {{-- <div class="well well-sm" style="margin-top:10px;">
                                                     <div style="text-align: center;">This is receipt footer for store</div>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                             <div style="clear:both;"></div>
                                         </div>

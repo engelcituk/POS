@@ -31,14 +31,20 @@ $("#zonaElige").change(function() {
     //muestro el modal pero no lo dejo salir al hacer click fuera de este
     var estadoMesa = $("#mesaAbrir"+idMesa).attr("estadoMesa");//obtengo el id de la mesa
     $('#idMesaModal').val(idMesa);
+    var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
 
     if(estadoMesa=="disponible"){//si la mesa está disponible abro modal para obtener datos de huesped
         $('#myModal').modal({backdrop: 'static', keyboard: false });
+        localStorage.setItem("idMesaLS", idMesa); 
     }else if(estadoMesa=="ocupado"){
         $("#zonaTomarOrden").removeClass("hidden");
         $("#zonaMesas").addClass("hidden");
         $("#myModal").modal("hide"); 
-        localStorage.setItem("idMesaLS", idMesa);             
+        localStorage.setItem("idMesaLS", idMesa);
+        leerCuentaTemporal(idPV, idMesa); //obtengo los datos de productos de la cuenta temporal
+        // var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+        // var datosCuentaTemporal = localStorage.getItem(cuentaTemporal);
+        // console.log("datosCuentaTemporal ",datosCuentaTemporal);
     }
 
  }
@@ -168,28 +174,81 @@ $("#zonaElige").change(function() {
         }
     }); 
  }
- 
-function addProducto(idProducto) {
-    var numeroDeMesa = $("#idMesaAddProducts").attr("idMesaValue");//obtengo el id de la mesa
 
-    var idProducto = $("#producto"+idProducto).attr("idProducto");
+var lstProductos=[];
+function addProducto(idProducto) {
+
+    var idPV= $("#idPVModalOrdenar").val();
+    var idMesa = localStorage.getItem("idMesaLS");    
+    var cuentaObjeto = JSON.parse(localStorage.getItem(idPV+idMesa));
+    var idCuenta = cuentaObjeto["id"];
     var nombreProducto = $("#producto"+idProducto).attr("nProducto");
     var precio = $("#producto"+idProducto).attr("precio");
-    var cantidad = prompt("Indique Cantidad", 1);
-    var cantidadIsNumber=Number.isInteger(cantidad);
+    
 
-    if(cantidadIsNumber){
-        //estructura html para agregar algo a la tabla
-    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+precio+"</td></tr>";
-    $("table tbody").append(filaTabla);
-    }else{
-        console.log("no pusiste numero!!");
-    }
+    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+    var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
 
-          
-        
+        if (typeof datosCuentaTemporal === 'undefined' || datosCuentaTemporal === null) {
+	        lstProductos=[];
+	    }else{
+	       lstProductos=datosCuentaTemporal;	              
+	    }
+        while(true){
+            var cantidad = prompt('Indique Cantidad', 1);           
+            if(!isNaN(cantidad) && cantidad != null && cantidad != ""){            
+                break;
+            }else if(cantidad == 'fin'){
+                break;
+            }else{
+                alert('no es numero');
+                continue;
+            }
+        }      
+    var subTotal = precio*cantidad;    
+    lstProductos.push({"idCuenta":idCuenta,
+                       "idPV":parseInt(idPV),
+                       "idMesa":parseInt(idMesa),                       
+                       "idProducto":parseInt(idProducto),
+                       "nombreProducto":nombreProducto,
+                       "cantidad":parseInt(cantidad),
+                       "precio":parseFloat(precio),
+                       "subTotal":parseFloat(subTotal)});
+    // console.log("su cuenta",cuentaObjeto);
+    // console.log("su lista de productos", lstProductos);
+    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+    localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));    
+    //estructura html para agregar algo a la tabla
+    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr>";
+    $("table tbody").append(filaTabla);        
     //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);
  }
+ function leerCuentaTemporal(idPV, idMesa) {
+     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+     var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
+    if (typeof datosCuentaTemporal === 'undefined' || datosCuentaTemporal === null) {
+        console.log("no tienes definido la variable");
+    }else{
+        console.log(datosCuentaTemporal);
+        // console.log(datosCuentaTemporal[0]["idCuenta"]);
+        var sumaSubTotales=0;   
+        for (i = 0; i < datosCuentaTemporal.length; i++) {
+            var idCuenta = datosCuentaTemporal[i]["idCuenta"];
+            var idPV = datosCuentaTemporal[i]["idPV"];
+            var idMesa = datosCuentaTemporal[i]["idMesa"];
+            var idProducto = datosCuentaTemporal[i]["idProducto"];
+            var nombreProducto = datosCuentaTemporal[i]["nombreProducto"];
+            var cantidad = datosCuentaTemporal[i]["cantidad"];
+            var precio = datosCuentaTemporal[i]["precio"];
+            var subTotal = datosCuentaTemporal[i]["subTotal"]; 
+            sumaSubTotales = sumaSubTotales + subTotal;
+           lstProductosTr="<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr>";
+           $("table tbody").append(lstProductosTr);
+        } 
+        var total="<tr><th colspan='2'>Total</th><th colspan='3' class='text-right'>"+sumaSubTotales+"</th></tr>";
+        $("table tfoot").append(total);      
+    } //sumaSubTotales
+}
  function deleteProductoItem(idProducto) {
     $("table tbody").find('#producto'+idProducto).each(function(){
         $(this).parents("tr").remove();
@@ -251,13 +310,34 @@ function marcarAlergenosMatch(idProducto){
     var contador=0;
     $("input[name='idAlergenoProducto[]']").each( function () {
         //    console.log(n)                        ;
-        if($(this).val().includes(alergenosIdHuesped[contador]) && $(this).prop("checked")){
+        if((alergenosIdHuesped.indexOf(parseInt($(this).val()))!=-1) && $(this).prop("checked")){
             valorIdAlergeno= $(this).val();            
             $("#labelCheck"+valorIdAlergeno).addClass("label label-warning");             
             contador++;	
         }
     });
     //$(this).val().includes(alergenosIdHuesped[contador]) 
+}
+function cargaAlergeno(idProducto){
+    var idPV= $("#idPVModalOrdenar").val();
+    var idMesaLS = localStorage.getItem("idMesaLS");
+    var variableLS =idPV+idMesaLS;
+
+    var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));
+    var idAlergenos = datosCuentaObjeto["TPV_AlergenosCuenta"];  
+    alergenosIdHuesped = [];
+    for (i = 0; i < idAlergenos.length; i++) {
+        alergenosIdHuesped[i]= idAlergenos[i].idAlergeno;
+    }
+    var contador=0;
+    $("input[name='idAlergenoProducto[]']").each( function () {                       
+        if((alergenosIdHuesped.indexOf(parseInt($(this).val()))!=-1) && $(this).prop("checked")){
+            valorIdAlergeno= $(this).val();            
+            $("#labelCheck"+valorIdAlergeno).addClass("label label-warning");             
+            contador++;	
+        }
+    });
+    
 }
 /*al cerrrar el modal myModalAlergenos quito los check previamente marcados en el modal
 E igual quito los colores de los label*/
