@@ -177,7 +177,17 @@ $("#zonaElige").change(function() {
 
  function GetProductosBySubCat(idSubCat){
      var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
-    // console.log("hiciste clic");
+     var idPV= $("#idPVModalOrdenar").val();
+    var idMesaLS = localStorage.getItem("idMesaLS");
+    var variableLS =idPV+idMesaLS;
+
+    var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
+    // console.log(variableLS);
+    var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
+    alergenosIdHuesped = [];
+    for (i = 0; i < alergenosCuenta.length; i++) {
+        alergenosIdHuesped[i]= alergenosCuenta[i].idAlergeno;
+    }
     $.ajax({
             url: "{{url('obtener/productos')}}"+'/'+idSubCat,
             type: "GET",
@@ -190,13 +200,25 @@ $("#zonaElige").change(function() {
                 var ok = respuesta["ok"];                
                 if(ok){
                     var objeto=respuesta["objeto"];
+                    
                     // console.log(objeto);
                     listaProductos=""
                         for(i =0;  i<objeto.length; i++){
+                            var colorAlergeno = "label-info";
                             var idProducto=objeto[i]["id"];
                             var nombreProducto=objeto[i]["nombreProducto"];
                             var precio=objeto[i]["precio"];
-                           listaProductos+="<li><div class='well well-sm'><div id='producto"+idProducto+"' idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio="+precio+"' onclick='addProducto("+idProducto+")' style='cursor: pointer;' ><strong>"+nombreProducto+"</strong></div><br><div style='cursor: pointer;' onclick='verAlergenos("+idProducto+")'>Alergenos</div></div></li>";
+                            var alergenosP = objeto[i]["TPV_ProductoAlergeno"];
+                            alergenosIdP = [];
+                            for (i = 0; i < alergenosP.length; i++) {
+                                if(alergenosIdHuesped.indexOf(alergenosP[i].idAlergeno)!=-1){
+                                        colorAlergeno="label-warning";
+                                }
+                            }
+                            console.log(alergenosP);
+                           listaProductos+="<li><div class='well well-sm'><div id='producto"+idProducto
+                           +"' idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio="+precio+"' onclick='addProducto("+idProducto+")' style='cursor: pointer;' ><strong>"+
+                           nombreProducto+"</strong></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
                     $("#UlList"+idSubCat).html(listaProductos);

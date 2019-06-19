@@ -86,27 +86,28 @@
                                         <div class="no-print">
                                         </div>
                                         <div id="receipt-data">
-                                            <div>
+                                            <div class="table-responsive">
                                                 <div style="clear:both;"></div>
                                                 <table  class="table table-striped table-condensed">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;"><i class="fas fa-table"></i> <strong><span id="mesaTablaProductos"></span></strong></th>
                                                             <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;">Nombre</th>
+                                                            <th class="text-center" style="width: 26%; border-bottom: 2px solid #ddd;">nota</th>
                                                             <th class="text-center" style="width: 12%; border-bottom: 2px solid #ddd;">Cantidad</th>
                                                             <th class="text-center" style="width: 24%; border-bottom: 2px solid #ddd;">Precio</th>
-                                                            <th class="text-center" style="width: 26%; border-bottom: 2px solid #ddd;">Subtotal</th>
+                                                            <th class="text-center" style="width: 26%; border-bottom: 2px solid #ddd;">Total</th>                                                            
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
-                                                        
-                                                        {{-- <tr>
-                                                            <td><button class="btn btn-danger btn-xs"><i class="fas fa-times"></i></button></td>
+                                                    <tbody>                                                        
+                                                        <tr>
+                                                            {{-- <td><button class="btn btn-danger btn-xs"><i class="fas fa-times"></i></button></td>
                                                             <td>Minion Hi</td>
+                                                            <td><input type='text' class='form-control'></td>
                                                             <td style="text-align:center;">1.00</td>
                                                             <td class="text-right">15.00</td>
-                                                            <td class="text-right">15.00</td>
-                                                        </tr>                                                         --}}
+                                                            <td class="text-right">15.00</td> --}}
+                                                        </tr>                                                        
                                                     </tbody>
                                                     <tfoot>
                                                         {{-- <tr>
@@ -170,25 +171,7 @@
                                                     @endphp                                                        
                                                         <div class="tab-pane" id="sub{{$subCat->id}}">
                                                             <ul class="nav nav-pills nav-pills-icons" id="UlList{{$subCat->id}}" role="tablist">
-                                                                {{-- @foreach($productos as $producto)
-                                                                    @php
-                                                                    $collection = collect(['idSubCat' => $producto->idSubCategoria, 'idSubCat' => $idSubCat]);
-                                                                    $respuesta = $collection->contains($producto->idSubCategoria);
-                                                                    $idProducto=$producto->id;
-                                                                    $nombreProducto=$producto->nombreProducto;
-                                                                    $precio=$producto->precio;
-                                                                    @endphp
-                                                                    @if($respuesta==1)
-                                                                    <li>
-                                                                        <div class="well well-sm">
-                                                                        <div id="producto{{$idProducto}}" idProducto="{{$producto->id}}" nProducto="{{$nombreProducto}}" precio="{{$precio}}" onclick="addProducto({{$idProducto}})" style="cursor: pointer;" ><strong>{{$nombreProducto}}</strong></div><br>
-                                                                            <div style="cursor: pointer;" onload="cargaAlergeno({{$idProducto}})" onclick="verAlergenos({{$idProducto}})">
-                                                                                Alergenos   
-                                                                            </div>
-                                                                        </div>
-                                                                    </li>                                                                   
-                                                                    @endif
-                                                                @endforeach --}}
+                                                               
                                                             </ul>
                                                         </div>                                                            
                                                     @endforeach
