@@ -241,8 +241,9 @@ function addProducto(idProducto) {
     var cuentaObjeto = JSON.parse(localStorage.getItem(idPV+idMesa));
     var idCuenta = cuentaObjeto["id"];
     var nombreProducto = $("#producto"+idProducto).attr("nProducto");
+    // var nota = $("#producto"+idProducto).attr("nota");
     var precio = $("#producto"+idProducto).attr("precio");
-    
+    // console.log("precio",precio);
 
     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
     var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
@@ -278,7 +279,7 @@ function addProducto(idProducto) {
     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
     localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));    
     //estructura html para agregar algo a la tabla
-    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr>";
+    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td><input type='text' class='form-control'></td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr>";
     $("table tbody").append(filaTabla);        
     //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);
  }
@@ -298,11 +299,12 @@ function addProducto(idProducto) {
             var idMesa = datosCuentaTemporal[i]["idMesa"];
             var idProducto = datosCuentaTemporal[i]["idProducto"];
             var nombreProducto = datosCuentaTemporal[i]["nombreProducto"];
+            var nota = datosCuentaTemporal[i]["nota"];
             var cantidad = datosCuentaTemporal[i]["cantidad"];
             var precio = datosCuentaTemporal[i]["precio"];
             var subTotal = datosCuentaTemporal[i]["subTotal"]; 
             sumaSubTotales = sumaSubTotales + subTotal;
-           lstProductosTr="<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr>";
+           lstProductosTr="<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td><input type='text' class='form-control' value='"+nota+"'></td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr>";
            $("table tbody").append(lstProductosTr);
         } 
         var total="<tr><th colspan='2'>Total</th><th colspan='3' class='text-right'>"+sumaSubTotales+"</th></tr>";
@@ -310,7 +312,10 @@ function addProducto(idProducto) {
     } //sumaSubTotales
 }
 
- function deleteProductoItem(idProducto) {
+ function deleteProductoItem(idProducto,idPV,idMesa) {
+     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+     var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
+     
     $("table tbody").find('#producto'+idProducto).each(function(){
         $(this).parents("tr").remove();
     });
@@ -416,3 +421,4 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
 </script>
 
                         
+
