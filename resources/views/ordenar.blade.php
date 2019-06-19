@@ -156,7 +156,7 @@
                                                 @endphp                                                    
                                                     @if($subCats!=0)
                                                         @foreach($subCats as $subCat) 
-                                                            <li><a href="#sub{{$subCat->id}}" data-toggle="tab">{{$subCat->name}}</a></li>
+                                                            <li><a href="#sub{{$subCat->id}}" data-toggle="tab" onclick="GetProductosBySubCat({{$subCat->id}})">{{$subCat->name}}</a></li>
                                                         @endforeach
                                                         @else
                                                            <p>Sin subcategorias</p>     
@@ -169,8 +169,8 @@
                                                         $idSubCat=$subCat->id;                                                        
                                                     @endphp                                                        
                                                         <div class="tab-pane" id="sub{{$subCat->id}}">
-                                                            <ul class="nav nav-pills nav-pills-icons" role="tablist">
-                                                                @foreach($productos as $producto)
+                                                            <ul class="nav nav-pills nav-pills-icons" id="UlList{{$subCat->id}}" role="tablist">
+                                                                {{-- @foreach($productos as $producto)
                                                                     @php
                                                                     $collection = collect(['idSubCat' => $producto->idSubCategoria, 'idSubCat' => $idSubCat]);
                                                                     $respuesta = $collection->contains($producto->idSubCategoria);
@@ -188,7 +188,7 @@
                                                                         </div>
                                                                     </li>                                                                   
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach --}}
                                                             </ul>
                                                         </div>                                                            
                                                     @endforeach

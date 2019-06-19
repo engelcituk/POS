@@ -175,6 +175,42 @@ $("#zonaElige").change(function() {
     }); 
  }
 
+ function GetProductosBySubCat(idSubCat){
+     var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+    // console.log("hiciste clic");
+    $.ajax({
+            url: "{{url('obtener/productos')}}"+'/'+idSubCat,
+            type: "GET",
+            data: {
+                '_method': 'GET',
+                '_token': csrf_token
+            },            
+            success: function(respuesta) {
+                var respuesta=JSON.parse(respuesta);                 
+                var ok = respuesta["ok"];                
+                if(ok){
+                    var objeto=respuesta["objeto"];
+                    // console.log(objeto);
+                    listaProductos=""
+                        for(i =0;  i<objeto.length; i++){
+                            var idProducto=objeto[i]["id"];
+                            var nombreProducto=objeto[i]["nombreProducto"];
+                            var precio=objeto[i]["precio"];
+                           listaProductos+="<li><div class='well well-sm'><div id='producto"+idProducto+"' idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio="+precio+"' onclick='addProducto("+idProducto+")' style='cursor: pointer;' ><strong>"+nombreProducto+"</strong></div><br><div style='cursor: pointer;' onclick='verAlergenos("+idProducto+")'>Alergenos</div></div></li>";
+                        }
+                    listaProductos+="";                     
+                    $("#UlList"+idSubCat).html(listaProductos);
+                }else{
+                    $("#UlList"+idSubCat).html('<p>Sin productos para la subcategoria</p>');
+                }
+            },
+            error: function(respuesta) {
+            respuesta=JSON.parse(respuesta); 
+            console.log(respuesta);
+            }
+    });
+ }
+
 var lstProductos=[];
 function addProducto(idProducto) {
 
@@ -212,6 +248,7 @@ function addProducto(idProducto) {
                        "idProducto":parseInt(idProducto),
                        "nombreProducto":nombreProducto,
                        "cantidad":parseInt(cantidad),
+                       "nota":"",
                        "precio":parseFloat(precio),
                        "subTotal":parseFloat(subTotal)});
     // console.log("su cuenta",cuentaObjeto);
@@ -223,6 +260,7 @@ function addProducto(idProducto) {
     $("table tbody").append(filaTabla);        
     //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);
  }
+ 
  function leerCuentaTemporal(idPV, idMesa) {
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
@@ -249,6 +287,7 @@ function addProducto(idProducto) {
         $("table tfoot").append(total);      
     } //sumaSubTotales
 }
+
  function deleteProductoItem(idProducto) {
     $("table tbody").find('#producto'+idProducto).each(function(){
         $(this).parents("tr").remove();

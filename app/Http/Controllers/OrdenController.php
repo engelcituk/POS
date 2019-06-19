@@ -12,6 +12,7 @@ class OrdenController extends Controller
     public $urlHuesped= "http://localhost/TPVApi/Venta/"; //para obtener los datos del huesped para la venta
     public $urlVenta= "http://localhost/TPVApi/Venta/";
     public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
+    public $urlBaseProducto = "http://localhost/TPVApi/Producto/";
 
     public function __construct(){
         // $this->middleware('auth');
@@ -82,22 +83,11 @@ class OrdenController extends Controller
         return $subCategorias;
     }
 
-    static public function getProductosBySubCat($idSubCategoria){
-        $metodo = "GET";
-        $urlBase = "http://localhost/TPVApi/Producto/GetProductosPorSubCategoria/{$idSubCategoria}";
+    public function getProductosBySubCat($idSubCategoria){
 
-        $cliente =  new Client();
-        $respuesta = $cliente->request($metodo, $urlBase);
-        $respuesta = $respuesta->getBody()->getContents();
-        $respuesta = json_decode($respuesta);
-        $respuestaOk = $respuesta->ok;
-
-        if ($respuestaOk == 1) {
-            $productos = $respuesta->objeto;
-        } else {
-            $productos = 0;
-        }
-        return $productos;
+        $respuesta = $this->realizarPeticion('GET', $this->urlBaseProducto."GetProductosPorSubCategoria/{$idSubCategoria}");
+        
+        return $respuesta;        
     }
 
     public function guardarCuenta(Request $request){
