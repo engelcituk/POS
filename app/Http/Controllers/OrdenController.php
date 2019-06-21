@@ -20,20 +20,22 @@ class OrdenController extends Controller
     public function index(){
         $idPuntoVenta = 23;
         $respuesta = $this->obtenerTodasLasZonasPV($idPuntoVenta);
+
+        // dd($respuesta);
         // $respuesta = json_decode($respuesta);
         $zonas = $respuesta->objeto;
-        $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
-        $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
-        $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
-        $productos = \App::call( 'App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
+        $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');//se cargan en un modal
+        $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
+        $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');//se carga en subtabs
+        // $productos = \App::call( 'App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
 
-        $idSubCatsCollection = new Collection([]);
-        foreach ($subcategorias as $subCat) {
-            $idSubCatsCollection->push($subCat->id);
-        }
+        // $idSubCatsCollection = new Collection([]);
+        // foreach ($subcategorias as $subCat) {
+        //     $idSubCatsCollection->push($subCat->id);
+        // }
         // dd($idSubCatsCollection);
 
-        return view('ordenar', compact('zonas','alergenos','categorias','productos', 'idSubCatsCollection'));
+        return view('ordenar', compact('zonas','alergenos','categorias'));
     }
    
     public function obtenerTodasLasZonasPV($idPuntoVenta){
@@ -111,7 +113,6 @@ class OrdenController extends Controller
         // return $alergenos;
         $respuesta = $this->realizarPeticion('POST', $this->urlVenta.'AddCuenta', [
             'form_params' => [
-
                 'idMesa' => $idMesa,
                 'idUsuarioAlta' => $idUsuario,
                 'reserva' => $reserva,
@@ -128,5 +129,44 @@ class OrdenController extends Controller
         $respuesta = $this->realizarPeticion('GET', $this->urlBaseProductoAlergeno."GetAlergenosProducto/{$idProducto}");        
         return $respuesta;
     }
-    
+    public function enviarACentrosPrep(Request $request){
+        $cuentaTemporal = $request->get('cuentaTemporal');        
+        
+        $contador=0;
+        foreach ($cuentaTemporal as $ct) {
+            $idCuenta = $cuentaTemporal[$contador]["idCuenta"];
+            $idMenuCarta = $cuentaTemporal[$contador]["idMenuCarta"];
+            $cantidad = $cuentaTemporal[$contador]["cantidad"];
+            $comensal = $cuentaTemporal[$contador]["comensal"];
+            $tiempo = $cuentaTemporal[$contador]["tiempo"];
+            $precioUnitario = $cuentaTemporal[$contador]["precioUnitario"];
+            $idUsuarioAlta = $cuentaTemporal[$contador]["idUsuarioAlta"];
+            $nota = $cuentaTemporal[$contador]["nota"];
+            
+            $arrayCuenta[] =  array('idCuenta' => (int) $idCuenta,
+                                    'idMenuCarta'=> (int) $idMenuCarta,
+                                    'cantidad'=> (int) $cantidad,
+                                    'comensal' => (int) $comensal,
+                                    'tiempo' =>(int) $tiempo,
+                                    'precioUnitario' => number_format($precioUnitario, 2),
+                                    'idUsuarioAlta' => (int) $idUsuarioAlta,
+                                    'nota' => $nota                                    
+                                    );
+
+            $contador++;  
+        }
+        // return json_encode($arrayCuenta);    
+        $respuesta = $this->realizarPeticion('POST', $this->urlVenta.'AddDetalleCuenta', [
+            'form_params' => [
+                'ldetalleCuenta' =>
+                 $arrayCuenta
+            ]
+        ]);
+        return $respuesta;
+    }
+    public function obtenerCuentaApi($idCuenta){
+
+        $respuesta = $this->realizarPeticion('GET', $this->urlVenta."GetDetalleCuenta/{$idCuenta}");
+        return $respuesta;        
+    }
 }

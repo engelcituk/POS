@@ -31,7 +31,7 @@
                 </nav>                                                
             </div>
         </div>
-        <div class="row" id="zonaMesas">
+        <div class="row" id="zonaMesas">            
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="red">
@@ -86,28 +86,21 @@
                                         <div class="no-print">
                                         </div>
                                         <div id="receipt-data">
-                                            <div class="table-responsive">
-                                                <div style="clear:both;"></div>
+                                            <div class="table-responsive" id="tablaItemProductos">
+                                               
                                                 <table  class="table table-striped table-condensed">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;"><i class="fas fa-table"></i> <strong><span id="mesaTablaProductos"></span></strong></th>
                                                             <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;">Nombre</th>
-                                                            <th class="text-center" style="width: 26%; border-bottom: 2px solid #ddd;">nota</th>
+                                                            
                                                             <th class="text-center" style="width: 12%; border-bottom: 2px solid #ddd;">Cantidad</th>
                                                             <th class="text-center" style="width: 24%; border-bottom: 2px solid #ddd;">Precio</th>
                                                             <th class="text-center" style="width: 26%; border-bottom: 2px solid #ddd;">Total</th>                                                            
                                                         </tr>
                                                     </thead>
                                                     <tbody>                                                        
-                                                        <tr>
-                                                            {{-- <td><button class="btn btn-danger btn-xs"><i class="fas fa-times"></i></button></td>
-                                                            <td>Minion Hi</td>
-                                                            <td><input type='text' class='form-control'></td>
-                                                            <td style="text-align:center;">1.00</td>
-                                                            <td class="text-right">15.00</td>
-                                                            <td class="text-right">15.00</td> --}}
-                                                        </tr>                                                        
+                                                                                                              
                                                     </tbody>
                                                     <tfoot>
                                                         {{-- <tr>
@@ -121,21 +114,20 @@
                                                     <div style="text-align: center;">This is receipt footer for store</div>
                                                 </div> --}}
                                             </div>
-                                            <div style="clear:both;"></div>
-                                        </div>
+                                           
+                                        </div>                                         
 
                                         <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
                                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                                <!-- <div class="btn-group" role="group">
-                                                    <button onclick="window.print();" class="btn btn-block btn-primary">Print</button> </div>
                                                 <div class="btn-group" role="group">
-                                                    <a class="btn btn-block btn-success" href="#" id="email">Email</a>
-                                                </div> -->
+                                                    <button onclick="window.print();" class="btn btn-block btn-primary">Opcion 1</button> </div>
                                                 <div class="btn-group" role="group">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <a class="btn btn-block btn-success" href="#" id="email">Opcion 2</a>
+                                                </div> 
+                                                <div class="btn-group" role="group">
+                                                    <button type="button" class="btn btn-info" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep()"><i class="fas fa-paper-plane"></i> Enviar</button>
                                                 </div>
-                                            </div>
-                                            <div style="clear:both;"></div>
+                                            </div>                                          
                                         </div>
 
                                     </div>

@@ -82,3 +82,15 @@
     -moz-border-radius: 10px;
     border-radius: 10px;
 }
+
+/* estilos tabla de productos en tomar orden */
+
+#tablaItemProductos { overflow-y: auto; height: 350px;
+    
+  }
+#tablaItemProductos thead th { /*position: sticky; top: 0; */ background:#37474f ; color: #f3f3f3; }
+
+/* Just common table stuff. Really. */
+table #tablaItemProductos { border-collapse: collapse; width: 100%;
+  
+}

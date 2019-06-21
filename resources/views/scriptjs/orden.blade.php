@@ -1,5 +1,5 @@
 <script>
-$( document ).ready(function() {
+$(document ).ready(function() {
     var valDefault = $("#zonaElige").children('option:first').val();    
     if (valDefault != "") {                        
         $(".zonas").hide();
@@ -24,7 +24,7 @@ $("#zonaElige").change(function() {
     //         text: '¡Por favor elija una zona!',
     //         type: 'error',
     //         timer: '1500'
-    //     })
+    //     });
     // }
 });
  function aperturaMesa(idMesa) {
@@ -32,21 +32,38 @@ $("#zonaElige").change(function() {
     var estadoMesa = $("#mesaAbrir"+idMesa).attr("estadoMesa");//obtengo el id de la mesa
     $('#idMesaModal').val(idMesa);
     var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
+    var idMenuCarta = $("#idMemuCartaPVModal").val();
 
     if(estadoMesa=="disponible"){//si la mesa está disponible abro modal para obtener datos de huesped
         $('#myModal').modal({backdrop: 'static', keyboard: false });
-        localStorage.setItem("idMesaLS", idMesa); 
+        localStorage.setItem("idMesaLS", idMesa);
+
+        $("#btnEnviarCP").attr("idPVCPBtn",idPV);
+        $("#btnEnviarCP").attr("idMesaCPBtn",idMesa);
+        $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);        
+
     }else if(estadoMesa=="ocupado"){
         $("#zonaTomarOrden").removeClass("hidden");
         $("#zonaMesas").addClass("hidden");
         $("#myModal").modal("hide"); 
         localStorage.setItem("idMesaLS", idMesa);
-        leerCuentaTemporal(idPV, idMesa); //obtengo los datos de productos de la cuenta temporal
+        $("#btnEnviarCP").attr("idPVCPBtn",idPV);
+        $("#btnEnviarCP").attr("idMesaCPBtn",idMesa);
+        $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
+        var idCuenta =getIdCuenta(idPV,idMesa) ;            
+        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
+        //obtengo los datos de productos de la cuenta temporal
         // var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
         // var datosCuentaTemporal = localStorage.getItem(cuentaTemporal);
         // console.log("datosCuentaTemporal ",datosCuentaTemporal);
     }
 
+ }
+ function getIdCuenta(idPV,idMesa){    
+    var variable=idPV+idMesa;
+    var cuenta = JSON.parse(localStorage.getItem(variable));
+    var idCuenta =cuenta["id"];
+    return idCuenta;
  }
  function buscarHuesped(){
     //  e.preventDefault();
@@ -107,7 +124,7 @@ $("#zonaElige").change(function() {
     }    
  }
   function abrirCuenta() {
-     var idMesa = $("#idMesaModal").val();
+     var idMesa = $("#idMesaModal").val();     
 
      var reserva = $("#reserva").val().length > 0;
      var nombre = $("#nombre").val().length > 0;
@@ -176,8 +193,8 @@ $("#zonaElige").change(function() {
  }
 
  function GetProductosBySubCat(idSubCat){
-     var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
-     var idPV= $("#idPVModalOrdenar").val();
+    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+    var idPV= $("#idPVModalOrdenar").val();
     var idMesaLS = localStorage.getItem("idMesaLS");
     var variableLS =idPV+idMesaLS;
 
@@ -199,9 +216,8 @@ $("#zonaElige").change(function() {
                 var respuesta=JSON.parse(respuesta);                 
                 var ok = respuesta["ok"];                
                 if(ok){
-                    var objeto=respuesta["objeto"];
-                    
-                    // console.log(objeto);
+                    var objeto=respuesta["objeto"];                    
+                    console.log(objeto);
                     listaProductos=""
                         for(i =0;  i<objeto.length; i++){
                             var colorAlergeno = "label-info";
@@ -209,15 +225,19 @@ $("#zonaElige").change(function() {
                             var nombreProducto=objeto[i]["nombreProducto"];
                             var precio=objeto[i]["precio"];
                             var alergenosP = objeto[i]["TPV_ProductoAlergeno"];
-                            alergenosIdP = [];
-                            for (i = 0; i < alergenosP.length; i++) {
-                                if(alergenosIdHuesped.indexOf(alergenosP[i].idAlergeno)!=-1){
-                                        colorAlergeno="label-warning";
-                                }
-                            }
-                            console.log(alergenosP);
+                            console.log("sus Alergenos",alergenosP);
+                           if(alergenosP.length >0 ){
+                                //operador ternario
+                            alergenosIdP = [];                            
+                                for (j = 0; j < alergenosP.length; j++) {
+                                    if(alergenosIdHuesped.indexOf(alergenosP[j].idAlergeno)!=-1){
+                                            colorAlergeno="label-warning";
+                                    }
+                                } 
+                            }                                                                                
+                            // console.log("sus Alergenos",alergenosPOk);
                            listaProductos+="<li><div class='well well-sm'><div id='producto"+idProducto
-                           +"' idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio="+precio+"' onclick='addProducto("+idProducto+")' style='cursor: pointer;' ><strong>"+
+                           +"' idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' onclick='addProducto("+idProducto+")' style='cursor: pointer;' ><strong>"+
                            nombreProducto+"</strong></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
@@ -237,6 +257,8 @@ var lstProductos=[];
 function addProducto(idProducto) {
 
     var idPV= $("#idPVModalOrdenar").val();
+    var idMenuCarta = $("#idMemuCartaPVModal").val();
+    var idUsuario = $("#idUserModalOrdenar").val();
     var idMesa = localStorage.getItem("idMesaLS");    
     var cuentaObjeto = JSON.parse(localStorage.getItem(idPV+idMesa));
     var idCuenta = cuentaObjeto["id"];
@@ -267,24 +289,33 @@ function addProducto(idProducto) {
     var subTotal = precio*cantidad;    
     lstProductos.push({"idCuenta":idCuenta,
                        "idPV":parseInt(idPV),
-                       "idMesa":parseInt(idMesa),                       
+                       "idMesa":parseInt(idMesa),
+                       "idMenuCarta":parseInt(idMenuCarta),
                        "idProducto":parseInt(idProducto),
                        "nombreProducto":nombreProducto,
                        "cantidad":parseInt(cantidad),
+                       "comensal":3,
+                       "tiempo":2,
+                       "idUsuarioAlta":parseInt(idUsuario),
                        "nota":"",
-                       "precio":parseFloat(precio),
+                       "precioUnitario":parseFloat(precio),
                        "subTotal":parseFloat(subTotal)});
     // console.log("su cuenta",cuentaObjeto);
     // console.log("su lista de productos", lstProductos);
-    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
-    localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));    
+    //var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+    localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));   
+    var count = lstProductos.length-1; 
     //estructura html para agregar algo a la tabla
-    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td><input type='text' class='form-control'></td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr>";
+    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='pos"+count+"' name='itemProducto'  onclick='deleteProductoItem("+count+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+count+"' class='form-control' value='' placeholder='Agregar nota' onchange='addNota("+count+","+idPV+","+idMesa+")'></td></tr>";
     $("table tbody").append(filaTabla);        
     //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);
  }
  
  function leerCuentaTemporal(idPV, idMesa) {
+    $("#tablaItemProductos tbody").empty();
+    $("#tablaItemProductos tfoot").empty();
+           
+     var counter=leerCuentaApi(idPV, idMesa);
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
     if (typeof datosCuentaTemporal === 'undefined' || datosCuentaTemporal === null) {
@@ -292,7 +323,8 @@ function addProducto(idProducto) {
     }else{
         console.log(datosCuentaTemporal);
         // console.log(datosCuentaTemporal[0]["idCuenta"]);
-        var sumaSubTotales=0;   
+        var sumaSubTotales=0;
+        var counterTem=-1;        
         for (i = 0; i < datosCuentaTemporal.length; i++) {
             var idCuenta = datosCuentaTemporal[i]["idCuenta"];
             var idPV = datosCuentaTemporal[i]["idPV"];
@@ -301,24 +333,133 @@ function addProducto(idProducto) {
             var nombreProducto = datosCuentaTemporal[i]["nombreProducto"];
             var nota = datosCuentaTemporal[i]["nota"];
             var cantidad = datosCuentaTemporal[i]["cantidad"];
-            var precio = datosCuentaTemporal[i]["precio"];
+            var precio = datosCuentaTemporal[i]["precioUnitario"];
             var subTotal = datosCuentaTemporal[i]["subTotal"]; 
             sumaSubTotales = sumaSubTotales + subTotal;
-           lstProductosTr="<tr><td><button class='btn btn-danger btn-xs' id='producto"+idProducto+"' name='itemProducto' onclick='deleteProductoItem("+idProducto+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td><input type='text' class='form-control' value='"+nota+"'></td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr>";
+            counter++;
+            
+           lstProductosTr="<tr><td><button id='pos"+counterTem+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+counterTem+"' class='form-control' value='"+nota+"' onchange='addNota("+counterTem+","+idPV+","+idMesa+")'></td></tr>";
            $("table tbody").append(lstProductosTr);
-        } 
+           counterTem++;
+        }
         var total="<tr><th colspan='2'>Total</th><th colspan='3' class='text-right'>"+sumaSubTotales+"</th></tr>";
-        $("table tfoot").append(total);      
-    } //sumaSubTotales
+        $("table tfoot").append(total);//sumaSubTotales         
+    }
 }
+ function leerCuentaApi(idPV, idMesa) {
+     var counter=-1;
+     var cuentaAPi="cuentaBD"+idPV+idMesa;
+     var objCuentaAPi =JSON.parse(localStorage.getItem(cuentaAPi));
+    if (typeof objCuentaAPi === 'undefined' || objCuentaAPi === null) {
+        console.log("no tienes definido la variable");
+    }else{
+        console.log(objCuentaAPi);
+        // console.log(objCuentaAPi[0]["idCuenta"]);
+        var sumaSubTotales=0;
+        
+        for (i = 0; i < objCuentaAPi.length; i++) {
+            var idCuenta = objCuentaAPi[i]["idCuenta"];
+            var idPV = objCuentaAPi[i]["idPV"];
+            var idMesa = objCuentaAPi[i]["idMesa"];
+            var idProducto = objCuentaAPi[i]["idProducto"];
+            var nombreProducto = objCuentaAPi[i]["nombreProducto"];            
+            var nota = (objCuentaAPi[i]["nota"] == null) ? "" : objCuentaAPi[i]["nota"];// ternario
+            var cantidad = objCuentaAPi[i]["cantidad"];
+            var precio = objCuentaAPi[i]["precioUnitario"];
+            var total = cantidad * precio;
+            // sumaSubTotales = sumaSubTotales + subTotal;
+            counter++;
+           lstProductosTr="<tr><td><button id='posi"+counter+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counter+","+idPV+","+idMesa+")'>Cancel</button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+total+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+counter+"' class='form-control' value='"+nota+"' disabled></td></tr>";
+           $("table tbody").append(lstProductosTr);
+           
+        }
+    } //sumaSubTotales
+    return counter;               
+}
+function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    
+    $.ajax({
+            url: "{{url('obtenercuenta')}}"+'/'+idCuenta,
+            type: "GET",
+            data: {
+                '_method': 'GET',
+                '_token': csrf_token
+            },            
+            success: function(respuesta) {
+                var respuesta=JSON.parse(respuesta);
+                var ok = respuesta["ok"];
+                if(ok){
+                    var cuentaApi="cuentaBD"+idPV+idMesa;//creo la variable
+                    var objeto=respuesta["objeto"];                    
+                    console.log(objeto);
+                     lstProductos=[];
+                        for(i =0;  i<objeto.length; i++){                           
+                            var menuCarta = objeto[i]["TPV_MenuCarta"];
+                            var idMenuCarta=menuCarta["id"];
+                            var idProducto=menuCarta["idProducto"];                            
+                            var producto = objeto[i]["TPV_MenuCarta"]["TPV_Producto"];
+                            var nombreProducto=producto["nombreProducto"];
+                            var cantidad=objeto[i]["cantidad"];
+                            var comensal=objeto[i]["comensal"];
+                            var tiempo=objeto[i]["tiempo"];
+                            var idUsuarioAlta=objeto[i]["idUsuarioAlta"];
+                            var nota=objeto[i]["nota"];
+                            var precio=objeto[i]["precioUnitario"];
 
- function deleteProductoItem(idProducto,idPV,idMesa) {
-     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+                            lstProductos.push({"idCuenta":idCuenta,
+                                "idPV":parseInt(idPV),
+                                "idMesa":parseInt(idMesa),
+                                "idMenuCarta":parseInt(idMenuCarta),
+                                "idProducto":parseInt(idProducto),
+                                "nombreProducto":nombreProducto,
+                                "cantidad":parseInt(cantidad),
+                                "comensal":parseInt(comensal),
+                                "tiempo":parseInt(tiempo),
+                                "idUsuarioAlta":parseInt(idUsuarioAlta),
+                                "nota":nota,
+                                "precioUnitario":parseFloat(precio)
+                            });
+                           
+                        }
+                localStorage.setItem(cuentaApi,JSON.stringify(lstProductos));   
+                } 
+                leerCuentaTemporal(idPV, idMesa);
+                 console.log(respuesta);
+            },
+            error: function(respuesta) {
+            respuesta=JSON.parse(respuesta); 
+            console.log(respuesta);
+            }
+    });
+}
+ function deleteProductoItem(pos,idPV,idMesa) {
+     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
      
-    $("table tbody").find('#producto'+idProducto).each(function(){
+      console.log(datosCuentaTemporal);
+      
+    $("table tbody").find('#pos'+pos).each(function(){
         $(this).parents("tr").remove();
     });
+    $("table tbody").find('#nota'+pos).each(function(){
+        $(this).parents("tr").remove();
+    });
+    // delete splice[productoNum];
+    datosCuentaTemporal.splice(pos,1);
+	    
+    localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
+    leerCuentaTemporal(idPV, idMesa);
+}
+
+function addNota(indiceProducto,idPV,idMesa){
+    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
+    var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
+    var nota=$("#nota"+indiceProducto).val();
+    //obtengo la nota y lo agrego al producto    
+    datosCuentaTemporal[indiceProducto]["nota"]=nota;
+    localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
+    // console.log("cambiaste de foco");
 }
 function verAlergenos(idProducto) {
     var csrf_token = $('meta[name="csrf-token"]').attr('content');    
@@ -417,8 +558,50 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
         }	
     });        
 });
+ function enviarCentroPrep() {
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     var idPV = $("#btnEnviarCP").attr("idPVCPBtn");
+     var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");
+     var idMenuCarta = $("#btnEnviarCP").attr("idMenuCartaCPBtn");
 
+     //console.log("idPV es: "+idPV+" idMesa: "+idMesa+" idMenuCarta: "+idMenuCarta);
+     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
+     var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
+     var longitud = datosCuentaTemporal.length;
+     
+     if(datosCuentaTemporal != null && longitud>0){
+         $.ajax({
+            url: "{{ url('ordenar/enviarcuenta') }}",
+            type: "POST",
+            data: {
+                '_method': 'POST',
+                'cuentaTemporal':datosCuentaTemporal,                
+                '_token': csrf_token
+            },        
+            success: function(respuesta) {
+                // console.log("su respuesta desde CONtroller", respuesta);
+                var respuesta = JSON.parse(respuesta);
+                var ok = respuesta["ok"];
+                console.log("respuesta",respuesta);
+                if(ok){//si ok es true
+                     localStorage.setItem(cuentaTemporal, null);
+                }
+            },
+            error: function() {
+                console.log(respuesta);
+        }
+    });          
+     }else{                  
+         swal({
+            title: 'Oopss...',
+            text: '¡Por favor agregue productos a la cuenta!',
+            type: 'error',
+            timer: '1500'
+        });
+     }
+ }
 </script>
 
                         
+
 

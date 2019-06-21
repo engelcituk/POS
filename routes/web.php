@@ -13,8 +13,10 @@ Route::middleware(['filtroAcceso'])->group(function () {
 Route::get('ordenar', 'OrdenController@index')->name('ordenar.index');
 Route::get('ordenar/{codhotel}/{room}', 'OrdenController@obtenerDatosHuesped')->name('ordenar.obtenerhuesped');
 Route::post('ordenar/addcuenta', 'OrdenController@guardarCuenta')->name('ordenar.addcuenta');
+Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name('ordenar.enviarcuenta');
 Route::get('obtener/productos/{idsubcat}', 'OrdenController@getProductosBySubCat')->name('obtener.productos');
 Route::get('buscar/alergenos/{idproducto}', 'OrdenController@obtenerAlergenosProducto')->name('buscar.getalergenos');
+Route::get('obtenercuenta/{idcuenta}', 'OrdenController@obtenerCuentaApi')->name('obtenercuenta.api');
 // Route::get('hoteles/create', 'HotelesController@create')->name('hoteles.create');
 // Route::post('hoteles/store', 'HotelesController@store')->name('hoteles.store');
 // Route::get('hoteles/{hotel}', 'HotelesController@show')->name('hoteles.show');
