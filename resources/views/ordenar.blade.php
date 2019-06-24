@@ -91,7 +91,7 @@
                                                 <table  class="table table-striped table-condensed">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;"><i class="fas fa-table"></i> <strong><span id="mesaTablaProductos"></span></strong></th>
+                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;"><i class="fas fa-table"></i> <span id="idCuentaSpan"></span></th>
                                                             <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;">Nombre</th>
                                                             
                                                             <th class="text-center" style="width: 12%; border-bottom: 2px solid #ddd;">Cantidad</th>
@@ -119,14 +119,24 @@
 
                                         <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
                                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                                <div class="btn-group" role="group">
+                                                {{-- <div class="btn-group" role="group">
                                                     <button onclick="window.print();" class="btn btn-block btn-primary">Opcion 1</button> </div>
                                                 <div class="btn-group" role="group">
                                                     <a class="btn btn-block btn-success" href="#" id="email">Opcion 2</a>
-                                                </div> 
+                                                </div>  --}}
                                                 <div class="btn-group" role="group">
                                                     <button type="button" class="btn btn-info" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep()"><i class="fas fa-paper-plane"></i> Enviar</button>
                                                 </div>
+                                            </div>                                          
+                                        </div>
+                                        <div id="buttons2" style="text-transform:uppercase;" class="no-print">
+                                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                                <div class="btn-group" role="group">
+                                                    <button class="btn btn-block btn-primary"> <i class="fas fa-window-close"></i> Cerrar</button>
+                                                </div>
+                                                <div class="btn-group" role="group">
+                                                    <a class="btn btn-block btn-success" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"> <i class="fas fa-percentage"></i> Agregar descuento</a>
+                                                </div>                                                 
                                             </div>                                          
                                         </div>
 
@@ -186,5 +196,8 @@
     </div>
     @include('ordenar.partials.modalOpenMesa')
     @include('ordenar.partials.modalAlergenos')
+    @include('ordenar.partials.modalCantidad')
+    @include('ordenar.partials.modalCancelarProducto')
+     @include('ordenar.partials.modalAgregarDesc')
 </div>
 @endsection

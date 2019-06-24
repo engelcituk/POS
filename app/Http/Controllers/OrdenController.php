@@ -169,4 +169,20 @@ class OrdenController extends Controller
         $respuesta = $this->realizarPeticion('GET', $this->urlVenta."GetDetalleCuenta/{$idCuenta}");
         return $respuesta;        
     }
+    public function cancelarProductoCuenta(Request $request, $idDetalleCuenta){
+
+        $idUsuarioSesion = $request->session()->get('idUsuarioLogueado');
+        $motivo = $request->get('motivo');
+        
+        $respuesta = $this->realizarPeticion('POST', $this->urlVenta.'CancelProduct', [
+            'form_params' => [
+                'iddc' => $idDetalleCuenta,
+                'idu' => $idUsuarioSesion,
+                'motivo' => $motivo            
+            ]
+        ]);
+        return $respuesta;
+
+    }
 }
+// 172.16.4.229

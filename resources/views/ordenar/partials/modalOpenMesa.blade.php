@@ -139,8 +139,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning pull-left" data-dismiss="modal"> <i class="fas fa-undo"></i> Descartar</button>
-        <button type="button" class="btn btn-primary" onclick="abrirCuenta()"><i class="fas fa-sign-in-alt" ></i> Abrir mesa</button>
-        
+        <button type="button" class="btn btn-primary" onclick="abrirCuenta()"><i class="fas fa-sign-in-alt" ></i> Abrir mesa</button>        
       </div>
     </div>
   </div>

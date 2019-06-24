@@ -17,6 +17,7 @@ Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name(
 Route::get('obtener/productos/{idsubcat}', 'OrdenController@getProductosBySubCat')->name('obtener.productos');
 Route::get('buscar/alergenos/{idproducto}', 'OrdenController@obtenerAlergenosProducto')->name('buscar.getalergenos');
 Route::get('obtenercuenta/{idcuenta}', 'OrdenController@obtenerCuentaApi')->name('obtenercuenta.api');
+Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarProductoCuenta')->name('cancelardetalle.api');
 // Route::get('hoteles/create', 'HotelesController@create')->name('hoteles.create');
 // Route::post('hoteles/store', 'HotelesController@store')->name('hoteles.store');
 // Route::get('hoteles/{hotel}', 'HotelesController@show')->name('hoteles.show');
