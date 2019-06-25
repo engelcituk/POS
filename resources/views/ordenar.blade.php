@@ -82,21 +82,19 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div id="wrapper">
-                                    <div id="receiptData" style="width: auto; max-width: 580px; min-width: 250px; margin: 0 auto;">
+                                    <div id="receiptData">
                                         <div class="no-print">
                                         </div>
                                         <div id="receipt-data">
-                                            <div class="table-responsive" id="tablaItemProductos">
-                                               
-                                                <table  class="table table-striped table-condensed">
+                                            <div class="table-responsive" id="tablaItemProductos">                                             
+                                                <table  class="table table-striped tablaProductos">
                                                     <thead>
                                                         <tr>
-                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;"><i class="fas fa-table"></i> <span id="idCuentaSpan"></span></th>
-                                                            <th class="text-center" style="width: 50%; border-bottom: 2px solid #ddd;">Nombre</th>
-                                                            
-                                                            <th class="text-center" style="width: 12%; border-bottom: 2px solid #ddd;">Cantidad</th>
-                                                            <th class="text-center" style="width: 24%; border-bottom: 2px solid #ddd;">Precio</th>
-                                                            <th class="text-center" style="width: 26%; border-bottom: 2px solid #ddd;">Total</th>                                                            
+                                                            <th class="text-center"><i class="fas fa-table"></i> <span id="idCuentaSpan"></span></th>
+                                                            <th class="text-center">Nombre</th>                                              
+                                                            <th class="text-center" >Cantidad</th>
+                                                            <th class="text-center" >Precio</th>
+                                                            <th class="text-center" >Total</th>        
                                                         </tr>
                                                     </thead>
                                                     <tbody>                                                        
@@ -125,18 +123,21 @@
                                                     <a class="btn btn-block btn-success" href="#" id="email">Opcion 2</a>
                                                 </div>  --}}
                                                 <div class="btn-group" role="group">
-                                                    <button type="button" class="btn btn-info" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep()"><i class="fas fa-paper-plane"></i> Enviar</button>
+                                                    <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep()"><i class="fas fa-paper-plane"></i> Enviar</button>
                                                 </div>
                                             </div>                                          
                                         </div>
                                         <div id="buttons2" style="text-transform:uppercase;" class="no-print">
                                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                                 <div class="btn-group" role="group">
-                                                    <button class="btn btn-block btn-primary"> <i class="fas fa-window-close"></i> Cerrar</button>
+                                                    <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuenta()"> <i class="fas fa-window-close"></i> Cerrar</button>
                                                 </div>
                                                 <div class="btn-group" role="group">
-                                                    <a class="btn btn-block btn-success" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"> <i class="fas fa-percentage"></i> Agregar descuento</a>
-                                                </div>                                                 
+                                                    <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"> <i class="fas fa-percentage"></i> Descuento</a>
+                                                </div>  
+                                                <div class="btn-group" role="group">
+                                                    <a class="btn btn-block btn-info" id="btnPrintTicket"> <i class="fas fa-ticket-alt"></i> Ticket</a>
+                                                </div>                                               
                                             </div>                                          
                                         </div>
 

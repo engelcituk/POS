@@ -328,7 +328,7 @@ function addProducto() {
     localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));   
     var count = lstProductos.length-1; 
     //estructura html para agregar algo a la tabla
-    var filaTabla = "<tr><td><button class='btn btn-danger btn-xs' id='pos"+count+"' name='itemProducto'  onclick='deleteProductoItem("+count+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+count+"' class='form-control' value='' placeholder='Agregar nota' onchange='addNota("+count+","+idPV+","+idMesa+")'></td></tr>";
+    var filaTabla = "<tr class='danger'><td><button class='btn btn-danger btn-xs' id='pos"+count+"' name='itemProducto'  onclick='deleteProductoItem("+count+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+count+"' class='form-control' value='' placeholder='Agregar nota' onchange='addNota("+count+","+idPV+","+idMesa+")'></td></tr>";
     $("table tbody").append(filaTabla);        
     //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);
  }
@@ -362,11 +362,11 @@ function addProducto() {
             sumaSubTotales = sumaSubTotales + subTotal; //este son los totales de la cuenta temporal
             counter++;
             counterTem++;
-           lstProductosTr="<tr><td><button id='pos"+counterTem+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+counterTem+"' class='form-control' value='"+nota+"' onchange='addNota("+counterTem+","+idPV+","+idMesa+")'></td></tr>";
+           lstProductosTr="<tr class='danger'><td><button id='pos"+counterTem+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+counterTem+"' class='form-control' value='"+nota+"' onchange='addNota("+counterTem+","+idPV+","+idMesa+")'></td></tr>";
            $("table tbody").append(lstProductosTr);
            
         }                    
-        mostrarTotales(sumaApiTotales,sumaSubTotales);
+        mostrarTotales(sumaApiTotales,sumaSubTotales);//el total que trae la api y la suma de los totales en localstorage
     }
 }
 function mostrarTotales(totalApi, sumaSubTotales) {
@@ -385,8 +385,8 @@ function mostrarTotales(totalApi, sumaSubTotales) {
         totalConDescuento= totalApiMasTemporal;     
     }
     var total="<tr><th colspan='2'>Subtotal</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='totalCuentaSinDesc' value='"+totalApiMasTemporal+"' disabled></th></tr>";
-    var descuento="<tr><th colspan='2'>Descuento</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='descuentoCuenta' value='"+porcentaje+"' disabled></th></tr>";
-    var totalFinal="<tr><th colspan='2'>Total</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='totalCuenta' value='"+totalConDescuento+"' disabled></th></tr>";
+    var descuento="<tr class='danger'><th colspan='2'>Descuento</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='descuentoCuenta' value='"+porcentaje+"' disabled></th></tr>";
+    var totalFinal="<tr class='success'><th colspan='2'>Total</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='totalCuenta' value='"+totalConDescuento+"' disabled></th></tr>";
 
     $("table tfoot").append(total);//sumaSubTotales         
     $("table tfoot").append(descuento);//sumaSubTotales         
@@ -416,7 +416,7 @@ function mostrarTotales(totalApi, sumaSubTotales) {
             var total = cantidad * precio;
             sumaSubTotales = sumaSubTotales + total;
             counter++;
-           lstProductosTr="<tr><td><button id='posi"+counter+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='cancelarProductoModal("+idDetalleCuenta+","+counter+")'>Cancel</button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+total+"</td></tr><tr><td colspan='5'><input type='text' id='notaApi"+counter+"' class='form-control' value='"+nota+"' disabled></td></tr>";
+           lstProductosTr="<tr class='success'><td><button id='posi"+counter+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='cancelarProductoModal("+idDetalleCuenta+","+counter+")'>Cancel</button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+total+"</td></tr>< class='success'><td colspan='5'><input type='text' id='notaApi"+counter+"' class='form-control' value='"+nota+"' disabled></td></tr>";
            $("table tbody").append(lstProductosTr);
            
         }
@@ -707,16 +707,9 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
                         }); 
                         datosCuentaAPi.splice(posicionProducto,1);
                         localStorage.setItem(cuentaAPi,JSON.stringify(datosCuentaAPi));
-                    }
-                    // swal({
-                    //     title: '¡Exito!',
-                    //     text: '¡Su dato ha sido borrado!',
-                    //     type: 'success',
-                    //     timer: '1500'
-                    // })
+                    }                    
                 },
-                error: function(respuesta) {
-                    // console.log(respuesta);
+                error: function(respuesta) {                    
                     swal({
                         title: 'Oops...',
                         text: '¡Algo salió mal!',
@@ -777,6 +770,28 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
     });
     var descuentoCuenta="DescCuenta"+idCuenta;
     localStorage.setItem(descuentoCuenta, JSON.stringify(porcentaje));
+ }
+
+ function cerrarCuenta() {
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     var idPV = $("#btnEnviarCP").attr("idPVCPBtn");//obtengo el idPV que tengo en el btn enviar
+     var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");//obtengo el idMesa que tengo en el btn enviar
+
+     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
+     var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
+     var longitud = datosCuentaTemporal.length;
+     console.log("cuentaTemporal",datosCuentaTemporal);
+     
+    if(longitud==0){
+        console.log("si puedes cerrar la cuenta");
+    }else{
+        swal({
+            title: 'Oopss...',
+            text: '¡Aún tienes productos sin enviar a centros de preparación!',
+            type: 'error',
+            timer: '2500'
+        });
+    }
  }
 </script>
 
