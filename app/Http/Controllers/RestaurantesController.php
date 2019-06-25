@@ -82,7 +82,7 @@ class RestaurantesController extends Controller
     public function store(Request $request)
     {       
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddPuntoVenta', ['form_params' => $request->all()]);
-
+        //  dd($respuesta);
         return redirect('/restaurantes');
     }
     public function actualizar(Request $request)

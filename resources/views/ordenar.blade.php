@@ -130,7 +130,7 @@
                                         <div id="buttons2" style="text-transform:uppercase;" class="no-print">
                                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                                 <div class="btn-group" role="group">
-                                                    <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuenta()"> <i class="fas fa-window-close"></i> Cerrar</button>
+                                                    <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar</button>
                                                 </div>
                                                 <div class="btn-group" role="group">
                                                     <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"> <i class="fas fa-percentage"></i> Descuento</a>
@@ -199,6 +199,7 @@
     @include('ordenar.partials.modalAlergenos')
     @include('ordenar.partials.modalCantidad')
     @include('ordenar.partials.modalCancelarProducto')
-     @include('ordenar.partials.modalAgregarDesc')
+    @include('ordenar.partials.modalAgregarDesc')
+    @include('ordenar.partials.modalMetodoPago')
 </div>
 @endsection

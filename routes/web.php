@@ -14,6 +14,7 @@ Route::get('ordenar', 'OrdenController@index')->name('ordenar.index');
 Route::get('ordenar/{codhotel}/{room}', 'OrdenController@obtenerDatosHuesped')->name('ordenar.obtenerhuesped');
 Route::post('ordenar/addcuenta', 'OrdenController@guardarCuenta')->name('ordenar.addcuenta');
 Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name('ordenar.enviarcuenta');
+Route::post('ordenar/cerrarcuenta/{cuenta}', 'OrdenController@cerraCuenta')->name('ordenar.cerrarcuenta');
 Route::get('obtener/productos/{idsubcat}', 'OrdenController@getProductosBySubCat')->name('obtener.productos');
 Route::get('buscar/alergenos/{idproducto}', 'OrdenController@obtenerAlergenosProducto')->name('buscar.getalergenos');
 Route::get('obtenercuenta/{idcuenta}', 'OrdenController@obtenerCuentaApi')->name('obtenercuenta.api');
@@ -32,7 +33,9 @@ Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarPro
     // Route::get('/home', 'HomeController@index')->name('home.index');
     // Route::get('/ordenar', 'OrdenController@index')->name('ordenar.index');
 Route::get('/historico', 'HistoricoController@index')->name('historico.index');
-
+Route::get('all/historico', 'HistoricoController@AllHistorico')->name('all.historico');
+Route::get('historico/{cuenta}', 'HistoricoController@show')->name('historico.show');
+Route::delete('historico/{cuenta}', 'HistoricoController@destroy')->name('historico.destroy');
 // Route::get('/roles', 'RolesController@index')->name('roles.index');
 // Route::resource('usuarios', 'UsuariosController');
 // Route::get('/usuarios', 'UsuariosController@index')->name('usuarios.index');

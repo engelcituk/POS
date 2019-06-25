@@ -281,7 +281,9 @@ $("#cantidadProducto").change(function(){
  });
 
 var lstProductos=[];
-function addProducto() {    
+function addProducto() { 
+      
+
     var idPV= $("#idPVModalOrdenar").val();
     var idMenuCarta = $("#idMemuCartaPVModal").val();
     var idUsuario = $("#idUserModalOrdenar").val();
@@ -298,7 +300,7 @@ function addProducto() {
      $('#modalCantidadProducto').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
     });
-
+    
     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
     var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
 
@@ -326,17 +328,19 @@ function addProducto() {
     // console.log("su lista de productos", lstProductos);
     //var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
     localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));   
-    var count = lstProductos.length-1; 
-    //estructura html para agregar algo a la tabla
-    var filaTabla = "<tr class='danger'><td><button class='btn btn-danger btn-xs' id='pos"+count+"' name='itemProducto'  onclick='deleteProductoItem("+count+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+count+"' class='form-control' value='' placeholder='Agregar nota' onchange='addNota("+count+","+idPV+","+idMesa+")'></td></tr>";
-    $("table tbody").append(filaTabla);        
-    //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);
+    // var count = lstProductos.length-1; 
+    // //estructura html para agregar algo a la tabla
+    // var filaTabla = "<tr ><td><button class='btn btn-danger btn-xs' id='pos"+count+"' name='itemProducto'  onclick='deleteProductoItem("+count+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+count+"' class='form-control' value='' placeholder='Agregar nota' onchange='addNota("+count+","+idPV+","+idMesa+")'></td></tr>";
+    // $("table tbody").append(filaTabla);      
+    leerCuentaTemporal(idPV,idMesa);  
+    //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);    
  }
 
  function leerCuentaTemporal(idPV, idMesa) {
     $("#tablaItemProductos tbody").empty();
     $("#tablaItemProductos tfoot").empty();
-           
+    var cadena=String(idPV)+String(idMesa);  
+    var cuenta = JSON.parse(localStorage.getItem(cadena)); 
      var sumaApiTotales=leerCuentaApi(idPV, idMesa); //lo que se tiene de la api
     //  console.log("sumaApiTotales",sumaApiTotales);
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
@@ -362,34 +366,37 @@ function addProducto() {
             sumaSubTotales = sumaSubTotales + subTotal; //este son los totales de la cuenta temporal
             counter++;
             counterTem++;
-           lstProductosTr="<tr class='danger'><td><button id='pos"+counterTem+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+counterTem+"' class='form-control' value='"+nota+"' onchange='addNota("+counterTem+","+idPV+","+idMesa+")'></td></tr>";
+           lstProductosTr="<tr class='success'><td><button id='pos"+counterTem+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr class='success'><td colspan='5'><input type='text' id='nota"+counterTem+"' class='form-control' value='"+nota+"' onchange='addNota("+counterTem+","+idPV+","+idMesa+")'></td></tr>";
            $("table tbody").append(lstProductosTr);
            
-        }                    
-        mostrarTotales(sumaApiTotales,sumaSubTotales);//el total que trae la api y la suma de los totales en localstorage
+        }    
+        cuenta["subtotalCuenta"] = sumaApiTotales +sumaSubTotales;
+        
+         localStorage.setItem(cadena, JSON.stringify(cuenta));
+        mostrarTotales(cadena);//el total que trae la api y la suma de los totales en localstorage
     }
+    return sumaSubTotales;
 }
-function mostrarTotales(totalApi, sumaSubTotales) {
-    var totalApiMasTemporal=totalApi+sumaSubTotales;
-    
-    var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr");     
-    var descCuenta="DescCuenta"+idCuenta;    
-    var descuentoCuenta =JSON.parse(localStorage.getItem(descCuenta));
-    //si por localstorage se ha agregado porcentajes, hago los calculos correspondientes    
-    if(descuentoCuenta!=null){
-       var porcentaje=parseInt(descuentoCuenta);
-       var CalculoDescuento= ((porcentaje*totalApiMasTemporal)/100);
-       var totalConDescuento=totalApiMasTemporal-CalculoDescuento;
-    }else{
-        var porcentaje=0;
-        totalConDescuento= totalApiMasTemporal;     
-    }
-    var total="<tr><th colspan='2'>Subtotal</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='totalCuentaSinDesc' value='"+totalApiMasTemporal+"' disabled></th></tr>";
-    var descuento="<tr class='danger'><th colspan='2'>Descuento</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='descuentoCuenta' value='"+porcentaje+"' disabled></th></tr>";
-    var totalFinal="<tr class='success'><th colspan='2'>Total</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='totalCuenta' value='"+totalConDescuento+"' disabled></th></tr>";
+function mostrarTotales(cadena) {
+       var cuenta = JSON.parse(localStorage.getItem(cadena));  
+       var subtotal=  cuenta["subtotalCuenta"];
+       var descuento= cuenta["descuento"];
+
+     var porcentaje = cuenta["descuentoPorc"]; 
+     var totalSinDescuento = cuenta["subtotalCuenta"];
+     var descuentCalculado=((porcentaje*totalSinDescuento)/100);
+     var TotalConDescuento=totalSinDescuento-descuentCalculado;
+ 
+     cuenta["descuento"]=descuentCalculado;
+     cuenta["totalCuenta"]=TotalConDescuento;
+
+    localStorage.setItem(cadena, JSON.stringify(cuenta));
+    var total="<tr><th colspan='2'>Subtotal</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='totalCuentaSinDesc' value='"+subtotal+"' disabled></th></tr>";
+    var sdescuento="<tr class='danger'><th colspan='2'>Descuento</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='descuentoCuenta' value='"+descuentCalculado+"' disabled></th></tr>";
+    var totalFinal="<tr class='success'><th colspan='2'>Total</th><th colspan='3' class='text-right'><input type='text' class='form-control' id='totalCuenta' value='"+TotalConDescuento+"' disabled></th></tr>";
 
     $("table tfoot").append(total);//sumaSubTotales         
-    $("table tfoot").append(descuento);//sumaSubTotales         
+    $("table tfoot").append(sdescuento);//sumaSubTotales         
     $("table tfoot").append(totalFinal);//sumaSubTotales
 }
  function leerCuentaApi(idPV, idMesa) {
@@ -416,7 +423,7 @@ function mostrarTotales(totalApi, sumaSubTotales) {
             var total = cantidad * precio;
             sumaSubTotales = sumaSubTotales + total;
             counter++;
-           lstProductosTr="<tr class='success'><td><button id='posi"+counter+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='cancelarProductoModal("+idDetalleCuenta+","+counter+")'>Cancel</button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+total+"</td></tr>< class='success'><td colspan='5'><input type='text' id='notaApi"+counter+"' class='form-control' value='"+nota+"' disabled></td></tr>";
+           lstProductosTr="<tr class='danger'><td><button id='posi"+counter+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='cancelarProductoModal("+idDetalleCuenta+","+counter+")'>Cancel</button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+total+"</td></tr><tr class='danger'><td colspan='5'><input type='text' id='notaApi"+counter+"' class='form-control' value='"+nota+"' disabled></td></tr>";
            $("table tbody").append(lstProductosTr);
            
         }
@@ -754,13 +761,22 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
 	    }	 
  });
  function addDescuento(){
-     var idCuenta = $("#idCuentaModalDescuento").val();//Aquí obtengo el id de la cuenta
+     var idPV = $("#btnEnviarCP").attr("idPVCPBtn");
+     var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");
+     var cuenta = JSON.parse(localStorage.getItem(idPV+idMesa));  
+
+   
      var porcentaje = $("#cantidadDescuento").val(); 
-     var totalSinDescuento = $("#totalCuentaSinDesc").val();
+     var totalSinDescuento = cuenta["subtotalCuenta"];
      var descuentCalculado=((porcentaje*totalSinDescuento)/100);
      var TotalConDescuento=totalSinDescuento-descuentCalculado;
-     $("#descuentoCuenta").val(porcentaje);     
+     $("#descuentoCuenta").val(descuentCalculado); 
+    //  $("#descuentoCuenta").attr("porcentajeDescuento",porcentaje)
+        //  
      $("#totalCuenta").val(TotalConDescuento);
+     cuenta["descuentoPorc"]=porcentaje;
+     cuenta["descuento"]=descuentCalculado;
+     cuenta["totalCuenta"]=TotalConDescuento;
     //  console.log("idCuenta",idCuenta);
     //  console.log("descuentoPorcentaje",porcentaje);      
     $("#modalDescuentoCuenta").modal("hide");
@@ -768,22 +784,28 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
      $('#modalDescuentoCuenta').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
     });
-    var descuentoCuenta="DescCuenta"+idCuenta;
-    localStorage.setItem(descuentoCuenta, JSON.stringify(porcentaje));
+   
+    localStorage.setItem(idPV+idMesa, JSON.stringify(cuenta));
  }
 
- function cerrarCuenta() {
-     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+ function cerrarCuentaModal() {     
      var idPV = $("#btnEnviarCP").attr("idPVCPBtn");//obtengo el idPV que tengo en el btn enviar
      var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");//obtengo el idMesa que tengo en el btn enviar
 
+     var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr");//obtengo el idMesa que tengo en el btn enviar
+
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
-     var longitud = datosCuentaTemporal.length;
-     console.log("cuentaTemporal",datosCuentaTemporal);
+     if(datosCuentaTemporal==null){
+        var longitud = 0;
+     }else{
+         longitud =datosCuentaTemporal.length
+     }
+    //  console.log("cuentaTemporal",datosCuentaTemporal);
      
-    if(longitud==0){
-        console.log("si puedes cerrar la cuenta");
+    if(longitud==0 ){
+        $('#modalMetodoPago').modal({backdrop: 'static', keyboard: false });
+        $("#idCuentaCerrar").val(idCuenta);
     }else{
         swal({
             title: 'Oopss...',
@@ -792,6 +814,54 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
             timer: '2500'
         });
     }
+ }
+ function cerrarCuenta() {
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     var idPV = $("#btnEnviarCP").attr("idPVCPBtn");
+     var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");
+
+     var cuenta = JSON.parse(localStorage.getItem(idPV+idMesa));        
+     var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr");  
+     var porcentajeDesc = cuenta["descuentoPorc"]; 
+     var idFormaPago = $("#formaPagoSelect option:selected" ).val();
+     $("#modalMetodoPago").modal("hide");     
+     $.ajax({
+        url: "{{ url('ordenar/cerrarcuenta') }}"+'/'+idCuenta,
+        type: "POST",
+        data: {
+            '_method': 'POST',           
+            'porcentajeDescuento':porcentajeDesc,                    
+            'idFormaPago':idFormaPago,
+            '_token': csrf_token
+        },
+        success: function(respuesta) {             
+             var respuesta = JSON.parse(respuesta);
+             var ok = respuesta["ok"];                
+                if(ok){//si ok es true
+                
+                var cuenta=idPV+idMesa;
+                var cuentaTemporal="cuentaTemporal"+cuenta;
+                var cuentaAPi="cuentaBD"+cuenta;
+
+                     localStorage.removeItem(cuenta);
+                     localStorage.removeItem(cuentaTemporal);
+                     localStorage.removeItem(cuentaAPi);
+
+                     swal({
+                            title: 'Exito',
+                            text: '¡Operacion realizada con exito!',
+                            type: 'success',
+                            timer: '1500'
+                        }).then(function(){ 
+                            location.reload();
+                        }
+                    );
+                }                                
+        },
+        error: function(respuesta) {                    
+            console.log("respuesta",respuesta); 
+        }
+    });
  }
 </script>
 

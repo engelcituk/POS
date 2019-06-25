@@ -43,7 +43,23 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-file-signature"></i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">homoclave</label>
+                                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="homoclave" required autofocus>
+                                            @if ($errors->has('name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="comment">Descripcion:</label>
                                         <textarea class="form-control" rows="2" name="descripcion" required></textarea>

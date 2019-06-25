@@ -26,16 +26,16 @@ class OrdenController extends Controller
         $zonas = $respuesta->objeto;
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');//se cargan en un modal
         $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
-        $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');//se carga en subtabs
+        $metodosPago = \App::call('App\Http\Controllers\MetodosPagoController@obtenerTodosLosMetodosPagos');//se carga en subtabs
         // $productos = \App::call( 'App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
 
         // $idSubCatsCollection = new Collection([]);
         // foreach ($subcategorias as $subCat) {
         //     $idSubCatsCollection->push($subCat->id);
         // }
-        // dd($idSubCatsCollection);
+        // dd($metodosPago);
 
-        return view('ordenar', compact('zonas','alergenos','categorias'));
+        return view('ordenar', compact('zonas','alergenos','categorias', 'metodosPago'));
     }
    
     public function obtenerTodasLasZonasPV($idPuntoVenta){
@@ -183,6 +183,24 @@ class OrdenController extends Controller
         ]);
         return $respuesta;
 
+    }
+    public function cerraCuenta(Request $request, $idCuenta){
+        // $urlVenta = "http://172.16.4.229/TPVApi/Venta/";
+        $idUsuarioSesion = $request->session()->get('idUsuarioLogueado'); 
+
+        $porcentajeDescuento = $request->get('porcentajeDescuento');
+        $idFormaPago = $request->get('idFormaPago');
+                
+        $respuesta = $this->realizarPeticion('POST', $this->urlVenta.'cierraCuenta', [
+            'form_params' => [
+                'idc'=>$idCuenta,
+                'idu' => $idUsuarioSesion,
+                'descuento' => $porcentajeDescuento,
+                'idFormaPago' => $idFormaPago
+            ]
+        ]);
+        return $respuesta;
+        
     }
 }
 // 172.16.4.229

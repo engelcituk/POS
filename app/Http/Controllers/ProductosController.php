@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Collection;
-
+ 
 class ProductosController extends Controller
 {
     public $urlBase = "http://localhost/TPVApi/Producto/";
