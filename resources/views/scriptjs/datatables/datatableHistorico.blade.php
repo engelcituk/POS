@@ -1,18 +1,5 @@
 <script>
-    
-// var fechaInicio=$("#fechaInicioHist").val();
-//     var fechaFInal=$("#fechaFinalHist").val(); 
-//     var today = new Date();
-//     var dd = String(today.getDate()).padStart(2, '0');
-//     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-//     var yyyy = today.getFullYear();
-
-//     fechaInicialDef = yyyy + '-' + 25 + '-' + mm;
-//     fechaFinalDef = yyyy + '-' + dd + '-' + mm;
-//     var urlFechas=fechaInicialDef+'/'+fechaFinalDef;
-//     // var rangoFechas=filtrarFecha();
-//                 // tablaHistorico.ajax.reload();
-//     var url="all/historico/"+urlFechas;
+    $.fn.dataTableExt.sErrMode = 'throw'; /*para eliminar el warning de DataTables warning: table id=roles - Cannot reinitialise DataTable.*/ 
     var tablaHistorico= $('#historico').DataTable({
         processing: true,
         serverSide: true,
@@ -97,15 +84,14 @@ function filtrarFecha(){
                 'fechaFinal':fechaFinalInput,
                 '_token': csrf_token
             },        
-            success: function(respuesta) {
-            console.log("su respuesta desde CONtroller", respuesta);
-               
-               
-            },
-            error: function() {
+                success: function(respuesta) {
+                    console.log("su respuesta desde CONtroller", respuesta);
+                                
+                },
+                error: function() {
                 console.log(respuesta);
-        }
-    });
+            }
+        });
 
             // tablaHistorico.ajax.url( url).load(); 
 

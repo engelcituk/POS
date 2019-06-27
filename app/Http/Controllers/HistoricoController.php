@@ -50,22 +50,22 @@ class HistoricoController extends Controller
     }
     public function obtenerHistoricoFechas(Request $request){
         //es una funcion que esta en el controller principal
-        $urlBase = "http://172.16.4.229/TPVApi/historico/";
+        // $urlBase = "http://172.16.4.229/TPVApi/historico/";
 
-        $idPV = $request->session()->get('idPuntoVenta'); 
+        // $idPV = $request->session()->get('idPuntoVenta'); 
         $fechaInicial = $request->get('fechaInicial');        
         $fechaFinal = $request->get('fechaFinal');
 
         $fechaInicialF = date("d-m-Y", strtotime($fechaInicial));
         $fechaFinalF = date("d-m-Y", strtotime($fechaFinal));
 
-        $respuesta = $this->realizarPeticion('GET', $urlBase."getCuentas/{$idPV}/{$fechaInicialF}/{$fechaFinalF}");
+        // $respuesta = $this->realizarPeticion('GET', $urlBase."getCuentas/{$idPV}/{$fechaInicialF}/{$fechaFinalF}");
 
-        $datos = json_decode($respuesta);
+        // $datos = json_decode($respuesta);
 
-        $historico = $datos->objeto;
+        // $historico = $datos->objeto;
 
-        return $historico;
+        return $fechaInicialF;
     }
 }
  

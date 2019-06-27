@@ -28,17 +28,13 @@
                     </div>
                     <div class="col-md-3">
                         <div class="input-group">
-                            <button class="btn btn-success" onclick="filtrarFecha()"><i class="fas fa-h-square"></i> Filtrar</button>
+                            <button class="btn btn-success" onclick="filtrarFecha()"><i class="fas fa-search"></i> Filtrar</button>
                         </div>
                     </div>
                 </div>
-                {{-- <br> --}}
-                {{-- <div class="card">                 --}}
-                    {{-- <div class="card-header card-header-icon" data-background-color="purple">
-                        <i class="material-icons">assignment</i>
-                    </div> --}}
+               
                     <div class="card-content">
-                        <h4 class="card-title">Historico de ordenes</h4>
+                        {{-- <h4 class="card-title">Historico de ordenes</h4> --}}
                         <div class="toolbar">
                             
                             {{-- Here you can write extra buttons/actions for the toolbar {{$fechaHoy}}              --}}
@@ -55,7 +51,7 @@
                                         <th>SubTotal</th>
                                         <th>% Descuento</th>
                                         <th>Total cuenta</th>
-                                        <th class="disabled-sorting text-right">Acciones</th>
+                                        <th class="disabled-sorting text-right"></th>
                                     </tr>
                                 </thead>
                                 

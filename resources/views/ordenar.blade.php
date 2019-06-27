@@ -57,7 +57,7 @@
                                 $mesaCss = ($estadoMesa != 1) ? "bordeMesaOcupada" : "";
                                 @endphp
                                     <li class="abrirMesa {{$mesaCss}}" idMesa="{{$idMesa}}">
-                                        <a href="#" id="mesaAbrir{{$idMesa}}" class="" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})" estadoMesa="{{$mesaStatus}}">
+                                        <a id="mesaAbrir{{$idMesa}}" class="" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})" estadoMesa="{{$mesaStatus}}">
                                             <img  class="{{$mesaStatus}}" src="{{asset('img/mesa.png')}}"> {{$nombreMesa}} 
                                         </a>
                                     </li>

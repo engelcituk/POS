@@ -7,4 +7,4 @@
 $cadenaObtenerNumero="{{ route('modos.destroy', ['modo' => $id])}}";
 $idModo = intval(preg_replace('/[^0-9]+/', '', $cadenaObtenerNumero), 10);
 @endphp
-<a onclick="deleteProducto({{$idModo}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>
+<a onclick="deleteModo({{$idModo}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>

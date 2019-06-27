@@ -284,29 +284,89 @@
 <script src="{{asset('js/bootstrap-timepicker.js')}}"></script>
 <!-- <script src="{{asset('js/crudUsuarios.js')}}"></script> -->
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
-@if(request()->is('ordenar')) @include('scriptjs/orden') @endif
-@if(request()->is('historico')) @include('scriptjs/historico') @endif
 @include('scriptjs/ticketRecibo')
-@include('scriptjs/datatables')
-@if(request()->is('historico')) @include('scriptjs/validacionesHistorico') @endif
-@if(request()->is('historico')) @include('scriptjs/datatableHistorico') @endif
-@if(request()->is('hoteles')) @include('scriptjs/datatableHoteles') @endif
-@if(request()->is('rolesapi')) @include('scriptjs/datatableRoles') @endif
-@if(request()->is('users')) @include('scriptjs/datatableUsuarios') @endif
-@if(request()->is('restaurantes')) @include('scriptjs/datatablePVRestaurantes') @endif
+@if(request()->is('ordenar')) @include('scriptjs/orden') @endif
+@if(request()->is('historico'))
+    @include('scriptjs/historico')
+    @include('scriptjs/datatables/datatableHistorico')
+    @include('scriptjs/validacionesHistorico') {{--validaciones  --}}
+@endif
+@if(request()->is('hoteles')) 
+    @include('scriptjs/datatables/datatableHoteles')
+    @include('scriptjs/sweetalerts/sweetalertHotel')
+@endif
+@if(request()->is('rolesapi')) 
+    @include('scriptjs/datatables/datatableRoles')
+    @include('scriptjs/sweetalerts/sweetalertRol')
+    @include('scriptjs/permisosRol')
+    @include('scriptjs/validacionesRoles')
+@endif
+@if(request()->is('users')) 
+    @include('scriptjs/datatables/datatableUsuarios')
+    @include('scriptjs/sweetalerts/sweetalertUsuario') 
+    @include('scriptjs/permisosRolUsuario')
+@endif
+@if(request()->is('restaurantes'))
+    @include('scriptjs/datatables/datatablePVRestaurantes')
+    @include('scriptjs/sweetalerts/sweetalertRestaurante') 
+@endif
+@if(request()->is('impresoras')) 
+    @include('scriptjs/datatables/datatableImpresoras')
+    @include('scriptjs/sweetalerts/sweetalertImpresora') 
+    @include('scriptjs/validacionesImpresoras')
 
-@include('scriptjs/sweetalerts')
-@if(request()->is('rolesapi')) @include('scriptjs/permisosRol') @endif
-@if(request()->is('productos')) @include('scriptjs/productoAlergeno') @endif
-@if(request()->is('users')) @include('scriptjs/permisosRolUsuario') @endif
-{{-- validaciones --}}
-@if(request()->is('categorias')) @include('scriptjs/validacionesCategorias') @endif
-@if(request()->is('impresoras')) @include('scriptjs/validacionesImpresoras') @endif
-@if(request()->is('rolesapi')) @include('scriptjs/validacionesRoles') @endif
-@if(request()->is('turnos')) @include('scriptjs/validacionesTurnos') @endif
-
-
-
-@if(request()->is('cartas')) @include('scriptjs/cartas') @endif
+@endif
+@if(request()->is('centrospreparacion'))
+    @include('scriptjs/datatables/datatableCentrosPrep')
+    @include('scriptjs/sweetalerts/sweetalertCentroPreparacion') 
+@endif
+@if(request()->is('turnos'))
+    @include('scriptjs/datatables/datatableTurnosPV')
+    @include('scriptjs/sweetalerts/sweetalertTurno') 
+    @include('scriptjs/validacionesTurnos') {{--validaciones  --}}
+@endif
+@if(request()->is('zonas'))
+    @include('scriptjs/datatables/datatableZonas')
+    @include('scriptjs/sweetalerts/sweetalertZona')
+@endif
+@if(request()->is('mesas')) 
+    @include('scriptjs/datatables/datatableMesas')
+    @include('scriptjs/sweetalerts/sweetalertMesa')
+@endif
+@if(request()->is('cartas'))
+    @include('scriptjs/datatables/datatableCartas')
+    @include('scriptjs/sweetalerts/sweetalertCarta')
+    @include('scriptjs/cartas') {{--  --}}
+@endif
+@if(request()->is('categorias'))
+    @include('scriptjs/datatables/datatableCategorias')
+    @include('scriptjs/sweetalerts/sweetalertCategoria')
+    @include('scriptjs/validacionesCategorias') {{-- validaciones --}}
+@endif
+@if(request()->is('subcategorias'))
+    @include('scriptjs/datatables/datatableSubCategorias')
+    @include('scriptjs/sweetalerts/sweetalertSubCategoria')
+@endif
+@if(request()->is('productos'))
+    @include('scriptjs/datatables/datatableProductos')
+    @include('scriptjs/sweetalerts/sweetalertProducto')
+    @include('scriptjs/productoAlergeno')
+@endif
+@if(request()->is('menuscartas'))
+    @include('scriptjs/datatables/datatableMenuCartas')
+    @include('scriptjs/sweetalerts/sweetalertMenuCarta')
+@endif
+@if(request()->is('metodospago'))
+    @include('scriptjs/datatables/datatableMetodosPago')
+    @include('scriptjs/sweetalerts/sweetalertMetodoPago')
+@endif
+@if(request()->is('modos'))
+    @include('scriptjs/datatables/datatableModos')
+    @include('scriptjs/sweetalerts/sweetalertModo')
+@endif
+@if(request()->is('alergenos'))
+    @include('scriptjs/datatables/datatableAlergenos')
+    @include('scriptjs/sweetalerts/sweetalertAlergeno')
+@endif
 
 </html>

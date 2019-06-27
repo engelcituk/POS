@@ -183,13 +183,27 @@ $("#zonaElige").change(function() {
             },        
             success: function(respuesta) {
                 var resultado = JSON.parse(respuesta);
-                var objeto = resultado["objeto"];
-                var idCuenta=objeto["id"];
-                var folio=objeto["folio"];
-                // console.log("objeto", objeto);
-                // console.log("respuesta folio "+folio);
-                $("#btnAddDescuento").attr("btnIdCuenta",idCuenta);//creo los atributos
-                localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto
+                console.log("resultado", resultado);
+                var ok = resultado["ok"];
+                if(ok){
+                    var objeto = resultado["objeto"];
+                    var idCuenta=objeto["id"];
+                    var folio=objeto["folio"];
+                    // console.log("respuesta folio "+folio);
+                    $("#btnAddDescuento").attr("btnIdCuenta",idCuenta);//creo los atributos
+                    localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto
+                }else{
+                    var mensaje=resultado["mensaje"];
+                    swal({
+                        title: 'Error',
+                        text: mensaje,
+                        type: 'error',
+                        // timer: '1500'
+                            }).then(function(){ 
+                                location.reload();
+                        }
+                    );
+                }                
             },
             error: function() {
             console.log(JSON.parse(respuesta));
