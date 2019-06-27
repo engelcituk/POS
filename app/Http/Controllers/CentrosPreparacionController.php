@@ -106,8 +106,9 @@ class CentrosPreparacionController extends Controller
         $idImpresora = $centroPreparacion->idImpresora;
         $datosImpresora = new ImpresorasController(); //para obtener los datos de la zona
         $datosImpresoraCP = $datosImpresora->obtenerUnaImpresora($idImpresora); //los datos de la zona lo envio a la vista
-
+        
         $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
+        dd( $impresoras);
 
         return view('centrospreparacion.partials.edit', compact('impresoras', 'centroPreparacion', 'datosImpresoraCP')); 
     }

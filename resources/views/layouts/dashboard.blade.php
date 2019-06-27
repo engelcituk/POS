@@ -27,6 +27,8 @@
 </head>
 
 <body>
+    {{-- @if(request()->is('historico')) onload="mostrarHistorico({{$fechaHoy}}, {{$fechaHoy}})" @endif --}}
+    
     <div class="wrapper">
         <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{{asset('img/sidebar-1.jpg')}}">
             <!--
@@ -220,55 +222,12 @@
                             </li>
                             <li class="separator hidden-lg hidden-md"></li>
                         </ul>
-                        {{-- <form class="navbar-form navbar-right" role="search">
-                            <div class="form-group form-search is-empty">
-                                <input type="text" class="form-control" placeholder="Buscar">
-                                <span class="material-input"></span>
-                            </div>
-                            <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                                <i class="material-icons">search</i>
-                                <div class="ripple-container"></div>
-                            </button>
-                        </form> --}}
+                        
                     </div>
                 </div>
             </nav>
             @yield('content')
-            <!-- <footer class="footer">
-                <div class="container-fluid">
-                    <nav class="pull-left">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Home
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Company
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Portfolio
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Blog
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                    <p class="copyright pull-right">
-                        &copy;
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script>
-                        <a href="#">Ecituk</a>, the best TPV from the web
-                    </p>
-                </div>
-            </footer> -->
+            
         </div>
     </div>
     <script src="{{asset('sweetalert/dist/sweetalert.min.js')}}" type="text/javascript"></script>
@@ -325,15 +284,29 @@
 <script src="{{asset('js/bootstrap-timepicker.js')}}"></script>
 <!-- <script src="{{asset('js/crudUsuarios.js')}}"></script> -->
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
-@include('scriptjs/orden')
-@include('scriptjs/historico')
+@if(request()->is('ordenar')) @include('scriptjs/orden') @endif
+@if(request()->is('historico')) @include('scriptjs/historico') @endif
 @include('scriptjs/ticketRecibo')
 @include('scriptjs/datatables')
+@if(request()->is('historico')) @include('scriptjs/validacionesHistorico') @endif
+@if(request()->is('historico')) @include('scriptjs/datatableHistorico') @endif
+@if(request()->is('hoteles')) @include('scriptjs/datatableHoteles') @endif
+@if(request()->is('rolesapi')) @include('scriptjs/datatableRoles') @endif
+@if(request()->is('users')) @include('scriptjs/datatableUsuarios') @endif
+@if(request()->is('restaurantes')) @include('scriptjs/datatablePVRestaurantes') @endif
+
 @include('scriptjs/sweetalerts')
-@include('scriptjs/permisosRol')
-@include('scriptjs/productoAlergeno')
-@include('scriptjs/permisosRolUsuario')
-@include('scriptjs/validaciones')
-@include('scriptjs/cartas')
+@if(request()->is('rolesapi')) @include('scriptjs/permisosRol') @endif
+@if(request()->is('productos')) @include('scriptjs/productoAlergeno') @endif
+@if(request()->is('users')) @include('scriptjs/permisosRolUsuario') @endif
+{{-- validaciones --}}
+@if(request()->is('categorias')) @include('scriptjs/validacionesCategorias') @endif
+@if(request()->is('impresoras')) @include('scriptjs/validacionesImpresoras') @endif
+@if(request()->is('rolesapi')) @include('scriptjs/validacionesRoles') @endif
+@if(request()->is('turnos')) @include('scriptjs/validacionesTurnos') @endif
+
+
+
+@if(request()->is('cartas')) @include('scriptjs/cartas') @endif
 
 </html>

@@ -19,12 +19,6 @@ Route::get('obtener/productos/{idsubcat}', 'OrdenController@getProductosBySubCat
 Route::get('buscar/alergenos/{idproducto}', 'OrdenController@obtenerAlergenosProducto')->name('buscar.getalergenos');
 Route::get('obtenercuenta/{idcuenta}', 'OrdenController@obtenerCuentaApi')->name('obtenercuenta.api');
 Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarProductoCuenta')->name('cancelardetalle.api');
-// Route::get('hoteles/create', 'HotelesController@create')->name('hoteles.create');
-// Route::post('hoteles/store', 'HotelesController@store')->name('hoteles.store');
-// Route::get('hoteles/{hotel}', 'HotelesController@show')->name('hoteles.show');
-// Route::get('hoteles/{hotel}/edit', 'HotelesController@edit')->name('hoteles.edit');
-// Route::put('hoteles/actualizar', 'HotelesController@actualizar')->name('hoteles.actualizar');
-// Route::delete('hoteles/{hotel}', 'HotelesController@destroy')->name('hoteles.destroy');
 
 // Route::get('/prueba','Controller@obtenerAccessToken');
 
@@ -35,6 +29,7 @@ Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarPro
 Route::get('/historico', 'HistoricoController@index')->name('historico.index');
 Route::get('all/historico', 'HistoricoController@AllHistorico')->name('all.historico');
 Route::get('historico/{cuenta}', 'HistoricoController@show')->name('historico.show');
+Route::post('historico/filtro', 'HistoricoController@obtenerHistoricoFechas')->name('historico.filtro');
 Route::delete('historico/{cuenta}', 'HistoricoController@destroy')->name('historico.destroy');
 // Route::get('/roles', 'RolesController@index')->name('roles.index');
 // Route::resource('usuarios', 'UsuariosController');

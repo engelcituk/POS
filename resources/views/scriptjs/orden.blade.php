@@ -837,8 +837,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
         success: function(respuesta) {             
              var respuesta = JSON.parse(respuesta);
              var ok = respuesta["ok"];                
-                if(ok){//si ok es true
-                
+                if(ok){//si ok es true                
                 var cuenta=idPV+idMesa;
                 var cuentaTemporal="cuentaTemporal"+cuenta;
                 var cuentaAPi="cuentaBD"+cuenta;

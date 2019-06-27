@@ -201,6 +201,6 @@ class OrdenController extends Controller
         ]);
         return $respuesta;
         
-    }
+    } 
 }
 // 172.16.4.229

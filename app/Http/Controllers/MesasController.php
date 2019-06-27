@@ -77,12 +77,13 @@ class MesasController extends Controller
         $mesa = $this->obtenerUnaMesa($idMesa);//obtengo los datos de la mesa
 
         $idZona = $mesa->idZona; //obtengo el idZona de la mesa que ocupo para obtener los datos de la zona
-
+        
         $datosZona = new ZonasController(); //para obtener los datos de la zona
         $datosZonaMesa = $datosZona->obtenerUnaZona($idZona); //los datos de la zona lo envio a la vista
-
+        
         $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
         $zonas = \App::call('App\Http\Controllers\ZonasController@obtenerTodasLasZonas');
+        dd($restaurantes);
 
         return view('mesas.partials.edit', ['mesa'=> $mesa,'datosZonaMesa'=>$datosZonaMesa, 'restaurantes' => $restaurantes, 'zonas' => $zonas]); 
         
