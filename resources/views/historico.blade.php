@@ -26,6 +26,7 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="col-md-3">
                         <div class="input-group">
                             <button class="btn btn-success" onclick="filtrarFecha()"><i class="fas fa-search"></i> Filtrar</button>

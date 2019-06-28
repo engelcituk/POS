@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 class HistoricoController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Producto/";
+    public $urlBase = "http://localhost/TPVApi/Historico/";
     public function __construct()
     {
         // $this->middleware('auth');
@@ -23,24 +23,31 @@ class HistoricoController extends Controller
      */
     public function index(){ 
         
-        $fechaHoy = Carbon::now()->toDateString();  //solo fecha sin hora     
-
-        return view('historico', compact('fechaHoy'));
+        $fechaHoy = Carbon::now()->toDateString();  //solo fecha sin hora  addDays(1)
+        $fechaManiana= Carbon::now()->addDays(1)->toDateString();
+             
+        $fechaHoyDMY = Carbon::now()->format('d-m-Y'); //fecha sin hora formato DMY 
+        
+        return view('historico', compact('fechaHoy', 'fechaManiana'));
     }
-    public function AllHistorico(){
-        // $idPV = $request->session()->get('idPuntoVenta');
-        $historico = $this->obtenerHistorico();
+    public function AllHistorico(Request $request){
+        
+        $idPV = $request->session()->get('idPuntoVenta');    
+     
+        $inicio= $request->get('inicio');
+        $final= $request->get('final');
 
-        $acciones = 'historico.datatables.botones'; /*creo los botones de acciones en una vista*/
+        if ($inicio && $final) {
+            $historico = $this->obtenerHistorico($idPV, $inicio,  $final);
+        }                      
+        $acciones = 'historico.datatables.botones';
         return Datatables::of($historico)
             ->addColumn('acciones', $acciones)
-            ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
+            ->rawColumns(['acciones'])->make(true); 
     }
-    public function obtenerHistorico(){
-        //es una funcion que esta en el controller principal
-        $urlBase= "http://172.16.4.229/TPVApi/historico/";
-                        
-        $respuesta = $this->realizarPeticion('GET', $urlBase."getCuentas");
+    public function obtenerHistorico($idPV, $fechaInicialFiltro, $fechaFinalFiltro){
+                              
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetCuentas/{$idPV}/{$fechaInicialFiltro}/{$fechaFinalFiltro}");
 
         $datos = json_decode($respuesta);
 
@@ -48,24 +55,8 @@ class HistoricoController extends Controller
 
         return $historico;
     }
-    public function obtenerHistoricoFechas(Request $request){
-        //es una funcion que esta en el controller principal
-        // $urlBase = "http://172.16.4.229/TPVApi/historico/";
-
-        // $idPV = $request->session()->get('idPuntoVenta'); 
-        $fechaInicial = $request->get('fechaInicial');        
-        $fechaFinal = $request->get('fechaFinal');
-
-        $fechaInicialF = date("d-m-Y", strtotime($fechaInicial));
-        $fechaFinalF = date("d-m-Y", strtotime($fechaFinal));
-
-        // $respuesta = $this->realizarPeticion('GET', $urlBase."getCuentas/{$idPV}/{$fechaInicialF}/{$fechaFinalF}");
-
-        // $datos = json_decode($respuesta);
-
-        // $historico = $datos->objeto;
-
-        return $fechaInicialF;
-    }
+   
+   
 }
- 
+  //es una funcion que esta en el controller principal
+        // $urlBase= "http://172.16.4.229/TPVApi/historico/"; 

@@ -1,10 +1,26 @@
 <script>
     $.fn.dataTableExt.sErrMode = 'throw'; /*para eliminar el warning de DataTables warning: table id=roles - Cannot reinitialise DataTable.*/ 
-    var tablaHistorico= $('#historico').DataTable({
-        processing: true,
+   
+    //datatableHistorico.blade.php
+    $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+    });
+    
+    $('#historico').DataTable({
+        processing: true,       
         serverSide: true,
-        // url: "{{ url('buscar/alergenos') }}"+'/'+idProducto,               
-        ajax: "{{ route('all.historico') }}",
+        // destroy:true,                       
+        // ajax: "{{ url('all/historico') }}",
+        ajax: {
+            url: "{{ url('all/historico') }}",
+            type: 'POST',
+            data: function (filtro) {
+                filtro.inicio = $('#fechaInicioHist').val();
+                filtro.final = $('#fechaFinalHist').val();                
+            }
+        },
         columns: [{
                 data: 'folio',
                 name: 'folio'
@@ -55,6 +71,7 @@
             processing: "Procesando",
             search: "_INPUT_",
             searchPlaceholder: "Buscar registros",
+            emptyTable: "No hay datos disponibles en la tabla",
             sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
             oPaginate: {
                 "sFirst": "Primero",
@@ -64,47 +81,26 @@
             }
         }
     });
+    function filtrarFecha(){
 
-function filtrarFecha(){
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-    var fechaInicioInput=$("#fechaInicioHist").val();     
-    var fechaFinalInput=$("#fechaFinalHist").val();
-    // var urlFechas=fechaInicialDef+'/'+fechaFinalDef;
-    if (fechaInicioInput!='' && fechaFinalInput!= '') {
-		// console.log("fechaInicial",fechaInicioInput);		
-		if(fechaInicioInput<=fechaFinalInput){			
-            var urlFechas=fechaInicioInput+'/'+fechaFinalInput;
-            // tablaHistorico.ajax.reload();                      
-            $.ajax({
-            url: "{{ url('historico/filtro') }}",
-            type: "POST",
-            data: {
-                '_method': 'POST',
-                'fechaInicial':fechaInicioInput, 
-                'fechaFinal':fechaFinalInput,
-                '_token': csrf_token
-            },        
-                success: function(respuesta) {
-                    console.log("su respuesta desde CONtroller", respuesta);
-                                
-                },
-                error: function() {
-                console.log(respuesta);
-            }
-        });
+         var fechaInicioInput=$("#fechaInicioHist").val();     
+         var fechaFinalInput=$("#fechaFinalHist").val();
 
-            // tablaHistorico.ajax.url( url).load(); 
-
-            // console.log("formato de fecha correcto",urlFechas); 
-            // console.log("urlfinal",url); 
-                      				
-		}else{
-            swal ("Oops","La fecha de inicio "+fechaInicioInput+" es mayor que la fecha final "+fechaFinalInput, "error");           
-		}
+         if (fechaInicioInput!='' && fechaFinalInput!= '') {
+				
+		    if(fechaInicioInput<=fechaFinalInput){   
+                $('#historico').DataTable().draw(true); 
+                // console.log("todo ok");                      				
+		    }else if(fechaInicioInput>fechaFinalInput){
+            swal ("Oops","La fecha de inicio "+fechaInicioInput+" es mayor que la fecha final "+fechaFinalInput, "error");   
+		    }
 	} else{
         swal ( "Oops","No dejes campos de fecha vacios", "error");
     }
-    // console.log("fechasAusar",urlFechas);
-    return urlFechas;
+// var fechauno = new Date();
+// var fechados = new Date(fechauno);
+// var resultado = fechauno.getTime() === fechados.getTime();
+// console.log("resultado", fechaUno);
 }
+
 </script>
