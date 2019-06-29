@@ -12,11 +12,36 @@
                         <div class="card card-login card-hidden">
                             <div class="card-header text-center" data-background-color="blue">
                                 <h4 class="card-title">Inicio de sesión</h4>                                
-                            </div>
-                            <p class="category text-center">
-                                Ingrese sus datos de ingreso
-                            </p>
+                            </div>                            
                             <div class="card-content">
+                                
+                                <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-h-square"></i>
+                                        </span>
+                                        <div class="form-group">                                            
+                                            <select class="form-control" id="idHotel" name="idHotel" onchange="eligeHotel()" required>
+                                                <option value="">Seleccione hotel</option>
+                                                @foreach($hoteles as $hotel)
+                                                <option value="{{ $hotel->id }}">{{ $hotel->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                </div>
+                                
+                                <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-utensils"></i>
+                                        </span>
+                                        <div class="form-group">                                            
+                                            <select class="form-control" name="listaPuntosVenta" id="listaPuntosVenta" required>
+                                              <option value="">Seleccione punto de venta</option>
+                                          </select>
+                                        </div>
+                                </div>
+                                <p class="category text-center">
+                                    Ingrese sus datos de acceso
+                                </p>
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="material-icons">email</i>
@@ -44,20 +69,7 @@
                                         </span>
                                         @endif
                                     </div>
-                                </div>
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="material-icons">check_circle</i>
-                                    </span>
-                                    <div class="form-group label-floating">
-                                        <!-- <label class="control-label">Password</label> -->
-                                        <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                        <label class="form-check-label" for="remember">
-                                            {{ __('Recordar sesión') }}
-                                        </label>
-                                    </div>
-                                </div>
+                                </div>                                
                                 <!-- <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="material-icons">check_circle</i>
@@ -85,7 +97,7 @@
     </div>
     <footer class="footer">
         <div class="container">
-            <nav class="pull-left">
+            {{-- <nav class="pull-left">
                 <ul>
                     <li>
                         <a href="#">
@@ -108,7 +120,7 @@
                         </a>
                     </li>
                 </ul>
-            </nav>
+            </nav> --}}
             <p class="copyright pull-right">
                 &copy;
                 <script>

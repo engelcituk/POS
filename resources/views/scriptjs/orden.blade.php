@@ -205,7 +205,7 @@ $("#zonaElige").change(function() {
                     );
                 }                
             },
-            error: function() {
+            error: function(respuesta) {
             console.log(JSON.parse(respuesta));
         }
     }); 
@@ -837,7 +837,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
      var cuenta = JSON.parse(localStorage.getItem(idPV+idMesa));        
      var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr");  
      var porcentajeDesc = cuenta["descuentoPorc"]; 
-     var idFormaPago = $("#formaPagoSelect option:selected" ).val();
+     var idFormaPago = $("#formaPagoSelect option:selected").val();
      $("#modalMetodoPago").modal("hide");     
      $.ajax({
         url: "{{ url('ordenar/cerrarcuenta') }}"+'/'+idCuenta,

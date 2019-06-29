@@ -1,9 +1,11 @@
 <?php
 
 Route::get('/', function () {
-    return view('auth.login');
+    $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+    return view('auth.login', compact('hoteles'));
 });
 // Auth::routes();
+Route::get('login/getpuntosventa/{hotel}', 'Auth\LoginController@obtenerPuntosVenta')->name('login.puntosventa');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
@@ -29,8 +31,8 @@ Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarPro
 Route::get('/historico', 'HistoricoController@index')->name('historico.index');
 Route::post('all/historico', 'HistoricoController@AllHistorico')->name('all.historico');
 Route::get('historico/{cuenta}', 'HistoricoController@show')->name('historico.show');
-Route::get('filtro/historico', 'HistoricoController@obtenerHistoricoFechas')->name('filtro.historico');
-Route::delete('historico/{cuenta}', 'HistoricoController@destroy')->name('historico.destroy');
+Route::get('historico/detalle/{cuenta}', 'HistoricoController@obtenerDetalleCuenta')->name('historico.detalle');
+// Route::delete('historico/{cuenta}', 'HistoricoController@destroy')->name('historico.destroy');
 // Route::get('/roles', 'RolesController@index')->name('roles.index');
 // Route::resource('usuarios', 'UsuariosController');
 // Route::get('/usuarios', 'UsuariosController@index')->name('usuarios.index');

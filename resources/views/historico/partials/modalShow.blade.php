@@ -18,27 +18,14 @@
                     </tr>
                 </thead>                
                 <tbody>
-                    <tr>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>john@example.com</td>
-                        <td>Doe</td>
-
-                    </tr>
-                    <tr>
-                        <td>Mary</td>
-                        <td>Moe</td>
-                        <td>mary@example.com</td>
-                        <td>Doe</td>
-
-                    </tr>
+                    
                 </tbody>
             </table>
            </div><!--End Invoice-->         
         </div>            
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning pull-right" data-dismiss="modal"> <i class="fas fa-undo"></i> Descartar</button>        
+        <button type="button" class="btn btn-warning pull-right" data-dismiss="modal"> <i class="fas fa-sign-out-alt"></i> Salir</button>        
       </div>
     </div>
   </div>

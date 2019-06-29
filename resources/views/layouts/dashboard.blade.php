@@ -314,6 +314,9 @@
     @include('scriptjs/datatables/datatableImpresoras')
     @include('scriptjs/sweetalerts/sweetalertImpresora') 
     @include('scriptjs/validacionesImpresoras')
+@endif
+@if(request()->is('impresoras/create'))      
+    @include('scriptjs/validacionesImpresoras')
 
 @endif
 @if(request()->is('centrospreparacion'))

@@ -10,6 +10,7 @@ use function GuzzleHttp\json_decode;
 class LoginController extends Controller
 {
     public $urlBase = "http://localhost/TPVApi/Ingreso/";
+    public $urlPuntoVenta = "http://localhost/TPVApi/PuntosVenta/";
 
     public function login(Request $request){
  
@@ -31,7 +32,7 @@ class LoginController extends Controller
             $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
             $request->session()->put('idUsuarioLogueado', $idUsuario);
             $request->session()->put('idPuntoVenta', 23);
-            $request->session()->put('idMenuCarta', 1010);
+            $request->session()->put('idCarta', 1010);
             // $usuarioSesion = $request->session()->get('UsuarioLogueado'); 
                      
             return  redirect('ordenar');
@@ -45,6 +46,10 @@ class LoginController extends Controller
         return $respuesta;
     }
 
+    public function obtenerPuntosVenta($idHotel){
+        $respuesta = $this->realizarPeticion('GET', $this->urlPuntoVenta."GetPuntosVentaPorHotel/{$idHotel}");        
+        return $respuesta;
+    }
     public function logout(Request $request){
 
         // $usuario = $request->get('UsuarioLogueado');

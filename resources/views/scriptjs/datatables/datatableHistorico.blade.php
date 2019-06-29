@@ -10,9 +10,7 @@
     
     $('#historico').DataTable({
         processing: true,       
-        serverSide: true,
-        // destroy:true,                       
-        // ajax: "{{ url('all/historico') }}",
+        serverSide: true,        
         ajax: {
             url: "{{ url('all/historico') }}",
             type: 'POST',
@@ -62,8 +60,8 @@
         ],
         "pagingType": "full_numbers",
         "lengthMenu": [
-            [15, 25, 50, -1],
-            [15, 25, 50, "Todos"]
+            [10,15, 25, 50, -1],
+            [10,15, 25, 50, "Todos"]
         ],
         responsive: true,
         language: {
@@ -71,7 +69,8 @@
             processing: "Procesando",
             search: "_INPUT_",
             searchPlaceholder: "Buscar registros",
-            emptyTable: "No hay datos disponibles en la tabla",
+            infoEmpty: "Mostrando 0 de 0 de 0 entradas",
+            emptyTable: "No hay datos disponibles en la tabla",            
             sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
             oPaginate: {
                 "sFirst": "Primero",
@@ -82,25 +81,18 @@
         }
     });
     function filtrarFecha(){
-
          var fechaInicioInput=$("#fechaInicioHist").val();     
          var fechaFinalInput=$("#fechaFinalHist").val();
-
          if (fechaInicioInput!='' && fechaFinalInput!= '') {
 				
 		    if(fechaInicioInput<=fechaFinalInput){   
-                $('#historico').DataTable().draw(true); 
-                // console.log("todo ok");                      				
+                $('#historico').DataTable().draw(true);                                      				
 		    }else if(fechaInicioInput>fechaFinalInput){
             swal ("Oops","La fecha de inicio "+fechaInicioInput+" es mayor que la fecha final "+fechaFinalInput, "error");   
 		    }
 	} else{
         swal ( "Oops","No dejes campos de fecha vacios", "error");
     }
-// var fechauno = new Date();
-// var fechados = new Date(fechauno);
-// var resultado = fechauno.getTime() === fechados.getTime();
-// console.log("resultado", fechaUno);
 }
 
 </script>

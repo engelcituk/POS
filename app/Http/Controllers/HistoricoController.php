@@ -14,13 +14,7 @@ class HistoricoController extends Controller
     public function __construct()
     {
         // $this->middleware('auth');
-    }
- 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    }     
     public function index(){ 
         
         $fechaHoy = Carbon::now()->toDateString();  //solo fecha sin hora  addDays(1)
@@ -54,6 +48,11 @@ class HistoricoController extends Controller
         $historico = $datos->objeto;
 
         return $historico;
+    }
+    public function obtenerDetalleCuenta($idCuenta){
+
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetDetalleCuenta/{$idCuenta}");                
+        return $respuesta;
     }
    
    

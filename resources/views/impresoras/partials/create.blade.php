@@ -55,7 +55,7 @@
                                     </div>
                                 </div>
                                 <!-- <small>En la api se registra el <cite title="idPuntoVenta">idPuntoVenta y status </cite></small> -->
-                                <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
+                                <button class="btn btn-primary pull-right" id="btnGuardarImpresora"  class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>
                     </div>
