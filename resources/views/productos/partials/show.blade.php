@@ -16,6 +16,15 @@
                     <h4 class="card-title"><strong>Subcategoria: </strong> {{$subCategoria->name}}</h4><br>
 
                     <h4 class="card-title"><strong>De la Categoria: </strong> {{$categoria->name}}</h4><br>
+                    
+                    @php
+                       $img = '<img class="img" src="{{asset("img/faces/producto.png")}}">';
+                    //   $img =  '<input type="text" value="123" />'."\n";
+                        // $imagen = ($producto->imagen == "SIN IMAGEN") ? $img : $producto->imagen ;
+                        // <img class="img" src="{{asset('img/faces/default.png')}}">
+                    @endphp
+                        <h4 class="card-title"><strong>Imagen:  </strong> </h4><br>
+                        <img src="data:image/png;base64, {{$producto->imagen}}"/>
 
                     <a href="{{ route('subcategorias.index') }}" class="btn btn-rose btn-round"><i class="fas fa-arrow-left"></i> Volver</a>
                     </div>

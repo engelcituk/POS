@@ -122,26 +122,10 @@ class ProductosController extends Controller
         // $respuestaOK = $datos->objeto;
         return $datos;
     }
-    // public function store(Request $request){
-
-    //     $arrayIdAlergenos = $request->get('idAlergeno');
-    //     $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddProducto', ['form_params' => $request->all()]);
-    //     $datos = json_decode($respuesta);
-    //     $respuestaObjeto = $datos->objeto; 
-
-    //     $idProducto = $respuestaObjeto->id;
-
-    //     if($arrayIdAlergenos!=null){            
-    //         foreach ($arrayIdAlergenos as $idAlergeno) {
-    //             $this->guardarProductoAlergeno($idProducto, $idAlergeno);
-    //         }
-    //     }                         
-    //     return redirect('/productos');
-    // }
+   
     public function store(Request $request)
     {
 
-<<<<<<< Updated upstream
         $arrayIdAlergenos = $request->get('idAlergeno');
         $imagen = $request->file('imagen');
         //$imagenb = base64_encode(file_get_contents($request->file('imagen')->path()));
@@ -183,22 +167,11 @@ class ProductosController extends Controller
 
         $datos = json_decode($respuesta);
         $respuestaObjeto = $datos->objeto;
-=======
-        // $arrayIdAlergenos = $request->get('idAlergeno');
-        // $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddProducto', ['form_params' => $request->all()]);
-        // $datos = json_decode($respuesta);
-        // $respuestaObjeto = $datos->objeto; 
->>>>>>> Stashed changes
 
-        // $idProducto = $respuestaObjeto->id;
+        $idProducto = $respuestaObjeto->id;
 
-<<<<<<< Updated upstream
 
         if ($arrayIdAlergenos != null) {
-=======
-        dd( $request->all());
-        if($arrayIdAlergenos!=null){            
->>>>>>> Stashed changes
             foreach ($arrayIdAlergenos as $idAlergeno) {
                 $this->guardarProductoAlergeno($idProducto, $idAlergeno);
             }
