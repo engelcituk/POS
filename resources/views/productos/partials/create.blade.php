@@ -3,7 +3,7 @@
 <div class="content">
     <div class="container-fluid">
         <a href="{{ route('productos.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <form method="POST" action="{{ route('productos.store')}}">
+        <form method="POST" action="{{ route('productos.store')}}"  enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-profile">
@@ -114,6 +114,23 @@
                                         </div>
                                     </div>
                                 </div>
+                                                                
+                                <div class="col-md-12 centerImg">                                   
+                                    <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                        <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                            <div>
+                                                <span class="btn btn-rose btn-round btn-file">
+                                                    <span class="fileinput-new"> <i class="fas fa-file-image"></i> Subir icono</span>
+                                                    <span class="fileinput-exists">Change</span>
+                                                    <input type="file" name="imagen" id="file" onchange="return fileValidation()"/>
+                                                </span>
+
+                                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                            </div>
+                                        </div>                                       
+                                    </div>
+                                    
+                                
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         Con propina

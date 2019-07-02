@@ -105,7 +105,7 @@ class AlergenoController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $icono = base64_encode(file_get_contents($request->file('icono')->path()));        
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddAlergeno', [
             'form_params' => [

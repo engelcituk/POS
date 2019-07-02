@@ -122,20 +122,75 @@ class ProductosController extends Controller
         // $respuestaOK = $datos->objeto;
         return $datos;
     }
-    public function store(Request $request){
+    // public function store(Request $request){
+
+    //     $arrayIdAlergenos = $request->get('idAlergeno');
+    //     $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddProducto', ['form_params' => $request->all()]);
+    //     $datos = json_decode($respuesta);
+    //     $respuestaObjeto = $datos->objeto; 
+
+    //     $idProducto = $respuestaObjeto->id;
+
+    //     if($arrayIdAlergenos!=null){            
+    //         foreach ($arrayIdAlergenos as $idAlergeno) {
+    //             $this->guardarProductoAlergeno($idProducto, $idAlergeno);
+    //         }
+    //     }                         
+    //     return redirect('/productos');
+    // }
+    public function store(Request $request)
+    {
 
         $arrayIdAlergenos = $request->get('idAlergeno');
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddProducto', ['form_params' => $request->all()]);
+        $imagen = $request->file('imagen');
+        //$imagenb = base64_encode(file_get_contents($request->file('imagen')->path()));
+
+        $codigoProducto = $request->get('codigoProducto');
+        $idSubCategoria = $request->get('idSubCategoria');
+        $nombreProducto = $request->get('nombreProducto');
+        $propina = $request->get('propina');
+        $tipoPropina = $request->get('tipoPropina');
+        $montoPropina = $request->get('montoPropina');
+        $precio = $request->get('precio');
+        $complemento = $request->get('complemento');
+        $status = $request->get('status');
+
+       
+        if ($imagen == null) {
+            $imagen = "SIN IMAGEN";
+        } else {            
+            $imagen = base64_encode(file_get_contents($request->file('imagen')->path()));
+
+        }
+      
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddProducto', [
+            'form_params' => [
+                'codigoProducto' => $codigoProducto,
+                'idSubCategoria' => $idSubCategoria,
+                'nombreProducto' => $nombreProducto,
+                'propina' => $propina,
+                'tipoPropina' => $tipoPropina,
+                'montoPropina' => $montoPropina,
+                'precio' => $precio,
+                'complemento' => $complemento,
+                'imagen' => $imagen,
+                'status' => $status,
+
+
+            ]
+        ]);
+
         $datos = json_decode($respuesta);
-        $respuestaObjeto = $datos->objeto; 
+        $respuestaObjeto = $datos->objeto;
 
         $idProducto = $respuestaObjeto->id;
 
-        if($arrayIdAlergenos!=null){            
+
+        if ($arrayIdAlergenos != null) {
             foreach ($arrayIdAlergenos as $idAlergeno) {
                 $this->guardarProductoAlergeno($idProducto, $idAlergeno);
             }
-        }                         
+        }
         return redirect('/productos');
     }
 
