@@ -30,7 +30,7 @@ Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarPro
     // Route::get('/ordenar', 'OrdenController@index')->name('ordenar.index');
 Route::get('/historico', 'HistoricoController@index')->name('historico.index');
 Route::post('all/historico', 'HistoricoController@AllHistorico')->name('all.historico');
-Route::get('historico/{cuenta}', 'HistoricoController@show')->name('historico.show');
+Route::get('historico/{cuenta}', 'HistoricoController@obtenerCuenta')->name('historico.cuenta');
 Route::get('historico/detalle/{cuenta}', 'HistoricoController@obtenerDetalleCuenta')->name('historico.detalle');
 // Route::delete('historico/{cuenta}', 'HistoricoController@destroy')->name('historico.destroy');
 // Route::get('/roles', 'RolesController@index')->name('roles.index');

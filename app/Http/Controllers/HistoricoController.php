@@ -11,6 +11,7 @@ use Carbon\Carbon;
 class HistoricoController extends Controller
 {
     public $urlBase = "http://localhost/TPVApi/Historico/";
+    public $urlCuenta = "http://localhost/TPVApi/Venta/";
     public function __construct()
     {
         // $this->middleware('auth');
@@ -49,6 +50,12 @@ class HistoricoController extends Controller
 
         return $historico;
     }
+    public function obtenerCuenta($idCuenta){
+
+        $respuesta = $this->realizarPeticion('GET', $this->urlCuenta."GetCuenta/{$idCuenta}");
+        return $respuesta;
+    }
+
     public function obtenerDetalleCuenta($idCuenta){
 
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetDetalleCuenta/{$idCuenta}");                

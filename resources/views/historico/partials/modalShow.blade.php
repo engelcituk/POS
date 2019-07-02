@@ -7,14 +7,81 @@
       </div>
       <div class="modal-body">                              
         <div class="row">
+          <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fas fa-info-circle"></i>
+                </span>
+                <div class="form-group label-floating">
+                    <strong>Folio cuenta</strong>
+                    <input  type="text" id="folioCuenta" class="form-control" name="folioCuenta" disabled>
+                    
+                </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fas fa-info-circle"></i>
+                </span>
+                <div class="form-group label-floating">
+                    <strong>Habitación</strong>
+                    <input  type="text" id="habitacion" class="form-control" name="habitacion" disabled>
+                    
+                </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fas fa-info-circle"></i>
+                </span>
+                <div class="form-group label-floating">
+                    <strong>Pax</strong>
+                    <input  type="text" id="pax" class="form-control" name="pax" disabled>
+                    
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fas fa-info-circle"></i>
+                </span>
+                <div class="form-group label-floating">
+                    <strong>Reserva</strong>
+                    <input  type="text" id="reserva" class="form-control" name="reserva" disabled>
+                    
+                </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fas fa-info-circle"></i>
+                </span>
+                <div class="form-group label-floating">
+                    <strong>Nombre cliente</strong>
+                    <input  type="text" id="nombreCliente" class="form-control" name="nombreCliente" disabled>
+                    
+                </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div id="showLoader"></div>
+        <div class="row">          
           <div id="invoice-POS">    
             <table id="detalleCuenta" class="table table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                     <tr class="info">
-                        <th>IdCuenta</th>
                         <th>Cantidad</th>
-                        <th>Comensal</th>                        
+                        <th>Nombre</th>
                         <th>Precio</th>
+                        <th>Subtotal</th>                        
+                        <th>Estado</th> 
                     </tr>
                 </thead>                
                 <tbody>

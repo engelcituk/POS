@@ -51,8 +51,8 @@
                                         <th>Pax</th>
                                         <th>SubTotal</th>
                                         <th>% Descuento</th>
-                                        <th>Total cuenta</th>
-                                        <th class="disabled-sorting text-right"></th>
+                                        <th>Total</th>
+                                        <th class="disabled-sorting text-right">Herramientas</th>
                                     </tr>
                                 </thead>
                                 

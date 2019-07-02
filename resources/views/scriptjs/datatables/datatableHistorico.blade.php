@@ -8,7 +8,7 @@
           }
     });
     
-    $('#historico').DataTable({
+   var tablaHistorico= $('#historico').DataTable({
         processing: true,       
         serverSide: true,        
         ajax: {

@@ -47,7 +47,7 @@
               <div id="mensajeRespuesta"></div>                      
               <div class="row">    
                   <div class="col-md-6">
-                    <div class="input-group">
+                    <div class="input-group"> 
                         <span class="input-group-addon">
                             {{-- <i class="fas fa-restroom"></i> --}}Reserva
                         </span>
