@@ -105,5 +105,83 @@ function verCuentaDetalles(id) {
             console.log(JSON.parse(respuesta));
         }
     }); 
+}
+    //funcion con sweetalert para reimprimir cuenta
+    function imprimirCuenta(idCuenta) {
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: '¿Seguro de realizar la impresión de la cuenta?',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '¡Sí, imprimir!',
+            cancelButtonText: '¡No, desistir!'
+        }).then(function() {
+            $.ajax({
+                url: "{{ url('historico/imprimir') }}" + '/'+idCuenta,
+                type: "POST",
+                data: {
+                    '_method': 'POST',
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {
+                    console.log("respuesta controlador",respuesta);                    
+                },
+                error: function(respuesta) { 
+                    console.log("respuesta controlador",respuesta);                    
+
+                }
+            });
+        });
     }
+    function cancelarCuentaModal(idCuenta) {
+        $("#idCuentaCancelar").val(idCuenta);
+        $('#modalCancelarCuenta').modal({backdrop: 'static', keyboard: false });
+        $("#cancelarCuentaBtn").attr("idCuenta",idCuenta)
+    }
+    /*
+    $("#modalDescuentoCuenta").modal("hide");
+    //reseteo los valores de los campos del modal por si acaso 
+     $('#modalDescuentoCuenta').on('hidden.bs.modal', function (e) {
+        $(this).find('form')[0].reset();
+    });
+    */
+    //funcion con sweetalert para cancelar cuenta
+    function cancelarCuenta() {
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        var idCuenta =$("#cancelarCuentaBtn").attr("idCuenta");
+        var motivoCancelacion =$("#motivoCancelacion").val();               
+                 
+        if(motivoCancelacion.length >= 20) {                     
+            $.ajax({
+                url: "{{ url('historico/cancelar') }}" + '/'+idCuenta,
+                type: "POST",
+                data: {
+                    '_method': 'POST',
+                    'motivo':motivoCancelacion,
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {
+                    console.log("respuesta controlador cancelar",respuesta);                    
+                },
+                error: function() { 
+                    console.log("respuesta controlador",respuesta);                    
+
+                }
+            }); 
+            $("#modalCancelarCuenta").modal("hide");
+            // reseteo los valores de los campos del modal por si acaso            
+        } else{
+            swal({
+                title: 'Oops...',
+                text: '¡EL motivo tiene que ser mayor a 20 caracteres!',
+                type: 'error',
+                timer: '2500'
+            })
+        }                 
+    }
+    $('#modalCancelarCuenta').on('hidden.bs.modal', function (e) {
+        $(this).find('form')[0].reset();
+    });
 </script> 

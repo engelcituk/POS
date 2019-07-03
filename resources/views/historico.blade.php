@@ -71,6 +71,7 @@
         <!-- end row -->
     </div>
     @include('historico.partials.modalShow')
+    @include('historico.partials.modalCancelarCuenta')
 </div>
 @endsection
 

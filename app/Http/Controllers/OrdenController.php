@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class OrdenController extends Controller
@@ -13,19 +14,25 @@ class OrdenController extends Controller
     public $urlVenta= "http://localhost/TPVApi/Venta/";
     public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
     public $urlBaseProducto = "http://localhost/TPVApi/Producto/";
-
+    public $urlMenuCarta= "http://localhost/TPVApi/MenuCarta/";
+//
     public function __construct(){
         // $this->middleware('auth');
     }
-    public function index(){
-        $idPuntoVenta = 23;
+    public function index(Request $request){
+        
+        $idPuntoVenta = $request->session()->get('idPuntoVenta');
+        $idCarta = $request->session()->get('idCarta');
+
         $respuesta = $this->obtenerTodasLasZonasPV($idPuntoVenta);
 
-        // dd($respuesta);
+        $categorias=$this->obtenerCategoriasCarta($idCarta);
+
+        
         // $respuesta = json_decode($respuesta);
         $zonas = $respuesta->objeto;
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');//se cargan en un modal
-        $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
+        //$categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
         $metodosPago = \App::call('App\Http\Controllers\MetodosPagoController@obtenerTodosLosMetodosPagos');//se carga en subtabs
         // $productos = \App::call( 'App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
 
@@ -45,6 +52,19 @@ class OrdenController extends Controller
         $respuesta= json_decode($respuesta);        
 
         return $respuesta;
+    }
+    public function obtenerCategoriasCarta($idCarta){
+        
+        $urlBase= "http://172.16.4.229/TPVApi/Categoria/";
+        
+        $respuesta = $this->realizarPeticion('GET', $urlBase."GetCategoriabyCarta/{$idCarta}");        
+
+        $datos = json_decode($respuesta);
+
+        $categorias = $datos->objeto;
+
+        return $categorias;
+
     }
 
     public function obtenerDatosHuesped($codhotel, $room){
@@ -85,9 +105,10 @@ class OrdenController extends Controller
         return $subCategorias;
     }
 
-    public function getProductosBySubCat($idSubCategoria){
+    public function getProductosBySubCat( Request $request, $idSubCategoria){
+        $idCarta = $request->session()->get('idCarta');
 
-        $respuesta = $this->realizarPeticion('GET', $this->urlBaseProducto."GetProductosPorSubCategoria/{$idSubCategoria}");
+        $respuesta = $this->realizarPeticion('GET', $this->urlMenuCarta."GetProductosMenuCarta/{$idCarta}/{$idSubCategoria}");
         
         return $respuesta;        
     }
@@ -202,5 +223,18 @@ class OrdenController extends Controller
         return $respuesta;
         
     } 
+    public function cerrarDia(Request $request,$idPV){
+
+        $urlCerrarDia = "http://localhost/TPVApi/Admin/";
+
+        $idUsuario = $request->session()->get('idUsuarioLogueado');
+        $fecha = Carbon::now()->format('d-m-Y');
+
+        $respuesta = $this->realizarPeticion('POST', $urlCerrarDia."cierreDia/{$idPV}/{$fecha}/{$idUsuario}");
+
+        return $respuesta;
+
+        
+    }
 }
 // 172.16.4.229

@@ -17,11 +17,11 @@ Route::get('ordenar/{codhotel}/{room}', 'OrdenController@obtenerDatosHuesped')->
 Route::post('ordenar/addcuenta', 'OrdenController@guardarCuenta')->name('ordenar.addcuenta');
 Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name('ordenar.enviarcuenta');
 Route::post('ordenar/cerrarcuenta/{cuenta}', 'OrdenController@cerraCuenta')->name('ordenar.cerrarcuenta');
+Route::post('ordenar/cerrardia/{idpv}', 'OrdenController@cerrarDia')->name('ordenar.cerrardia');
 Route::get('obtener/productos/{idsubcat}', 'OrdenController@getProductosBySubCat')->name('obtener.productos');
 Route::get('buscar/alergenos/{idproducto}', 'OrdenController@obtenerAlergenosProducto')->name('buscar.getalergenos');
 Route::get('obtenercuenta/{idcuenta}', 'OrdenController@obtenerCuentaApi')->name('obtenercuenta.api');
 Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarProductoCuenta')->name('cancelardetalle.api');
-
 // Route::get('/prueba','Controller@obtenerAccessToken');
 
 //Hago que mis rutas sean validados con el middleware (auth) para el login
@@ -30,6 +30,8 @@ Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarPro
     // Route::get('/ordenar', 'OrdenController@index')->name('ordenar.index');
 Route::get('/historico', 'HistoricoController@index')->name('historico.index');
 Route::post('all/historico', 'HistoricoController@AllHistorico')->name('all.historico');
+Route::post('historico/cancelar/{cuenta}', 'HistoricoController@cancelarCuenta')->name('historico.cancelar');
+Route::post('historico/imprimir/{cuenta}', 'HistoricoController@imprimirCuenta')->name('historico.imprimir');
 Route::get('historico/{cuenta}', 'HistoricoController@obtenerCuenta')->name('historico.cuenta');
 Route::get('historico/detalle/{cuenta}', 'HistoricoController@obtenerDetalleCuenta')->name('historico.detalle');
 // Route::delete('historico/{cuenta}', 'HistoricoController@destroy')->name('historico.destroy');

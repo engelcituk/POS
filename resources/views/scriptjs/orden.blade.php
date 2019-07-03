@@ -87,7 +87,7 @@ $("#zonaElige").change(function() {
             beforeSend: function () {
                 $("#mensajeRespuesta").html('<div class="loader"></div>');
             },
-            success: function(respuesta) {
+            success: function(respuesta) { 
                 var resultado=JSON.parse(respuesta);                
                 var objeto = resultado["objeto"];
                 var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
@@ -216,6 +216,8 @@ $("#zonaElige").change(function() {
     var idPV= $("#idPVModalOrdenar").val();
     var idMesaLS = localStorage.getItem("idMesaLS");
     var variableLS =idPV+idMesaLS;
+    var idCuenta =getIdCuenta(idPV,idMesaLS); 
+    $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
 
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
     // console.log(variableLS);
@@ -240,10 +242,11 @@ $("#zonaElige").change(function() {
                     listaProductos=""
                         for(i =0;  i<objeto.length; i++){
                             var colorAlergeno = "label-info";
-                            var idProducto=objeto[i]["id"];
-                            var nombreProducto=objeto[i]["nombreProducto"];
+                            var idProducto=objeto[i]["TPV_Producto"]["id"];
+                            var idMenuCarta=objeto[i]["id"];
+                            var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
                             var precio=objeto[i]["precio"];
-                            var alergenosP = objeto[i]["TPV_ProductoAlergeno"];
+                            var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
                             console.log("sus Alergenos",alergenosP);
                            if(alergenosP.length >0 ){
                                 //operador ternario
@@ -256,7 +259,7 @@ $("#zonaElige").change(function() {
                             }                                                                                
                             // console.log("sus Alergenos",alergenosPOk);
                            listaProductos+="<li><div class='well well-sm'><div id='producto"+idProducto
-                           +"' idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' onclick='addCantidadProductoModal("+idProducto+")' style='cursor: pointer;' ><strong>"+
+                           +"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")' style='cursor: pointer;' ><strong>"+
                            nombreProducto+"</strong></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
@@ -271,9 +274,11 @@ $("#zonaElige").change(function() {
             }
     });
  }
- function addCantidadProductoModal(idProducto) {
+ function addCantidadProductoModal(idProducto,idMenuCarta) {
      $('#modalCantidadProducto').modal({backdrop: 'static', keyboard: false });
      $("#idProductoModal").val(idProducto);
+     $("#idMenuCartaModal").val(idMenuCarta);
+
      $(document).on("input", "#cantidadProducto", function() {
         this.value = this.value.replace(/[^0-9]/g, '');
      });
@@ -299,7 +304,7 @@ function addProducto() {
       
 
     var idPV= $("#idPVModalOrdenar").val();
-    var idMenuCarta = $("#idMemuCartaPVModal").val();
+    var idMenuCarta = $("#idMenuCartaModal").val();
     var idUsuario = $("#idUserModalOrdenar").val();
     var idProducto=$("#idProductoModal").val();
     var cantidad=$("#cantidadProducto").val();
@@ -850,6 +855,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
         },
         success: function(respuesta) {             
              var respuesta = JSON.parse(respuesta);
+             console.log("respuesta",respuesta);
              var ok = respuesta["ok"];                
                 if(ok){//si ok es true                
                 var cuenta=idPV+idMesa;
@@ -872,6 +878,26 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
                 }                                
         },
         error: function(respuesta) {                    
+            console.log("respuesta",respuesta); 
+        }
+    });
+ }
+ function cerrarDia(idPuntoVenta) {
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     $.ajax({
+        url: "{{ url('ordenar/cerrardia') }}"+'/'+idPuntoVenta,
+        type: "POST",
+        data: {
+            '_method': 'POST',           
+            
+            '_token': csrf_token
+        },
+        success: function(respuesta) {             
+            //  var respuesta = JSON.parse(respuesta);
+             console.log("Respuesta controlador",respuesta);               
+                                                
+        },
+        error: function(respuesta) { 
             console.log("respuesta",respuesta); 
         }
     });

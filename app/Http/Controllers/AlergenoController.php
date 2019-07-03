@@ -14,7 +14,9 @@ class AlergenoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $urlBase = "http://localhost/TPVApi/Alergenos/";
+    // public $urlBase = "http://localhost/TPVApi/Alergenos/";
+    public $urlBase = "http://172.16.4.229/TPVApi/Alergenos/";
+    
     public function index()
     {
         return view('alergenos');

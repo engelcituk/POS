@@ -103,3 +103,7 @@ table #tablaItemProductos { border-collapse: collapse; width: 100%;
   background: #FEF9F9;
 
 }
+
+.mesaOrden{
+  background-color: #e0e0e0   !important;
+}

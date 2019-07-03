@@ -31,8 +31,8 @@ class LoginController extends Controller
 
             $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
             $request->session()->put('idUsuarioLogueado', $idUsuario);
-            $request->session()->put('idPuntoVenta', 23);
-            $request->session()->put('idCarta', 1010);
+            $request->session()->put('idPuntoVenta', 10);
+            $request->session()->put('idCarta', 1034);
             // $usuarioSesion = $request->session()->get('UsuarioLogueado'); 
                      
             return  redirect('ordenar');

@@ -10,6 +10,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <input type="number" class="form-control hidden" id="idProductoModal">        
+                        <input type="number" class="form-control hidden" id="idMenuCartaModal"> 
                         <input type="number" class="form-control" id="cantidadProducto" min="1" value="1">
                     </div>
                 </div>            

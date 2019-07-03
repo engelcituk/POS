@@ -12,6 +12,8 @@ class HistoricoController extends Controller
 {
     public $urlBase = "http://localhost/TPVApi/Historico/";
     public $urlCuenta = "http://localhost/TPVApi/Venta/";
+    public $urlAdmin = "http://localhost/TPVApi/Admin/";
+
     public function __construct()
     {
         // $this->middleware('auth');
@@ -61,8 +63,28 @@ class HistoricoController extends Controller
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetDetalleCuenta/{$idCuenta}");                
         return $respuesta;
     }
-   
-   
+    public function imprimirCuenta($idCuenta){
+       
+        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin."imprimeCuenta/{$idCuenta}"); 
+        
+        return $respuesta;        
+    }
+    public function cancelarCuenta(Request $request, $idCuenta){
+        
+        $idUsuario = $request->session()->get('idUsuarioLogueado');
+        $motivo = $request->get('motivo');
+        
+        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin.'cancelaCuenta', [
+            'form_params' => [
+                'idc' => $idCuenta,
+                'idu' => $idUsuario,
+                'motivo' => $motivo                
+            ]
+        ]);
+        return $respuesta;
+        
+    }
 }
-  //es una funcion que esta en el controller principal
-        // $urlBase= "http://172.16.4.229/TPVApi/historico/"; 
+//es una funcion que esta en el controller principal
+// $urlBase= "http://172.16.4.229/TPVApi/historico/"; 
+//http://172.16.4.229/TPVApi/admin/imprimeCuenta/127

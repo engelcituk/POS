@@ -34,12 +34,13 @@
         <div class="row" id="zonaMesas">            
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-icon" data-background-color="red">
+                    {{-- <div class="card-header card-header-icon" data-background-color="red">
                         <i class="fas fa-concierge-bell"></i>
-                    </div>
+                    </div> --}}
                     <div class="card-content">
-                        <h4 class="card-title">Tomar Orden </h4>
-                         
+                        {{-- <h4 class="card-title">Tomar Orden </h4> --}}
+                         <button class="btn btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})"><i class="far fa-window-close"></i> Cerrar día</button>
+                         <br>
                         @foreach($zonas as $zona)                            
                             <div id="zona{{$zona->id}}" class="zonas">
                             <strong>{{$zona->name}}</strong>
@@ -56,10 +57,15 @@
                                 $mesaStatus = ($estadoMesa == 1) ? "disponible" : "ocupado";
                                 $mesaCss = ($estadoMesa != 1) ? "bordeMesaOcupada" : "";
                                 @endphp
+                                
+                                        
                                     <li class="abrirMesa {{$mesaCss}}" idMesa="{{$idMesa}}">
                                         <a id="mesaAbrir{{$idMesa}}" class="" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})" estadoMesa="{{$mesaStatus}}">
-                                            <img  class="{{$mesaStatus}}" src="{{asset('img/mesa.png')}}"> {{$nombreMesa}} 
+                                            <span class="label label-success">1</span><span class="label label-warning">2</span><span class="label label-default">3</span><br><br>
+                                            <div class="well well-sm mesaOrden {{$mesaStatus}}"><strong>{{$nombreMesa}}</strong></div>
+                                            {{-- <img  class="{{$mesaStatus}}" src="{{asset('img/mesa.png')}}">   --}}
                                         </a>
+                                        
                                     </li>
                                 @endforeach                                
                             </ul> 
@@ -77,7 +83,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-content">
-                        <a href="#" class="btn btn-warning btn-sm pull-right volverMesas"><i class="fas fa-undo-alt"></i></i> Volver</a>
+                        <a href="{{ route('ordenar.index') }}" class="btn btn-warning btn-sm pull-right volverMesas"><i class="fas fa-undo-alt"></i></i> Volver</a>
                         <h4 class="card-title">Tomar Orden</h4>
                         <div class="row">
                             <div class="col-md-5">
