@@ -13,18 +13,23 @@
                         
                     <h3 class="category text-black"><strong>Nombre producto:</strong> {{$producto->nombreProducto}}</h3><br>                   <h4 class="card-title"><strong>Fecha alta: </strong> {{$producto->fechaAlta}}</h4><br>
 
-                    <h4 class="card-title"><strong>Subcategoria: </strong> {{$subCategoria->name}}</h4><br>
+                    <h4 class="card-title"><strong>Subcategoria: </strong> </h4><br>
 
-                    <h4 class="card-title"><strong>De la Categoria: </strong> {{$categoria->name}}</h4><br>
-                    
+                    <h4 class="card-title"><strong>De la Categoria: </strong> {{$categoria->name}}</h4><br>                   
                     @php
-                       $img = '<img class="img" src="{{asset("img/faces/producto.png")}}">';
-                    //   $img =  '<input type="text" value="123" />'."\n";
-                        // $imagen = ($producto->imagen == "SIN IMAGEN") ? $img : $producto->imagen ;
-                        // <img class="img" src="{{asset('img/faces/default.png')}}">
+
+                        $imgProducto =$producto->imagen;
+                        $img =asset('img/faces/default.png'); //Esto es para la imagen por default
+                        $dataimg = "data:image/png;base64,";                       
+                        $imgconfoto = $dataimg.$imgProducto;                                        
+                        $resultadoImg = (($imgProducto == "AA==") || ($imgProducto == NULL)) ? $img : $imgconfoto;    
                     @endphp
                         <h4 class="card-title"><strong>Imagen:  </strong> </h4><br>
-                        <img src="data:image/png;base64, {{$producto->imagen}}"/>
+                        
+                            <div class="col-md-1">
+                                <img class="img-responsive" src="{{$resultadoImg}}"/>                                
+                            </div>
+                        
 
                     <a href="{{ route('subcategorias.index') }}" class="btn btn-rose btn-round"><i class="fas fa-arrow-left"></i> Volver</a>
                     </div>
@@ -33,4 +38,4 @@
         </div>
     </div>
 </div>
-@lo
+@endsection()

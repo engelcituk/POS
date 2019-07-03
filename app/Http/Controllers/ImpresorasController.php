@@ -33,8 +33,7 @@ class ImpresorasController extends Controller
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    public function obtenerTodasLasImpresoras()
-    {
+    public function obtenerTodasLasImpresoras(){
         //es una funcion que esta en el controller principal        
         $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetImpresoras');
 

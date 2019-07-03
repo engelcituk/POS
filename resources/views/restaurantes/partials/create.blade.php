@@ -26,7 +26,6 @@
                                         </div>
                                     </div>
                                 </div>
- 
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -54,6 +53,70 @@
                                             @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-print"></i>
+                                        </span>
+                                        <div class="form-group">
+                                            <!-- <label for="sel1">Select list:</label> -->
+                                            <select class="form-control" name="idImpresora" required>
+                                                <option value="">Seleccione impresora</option>
+                                                @foreach($impresoras as $impresora)
+                                                <option value="{{ $impresora->id }}">{{$impresora->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>                                
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-key"></i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">codCP</label>
+                                            <input id="codCP" type="text" class="form-control{{ $errors->has('codCP') ? ' is-invalid' : '' }}" name="codCP" required>
+                                            @if ($errors->has('codCP'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('codCP') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Moneda</label>
+                                            <input id="moneda" type="text" class="form-control{{ $errors->has('moneda') ? ' is-invalid' : '' }}" name="moneda" required>
+                                            @if ($errors->has('moneda'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('moneda') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-dollar-sign"></i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Símbolo Moneda</label>
+                                            <input id="simboloM" type="text" class="form-control{{ $errors->has('simboloM') ? ' is-invalid' : '' }}" name="simboloM" required>
+                                            @if ($errors->has('simboloM'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('simboloM') }}</strong>
                                             </span>
                                             @endif
                                         </div>

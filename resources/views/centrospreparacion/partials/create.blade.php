@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="card-content">
                                                               
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fab fa-elementor"></i>
@@ -27,7 +27,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-utensils"></i>
@@ -42,13 +42,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="comment">Descripcion:</label>
-                                        <textarea class="form-control" rows="2" name="descripcion" required></textarea>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-utensils"></i>
+                                        </span>
+                                        <div class="form-group">
+                                            <select class="form-control" name="idImpresora" required>
+                                                <option value="">Impresora backup CP</option>
+                                                @foreach($impresoras as $impresora)
+                                                    <option value="{{$impresora->id}}">{{$impresora->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div>                                                                
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <div class="radio">
                                             <strong>Estado</strong>
@@ -56,7 +65,23 @@
                                             <label><input type="radio" name="status" value="False">Desactivado</label>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="radio">
+                                            <strong>Imprime</strong>
+                                            <label><input type="radio" name="imprime" value="True" checked>Si</label>
+                                            <label><input type="radio" name="imprime" value="False">No</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="comment">Descripcion:</label>
+                                        <textarea class="form-control" rows="2" name="descripcion" required></textarea>
+                                    </div>
+                                </div>
+                                                                
                                 <!-- <small>En la api se registar el <cite title="idHotel">idHotel</cite></small> -->
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>

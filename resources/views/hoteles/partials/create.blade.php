@@ -10,14 +10,14 @@
                         @csrf
                         <div class="row">
                             <div class="card-content">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons">create</i>
                                         </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Nombre hotel</label>
-                                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required autofocus>
+                                            <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required autofocus>
                                             @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
@@ -26,17 +26,33 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons">create</i>
                                         </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Empresa</label>
-                                            <input id="direccion" type="text" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }}" name="empresa" required>
+                                            <input type="text" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }}" name="empresa" required>
                                             @if ($errors->has('empresa'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('empresa') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">create</i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Codigo Hotel</label>
+                                            <input id="codHotel" type="text" class="form-control{{$errors->has('codHotel') ? ' is-invalid' : '' }}" name="codHotel" required>
+                                            @if ($errors->has('codHotel'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('codHotel') }}</strong>
                                             </span>
                                             @endif
                                         </div>

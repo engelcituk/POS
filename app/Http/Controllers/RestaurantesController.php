@@ -42,11 +42,13 @@ class RestaurantesController extends Controller
         $restaurantes = $datos->objeto;
         return $restaurantes;
     } 
-    protected function create() 
-    {
+    protected function create(){
         /*Obtendo todos los hoteles que me trae mi controlador HOTELESCONTROLLER con su metodo OBTENERTODOSLOSHOTELES*/
-        $hoteles =\App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');        
-        return view('restaurantes.partials.create',['hoteles'=> $hoteles]);
+
+        $hoteles =\App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+        $impresoras = \App::call( 'App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras'); 
+        
+        return view('restaurantes.partials.create',['hoteles'=> $hoteles, 'impresoras'=> $impresoras]);
     }   
     public function show($id)
     {        
