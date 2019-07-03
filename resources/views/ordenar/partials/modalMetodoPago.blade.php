@@ -7,7 +7,7 @@
       </div>     
         <form action="">
             <div class="modal-body">
-              <input type="text" class="form-control" id="idCuentaCerrar">                                                   
+              <input type="text" class="form-control hidden" id="idCuentaCerrar">                                                   
                 <div class="row">
                     <div class="col-md-12">                                                        
                         <div class="form-group">

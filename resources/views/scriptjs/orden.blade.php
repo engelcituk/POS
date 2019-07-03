@@ -366,6 +366,7 @@ function addProducto() {
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
     if (typeof datosCuentaTemporal === 'undefined' || datosCuentaTemporal === null) {
         console.log("no tienes definido la variable");
+        mostrarTotales(cadena);
     }else{
         console.log(datosCuentaTemporal);
         // console.log(datosCuentaTemporal[0]["idCuenta"]);
@@ -385,7 +386,7 @@ function addProducto() {
             sumaSubTotales = sumaSubTotales + subTotal; //este son los totales de la cuenta temporal
             counter++;
             counterTem++;
-           lstProductosTr="<tr class='success'><td><button id='pos"+counterTem+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr class='success'><td colspan='5'><input type='text' id='nota"+counterTem+"' class='form-control' value='"+nota+"' onchange='addNota("+counterTem+","+idPV+","+idMesa+")'></td></tr>";
+           lstProductosTr="<tr class='success'><td><button id='pos"+counterTem+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr class='success'><td colspan='5'><input type='text' id='nota"+counterTem+"' class='form-control'  placeholder='Escribe nota' value='"+nota+"' onchange='addNota("+counterTem+","+idPV+","+idMesa+")'></td></tr>";
            $("table tbody").append(lstProductosTr);
            
         }    
@@ -421,13 +422,14 @@ function mostrarTotales(cadena) {
  function leerCuentaApi(idPV, idMesa) {
      var counter=-1;
      var cuentaAPi="cuentaBD"+idPV+idMesa;
+     var sumaSubTotales=0;
      var objCuentaAPi =JSON.parse(localStorage.getItem(cuentaAPi));
     if (typeof objCuentaAPi === 'undefined' || objCuentaAPi === null) {
         console.log("no tienes definido la variable");
     }else{
         console.log(objCuentaAPi);
         // console.log(objCuentaAPi[0]["idCuenta"]);
-        var sumaSubTotales=0;
+      
         
         for (i = 0; i < objCuentaAPi.length; i++) {
             var idCuenta = objCuentaAPi[i]["idCuenta"];
@@ -882,6 +884,37 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
         }
     });
  }
+ //funcion con sweetalert para reimprimir cuenta
+    function imprimirCuenta() {
+        var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr"); 
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        swal({
+            title: '¿Seguro de realizar la impresión de la cuenta?',
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: '¡Sí, imprimir!',
+            cancelButtonText: '¡No, desistir!'
+        }).then(function() {
+            $.ajax({
+                url: "{{ url('historico/imprimir') }}" + '/'+idCuenta,
+                type: "POST",
+                data: {
+                    '_method': 'POST',
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {
+                    console.log("respuesta controlador",respuesta);                    
+                },
+                error: function(respuesta) { 
+                    console.log("respuesta controlador",respuesta);                    
+
+                }
+            });
+        });
+    }
+
  function cerrarDia(idPuntoVenta) {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      $.ajax({

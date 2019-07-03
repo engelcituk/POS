@@ -142,7 +142,7 @@
                                                     <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"> <i class="fas fa-percentage"></i> Descuento</a>
                                                 </div>  
                                                 <div class="btn-group" role="group">
-                                                    <a class="btn btn-block btn-info" id="btnPrintTicket"> <i class="fas fa-ticket-alt"></i> Ticket</a>
+                                                    <a class="btn btn-block btn-info" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
                                                 </div>                                               
                                             </div>                                          
                                         </div>

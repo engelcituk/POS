@@ -64,17 +64,19 @@ class HistoricoController extends Controller
         return $respuesta;
     }
     public function imprimirCuenta($idCuenta){
+        $urlAdmin = "http://172.16.4.229/TPVApi/Admin/";
        
-        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin."imprimeCuenta/{$idCuenta}"); 
+        $respuesta = $this->realizarPeticion('POST', $urlAdmin."imprimeCuenta/{$idCuenta}"); 
         
         return $respuesta;        
     }
     public function cancelarCuenta(Request $request, $idCuenta){
-        
+
+        $urlAdmin = "http://172.16.4.229/TPVApi/Admin/";
         $idUsuario = $request->session()->get('idUsuarioLogueado');
         $motivo = $request->get('motivo');
         
-        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin.'cancelaCuenta', [
+        $respuesta = $this->realizarPeticion('POST', $urlAdmin.'cancelaCuenta', [
             'form_params' => [
                 'idc' => $idCuenta,
                 'idu' => $idUsuario,

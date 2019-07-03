@@ -47,9 +47,14 @@
                 data: 'descuentoPorc',
                 name: 'descuentoPorc'
             },
+            
             {
                 data: 'totalCuenta',
                 name: 'totalCuenta'
+            },             
+            {
+                data: 'fechaCierre',
+                name: 'fechaCierre',                
             },
             {
                 data: 'acciones',
