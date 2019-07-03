@@ -9,8 +9,8 @@ use Illuminate\Support\Collection;
  
 class ProductosController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Producto/";
-    public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
+    public $urlBase = "http://172.16.4.229/TPVApi/Producto/";
+    public $urlBaseProductoAlergeno = "http://172.16.4.229/TPVApi/ProductoAlergeno/";
 
     public function __construct()
     {
@@ -32,10 +32,10 @@ class ProductosController extends Controller
     protected function create(){
         
         $categorias= \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
-        $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
+        //$subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
         $alergenos = \App::call( 'App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
 
-        return view('productos.partials.create', compact('categorias','subcategorias','alergenos'));  
+        return view('productos.partials.create', compact('categorias','alergenos'));  
     }
     public function AllProduct()
     {
@@ -60,16 +60,13 @@ class ProductosController extends Controller
     public function show($idProducto){
         
         $producto = $this->obtenerUnProducto($idProducto);
-        $idSubcategoria= $producto->idSubCategoria;
+        $idCategoria= $producto->idCategoria;
 
-        $subCategoria = new SubCategoriaController();
-        $subCategoria = $subCategoria->obtenerUnaSubCategoria($idSubcategoria);
-        $idCategoria = $subCategoria->idCategoria;
-
+        
         $categoria = new CategoriaController();
         $categoria = $categoria->obtenerUnaCategoria($idCategoria);
 
-        return view('productos.partials.show', compact('producto','subCategoria','categoria'));
+        return view('productos.partials.show', compact('producto','categoria'));
 
         // $respuesta = $this->realizarPeticion('GET', "https://apilumen.juandmegon.com/estudiantes/{$id}");
 
@@ -82,19 +79,16 @@ class ProductosController extends Controller
     public function edit($idProducto){
 
         $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
-        $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
+        // $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
 
         $producto = $this->obtenerUnProducto($idProducto);
+
+        // dd( $producto);
         $alergenosProducto = $this->obtenerAlergenosProducto($idProducto);//obtengo un objeto con una respuesta ok
         $respuestaOk = $alergenosProducto->ok;
 
-        $idSubcategoria = $producto->idSubCategoria;
-
-        $subCategoria = new SubCategoriaController();
-        $subCategoria = $subCategoria->obtenerUnaSubCategoria($idSubcategoria);
-        $idCategoria = $subCategoria->idCategoria;
- 
+         
         if ($respuestaOk== 1) {
             $alergenosProducto = $alergenosProducto->objeto;
 
@@ -107,7 +101,7 @@ class ProductosController extends Controller
             $idAlergenosColeccion = new Collection([]);
          }
                                
-        return view('productos.partials.edit', compact('categorias', 'subcategorias', 'alergenos','producto', 'subCategoria', 'idAlergenosColeccion')); 
+        return view('productos.partials.edit', compact('categorias',  'alergenos','producto', 'idAlergenosColeccion')); 
     }
     public function obtenerUnProducto($idProducto){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProducto/{$idProducto}");
@@ -129,9 +123,8 @@ class ProductosController extends Controller
         $arrayIdAlergenos = $request->get('idAlergeno');
         $imagen = $request->file('imagen');
         //$imagenb = base64_encode(file_get_contents($request->file('imagen')->path()));
-
+        $idCategoria = $request->get( 'idCategoria');       
         $codigoProducto = $request->get('codigoProducto');
-        $idSubCategoria = $request->get('idSubCategoria');
         $nombreProducto = $request->get('nombreProducto');
         $propina = $request->get('propina');
         $tipoPropina = $request->get('tipoPropina');
@@ -139,26 +132,33 @@ class ProductosController extends Controller
         $precio = $request->get('precio');
         $complemento = $request->get('complemento');
         $status = $request->get('status');
-
+        
+        // dd( $imagen);
        
         if ($imagen == null) {
+            $array = array();
             $imagen = "SIN IMAGEN";
+            $array=$imagen;
         } else {            
-            $imagen = base64_encode(file_get_contents($request->file('imagen')->path()));
+            $imagen = file_get_contents($request->file('imagen')->path());
 
+            $array = array();
+            foreach (str_split($imagen) as $char) {
+                array_push($array, ord($char));
+            }
         }
-      
+                       
         $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddProducto', [
             'form_params' => [
                 'codigoProducto' => $codigoProducto,
-                'idSubCategoria' => $idSubCategoria,
+                'idCategoria' => $idCategoria,
                 'nombreProducto' => $nombreProducto,
                 'propina' => $propina,
                 'tipoPropina' => $tipoPropina,
                 'montoPropina' => $montoPropina,
                 'precio' => $precio,
                 'complemento' => $complemento,
-                'imagen' => $imagen,
+                'imagen' => $array,
                 'status' => $status,
 
 

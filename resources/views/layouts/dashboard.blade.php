@@ -152,9 +152,7 @@
                                <li>                               
                                     <a href="{{ route('categorias.index') }}">Categorias</a>
                                 </li>
-                                <li>                               
-                                    <a href="{{ route('subcategorias.index') }}">Subcategorias</a>
-                                </li>
+                               
                                 <li>
                                     <a href="{{ route('productos.index') }}">Productos</a>
                                 </li>

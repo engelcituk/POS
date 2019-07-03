@@ -55,7 +55,7 @@ class OrdenController extends Controller
     }
     public function obtenerCategoriasCarta($idCarta){
         
-        $urlBase= "http://172.16.4.229/TPVApi/Categoria/";
+        $urlBase= "http://localhost/TPVApi/Categoria/";
         
         $respuesta = $this->realizarPeticion('GET', $urlBase."GetCategoriabyCarta/{$idCarta}");        
 

@@ -16,20 +16,10 @@
                                             <i class="fas fa-grip-horizontal"></i>
                                         </span>
                                         <div class="form-group">
-                                            <select class="form-control" name="idSubCategoria" required>
+                                            <select class="form-control" name="idCategoria" required>
                                                 <option value="">Elija subcategoria del producto </option>
                                                 @foreach($categorias as $categoria)
-                                                <optgroup label="{{$categoria->name}}">
-                                                    @foreach($subcategorias as $subcategoria)
-                                                    @php
-                                                        $collection = collect(['idCategoria' => $subcategoria->idCategoria, 'idCategoria' => $categoria->id]);
-                                                        $respuesta = $collection->contains($subcategoria->idCategoria);
-                                                    @endphp
-                                                        @if($respuesta==1)
-                                                        <option value="{{$subcategoria->id}}">{{$subcategoria->name}}</option>
-                                                    @endif 
-                                                    @endforeach
-                                                </optgroup>
+                                                    <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
