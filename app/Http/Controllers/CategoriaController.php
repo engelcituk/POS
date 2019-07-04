@@ -9,7 +9,7 @@ use Alert;
 
 class CategoriaController extends Controller
 {
-    public $urlBase = "http://172.16.4.229/TPVApi/Categoria/";        
+    public $urlBase = "http://localhost/TPVApi/Categoria/";        
     public function index(){
         return view('categorias');
     }
@@ -41,8 +41,8 @@ class CategoriaController extends Controller
 
    
     public function store(Request $request){
-
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddCategoria', ['form_params' => $request->all()]);
+        dd( $request->all());
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddCategoria', ['form_params' => $request->all()]);       
         // dd($respuesta);
         return redirect('/categorias');
     }

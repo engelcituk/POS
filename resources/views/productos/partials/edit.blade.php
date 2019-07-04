@@ -5,7 +5,17 @@
         <a href="{{ route('productos.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
         <div class="row">
                 <div class="col-md-12">
+                    @php
+                        $imgProducto =$producto->imagen;
+                        $img =asset('img/faces/defaultProducto.png'); //Esto es para la imagen por default
+                        $dataimg = "data:image/png;base64,";                       
+                        $imgconfoto = $dataimg.$imgProducto;                                        
+                        $resultadoImg = (($imgProducto == "AA==") || ($imgProducto == NULL)) ? $img : $imgconfoto;    
+                    @endphp
                     <div class="card card-profile">
+                        <div class="card-avatar">
+                        <img class="img" src="{{$resultadoImg}}"/>                                                        
+                    </div>
                         @csrf
                         <div class="row">
                             <div class="card-content">                                
@@ -16,7 +26,7 @@
                                         </span>
                                         <div class="form-group">
                                             <select class="form-control" name="idCategoria" required>
-                                                <option value="">Elija subcategoria del producto </option>
+                                                <option value="">Elija categoria del producto </option>
                                                 @foreach($categorias as $categoria)
                                                     <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                                                 @endforeach
@@ -112,8 +122,8 @@
                                             $radios = ($estado == 1) ?
                                             "<label><input type='radio' name='propina' value='True' checked>Activado</label>
                                             <label><input type='radio' name='propina' value='False'>Desactivado</label>" :
-                                            "<label><input type='radio' name='propina' value='True'>Activado</label>
-                                            <label><input type='radio' name='propina' value='False' checked>Desactivado</label>";
+                                            "<label><input type='radio' name='propina' value='True'>a</label>
+                                            <label><input type='radio' name='propina' value='False' checked>d</label>";
                                             echo $radios;
                                             @endphp
                                         </div>
@@ -136,13 +146,7 @@
                                         </div>
 
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                    <img src="data:image/jpeg;base64,{{$producto->imagen}}" alt="">
-                                    </div>
-                                </div>
-
+                                </div>                                
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         Estado
@@ -187,4 +191,67 @@
             </div>
     </div>
 </div>
+<script>
+    function AddDeleteProductoAlergeno(idAlergeno){
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        var idProducto = $("#checkAlergeno"+idAlergeno).attr("idProducto");
+        var nombreAlergeno = $("#checkAlergeno"+idAlergeno).attr("nombreAlergeno");
+        var nombreProducto = $("#checkAlergeno"+idAlergeno).attr("nombreProducto");
+        
+        valorCheck=$("#checkAlergeno"+idAlergeno).prop("checked");//obtengo true o false
+        // console.log("idProducto "+idProducto+" idAlergeno "+idAlergeno+" Valorcheck "+valorCheck);        
+
+        if(valorCheck) {    
+            $.ajax({
+                url: "{{ url('productos') }}"+'/'+idProducto+'/'+idAlergeno,
+                type: "POST",
+                data: {
+                    '_method': 'POST',
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {
+                    $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Se ha registrado alergeno: <strong>'+nombreAlergeno+' para el producto '+nombreProducto+' con id: '+idProducto 
+                        },{								
+                            type: 'info',
+                            delay: 5000
+                        });                    
+                },
+                error: function() {
+                   $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Ocurrió un error al hacerse la petición'
+                        },{								
+                            type: 'danger',
+                            delay: 5000
+                        });
+                }
+            });
+        }else{
+            $.ajax({
+                url: "{{ url('borrar') }}"+'/'+idProducto+'/'+idAlergeno,
+                type: "POST",
+                data: {
+                    '_method': 'DELETE',
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {                    
+                    $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Se ha borrado el alergeno: <strong>'+nombreAlergeno+' para el producto '+nombreProducto+' con id: '+idProducto 
+                        },{								
+                            type: 'warning',
+                            delay: 5000
+                        });
+                },
+                error: function(respuesta) {
+                   $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Ocurrió un error al hacerse la petición'+respuesta
+                        },{								
+                            type: 'danger',
+                            delay: 5000
+                        });
+                }
+            });
+        }
+    }
+</script>
 @endsection

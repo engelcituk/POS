@@ -38,14 +38,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr id="addr0" data-id="0">
-                                            <td data-name="idProducto">
-                                            <select class="form-control" name="idProducto[]" required>
-                                                <option value="">Elija producto</option>
-                                                    @foreach($productos as $producto)
-                                                        <option value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
-                                                    @endforeach
-                                            </select>
+                                        <tr id="addr0" data-id="0" id="listaClon">
+                                            <td data-name="idProducto" >        
+                                                <select class="form-control listaProductos" id="templateLista" name="idProducto[]" required>
+                                                    <option value="">Elija producto</option>
+                                                            @foreach($productos as $producto)
+                                                    <option value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
+                                                            @endforeach
+                                                </select>                                                                                              
                                             </td>
                                             <td data-name="precio">
                                                 <input id="precio" type="number" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="precio[]"  required>
@@ -79,5 +79,6 @@
         </form>
     </div>
 </div>
+
 
 @endsection

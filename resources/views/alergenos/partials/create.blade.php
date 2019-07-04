@@ -39,7 +39,7 @@
                                                     <span class="btn btn-rose btn-round btn-file">
                                                         <span class="fileinput-new"> <i class="fas fa-file-image"></i> Subir icono</span>
                                                         <span class="fileinput-exists">Change</span>
-                                                        <input type="file" name="icono"/>
+                                                        <input type="file" id="icono" name="icono" onchange="return fileValidation()"/>
                                                     </span>
                                                     <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
                                                 </div>

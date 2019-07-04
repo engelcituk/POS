@@ -74,23 +74,23 @@
                                         </div>
                                     </div>
                                 </div>                                
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-key"></i>
                                         </span>
                                         <div class="form-group label-floating">
-                                            <label class="control-label">codCP</label>
-                                            <input id="codCP" type="text" class="form-control{{ $errors->has('codCP') ? ' is-invalid' : '' }}" name="codCP" required>
-                                            @if ($errors->has('codCP'))
+                                            <label class="control-label">Código centro Productivo</label>
+                                            <input id="centroProd" type="text" class="form-control{{ $errors->has('centroProd') ? ' is-invalid' : '' }}" name="centroProd" required>
+                                            @if ($errors->has('centroProd'))
                                             <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('codCP') }}</strong>
+                                                <strong>{{ $errors->first('centroProd') }}</strong>
                                             </span>
                                             @endif
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-dollar-sign"></i>
@@ -106,23 +106,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-dollar-sign"></i>
-                                        </span>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Símbolo Moneda</label>
-                                            <input id="simboloM" type="text" class="form-control{{ $errors->has('simboloM') ? ' is-invalid' : '' }}" name="simboloM" required>
-                                            @if ($errors->has('simboloM'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('simboloM') }}</strong>
-                                            </span>
-                                            @endif
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
+                                
+                                <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="comment">Descripcion:</label>
                                         <textarea class="form-control" rows="2" name="descripcion" required></textarea>

@@ -153,43 +153,16 @@
                             <div class="col-md-7" id="idMesaAddProducts">                              
                                 <ul class="nav nav-tabs navPersonalizado" id="tabs">
                                     @foreach($categorias as $categoria)
-                                    <li><a href="#cate{{$categoria->id}}" data-toggle="tab">{{$categoria->name}}</a></li>                   
-                                    @endforeach
+                                    <li><a href="#cate{{$categoria->id}}" data-toggle="tab" onclick="GetProductosByCat({{$categoria->id}})">{{$categoria->name}}</a></li>   
+                                    @endforeach                                    
                                 </ul>
                                 <div class="tab-content">
                                     @foreach($categorias as $categoria)                                        
-                                        <div class="tab-pane {{ $loop->first ? 'active' : '' }}" id="cate{{$categoria->id}}">                 
-                                            <ul class="nav nav-tabs navPersonalizado">
-                                                @php                                
-                                                    $idCategoria=$categoria->id;                          
-                                                    $subCats=App\Http\Controllers\OrdenController::getSCategoriasByCategoria($idCategoria); 
-                                                @endphp                                                    
-                                                    @if($subCats!=0)
-                                                        @foreach($subCats as $subCat) 
-                                                            <li><a href="#sub{{$subCat->id}}" data-toggle="tab" onclick="GetProductosBySubCat({{$subCat->id}})">{{$subCat->name}}</a></li>
-                                                        @endforeach
-                                                        @else
-                                                           <p>Sin subcategorias</p>     
-                                                    @endif                                                            
-                                            </ul>           
-                                            <div class="tab-content">                                               
-                                                @if($subCats!=0)                                                
-                                                    @foreach($subCats as $subCat)
-                                                    @php                                
-                                                        $idSubCat=$subCat->id;                                                        
-                                                    @endphp                                                        
-                                                        <div class="tab-pane" id="sub{{$subCat->id}}">
-                                                            <ul class="nav nav-pills nav-pills-icons" id="UlList{{$subCat->id}}" role="tablist">
-                                                               
-                                                            </ul>
-                                                        </div>                                                            
-                                                    @endforeach
-                                                @else
-                                                    <p>Sin productos para esta Subcategoria</p>     
-                                                @endif 
-                                            </div>  
+                                        <div id="cate{{$categoria->id}}" class="tab-pane">  
+                                            <ul class="nav nav-pills nav-pills-icons" id="UlList{{$categoria->id}}" role="tablist">                                                               
+                                            </ul>
                                         </div>             
-                                    @endforeach                                                                        
+                                    @endforeach                         
                                 </div>
                             </div>
                         </div>

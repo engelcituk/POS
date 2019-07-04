@@ -9,8 +9,8 @@ use Illuminate\Support\Collection;
  
 class ProductosController extends Controller
 {
-    public $urlBase = "http://172.16.4.229/TPVApi/Producto/";
-    public $urlBaseProductoAlergeno = "http://172.16.4.229/TPVApi/ProductoAlergeno/";
+    public $urlBase = "http://localhost/TPVApi/Producto/";
+    public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
 
     public function __construct()
     {
@@ -67,19 +67,11 @@ class ProductosController extends Controller
         $categoria = $categoria->obtenerUnaCategoria($idCategoria);
 
         return view('productos.partials.show', compact('producto','categoria'));
-
-        // $respuesta = $this->realizarPeticion('GET', "https://apilumen.juandmegon.com/estudiantes/{$id}");
-
-        // $datos = json_decode($respuesta);
-
-        // $producto = $datos->productos;
-       
-        // return view('productos.partials.show', ['producto' => $producto]);        
+               
     }
     public function edit($idProducto){
 
-        $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
-        // $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
+        $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');        
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
 
         $producto = $this->obtenerUnProducto($idProducto);
@@ -117,8 +109,7 @@ class ProductosController extends Controller
         return $datos;
     }
    
-    public function store(Request $request)
-    {
+    public function store(Request $request){
 
         $arrayIdAlergenos = $request->get('idAlergeno');
         $imagen = $request->file('imagen');

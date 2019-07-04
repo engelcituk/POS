@@ -28,10 +28,10 @@
                         timer: '1500'
                     })
                 },
-                error: function() {
+                error: function(data) {
                     swal({
                         title: 'Oops...',
-                        text: '¡Algo salió mal!',
+                        text: '¡Algo salió mal!'+data,
                         type: 'error',
                         timer: '1500'
                     })

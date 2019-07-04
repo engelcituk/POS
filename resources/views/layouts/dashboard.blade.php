@@ -22,7 +22,10 @@
     <!--     Fonts and icons     -->
     <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link href="{{asset('css/google-roboto-300-700.cs')}}s" rel="stylesheet" />
+    <link href="{{asset('css/google-roboto-300-700.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/select2.min.css')}}" rel="stylesheet"/>
+    <script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>
+    
     
 </head>
 
@@ -232,7 +235,7 @@
     @include('sweet::alert')
 </body>
 <!--   Core JS Files   -->
-<script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>
+
 <script src="{{asset('js/jquery-ui.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/material.min.js')}}" type="text/javascript"></script>
@@ -280,6 +283,8 @@
 <!-- <script src="{{asset('js/init.js')}}"></script> -->
 <script src="{{asset('js/datatables.js')}}"></script>
 <script src="{{asset('js/bootstrap-timepicker.js')}}"></script>
+
+<script src="{{asset('js/select2.min.js')}}"></script>
 <!-- <script src="{{asset('js/crudUsuarios.js')}}"></script> -->
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
 @include('scriptjs/ticketRecibo')
@@ -350,13 +355,21 @@
 @endif
 @if(request()->is('productos'))
     @include('scriptjs/datatables/datatableProductos')
-    @include('scriptjs/sweetalerts/sweetalertProducto')
-    @include('scriptjs/productoAlergeno')
+    @include('scriptjs/sweetalerts/sweetalertProducto')   
 @endif
+@if(request()->is('productos/create'))
+    @include('scriptjs/validacionImgProducto')
+     
+@endif
+    
 @if(request()->is('menuscartas'))
     @include('scriptjs/datatables/datatableMenuCartas')
     @include('scriptjs/sweetalerts/sweetalertMenuCarta')
 @endif
+@if(request()->is('menuscartas/create'))
+    @include('scriptjs/cartas')
+@endif
+
 @if(request()->is('metodospago'))
     @include('scriptjs/datatables/datatableMetodosPago')
     @include('scriptjs/sweetalerts/sweetalertMetodoPago')
@@ -370,4 +383,9 @@
     @include('scriptjs/sweetalerts/sweetalertAlergeno')
 @endif
 
+@if(request()->is('alergenos/create'))
+    @include('scriptjs/validacionImgAlergeno')   
+@endif
+
 </html>
+

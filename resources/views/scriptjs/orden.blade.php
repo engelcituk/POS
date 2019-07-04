@@ -211,7 +211,7 @@ $("#zonaElige").change(function() {
     }); 
  }
 
- function GetProductosBySubCat(idSubCat){
+ function GetProductosByCat(idCategoria){
     var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
     var idPV= $("#idPVModalOrdenar").val();
     var idMesaLS = localStorage.getItem("idMesaLS");
@@ -227,7 +227,7 @@ $("#zonaElige").change(function() {
         alergenosIdHuesped[i]= alergenosCuenta[i].idAlergeno;
     }
     $.ajax({
-            url: "{{url('obtener/productos')}}"+'/'+idSubCat,
+            url: "{{url('obtener/productos')}}"+'/'+idCategoria,
             type: "GET",
             data: {
                 '_method': 'GET',
@@ -258,14 +258,14 @@ $("#zonaElige").change(function() {
                                 } 
                             }                                                                                
                             // console.log("sus Alergenos",alergenosPOk);
-                           listaProductos+="<li><div class='well well-sm'><div id='producto"+idProducto
-                           +"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")' style='cursor: pointer;' ><strong>"+
-                           nombreProducto+"</strong></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                           listaProductos+="<li data-toggle='tooltip' data-placement='top' title='"+
+                           nombreProducto+"'><div class='well well-sm'><div id='producto"+idProducto
+                           +"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")' style='cursor: pointer;' ></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
-                    $("#UlList"+idSubCat).html(listaProductos);
+                    $("#UlList"+idCategoria).html(listaProductos);
                 }else{
-                    $("#UlList"+idSubCat).html('<p>Sin productos para la subcategoria</p>');
+                    $("#UlList"+idCategoria).html('<p>Sin productos para la subcategoria</p>');
                 }
             },
             error: function(respuesta) {
@@ -274,6 +274,9 @@ $("#zonaElige").change(function() {
             }
     });
  }
+ $('body').tooltip({
+    selector: '[rel=tooltip]'
+})
  function addCantidadProductoModal(idProducto,idMenuCarta) {
      $('#modalCantidadProducto').modal({backdrop: 'static', keyboard: false });
      $("#idProductoModal").val(idProducto);

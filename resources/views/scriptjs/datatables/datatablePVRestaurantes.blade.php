@@ -5,21 +5,38 @@
         processing: true,
         serverSide: true,
         ajax: "{{ route('all.restaurantes') }}",
-        columns: [{
-                data: 'id',
-                name: 'id'
-            },
+        columns: [
             {
                 data: 'name',
                 name: 'name'
             },
             {
-                data: 'idHotel',
-                name: 'idHotel'
+                data: 'hotel',
+                name: 'hotel'
             },
             {
                 data: 'descripcion',
                 name: 'descripcion'
+            },
+            {
+                data: 'homoclave',
+                name: 'homoclave'
+            },
+            {
+                data: 'impresora',
+                name: 'impresora'
+            },
+            {
+                data: 'centroProd',
+                name: 'centroProd'
+            },
+            {
+                data: 'moneda',
+                name: 'moneda'
+            },
+            {
+                data: 'cifrfc',
+                name: 'cifrfc'
             },
             {
                 data: 'acciones',

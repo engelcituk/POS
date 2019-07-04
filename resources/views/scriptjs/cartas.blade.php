@@ -1,4 +1,8 @@
-<script>
+<script>   
+$(document).ready(function() {
+    $('.listaProductos').select2();
+});
+
 function addrowTarifa() {
     // $("#add_row").on("click", function () {
         // Dynamic Rows Code
@@ -29,9 +33,10 @@ function addrowTarifa() {
                     "data-name": $(cur_td).data("name")
                 });
 
-                var c = $(cur_td).find($(children[0]).prop('tagName')).clone().val("");
-                var name = $(cur_td).data("name");
+                var c = $(cur_td).find($(children[0]).prop('tagName')).clone().val("");               
 
+                var name = $(cur_td).data("name");
+                
                 c.attr("name", $(cur_td).data("name"));
                 c.attr("id", $(cur_td).data("name") + newid);
                 c.appendTo($(td));
@@ -41,23 +46,27 @@ function addrowTarifa() {
                     'text': $('#tblMenuCartas tr').length
                 }).appendTo($(tr));
             }
-        });
-
-        
-       
+        });               
         // add the new row
         $(tr).appendTo($('#tblMenuCartas'));
-        //aplicamos select
-        
+        //aplicamos select        
         // $("#tipoServ" + newid + " option[value='1']").prop('selected', true);
         // $("#tipoRec" + newid + " option[value='1']").prop('selected', true);        
-
         $(tr).find("td button.row-remove").on("click", function () {
             $(this).closest("tr").remove();
         });
     // }); 
-
-    // $("#add_row").trigger("click");
+    clonarSelectList();
+    // $("#add_row").trigger("click");   
     
+}
+var i = 0;
+function clonarSelectList() {
+      var sel = $('#templateLista');
+      var clone = sel.clone(true, true);
+        i ++;
+      clone.attr("id", "selectListaProductos"+i);
+      clone.show();
+      clone.insertAfter('#listaClon').wrap('<tr></tr>').select2();
 }
 </script>

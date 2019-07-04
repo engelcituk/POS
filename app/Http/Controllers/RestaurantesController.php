@@ -28,6 +28,7 @@ class RestaurantesController extends Controller
     {
         $restaurantes = $this->obtenerTodosLosRestaurantes();
 
+        
         $acciones = 'restaurantes.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($restaurantes)
             ->addColumn('acciones', $acciones)
@@ -37,7 +38,7 @@ class RestaurantesController extends Controller
     {
         //es una funcion que esta en el controller principal
         $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetPuntosVenta');
-
+        
         $datos = json_decode($respuesta);
         $restaurantes = $datos->objeto;
         return $restaurantes;

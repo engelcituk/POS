@@ -15,7 +15,7 @@ class AlergenoController extends Controller
      * @return \Illuminate\Http\Response
      */
     // public $urlBase = "http://localhost/TPVApi/Alergenos/";
-    public $urlBase = "http://172.16.4.229/TPVApi/Alergenos/";
+    public $urlBase = "http://localhost/TPVApi/Alergenos/";
     
     public function index()
     {
@@ -48,30 +48,17 @@ class AlergenoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         return view('alergenos.partials.create');
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
+    
+    public function show($id){
         $idAlergeno = $id;
         $alergeno = $this->obtenerUnAlergeno($idAlergeno);
              
         return view('alergenos.partials.show', ['alergeno' => $alergeno]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id){
 
         $idAlergeno = $id;
@@ -81,16 +68,33 @@ class AlergenoController extends Controller
         return view('alergenos.partials.edit', ['alergeno' => $alergeno]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function actualizar(Request $request)
-    {
-        //
+    
+    public function actualizar(Request $request){
+        
+        $idAlergeno = $request->get('id');    
+        $nombre = $request->get('name');
+        $imagen = $request->file('icono');
+
+        if ($imagen == null) {
+            $array = array();
+            $imagen = "SIN IMAGEN";
+            $array = $imagen;
+        } else {
+            $imagen = file_get_contents($request->file('icono')->path());
+
+            $array = array();
+            foreach (str_split($imagen) as $char) {
+                array_push($array, ord($char));
+            }
+        }                        
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddAlergeno', [
+            'form_params' => [
+                'name' => $nombre,
+                'icono' => $array
+            ]
+        ]);
+        return redirect('/alergenos');
+
     }
     public function obtenerUnAlergeno($idAlergeno)
     {
@@ -99,33 +103,36 @@ class AlergenoController extends Controller
         $alergeno = $datos->objeto;
         return $alergeno;
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
+    
+    public function store(Request $request){
+        
+        $nombre = $request->get('name');
+        $imagen = $request->file('icono');      
 
-        $icono = base64_encode(file_get_contents($request->file('icono')->path()));        
+        if ($imagen == null) {
+            $array = array();
+            $imagen = "SIN IMAGEN";
+            $array = $imagen;
+        } else {
+            $imagen = file_get_contents($request->file('icono')->path());
+
+            $array = array();
+            foreach (str_split($imagen) as $char) {
+                array_push($array, ord($char));
+            }
+        }        
+        // $icono = base64_encode(file_get_contents($request->file('icono')->path()));        
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddAlergeno', [
             'form_params' => [
-                'name' => $request->get('name'),
-                'icono' => $icono
+                'name' => $nombre,
+                'icono' => $array
             ] 
         ]);        
         return redirect('/alergenos');
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $idAlergeno = $id;
+    
+    public function destroy($idAlergeno){
+        
         $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteAlergeno/{$idAlergeno}");
         return redirect('/centrospreparacion');
     }

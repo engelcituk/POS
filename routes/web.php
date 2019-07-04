@@ -218,7 +218,7 @@ Route::put('productos/{producto}', 'ProductosController@actualizar')->name('prod
 Route::get('productos/{producto}', 'ProductosController@show')->name('productos.show');
 Route::get('productos/{producto}/edit', 'ProductosController@edit')->name('productos.edit');        
 Route::delete('productos/{producto}', 'ProductosController@destroy')->name('productos.destroy');
-Route::delete('productos/{idProducto}/{idAlergeno}', 'ProductosController@destroyAlergeno')->name('rolesapi.destroyalergeno');
+Route::delete('borrar/{idProd}/{idAler}', 'ProductosController@destroyAlergeno')->name('producto.destroyalergeno');
  
 //Productos    
 Route::get('all/menuscartas', 'MenusCartasController@AllMenuCartas')->name('all.menuscartas');

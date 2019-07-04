@@ -32,7 +32,7 @@
                                            <i class="fas fa-user"></i>
                                         </span>
                                         <div class="form-group">
-                                            <select class="form-control" name="idUsuarioAlta" required>
+                                            <select class="form-control selectUsuarios" name="idUsuarioAlta" required>
                                                 <option value="">Seleccione usuario</option>
                                                 @foreach($users as $user)
                                                     <option value="{{$user->id }}">{{ $user->name }}</option>
@@ -61,4 +61,9 @@
         </form>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('.selectUsuarios').select2();
+    });
+</script>
 @endsection

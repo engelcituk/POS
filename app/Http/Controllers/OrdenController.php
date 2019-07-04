@@ -86,29 +86,29 @@ class OrdenController extends Controller
                 
         return  $mesas;
     }
-    static public function getSCategoriasByCategoria($idCategoria){
-        $metodo = "GET";
-        $urlBase = "http://localhost/TPVApi/SubCategoria/GetSubCategoriasPorCategoria/{$idCategoria}";
+    // static public function getSCategoriasByCategoria($idCategoria){
+    //     $metodo = "GET";
+    //     $urlBase = "http://localhost/TPVApi/SubCategoria/GetSubCategoriasPorCategoria/{$idCategoria}";
 
-        $cliente =  new Client();
-        $respuesta = $cliente->request($metodo, $urlBase);
-        $respuesta = $respuesta->getBody()->getContents();
-        $respuesta = json_decode($respuesta);
-        $respuestaOk = $respuesta->ok;
+    //     $cliente =  new Client();
+    //     $respuesta = $cliente->request($metodo, $urlBase);
+    //     $respuesta = $respuesta->getBody()->getContents();
+    //     $respuesta = json_decode($respuesta);
+    //     $respuestaOk = $respuesta->ok;
 
-        if ($respuestaOk == 1) { 
-            $subCategorias = $respuesta->objeto;
-        }else{
-            $subCategorias = 0;
-        }
+    //     if ($respuestaOk == 1) { 
+    //         $subCategorias = $respuesta->objeto;
+    //     }else{
+    //         $subCategorias = 0;
+    //     }
 
-        return $subCategorias;
-    }
+    //     return $subCategorias;
+    // }
 
-    public function getProductosBySubCat( Request $request, $idSubCategoria){
+    public function getProductosBySubCat( Request $request, $idCategoria){
         $idCarta = $request->session()->get('idCarta');
 
-        $respuesta = $this->realizarPeticion('GET', $this->urlMenuCarta."GetProductosMenuCarta/{$idCarta}/{$idSubCategoria}");
+        $respuesta = $this->realizarPeticion('GET', $this->urlMenuCarta."GetProductosMenuCarta/{$idCarta}/{$idCategoria}");
         
         return $respuesta;        
     }
@@ -206,7 +206,7 @@ class OrdenController extends Controller
 
     }
     public function cerraCuenta(Request $request, $idCuenta){
-        // $urlVenta = "http://172.16.4.229/TPVApi/Venta/";
+        // $urlVenta = "http://localhost/TPVApi/Venta/";
         $idUsuarioSesion = $request->session()->get('idUsuarioLogueado'); 
 
         $porcentajeDescuento = $request->get('porcentajeDescuento');
@@ -237,4 +237,4 @@ class OrdenController extends Controller
         
     }
 }
-// 172.16.4.229
+// 172.16.4.229 

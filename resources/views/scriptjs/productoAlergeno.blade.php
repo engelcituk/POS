@@ -35,7 +35,7 @@
             });
         }else{
             $.ajax({
-                url: "{{ url('productos') }}"+'/'+idProducto+'/'+idAlergeno,
+                url: "{{ url('borrar') }}"+'/'+idProducto+'/'+idAlergeno,
                 type: "POST",
                 data: {
                     '_method': 'DELETE',
@@ -49,9 +49,9 @@
                             delay: 5000
                         });
                 },
-                error: function() {
+                error: function(respuesta) {
                    $.notify({							
-                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Ocurrió un error al hacerse la petición'
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Ocurrió un error al hacerse la petición'+respuesta
                         },{								
                             type: 'danger',
                             delay: 5000

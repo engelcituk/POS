@@ -26,7 +26,7 @@ class CartaController extends Controller
     }
     public function obtenerTodosLasCartas(){
         //es una funcion que esta en el controller principal        
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase . 'GetCartas');
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetCartas');
 
         $datos = json_decode($respuesta);
 

@@ -16,7 +16,7 @@
                                             <i class="fas fa-grip-horizontal"></i>
                                         </span>
                                         <div class="form-group">
-                                            <select class="form-control" name="idCategoria" required>
+                                            <select class="form-control selectCategoria" name="idCategoria" required>
                                                 <option value="">Elija subcategoria del producto </option>
                                                 @foreach($categorias as $categoria)
                                                     <option value="{{$categoria->id}}">{{$categoria->name}}</option>
@@ -110,7 +110,7 @@
                                         <div class="fileinput-preview fileinput-exists thumbnail"></div>
                                             <div>
                                                 <span class="btn btn-rose btn-round btn-file">
-                                                    <span class="fileinput-new"> <i class="fas fa-file-image"></i> Subir icono</span>
+                                                    <span class="fileinput-new"> <i class="fas fa-file-image"></i> Subir imagen</span>
                                                     <span class="fileinput-exists">Change</span>
                                                     <input type="file" name="imagen" id="file" onchange="return fileValidation()"/>
                                                 </span>
@@ -181,5 +181,10 @@
         </form>
     </div>
 </div>
-
+<script>
+    
+    $(document).ready(function() {
+        $('.selectCategoria').select2();
+    });
+</script>
 @endsection
