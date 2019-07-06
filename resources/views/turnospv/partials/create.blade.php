@@ -9,32 +9,7 @@
                     <div class="card card-profile">
                         @csrf
                         <div class="row">
-                            <div class="card-content">
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-utensils"></i>
-                                        </span>
-                                        <div class="form-group">
-                                            <select class="form-control" name="idPuntoVenta" required>
-                                                <option value="">Seleccione PV para el turno </option>
-                                                @foreach($hoteles as $hotel)
-                                                <optgroup label="{{$hotel->name}}">
-                                                    @foreach($restaurantes as $restaurante)
-                                                    @php
-                                                    $collection = collect(['idHotel' => $restaurante->idHotel, 'idHotel' => $hotel->id]);
-                                                    $respuesta = $collection->contains($restaurante->idHotel);
-                                                    @endphp
-                                                    @if($respuesta==1)
-                                                    <option value="{{$restaurante->id}}">{{$restaurante->name}}</option>
-                                                    @endif
-                                                    @endforeach
-                                                </optgroup>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="card-content">                                
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
@@ -75,7 +50,7 @@
                                         </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Turno</label>
-                                            <input id="turnoPV" type="number" min="1" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="turno" required>
+                                            <input id="turnoNumber" type="number" min="1" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="turno" required>
                                             @if ($errors->has('turno'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('turno') }}</strong>

@@ -61,7 +61,7 @@ interface Filesystem
      *
      * @param  string  $path
      * @param  resource $resource
-     * @param  array  $options
+     * @param  mixed  $options
      * @return bool
      *
      * @throws \InvalidArgumentException If $resource is not a file handle.

@@ -7,8 +7,7 @@
             <form method="POST" action="{{ route('rolesapi.actualizar')}}">
                 {{-- <div class="col-md-12"> --}}
                     <div class="card card-profile">
-                        @csrf                                            
-                        {{ method_field('PUT') }}
+                        @csrf                                                                   
                         <input id="name" type="hidden" class="form-control" name="id" value="{{$rol->id}}" required>
                         {{-- <div class="row"> --}}
                             <div class="card-content">
@@ -46,14 +45,17 @@
                                 </div>
                                 <h4><strong>Editar permisos asignados al rol:</strong></h4>                            
                                 @foreach($permisos as $permiso)
-                                    @php                                	
-                                        $resultado = $idPermisosRolColeccion->contains($permiso->id);                                        
-                                        $checked = ($resultado == 1) ? "checked" : "";
-                                    @endphp                                        
+                                                                            
                                             <div class="col-md-4 col-sm-6 col-xs-6">
                                                 <div class="checkbox">
-                                                    @php
-                                                        $idPermiso=$permiso->id;
+                                                    @php 
+                                                        if (!$idPermisosRolColeccion->isEmpty()) {
+                                                            $resultado = $idPermisosRolColeccion->contains($permiso->id);     $checked = ($resultado == 1) ? "checked" : "";
+                                                            $idPermiso=$permiso->id;
+                                                        } else{
+                                                            $idPermiso=$permiso->id;
+                                                            $checked = "";
+                                                        }                                                      
                                                     @endphp                             
                                                     <label class="labelCheckbox checkbox-inline">
                                                         <input type="checkbox" nombreRol="{{$rol->name}}" nombrePermiso="{{$permiso->name}}" id="chekPermiso{{$permiso->id}}" idRol="{{$rol->id}}" idPermiso="{{$permiso->id}}" name="idPermiso[]" value="{{$permiso->id}}" {{$checked}} onclick="AddDeletePermisoRol({{$idPermiso}})"><strong>{{$permiso->name}}</strong>
@@ -73,4 +75,69 @@
         {{-- </div> --}}
     </div>
 </div>
+<script>
+    function AddDeletePermisoRol(idPermiso){
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        var idRol = $("#chekPermiso"+idPermiso).attr("idRol");
+        var idPermiso = $("#chekPermiso"+idPermiso).attr("idPermiso");
+        var nombreRol = $("#chekPermiso"+idPermiso).attr("nombreRol");
+        var nombrePermiso = $("#chekPermiso"+idPermiso).attr("nombrePermiso");
+        
+
+        valorCheck=$("#chekPermiso"+idPermiso).prop("checked");//obtengo true o false
+
+        if(valorCheck) {    
+            $.ajax({
+                url: "{{ url('rolesapi') }}"+'/'+idRol+'/'+idPermiso,
+                type: "POST",
+                data: {
+                    '_method': 'POST',
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {
+                    $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Se ha registrado permiso: <strong>'+nombrePermiso+'</strong> Para el rol: <strong>'+nombreRol+'</strong>'
+                        },{								
+                            type: 'info',
+                            delay: 5000
+                        });                    
+                },
+                error: function() {
+                   $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Ocurrió un error al hacerse la petición'
+                        },{								
+                            type: 'danger',
+                            delay: 5000
+                        });
+                }
+            });
+        }else{
+            $.ajax({
+                url: "{{ url('rolapiborrar') }}"+'/'+idRol+'/'+idPermiso,
+                type: "POST",
+                data: {
+                    '_method': 'POST',
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {                    
+                    $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Se ha borrado permiso: <strong>'+nombrePermiso+'</strong> del rol <strong>'+nombreRol+'</strong>'
+                        },{								
+                            type: 'warning',
+                            delay: 5000
+                        });
+                },
+                error: function(respuesta) {
+                    var res = JSON.parse(respuesta); 
+                   $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Ocurrió un error al hacerse la petición'+ res 
+                        },{								
+                            type: 'danger',
+                            delay: 5000
+                        });
+                }
+            });
+        }
+    }
+</script>
 @endsection

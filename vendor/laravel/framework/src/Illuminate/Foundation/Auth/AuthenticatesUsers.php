@@ -53,17 +53,15 @@ trait AuthenticatesUsers
         return $this->sendFailedLoginResponse($request);
     }
 
-    /** 
+    /**
      * Validate the user login request.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return void
-     *
-     * @throws \Illuminate\Validation\ValidationException
      */
     protected function validateLogin(Request $request)
     {
-        $request->validate([
+        $this->validate($request, [
             $this->username() => 'required|string',
             'password' => 'required|string',
         ]);

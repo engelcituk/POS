@@ -21,6 +21,8 @@
     <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="{{asset('css/google-roboto-300-700.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/select2.min.css')}}" rel="stylesheet"/>
+    <script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>
 </head>
 
 <body>
@@ -75,7 +77,7 @@
 
 </body>
 <!--   Core JS Files   -->
-<script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>
+
 <script src="{{asset('js/jquery-ui.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/material.min.js')}}" type="text/javascript"></script>
@@ -116,6 +118,7 @@
 <script src="{{asset('js/material-dashboard.js')}}"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{asset('js/demo.js')}}"></script>
+<script src="{{asset('js/select2.min.js')}}"></script>
 <script type="text/javascript">
     $().ready(function() {
         demo.checkFullPageBackgroundImage();

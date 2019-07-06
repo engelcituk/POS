@@ -259,8 +259,8 @@ $("#zonaElige").change(function() {
                             }                                                                                
                             // console.log("sus Alergenos",alergenosPOk);
                            listaProductos+="<li data-toggle='tooltip' data-placement='top' title='"+
-                           nombreProducto+"'><div class='well well-sm'><div id='producto"+idProducto
-                           +"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")' style='cursor: pointer;' ></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                           nombreProducto+"' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")'><div class='well well-sm'><div id='producto"+idProducto
+                           +"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"'  style='cursor: pointer;' ></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
                     $("#UlList"+idCategoria).html(listaProductos);
@@ -273,10 +273,11 @@ $("#zonaElige").change(function() {
             console.log(respuesta);
             }
     });
+    $('body').tooltip({
+        selector: '[data-toggle="tooltip"]'
+    })
  }
- $('body').tooltip({
-    selector: '[rel=tooltip]'
-})
+ 
  function addCantidadProductoModal(idProducto,idMenuCarta) {
      $('#modalCantidadProducto').modal({backdrop: 'static', keyboard: false });
      $("#idProductoModal").val(idProducto);

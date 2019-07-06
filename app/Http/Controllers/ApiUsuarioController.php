@@ -77,7 +77,6 @@ class ApiUsuarioController extends Controller
     
     public function show($idUsuario){
         $usuario = $this->obtenerUnUsuario($idUsuario);//obtengo los datos del usuario
-
         
         $idRolUser= $usuario->idRol;//para obtener los datos del rol que tiene asignado el usuario
         $rolUsuario = new ApiRolController(); 
@@ -88,20 +87,27 @@ class ApiUsuarioController extends Controller
 
         $permisosRol = new ApiRolController(); //instancia para la lista de permisos del rol
         $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUser); //los datos lo envio a la vista
-
-        //creo una colecion de los permisos del rol para enviarlos a la vista
-        $idPermisosRolColeccion = new Collection([]);
-        foreach ($permisosRol as $permisoRol) {
-            $idPermisosRolColeccion->push($permisoRol->idPermiso);
-        }
+        $respuesta = json_decode($permisosRol);
+        $ok = $respuesta->ok;
+        // dd( $permisosRol);
+        if ($ok == 1) {
+            $permisosRol = $respuesta->objeto;            
+            //del objeto PermisoRol me creo una colección con los idPermisos del rol
+            $idPermisosRolColeccion = new Collection([]);
+            foreach ($permisosRol as $permisoRol) {
+                $idPermisosRolColeccion->push($permisoRol->idPermiso);
+            }
+        } else {
+            $idPermisosRolColeccion = new Collection([]);
+        }                
         // dd($idPermisosRolColeccion);
         return view('users.partials.show', compact('usuario', 'rolUsuario', 'permisos', 'idPermisosRolColeccion'));
     }
     
     public function edit($idUsuario){
         $usuario = $this->obtenerUnUsuario($idUsuario); //obtengo los datos del usuario
+        // dd( $usuario);
         $usuarioPermisos = $this->obtenerDatosPermisosUsuario($idUsuario); //obtengo todos los datos permisos usuario
-
         $roles = new ApiRolController(); //para obtener los roles
         $roles = $roles->obtenerTodosLosRoles(); //los datos lo envio a la vista
 
@@ -115,38 +121,45 @@ class ApiUsuarioController extends Controller
         $permisosRol = new ApiRolController(); //instancia para la lista de permisos del rol
         $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUser); //los datos lo envio a la vista
 
-        $idPermisosRolColeccion = new Collection([]);
-        foreach ($permisosRol as $permisoRol) {
-            $idPermisosRolColeccion->push($permisoRol->idPermiso);
+        $respuesta = json_decode($permisosRol);
+        $ok = $respuesta->ok;
+        // dd( $permisosRol);
+        if ($ok == 1) {
+            $permisosRol = $respuesta->objeto;
+            //del objeto PermisoRol me creo una colección con los idPermisos del rol
+            $idPermisosRolColeccion = new Collection([]);
+            foreach ($permisosRol as $permisoRol) {
+                $idPermisosRolColeccion->push($permisoRol->idPermiso);
+            }
+        } else {
+            $idPermisosRolColeccion = new Collection([]);
         }
-        $p=[];
-        foreach ($permisosRol as $permisoRol) {
-            $p[] = [$permisoRol->idPermiso];
-        }
-        $crear = $p[0][0];
-        // dd( $crear);
-        $array = [];
-        $contador=-1;
-        foreach($permisos as $permiso) {
-            $contador++;
-            $array[]=['idPermiso'=> $permiso->id,'nombrePermiso'=>$permiso->name,'idUsuario'=> $usuario->id,'nUsuario' => $usuario->usuario, 'contador'=> $contador,'arP' => $crear];
+        // $p=[];
+        // foreach ($permisosRol as $permisoRol) {
+        //     $p[] = [$permisoRol->idPermiso];
+        // }
+        // $crear = $p[0][0];
+        // // dd( $crear);
+        // $array = [];
+        // $contador=-1;
+        // foreach($permisos as $permiso) {
+        //     $contador++;
+        //     $array[]=['idPermiso'=> $permiso->id,'nombrePermiso'=>$permiso->name,'idUsuario'=> $usuario->id,'nUsuario' => $usuario->usuario, 'contador'=> $contador,'arP' => $crear];
             
-        }
-        //$crear = $array[1];
-        // dd( $array);
-        //creo una colecion de los permisos del rol para enviarlos a la vista
-        
-
-        $crearColeccion = new Collection([]);
-        $leerColeccion = new Collection([]);
-        $actualizarColeccion = new Collection([]);
-        $borrarColeccion = new Collection([]);
-        foreach ($usuarioPermisos as $usuarioPermiso) {
-            $crearColeccion->push($usuarioPermiso->crear);
-            $leerColeccion->push($usuarioPermiso->leer);
-            $actualizarColeccion->push($usuarioPermiso->actualizar);
-            $borrarColeccion->push($usuarioPermiso->borrar);
-        }
+        // }
+        // //$crear = $array[1];
+        // // dd( $array);
+        // //creo una colecion de los permisos del rol para enviarlos a la vista        
+        // $crearColeccion = new Collection([]);
+        // $leerColeccion = new Collection([]);
+        // $actualizarColeccion = new Collection([]);
+        // $borrarColeccion = new Collection([]);
+        // foreach ($usuarioPermisos as $usuarioPermiso) {
+        //     $crearColeccion->push($usuarioPermiso->crear);
+        //     $leerColeccion->push($usuarioPermiso->leer);
+        //     $actualizarColeccion->push($usuarioPermiso->actualizar);
+        //     $borrarColeccion->push($usuarioPermiso->borrar);
+        // }
         //  dd( $borrarColeccion);
         return view('users.partials.edit', compact('usuario', 'rolUsuario', 'roles','permisos', 'idPermisosRolColeccion', 'crearColeccion', 'leerColeccion', 'actualizarColeccion','borrarColeccion'));
     }
@@ -158,9 +171,9 @@ class ApiUsuarioController extends Controller
     }
     public function obtenerDatosPermisosUsuario($idUsuario){
         $respuesta = $this->realizarPeticion('GET', $this->urlBasePermisosUsuario."GetUsuarioAllPermisos/{$idUsuario}");
-        $datos = json_decode($respuesta);
-        $usuarioPermisos = $datos->objeto;
-        return $usuarioPermisos;
+        // $datos = json_decode($respuesta);
+        // $usuarioPermisos = $datos->objeto;
+        return $respuesta;
     }
     public function guardarPermisosUsuario($idUsuario, $idPermiso){
 
@@ -202,7 +215,7 @@ class ApiUsuarioController extends Controller
         $idUsuario = $request->get('id');
 
         $password =($request->get('password') == null) ? 'sinCambios' : $request->get('password');          
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateUsuario/{$idUsuario}", [
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateUsuario/{$idUsuario}", [
             'form_params' => [
                 'name' => $request->get('name'),
                 'usuario' => $request->get('usuario'),
@@ -227,12 +240,12 @@ class ApiUsuarioController extends Controller
    
     public function destroy($idUsuario){        
 
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteUsuario/{$idUsuario}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteUsuario/{$idUsuario}");
         return $respuesta;
     }
     public function destroyPermisoUsuario($idUsuario, $idPermiso){
 
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBasePermisosUsuario."DeletePermisoUsuario/{$idUsuario}/{$idPermiso}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBasePermisosUsuario."DeletePermisoUsuario/{$idUsuario}/{$idPermiso}");
         $datos = json_decode($respuesta);
 
         $respuesta = $datos->mensaje; 

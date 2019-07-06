@@ -14,17 +14,17 @@
                 name: 'name'
             },
             {
-                data: 'idPuntoVenta', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
-                name: 'idPuntoVenta'
-            },
-            {
-                data: 'status',
-                name: 'status'
+                data: 'pv', //la propiedad de data tiene que coincidir con la columna de la tabla de la BD
+                name: 'pv'
             },
             {
                 data: 'descripcion',
                 name: 'descripcion'
             },
+            {
+                data: 'status',
+                name: 'status'
+            },            
             {
                 data: 'acciones',
                 name: 'acciones',

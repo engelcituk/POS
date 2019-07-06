@@ -28,15 +28,14 @@ class PermisosController extends Controller
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
 
-    public function obtenerTodosLosPermisos()
-    {
+    public function obtenerTodosLosPermisos(){
         //es una funcion que esta en el controller principal        
         $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetPermisos');
         $datos = json_decode($respuesta);
 
-        $roles = $datos->objeto;
+        $permisos = $datos->objeto;
 
-        return $roles;
+        return $permisos;
     }
     /**
      * Show the form for creating a new resource.

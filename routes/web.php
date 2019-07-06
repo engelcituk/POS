@@ -6,6 +6,7 @@ Route::get('/', function () {
 });
 // Auth::routes();
 Route::get('login/getpuntosventa/{hotel}', 'Auth\LoginController@obtenerPuntosVenta')->name('login.puntosventa');
+Route::get('login/getcartas/{idpv}', 'Auth\LoginController@obtenerCartasPuntosVenta')->name('login.cartas');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
@@ -40,8 +41,7 @@ Route::get('historico/detalle/{cuenta}', 'HistoricoController@obtenerDetalleCuen
 // Route::get('/usuarios', 'UsuariosController@index')->name('usuarios.index');
 Route::get('all/usuarios', 'UsuariosController@AllUser')->name('all.usuarios');
 Route::get('all/roles', 'RolesController@AllRole')->name('all.roles');
-// Route::post('/usuarios', 'UsuariosController@store')->name('usuarios');
-
+    // Route::post('/usuarios', 'UsuariosController@store')->name('usuarios');
 
 //rutas de menu configuracion -->hoteles
 Route::get('all/hoteles', 'HotelesController@AllHoteles')->name('all.hoteles');
@@ -50,8 +50,8 @@ Route::get('hoteles/create', 'HotelesController@create')->name('hoteles.create')
 Route::post('hoteles/store', 'HotelesController@store')->name('hoteles.store');
 Route::get('hoteles/{hotel}', 'HotelesController@show')->name('hoteles.show');
 Route::get('hoteles/{hotel}/edit', 'HotelesController@edit')->name('hoteles.edit');
-Route::put('hoteles/actualizar', 'HotelesController@actualizar')->name('hoteles.actualizar');
-Route::delete('hoteles/{hotel}', 'HotelesController@destroy')->name('hoteles.destroy');
+Route::post('hoteles/actualizar', 'HotelesController@actualizar')->name('hoteles.actualizar');
+Route::post('hoteles/{hotel}', 'HotelesController@destroy')->name('hoteles.destroy');
 
 
 //rutas de menu configuracion-->apiRoles
@@ -62,9 +62,9 @@ Route::post('rolesapi/store', 'ApiRolController@store')->name('rolesapi.store');
 Route::post('rolesapi/{idRol}/{idpermiso}', 'ApiRolController@guardarPermisosRol')->name('rolesapi.storepermiso');
 Route::get('rolesapi/{rolapi}', 'ApiRolController@show')->name('rolesapi.show');
 Route::get('rolesapi/{rolapi}/edit', 'ApiRolController@edit')->name('rolesapi.edit');
-Route::put('rolesapi/actualizar', 'ApiRolController@actualizar')->name('rolesapi.actualizar');
-Route::delete('rolesapi/{rolapi}', 'ApiRolController@destroy')->name('rolesapi.destroy');
-Route::delete('rolesapi/{idRol}/{idPermiso}', 'ApiRolController@destroyPermiso')->name('rolesapi.destroypermiso');
+Route::post('rolesapi/actualizar', 'ApiRolController@actualizar')->name('rolesapi.actualizar');
+Route::post('rolesapi/{rolapi}', 'ApiRolController@destroy')->name('rolesapi.destroy');
+Route::post('rolapiborrar/{idRol}/{idPermiso}', 'ApiRolController@destroyPermiso')->name('rolesapi.destroypermiso');
 
 //rutas de menu configuracion-->usuarios con la api
 Route::get('all/users', 'ApiUsuarioController@AllApiUsuario')->name('all.users');
@@ -74,10 +74,10 @@ Route::post('users/store', 'ApiUsuarioController@store')->name('users.store');
 Route::post('users/{idUsuario}/{idPermiso}', 'ApiUsuarioController@guardarPermisosUsuario')->name('users.storepermiso');
 Route::get('users/{user}', 'ApiUsuarioController@show')->name('users.show');
 Route::get('users/{user}/edit', 'ApiUsuarioController@edit')->name('users.edit');
-Route::put('users/actualizar', 'ApiUsuarioController@actualizar')->name('users.actualizar');
+Route::post('users/actualizar', 'ApiUsuarioController@actualizar')->name('users.actualizar');
 Route::put('users/{user}/{idpermiso}', 'ApiUsuarioController@guardarAccionPermisoUsuario')->name('users.storeaccionpermiso');
-Route::delete('users/{user}', 'ApiUsuarioController@destroy')->name('users.destroy');
-Route::delete('users/{idUsuario}/{idpermiso}', 'ApiUsuarioController@destroyPermisoUsuario')->name('users.destroypermisouser');
+Route::post('users/{user}', 'ApiUsuarioController@destroy')->name('users.destroy');
+Route::post('users/{idUsuario}/{idpermiso}', 'ApiUsuarioController@destroyPermisoUsuario')->name('users.destroypermisouser');
 
 //rutas de menu configuracion-->PermisosRolesApi
 Route::get('all/permisos', 'PermisosController@AllPermisos')->name('all.permisos');
@@ -107,8 +107,8 @@ Route::get('turnos/create', 'TurnosController@create')->name('turnos.create');
 Route::post('turnos/store', 'TurnosController@store')->name('turnos.store');
 Route::get('turnos/{turno}', 'TurnosController@show')->name('turnos.show');
 Route::get('turnos/{turno}/edit', 'TurnosController@edit')->name('turnos.edit');
-Route::put('turnos/actualizar', 'TurnosController@actualizar')->name('turnos.actualizar');
-Route::delete('turnos/{turno}', 'TurnosController@destroy')->name('turnos.destroy');
+Route::post('turnos/actualizar', 'TurnosController@actualizar')->name('turnos.actualizar');
+Route::post('turnos/{turno}', 'TurnosController@destroy')->name('turnos.destroy');
 
 //rutas de menu configuracion-->zonas 
 Route::get('all/zonas', 'ZonasController@AllZonas')->name('all.zonas');
@@ -137,8 +137,8 @@ Route::get('impresoras/create', 'ImpresorasController@create')->name('impresoras
 Route::post('impresoras/store', 'ImpresorasController@store')->name('impresoras.store');
 Route::get('impresoras/{impresora}', 'ImpresorasController@show')->name('impresoras.show');
 Route::get('impresoras/{impresora}/edit', 'ImpresorasController@edit')->name('impresoras.edit');
-Route::put('impresoras/actualizar', 'ImpresorasController@actualizar')->name('impresoras.actualizar');
-Route::delete('impresoras/{impresora}', 'ImpresorasController@destroy')->name('impresoras.destroy');
+Route::post('impresoras/actualizar', 'ImpresorasController@actualizar')->name('impresoras.actualizar');
+Route::post('impresoras/{impresora}', 'ImpresorasController@destroy')->name('impresoras.destroy');
 
 //rutas de menu configuracion-->centros de preparacion
 Route::get('all/centrospreparacion', 'CentrosPreparacionController@AllCentrosPreparacion')->name('all.centrospreparacion');
@@ -147,8 +147,8 @@ Route::get('centrospreparacion/create', 'CentrosPreparacionController@create')->
 Route::post('centrospreparacion/store', 'CentrosPreparacionController@store')->name('centrospreparacion.store');
 Route::get('centrospreparacion/{cpreparacion}', 'CentrosPreparacionController@show')->name('centrospreparacion.show');
 Route::get('centrospreparacion/{cpreparacion}/edit', 'CentrosPreparacionController@edit')->name('centrospreparacion.edit');
-Route::put('centrospreparacion/actualizar', 'CentrosPreparacionController@actualizar')->name('centrospreparacion.actualizar');
-Route::delete('centrospreparacion/{cpreparacion}', 'CentrosPreparacionController@destroy')->name('centrospreparacion.destroy');
+Route::post('centrospreparacion/actualizar', 'CentrosPreparacionController@actualizar')->name('centrospreparacion.actualizar');
+Route::post('centrospreparacion/{cpreparacion}', 'CentrosPreparacionController@destroy')->name('centrospreparacion.destroy');
 
 //rutas de menu configuracion-->metodos de pago 
 Route::get('all/metodospago', 'MetodosPagoController@AllMetodosPago')->name('all.metodospago');
@@ -157,8 +157,8 @@ Route::get('metodospago/create', 'MetodosPagoController@create')->name('metodosp
 Route::post('metodospago/store', 'MetodosPagoController@store')->name('metodospago.store');
 Route::get('metodospago/{metodopago}',  'MetodosPagoController@show')->name('metodospago.show');
 Route::get('metodospago/{metodopago}/edit', 'MetodosPagoController@edit')->name('metodospago.edit');
-Route::put('metodospago/actualizar', 'MetodosPagoController@actualizar')->name('metodospago.actualizar');
-Route::delete('metodospago/{metodopago}', 'MetodosPagoController@destroy')->name('metodospago.destroy');
+Route::post('metodospago/actualizar', 'MetodosPagoController@actualizar')->name('metodospago.actualizar');
+Route::post('metodospago/{metodopago}', 'MetodosPagoController@destroy')->name('metodospago.destroy');
 
 //rutas de menu configuracion-->modos
 Route::get('all/modos', 'ModosController@AllModos')->name('all.modos');
@@ -176,7 +176,7 @@ Route::post('alergenos/store', 'AlergenoController@store')->name('alergenos.stor
 Route::get('alergenos/{alergeno}', 'AlergenoController@show')->name('alergenos.show');
 Route::get('alergenos/{alergeno}/edit', 'AlergenoController@edit')->name('alergenos.edit');
 Route::put('alergenos/actualizar', 'AlergenoController@actualizar')->name('alergenos.actualizar');
-Route::delete('alergenos/{alergeno}', 'AlergenoController@destroy')->name('alergenos.destroy');
+Route::post('alergenos/{alergeno}', 'AlergenoController@destroy')->name('alergenos.destroy');
 
 //rutas de menu configuracion-->carta
 Route::get('all/cartas', 'CartaController@AllCartas')->name('all.cartas');
@@ -185,18 +185,18 @@ Route::get('cartas/create', 'CartaController@create')->name('cartas.create');
 Route::post('cartas/store', 'CartaController@store')->name('cartas.store');
 Route::get('cartas/{carta}', 'CartaController@show')->name('cartas.show');
 Route::get('cartas/{carta}/edit', 'CartaController@edit')->name('cartas.edit');
-Route::put('cartas/actualizar', 'CartaController@actualizar')->name('cartas.actualizar');
-Route::delete('cartas/{carta}', 'CartaController@destroy')->name('cartas.destroy');
+Route::post('cartas/actualizar', 'CartaController@actualizar')->name('cartas.actualizar');
+Route::post('cartas/{carta}', 'CartaController@destroy')->name('cartas.destroy');
 
 //rutas de menu configuracion-->categorias
 Route::get('all/categorias', 'CategoriaController@AllCategorias')->name('all.categorias');
 Route::get('/categorias', 'CategoriaController@index')->name('categorias.index');
 Route::get('categorias/create', 'CategoriaController@create')->name('categorias.create');
 Route::post('categorias/store', 'CategoriaController@store')->name('categorias.store');
-Route::get('categorias/{carta}', 'CategoriaController@show')->name('categorias.show');
-Route::get('categorias/{carta}/edit', 'CategoriaController@edit')->name('categorias.edit');
-Route::put('categorias/actualizar', 'CategoriaController@actualizar')->name('categorias.actualizar');
-Route::delete('categorias/{carta}', 'CategoriaController@destroy')->name('categorias.destroy');
+Route::get('categorias/{categoria}', 'CategoriaController@show')->name('categorias.show');
+Route::get('categorias/{categoria}/edit', 'CategoriaController@edit')->name('categorias.edit');
+Route::post('categorias/actualizar', 'CategoriaController@actualizar')->name('categorias.actualizar');
+Route::post('categorias/{categoria}', 'CategoriaController@destroy')->name('categorias.destroy');
 
 //rutas de menu configuracion-->subcategorias
 Route::get('all/subcategorias', 'SubCategoriaController@AllSubCategorias')->name('all.subcategorias');
@@ -217,66 +217,20 @@ Route::post('productos/{idProducto}/{idAlergeno}', 'ProductosController@guardarP
 Route::put('productos/{producto}', 'ProductosController@actualizar')->name('productos.actualizar');
 Route::get('productos/{producto}', 'ProductosController@show')->name('productos.show');
 Route::get('productos/{producto}/edit', 'ProductosController@edit')->name('productos.edit');        
-Route::delete('productos/{producto}', 'ProductosController@destroy')->name('productos.destroy');
-Route::delete('borrar/{idProd}/{idAler}', 'ProductosController@destroyAlergeno')->name('producto.destroyalergeno');
- 
-//Productos    
+Route::post('productos/{producto}', 'ProductosController@destroy')->name('productos.destroy');
+Route::post('borrar/{idProd}/{idAler}', 'ProductosController@destroyAlergeno')->name('producto.destroyalergeno');
+
+//menu cartas   
 Route::get('all/menuscartas', 'MenusCartasController@AllMenuCartas')->name('all.menuscartas');
 Route::get('menuscartas', 'MenusCartasController@index')->name('menuscartas.index');
 Route::get('menuscartas/create', 'MenusCartasController@create')->name('menuscartas.create');
 Route::post('menuscartas/store', 'MenusCartasController@store')->name('menuscartas.store');
-Route::put('menuscartas/{menuscarta}', 'MenusCartasController@actualizar')->name('menuscartas.actualizar');
+Route::ppostut('menuscartas/{menuscarta}', 'MenusCartasController@actualizar')->name('menuscartas.actualizar');
 Route::get('menuscartas/{menuscarta}', 'MenusCartasController@show')->name('menuscartas.show');
 Route::get('menuscartas/{menuscarta}/edit', 'MenusCartasController@edit')->name('menuscartas.edit');
-Route::delete('menuscartas/{menuscarta}', 'MenusCartasController@destroy')->name('menuscartas.destroy');
+Route::post('menuscartas/{menuscarta}', 'MenusCartasController@destroy')->name('menuscartas.destroy');
+
 
 Route::post('printrecibo', 'ReciboTicketController@createRecibo')->name('imprimir.createrecibo');
     //roles
-
-    // Route::get('/roles', 'RolesController@index')->name('roles.index')
-    //     ->middleware('permission:roles.index');
-
-    // Route::get('roles/create', 'RolesController@create')->name('roles.create')
-    //     ->middleware('permission:roles.create');
-
-    // Route::post('roles/store', 'RolesController@store')->name('roles.store')
-    //     ->middleware('permission:roles.create');
-
-    // Route::put('roles/{role}', 'RolesController@update')->name('roles.update')
-    //     ->middleware('permission:roles.edit');
-
-    // Route::get('roles/{role}', 'RolesController@show')->name('roles.show')
-    //     ->middleware('permission:roles.show');
-
-    // Route::delete('roles/{role}', 'RolesController@destroy')->name('roles.destroy')
-    //     ->middleware('permission:roles.destroy');
-
-    // Route::get('roles/{role}/edit', 'RolesController@edit')->name('roles.edit')
-    //     ->middleware('permission:roles.edit');
-
-    // //usuarios    
-    // Route::post('usuarios/store', 'UsuariosController@store')->name('usuarios.store')
-    //     ->middleware('permission:usuarios.create');
-
-    // Route::get('usuarios', 'UsuariosController@index')->name('usuarios.index')
-    //     ->middleware('permission:usuarios.index');
-
-    // Route::get('usuarios/create', 'UsuariosController@create')->name('usuarios.create')
-    //     ->middleware('permission:usuarios.create');
-
-    // Route::get('usuarios/{usuario}', 'UsuariosController@show')->name('usuarios.show')
-    //     ->middleware('permission:usuarios.show');
-
-    // Route::get('usuarios/{usuario}/edit', 'UsuariosController@edit')->name('usuarios.edit')
-    //     ->middleware('permission:roles.edit');
-
-    // Route::put('usuarios/{usuario}', 'UsuariosController@update')->name('usuarios.update')
-    //     ->middleware('permission:usuarios.edit');
-
-    // Route::delete('usuarios/{usuario}', 'UsuariosController@destroy')->name('usuarios.destroy')
-    //     ->middleware('permission:usuarios.destroy');
-    // });
-
-    // Route::resource('usuarios', 'UsuariosController');
-    // Route::get('all/usuarios', 'UsuariosController@AllUser','RolesController@store')->name('all/usuarios');
 });

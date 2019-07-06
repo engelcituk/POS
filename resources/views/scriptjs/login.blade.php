@@ -41,6 +41,57 @@
             });
             listaPuntosVenta="<select class='form-control' name='listaPuntosVenta' id='listaPuntosVenta' required><option value=''>Sin puntos de venta</option></select>";
             $("#listaPuntosVenta").html(listaPuntosVenta);
+
+            listaCartas="<select class='form-control' name='listaCartas' id='listaCartas' required><option value=''>Sin puntos de venta</option></select>";
+            $("#listaCartas").html(listaCartas);
         }
     }
+    function obtenerCartasPV() {
+        var idPuntoVenta = $("#listaPuntosVenta option:selected").val();
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+        if(idPuntoVenta !=''){          
+         $.ajax({
+                url: "{{ url('login/getcartas') }}"+'/'+idPuntoVenta,
+                type: "GET",
+                data: {
+                    '_method': 'GET',                    
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {             
+                    var respuesta = JSON.parse(respuesta);                    
+                    var ok = respuesta["ok"];  
+                    if(ok){//si ok es true
+                        var cartaTurno = respuesta["idCarta"];              
+                        var objeto=respuesta["objeto"];
+                        listaCartas="<select class='form-control' name='listaCartas' id='listaCartas' required> <option value=''>Elige carta</option>"
+                            for (i =0;  i<objeto.length; i++) {
+                                var select= objeto[i]["id"] == cartaTurno ? "selected" : "";
+                                
+                                listaCartas+= "<option "+select+" turno='"+objeto[i]["turno"]+"' value="+objeto[i]["id"]+">"+objeto[i]["name"]+"</option>";
+                            }               
+                        listaCartas+="</select>";
+			            $("#listaCartas").html(listaCartas);
+
+                    }else{                        
+                        listaCartas="<select class='form-control' name='listaCartas' id='listaCartas' required><option value=''>Sin cartas</option></select>";
+                        $("#listaCartas").html(listaCartas);
+                    }                               
+                },
+                error: function(respuesta) {                    
+                    console.log("respuesta",respuesta); 
+                }
+            });           
+        }else{
+            swal({
+                title: 'Oopss...',
+                text: '¡Tiene que elegir un punto de venta!',
+                type: 'error',
+                timer: '2500'
+            }); 
+
+            listaCartas="<select class='form-control' name='listaCartas' id='listaCartas' required><option value=''>Sin cartas</option></select>";
+            $("#listaCartas").html(listaCartas);          
+        }
+    }    
 </script> 

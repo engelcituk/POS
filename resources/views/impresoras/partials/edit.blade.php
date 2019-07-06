@@ -8,7 +8,7 @@
                 <div class="col-md-12">
                     <div class="card card-profile">
                         @csrf
-                        {{ method_field('PUT') }}
+                        {{-- {{ method_field('PUT') }} --}}
                         <input id="name" type="hidden" class="form-control" name="id" value="{{$impresora->id}}" required>
                         <div class="row">
                             <div class="card-content">

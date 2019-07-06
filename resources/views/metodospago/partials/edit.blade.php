@@ -9,7 +9,7 @@
 
                     <form method="POST" action="{{ route('metodospago.actualizar')}}">
                         @csrf
-                        {{ method_field('PUT') }}
+                        {{-- {{ method_field('PUT') }} --}}
                         <input id="name" type="hidden" class="form-control" name="id" value="{{$metodoPago->id}}" required>
                         <div class="card-content">
                             <div class="col-md-6">

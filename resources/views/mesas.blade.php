@@ -19,22 +19,12 @@
                             <table id="mesas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>id</th>
-                                        <th>idZona</th>
-                                        <th>name</th>
+                                        <th>Id</th>
+                                        <th>Zona</th>                                        
                                         <th>status</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>idZona</th>
-                                        <th>name</th>
-                                        <th>status</th>
-                                        <th class="text-right">Acciones</th>
-                                    </tr>
-                                </tfoot>
+                                </thead>                                
                                 <tbody>
 
                                 </tbody>

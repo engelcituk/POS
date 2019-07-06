@@ -20,23 +20,15 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>name</th>                                        
-                                        <th>idImpresora</th>
-                                        <th>descripción</th>                                        
-                                        <th>estado</th>
+                                        <th>Nombre</th>                                        
+                                        <th>Impresora</th>
+                                        <th>Impresora B</th>
+                                        <th>Descripción</th> 
+                                        <th>Imprime</th>                                        
+                                        <th>Estado</th>                                        
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>name</th>                                        
-                                        <th>idImpresora</th>
-                                        <th>descripción</th>                                        
-                                        <th>estado</th>
-                                        <th class="text-right">Acciones</th>
-                                    </tr>
-                                </tfoot>
+                                </thead>                                
                                 <tbody>
 
                                 </tbody>

@@ -17,10 +17,11 @@
                         $estado= $carta->status;//para obtener el estado de la zona
                         $estado = ($estado == 1) ? "Activo" : "Desactivado";
                         @endphp
-                        <h3 class="category text-black"><strong>Nombre hotel:</strong> {{$hotelRestaurante->name}}</h3><br>
-                        <h4 class="card-title"><strong>Punto de venta:</strong> {{$datosRestaurantePV->name}}</h4><br>
-                        <h4 class="card-title"><strong>Turno: </strong> {{$datosTurnoPV->turno}}</h4><br>
-                        <h4 class="card-title"><strong>Hora inicio turno: </strong>{{$datosTurnoPV->horaInicio}}</h4><br>
+                        <h3 class="category text-black"><strong>Nombre hotel:</strong> {{$datosHotel->name}}</h3><br>
+                        <h4 class="card-title"><strong>Punto de venta:</strong> {{$datosPV->name}}</h4><br>
+                        <h4 class="card-title"><strong>Turno: </strong> {{$datosTurno->turno}}</h4><br>
+                        <h4 class="card-title"><strong>Hora inicio turno: </strong>{{$datosTurno->horaInicio}}</h4><br>
+                        <h4 class="card-title"><strong>Hora fin turno: </strong>{{$datosTurno->horaFin}}</h4><br>
                         <h4 class="card-title"><strong>Nombre Carta: </strong> {{$carta->name}}</h4><br>
                         <h4 class="card-title"><strong>Fecha alta Carta: </strong> {{$fechaAlta}}</h4><br>
                         <h4 class="card-title"><strong>Hora alta Carta: </strong>{{$carta->horaAlta}}</h4><br>

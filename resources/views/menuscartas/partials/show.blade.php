@@ -11,9 +11,8 @@
                     </div>
                     <div class="card-content">
                         
-                        <h3 class="category text-black"><strong>Nombre subcategoria:</strong> </h3><br>                        
-                        <h4 class="card-title"><strong>Fecha alta Subcategoria: </strong> </h4><br>
-
+                        <h3 class="category text-black"><strong>Nombre categoria:</strong> </h3><br>                        
+                       
                         <h4 class="card-title"><strong>De la Categoria: </strong> </h4><br>
 
                         <h4 class="card-title"><strong>Creado por: </strong> </h4><br>  

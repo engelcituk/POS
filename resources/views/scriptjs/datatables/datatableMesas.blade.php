@@ -10,13 +10,9 @@
                 name: 'id'
             },
             {
-                data: 'idZona',
-                name: 'idZona'
-            },
-            {
-                data: 'name',
-                name: 'name'
-            },
+                data: 'zona',
+                name: 'zona'
+            },            
             {
                 data: 'status',
                 name: 'status'

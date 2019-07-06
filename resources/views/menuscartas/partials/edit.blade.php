@@ -8,7 +8,7 @@
                 <div class="col-md-12">
                     <div class="card card-profile">
                        @csrf
-                        {{ method_field('PUT') }}
+                        {{-- {{ method_field('PUT') }} --}}
                         <input id="name" type="hidden" class="form-control" name="id" value="{{$menucarta->id}}" required>
                         <div class="row">
                             <div class="card-content">                                
@@ -42,7 +42,7 @@
                                     <tbody>
                                         <tr id="addr0" data-id="0">
                                             <td data-name="idProducto">
-                                            <select class="form-control" name="idProducto" required>
+                                            <select class="form-control listaProductos" name="idProducto" required>
                                                 <option value="{{$datosProducto->id}}">{{$datosProducto->nombreProducto}}</option>
                                                     @foreach($productos as $producto)
                                                         <option value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
@@ -59,17 +59,14 @@
                                                             <option value="{{$cp->id}}">{{$cp->name}}</option>
                                                         @endforeach
                                                 </select>
-                                            </td> 
-                                            {{-- <td data-name="del">
-                                                <button name="del0" class='btn btn-danger fa fa-remove btn-sm row-remove'></button>
-                                            </td> --}}
+                                            </td>                                             
                                         </tr>
                                    
 
                                     </tbody>
                                     </table>     
                                 </div>    
-                                {{-- <a id="add_row" class="btn btn-success btn-circle pull-right fa fa-plus" onclick="addrowTarifa()"></a>                     --}}
+                              
                                 <button type="submit" class="btn btn-primary pull-left"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
 
@@ -82,4 +79,9 @@
     </div>
 </div>
 
+<script>
+$(document).ready(function() {
+    $('.listaProductos').select2();
+});    
+</script>
 @endsection

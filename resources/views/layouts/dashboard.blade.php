@@ -25,6 +25,8 @@
     <link href="{{asset('css/google-roboto-300-700.css')}}" rel="stylesheet" />
     <link href="{{asset('css/select2.min.css')}}" rel="stylesheet"/>
     <script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/select2.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap-timepicker.js')}}"></script>
     
     
 </head>
@@ -282,9 +284,8 @@
 <!-- <script src="{{asset('js/demo.js')}}"></script> -->
 <!-- <script src="{{asset('js/init.js')}}"></script> -->
 <script src="{{asset('js/datatables.js')}}"></script>
-<script src="{{asset('js/bootstrap-timepicker.js')}}"></script>
 
-<script src="{{asset('js/select2.min.js')}}"></script>
+
 <!-- <script src="{{asset('js/crudUsuarios.js')}}"></script> -->
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
 @include('scriptjs/ticketRecibo')
@@ -328,9 +329,12 @@
 @endif
 @if(request()->is('turnos'))
     @include('scriptjs/datatables/datatableTurnosPV')
-    @include('scriptjs/sweetalerts/sweetalertTurno') 
+    @include('scriptjs/sweetalerts/sweetalertTurno')     
+@endif
+@if(request()->is('turnos/create'))     
     @include('scriptjs/validacionesTurnos') {{--validaciones  --}}
 @endif
+
 @if(request()->is('zonas'))
     @include('scriptjs/datatables/datatableZonas')
     @include('scriptjs/sweetalerts/sweetalertZona')

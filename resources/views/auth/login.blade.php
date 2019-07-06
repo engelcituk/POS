@@ -27,18 +27,28 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                </div>
-                                
+                                </div>                                
                                 <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-utensils"></i>
                                         </span>
                                         <div class="form-group">                                            
-                                            <select class="form-control" name="listaPuntosVenta" id="listaPuntosVenta" required>
+                                            <select class="form-control" name="listaPuntosVenta" id="listaPuntosVenta"  onchange="obtenerCartasPV()" required>
                                               <option value="">Seleccione punto de venta</option>
                                           </select>
                                         </div>
                                 </div>
+                                <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-bars"></i>
+                                        </span>
+                                        <div class="form-group">                                            
+                                            <select class="form-control" name="listaCartas" id="listaCartas" required>
+                                              <option value="">Seleccione carta</option>
+                                          </select>
+                                        </div>
+                                </div>
+
                                 <p class="category text-center">
                                     Ingrese sus datos de acceso
                                 </p>
@@ -96,31 +106,7 @@
         </div>
     </div>
     <footer class="footer">
-        <div class="container">
-            {{-- <nav class="pull-left">
-                <ul>
-                    <li>
-                        <a href="#">
-                            Home
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Company
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Portfolio
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            Blog
-                        </a>
-                    </li>
-                </ul>
-            </nav> --}}
+        <div class="container">            
             <p class="copyright pull-right">
                 &copy;
                 <script>
@@ -131,5 +117,11 @@
         </div>
     </footer>
 </div>
-
+<script>
+$(document).ready(function() {
+    $('#idHotel').select2();
+    $('#listaPuntosVenta').select2();
+    $('#listaCartas').select2();
+});
+</script>
 @endsection 

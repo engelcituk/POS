@@ -313,9 +313,17 @@ class Arr
      */
     public static function has($array, $keys)
     {
+        if (is_null($keys)) {
+            return false;
+        }
+
         $keys = (array) $keys;
 
-        if (! $array || $keys === []) {
+        if (! $array) {
+            return false;
+        }
+
+        if ($keys === []) {
             return false;
         }
 
@@ -377,7 +385,7 @@ class Arr
     {
         $results = [];
 
-        [$value, $key] = static::explodePluckParameters($value, $key);
+        list($value, $key) = static::explodePluckParameters($value, $key);
 
         foreach ($array as $item) {
             $itemValue = data_get($item, $value);
@@ -541,9 +549,11 @@ class Arr
         if (is_null($seed)) {
             shuffle($array);
         } else {
-            mt_srand($seed);
-            shuffle($array);
-            mt_srand();
+            srand($seed);
+
+            usort($array, function () {
+                return rand(-1, 1);
+            });
         }
 
         return $array;
@@ -619,6 +629,6 @@ class Arr
             return [];
         }
 
-        return is_array($value) ? $value : [$value];
+        return ! is_array($value) ? [$value] : $value;
     }
 }

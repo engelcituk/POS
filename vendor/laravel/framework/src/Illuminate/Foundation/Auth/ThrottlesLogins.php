@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Cache\RateLimiter;
 use Illuminate\Auth\Events\Lockout;
-use Illuminate\Support\Facades\Lang; 
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Validation\ValidationException;
 
 trait ThrottlesLogins
@@ -33,7 +33,7 @@ trait ThrottlesLogins
     protected function incrementLoginAttempts(Request $request)
     {
         $this->limiter()->hit(
-            $this->throttleKey($request), $this->decayMinutes() * 60
+            $this->throttleKey($request), $this->decayMinutes()
         );
     }
 
@@ -42,7 +42,6 @@ trait ThrottlesLogins
      *
      * @param  \Illuminate\Http\Request  $request
      * @return void
-     *
      * @throws \Illuminate\Validation\ValidationException
      */
     protected function sendLockoutResponse(Request $request)
@@ -91,7 +90,7 @@ trait ThrottlesLogins
 
     /**
      * Get the rate limiter instance.
-     * 
+     *
      * @return \Illuminate\Cache\RateLimiter
      */
     protected function limiter()

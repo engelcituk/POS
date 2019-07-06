@@ -8,11 +8,11 @@
                 <div class="col-md-12">
                     <div class="card card-profile">
                         @csrf
-                        {{ method_field('PUT') }}
+                        {{-- {{ method_field('PUT') }} --}}
                         <input id="name" type="hidden" class="form-control" name="id" value="{{$centroPreparacion->id}}" required>
                         <div class="row">
                             <div class="card-content">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fab fa-elementor"></i>
@@ -28,7 +28,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-utensils"></i>
@@ -43,13 +43,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="comment">Descripcion:</label>
-                                        <textarea class="form-control" rows="2" name="descripcion" required>{{$centroPreparacion->descripcion}}</textarea>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-utensils"></i>
+                                        </span>
+                                        <div class="form-group">
+                                            <select class="form-control" name="idImpresoraB" required>
+                                            <option value="{{$datosImpresoraCPB->id}}">{{$datosImpresoraCPB->name}}</option>
+                                                @foreach($impresoras as $impresora)
+                                                    <option value="{{$impresora->id}}">{{$impresora->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <div class="radio">
                                             <strong>Estado</strong>
@@ -64,7 +73,30 @@
                                             @endphp
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="radio">
+                                            <strong>Estado</strong>
+                                            @php
+                                            $estado= $centroPreparacion->imprime;//para obtener el estado de la mesa
+                                            $radios = ($estado == 1) ?
+                                            "<label><input type='radio' name='imprime' value='True' checked>Activado</label>
+                                            <label><input type='radio' name='imprime' value='False'>Desactivado</label>" :
+                                            "<label><input type='radio' name='imprime' value='True'>Activado</label>
+                                            <label><input type='radio' name='imprime' value='False' checked>Desactivado</label>";
+                                            echo $radios;
+                                            @endphp
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="comment">Descripcion:</label>
+                                        <textarea class="form-control" rows="2" name="descripcion" required>{{$centroPreparacion->descripcion}}</textarea>
+                                    </div>
+                                </div>
+                                                                
                                 <!-- <small>En la api se registar el <cite title="idHotel">idHotel</cite></small> -->
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>

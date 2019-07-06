@@ -39,4 +39,11 @@ class Controller extends BaseController
          
         return $accessToken;
     }
+
+    protected function urlBase(){
+
+        $urlBase= "http://localhost/TPVApi/";
+        
+        return $urlBase;
+    }
 }

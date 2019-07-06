@@ -77,10 +77,10 @@ class MenusCartasController extends Controller{
     public function show($id){
         
         $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
-        $subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
+        
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
 
-        return view('menuscartas.partials.show', compact('categorias', 'subcategorias', 'alergenos'));
+        return view('menuscartas.partials.show', compact('categorias', 'alergenos'));
     }
 
 
@@ -121,7 +121,7 @@ class MenusCartasController extends Controller{
     public function actualizar(Request $request){
         $idMenuCarta = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateMenuCarta/{$idMenuCarta}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateMenuCarta/{$idMenuCarta}", ['form_params' => $request->except('id')]);
         
         return redirect('/menuscartas');
     }
@@ -129,7 +129,7 @@ class MenusCartasController extends Controller{
     
     public function destroy($idMenuCarta){
 
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteMenu/{$idMenuCarta}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteMenu/{$idMenuCarta}");
 
         return redirect('/menuscartas');
     }

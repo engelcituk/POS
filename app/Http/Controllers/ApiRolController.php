@@ -81,21 +81,28 @@ class ApiRolController extends Controller
     public function edit($id)
     {
         $idRol = $id;
-        $rol = $this->obtenerUnRol($idRol);
+        $rol = $this->obtenerUnRol($idRol);     
 
         $permisos = new PermisosController(); //para obtener los permisos
         $permisos = $permisos->obtenerTodosLosPermisos(); //los datos lo envio a la vista
-
-        $permisosRol = $this->obtenerPermisosPorRol($idRol);
-        $permisosDelRol = collect($permisosRol); //lo convierto en una coleccion
-
-        //del objeto PermisoRol me creo una colección con los idPermisos del rol
-        $idPermisosRolColeccion = new Collection([]);
-        foreach ($permisosDelRol as $permisoRol) {
-            $idPermisosRolColeccion->push($permisoRol->idPermiso);
+    //  dd($permisos);
+        $permisosRol = $this->obtenerPermisosPorRol($idRol);        
+        $respuesta = json_decode($permisosRol);
+        $ok = $respuesta->ok;
+        
+        if($ok==1){
+            $permisosRol= $respuesta->objeto;
+            $permisosDelRol = collect($permisosRol); //lo convierto en una coleccion
+            //del objeto PermisoRol me creo una colección con los idPermisos del rol
+            $idPermisosRolColeccion = new Collection([]);
+            foreach ($permisosDelRol as $permisoRol) {
+                $idPermisosRolColeccion->push($permisoRol->idPermiso);
+            }
+        }else{
+            $idPermisosRolColeccion = new Collection([]);
         }
-
-        // dd($idPermisosColeccion);
+        
+        // dd($idPermisosRolColeccion);
        return view('apiroles.partials.edit',compact('rol', 'permisos','idPermisosRolColeccion'));        
     }
     
@@ -109,9 +116,8 @@ class ApiRolController extends Controller
     public function obtenerPermisosPorRol($idRol)
     {
         $respuesta = $this->realizarPeticion('GET', $this->urlBaseRolPermisos ."GetPermisosPorRol/{$idRol}");
-        $datos = json_decode($respuesta);
-        $permisosRol = $datos->objeto;
-        return $permisosRol;
+        
+        return $respuesta;
     }
     
     public function store(Request $request)
@@ -147,7 +153,7 @@ class ApiRolController extends Controller
     {
         $idRol = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateRol/{$idRol}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateRol/{$idRol}", ['form_params' => $request->except('id')]);
 
         return redirect('/rolesapi');
     }
@@ -155,11 +161,11 @@ class ApiRolController extends Controller
     public function destroy($id)
     {
         $idRol = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteRol/{$idRol}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteRol/{$idRol}");
         return $respuesta;
     }
     public function destroyPermiso($idRol, $idPermiso){
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBaseRolPermisos."DeletePermisoRol/{$idRol}/{$idPermiso}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBaseRolPermisos."DeletePermisoRol/{$idRol}/{$idPermiso}");
 
        return $respuesta;
     }

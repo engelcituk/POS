@@ -10,20 +10,20 @@
                 name: 'id'
             },
             {
-                data: 'idCarta',
-                name: 'idCarta'
+                data: 'carta',
+                name: 'carta'
             },
             {
-                data: 'idProducto',
-                name: 'idProducto'
+                data: 'producto',
+                name: 'producto'
             },
             {
                 data: 'precio',
                 name: 'precio'
             },
             {
-                data: 'idCentroPrep',
-                name: 'idCentroPrep'
+                data: 'centro',
+                name: 'centro'
             },
             {
                 data: 'acciones',

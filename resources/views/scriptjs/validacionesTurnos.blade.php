@@ -8,7 +8,16 @@
         showMeridian: false,
         defaultTime: false
     });
-    $(document).on("input", "#turnoPV", function() {
+    $('#horaFin').timepicker({
+        minuteStep: 1,
+        template: 'modal',
+        appendWidgetTo: 'body',
+        showSeconds: true,
+        showMeridian: false,
+        defaultTime: false
+    });
+    $(document).on("input", "#turnoNumber", function() {
         this.value = this.value.replace(/[^0-9]/g, '');
-    })  
+    }) 
+
 </script>

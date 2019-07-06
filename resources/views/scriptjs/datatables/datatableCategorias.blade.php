@@ -16,11 +16,7 @@
             {
                 data: 'fechaAlta',
                 name: 'fechaAlta'
-            },
-            {
-                data: 'idUsuarioAlta',
-                name: 'idUsuarioAlta'
-            },
+            },           
             {
                 data: 'orden',
                 name: 'orden'

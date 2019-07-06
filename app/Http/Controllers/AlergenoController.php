@@ -133,7 +133,7 @@ class AlergenoController extends Controller
     
     public function destroy($idAlergeno){
         
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteAlergeno/{$idAlergeno}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteAlergeno/{$idAlergeno}");
         return redirect('/centrospreparacion');
     }
 }

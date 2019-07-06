@@ -27,7 +27,7 @@
                                 </div>
                             <div class="panel-body">
                                 <div class="viewcontent">
-                                    <table id="tblMenuCartas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <table id="tblMenuCartas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>Producto</th>
@@ -69,8 +69,9 @@
                                 </div>    
                                 <a id="add_row" class="btn btn-success btn-circle pull-right fa fa-plus" onclick="addrowTarifa()"></a>                    
                                 <button type="submit" class="btn btn-primary pull-left"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
-                            </div>
-
+                                
+                               
+                            </div>                                
                             </div>
                         </div>
                     </div>
@@ -80,5 +81,7 @@
     </div>
 </div>
 
+
+ 
 
 @endsection

@@ -10,7 +10,7 @@
                         @csrf
                         <div class="row">
                             <div class="card-content">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fab fa-elementor"></i>
@@ -26,25 +26,22 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6 hidden">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                           <i class="fas fa-user"></i>
+                                            <i class="fab fa-elementor"></i>
                                         </span>
-                                        <div class="form-group">
-                                            <select class="form-control selectUsuarios" name="idUsuarioAlta" required>
-                                                <option value="">Seleccione usuario</option>
-                                                @foreach($users as $user)
-                                                    <option value="{{$user->id }}">{{ $user->name }}</option>
-                                                  @endforeach                      
-                                            </select>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Usuario</label>
+                                            <input id="idUsuarioAlta" type="text" class="form-control{{ $errors->has('idUsuario') ? ' is-invalid' : '' }}" name="idUsuarioAlta" value="{{Session::get('idUsuarioLogueado')}}" required readonly>
+                                           
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group label-floating">
                                             <label class="control-label">orden</label>
-                                            <input id="ordenCategoria" type="number" class="form-control{{ $errors->has('orden') ? ' is-invalid' : '' }}" name="orden" required autofocus>
+                                            <input id="ordenCategoria" type="number" class="form-control{{ $errors->has('orden') ? ' is-invalid' : '' }}" name="orden" required>
                                             @if ($errors->has('orden'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('orden') }}</strong>

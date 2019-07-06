@@ -10,7 +10,7 @@
                         @csrf
                         <div class="row">
                             <div class="card-content">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fab fa-elementor"></i>
@@ -22,36 +22,41 @@
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
                                             </span>
-                                            @endif
+                                            @endif 
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-utensils"></i>
+                                        </span>
+                                        <div class="form-group">
+                                            <select class="form-control" name="idPuntoVenta" required>
+                                                <option value="">Seleccione PV para la carta</option>
+                                                @foreach($restaurantes as $restaurante)         
+                                                    <option value="{{$restaurante->id}}"> {{$restaurante->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-utensils"></i>
                                         </span>
                                         <div class="form-group">
                                             <select class="form-control" name="idTurno" required>
-                                                <option value="">Seleccione turno PV para la carta</option>
-                                                @foreach($restaurantes as $restaurante)
-                                                <optgroup label="{{$restaurante->name}}">
-                                                    @foreach($turnos as $turno)
-                                                        @php
-                                                        $collection = collect(['idPV' =>$turno->idPuntoVenta, 'idPV' => $restaurante->id]);
-                                                        $respuesta = $collection->contains($turno->idPuntoVenta);
-                                                        @endphp
-                                                            @if($respuesta==1)
-                                                            <option value="{{$turno->id}}">Turno {{$turno->turno}}</option>
-                                                            @endif
-                                                    @endforeach
-                                                </optgroup>
+                                                <option value="">Seleccione turno para la carta</option>
+                                                @foreach($turnos as $turno)         
+                                                    <option value="{{$turno->id}}"> {{$turno->turno}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="radio">
                                             <strong>Estado</strong>
@@ -60,7 +65,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 hidden">
+                                {{-- <div class="col-md-4 hidden">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fab fa-elementor"></i>
@@ -81,7 +86,7 @@
                                             <input id="horaAlta" type="text" class="form-control" name="horaAlta" value="{{$horaAlta}}" readonly>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!-- <small>En la api se registar el <cite title="idHotel">idHotel</cite></small> -->
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>

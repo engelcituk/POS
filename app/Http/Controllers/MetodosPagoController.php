@@ -78,14 +78,13 @@ class MetodosPagoController extends Controller
     public function actualizar(Request $request)
     {
         $idMetodoPago = $request->get('id');
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateMetodoPago/{$idMetodoPago}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateMetodoPago/{$idMetodoPago}", ['form_params' => $request->except('id')]);
         return redirect('/metodospago');
     }
     
-    public function destroy($id)
-    {
-        $idMetodoPago = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteMetodoPago/{$idMetodoPago}");
+    public function destroy($idMetodoPago){        
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteMetodoPago/{$idMetodoPago}");
         return redirect( '/metodospago');
     }
 }

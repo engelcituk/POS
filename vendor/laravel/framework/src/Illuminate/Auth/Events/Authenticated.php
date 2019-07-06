@@ -9,9 +9,9 @@ class Authenticated
     use SerializesModels;
 
     /**
-     * The authentication guard name.
+     * The authentication guard implementation.
      *
-     * @var string
+     * @var \Illuminate\Contracts\Auth\StatefulGuard
      */
     public $guard;
 
@@ -25,7 +25,7 @@ class Authenticated
     /**
      * Create a new event instance.
      *
-     * @param  string  $guard
+     * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
      * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @return void
      */

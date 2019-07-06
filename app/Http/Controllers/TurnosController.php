@@ -38,11 +38,6 @@ class TurnosController extends Controller
         return $turnos;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
@@ -51,57 +46,23 @@ class TurnosController extends Controller
         return view('turnospv.partials.create', ['hoteles' => $hoteles, 'restaurantes' => $restaurantes]);        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        
-        $idTurno = $id;
+    
+    public function show($idTurno){
         $turno = $this->obtenerUnTurno($idTurno);
-
-        $idPuntoVenta = $turno->idPuntoVenta; //obtengo el idRestaurante del turno
-        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
-        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
-
-        $idHotel = $datosRestaurantePV->idHotel;
-        $datosHotel = new HotelesController();
-        $hotelRestaurante = $datosHotel->obtenerUnHotel($idHotel);
-
-        return view('turnospv.partials.show', ['turno' => $turno, 'datosRestaurantePV'=> $datosRestaurantePV, 'hotelRestaurante'=> $hotelRestaurante]);
+        
+        return view('turnospv.partials.show', ['turno' => $turno]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($id)
     {
         $idTurno = $id;
         $turno = $this->obtenerUnTurno($idTurno);
-
-        $idPuntoVenta = $turno->idPuntoVenta; //obtengo el idRestaurante del turno
-        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
-        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
-
-        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
-        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
-
-         return view('turnospv.partials.edit',[ 'turno'=> $turno, 'datosRestaurantePV'=> $datosRestaurantePV, 'hoteles' => $hoteles, 'restaurantes' => $restaurantes]);
+        
+        return view('turnospv.partials.edit',[ 'turno'=> $turno]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function obtenerUnTurno($idTurno)
     {
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetTurno/{$idTurno}");
@@ -113,32 +74,22 @@ class TurnosController extends Controller
     {
         $idTurno = $request->get('id');        
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateTurno/{$idTurno}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateTurno/{$idTurno}", ['form_params' => $request->except('id')]);
 
         return redirect('/turnos');
     }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddTurno', ['form_params' => $request->all()]);
 
         return redirect('/turnos');
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */    
+        
     public function destroy($id)
     {
         $idTurno = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase . "DeleteTurno/{$idTurno}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase . "DeleteTurno/{$idTurno}");
         
         return redirect('/turnos');
     }

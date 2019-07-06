@@ -14,21 +14,13 @@
                 name: 'name'
             },            
             {
-                data: 'idTurno',
-                name: 'idTurno'
+                data: 'pv',
+                name: 'pv'
             },
             {
-                data: 'fechaAlta',
-                name: 'fechaAlta'
-            },
-            {
-                data: 'horaAlta',
-                name: 'horaAlta'
-            },
-            {
-                data: 'status',
-                name: 'status'
-            },
+                data: 'turno',
+                name: 'turno'
+            },           
             {
                 data: 'acciones',
                 name: 'acciones',

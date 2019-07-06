@@ -16,7 +16,7 @@
                 url: "{{ url('cartas') }}" + '/' + id,
                 type: "POST",
                 data: {
-                    '_method': 'DELETE',
+                    '_method': 'POST',
                     '_token': csrf_token
                 },
                 success: function(data) {

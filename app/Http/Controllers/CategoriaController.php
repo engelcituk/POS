@@ -9,8 +9,11 @@ use Alert;
 
 class CategoriaController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Categoria/";        
+    
+    public $urlBase = "http://localhost/TPVApi/Categoria/";
+    
     public function index(){
+        
         return view('categorias');
     }
 
@@ -35,13 +38,14 @@ class CategoriaController extends Controller
     
     public function create()
     {
-        $users = \App::call('App\Http\Controllers\ApiUsuarioController@obtenerTodosLosUsuarios');
-        return view('categorias.partials.create', compact('users'));
+        // $users = \App::call('App\Http\Controllers\ApiUsuarioController@obtenerTodosLosUsuarios');
+        return view('categorias.partials.create');
     }
 
    
     public function store(Request $request){
-        dd( $request->all());
+        // dd( $request->all());
+        
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddCategoria', ['form_params' => $request->all()]);       
         // dd($respuesta);
         return redirect('/categorias');
@@ -81,14 +85,14 @@ class CategoriaController extends Controller
     public function actualizar(Request $request){
         $idCategoria = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateCategoria/{$idCategoria}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateCategoria/{$idCategoria}", ['form_params' => $request->except('id')]);
 
         return redirect('/categorias');
     }
 
     public function destroy($idCategoria){
         
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteCategoria/{$idCategoria}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteCategoria/{$idCategoria}");
 
         return redirect('/categorias');
     }

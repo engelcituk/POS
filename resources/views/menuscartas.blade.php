@@ -21,23 +21,14 @@
                                 <thead>
                                     <tr>
                                         <th>id</th>
-                                        <th>idCarta</th>
-                                        <th>idProducto</th>
-                                        <th>precio</th>
-                                        <th>idCentroPrep</th>                                        
+                                        <th>Carta</th>
+                                        <th>Producto</th>
+                                        <th>Precio</th>
+                                        <th>Centro</th>                                        
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>idCarta</th>
-                                        <th>idProducto</th>
-                                        <th>precio</th>
-                                        <th>idCentroPrep</th>                                        
-                                        <th class="text-right">Acciones</th>
-                                    </tr>
-                                </tfoot>
+                                </thead>                                
+                                
                                 <tbody>
 
                                 </tbody>

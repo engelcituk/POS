@@ -62,8 +62,6 @@ class SeedCommand extends Command
         Model::unguarded(function () {
             $this->getSeeder()->__invoke();
         });
-
-        $this->info('Database seeding completed successfully.');
     }
 
     /**

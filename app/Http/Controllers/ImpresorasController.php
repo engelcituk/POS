@@ -67,6 +67,7 @@ class ImpresorasController extends Controller
     {
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddImpresora', ['form_params' => $request->all()]);
 
+        
         return redirect('/impresoras');
     }
     public function obtenerUnaImpresora($idImpresora)
@@ -80,13 +81,13 @@ class ImpresorasController extends Controller
     {
         $idImpresora = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateImpresora/{$idImpresora}", ['form_params' =>$request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateImpresora/{$idImpresora}", ['form_params' =>$request->except('id')]);
         return redirect('/impresoras');
     }
     public function destroy($id)
     {
         $idImpresora = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase ."DeleteImpresora/{$idImpresora}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase ."DeleteImpresora/{$idImpresora}");
         return redirect('/impresoras');
     }
 }

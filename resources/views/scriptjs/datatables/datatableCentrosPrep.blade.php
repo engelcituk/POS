@@ -14,12 +14,20 @@
                 name: 'name'
             },
             {
-                data: 'idImpresora',
-                name: 'idImpresora'
+                data: 'impresora',
+                name: 'impresora'
+            },
+            {
+                data: 'impresoraB',
+                name: 'impresoraB'
             },
             {
                 data: 'descripcion',
                 name: 'descripcion'
+            },
+            {
+                data: 'imprime',
+                name: 'imprime'
             },
             {
                 data: 'status',

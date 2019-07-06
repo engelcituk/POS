@@ -22,27 +22,13 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>name</th>
-                                        <!-- <th>idPuntoVenta</th> -->
-                                        <th>idTurno</th>
-                                        <th>fechaAlta</th>
-                                        <th>horaAlta</th>
-                                        <th>estado</th>
-                                        <th class="disabled-sorting text-right">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>name</th>
-                                        <!-- <th>idPuntoVenta</th> -->
-                                        <th>idTurno</th>
-                                        <th>fechaAlta</th>
-                                        <th>horaAlta</th>
-                                        <th>estado</th>
+                                        <th>Nombre</th>
+                                        <th>PV</th>
+                                        <th>Turno</th>       
                                         <th class="text-right">Acciones</th>
                                     </tr>
-                                </tfoot>
+                                </thead>
+                                
                                 <tbody>
 
                                 </tbody>

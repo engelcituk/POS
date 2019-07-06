@@ -181,14 +181,14 @@ class ProductosController extends Controller
     }
 
     public function destroy($idProducto){        
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteProducto/{$idProducto}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteProducto/{$idProducto}");
 
         return redirect('/productos');
     }
 
     public function destroyAlergeno($idProducto, $idAlergeno){
 
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBaseProductoAlergeno."DeleteProductoAlergeno/{$idProducto}/{$idAlergeno}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBaseProductoAlergeno."DeleteProductoAlergeno/{$idProducto}/{$idAlergeno}");
 
         return $respuesta;
     }

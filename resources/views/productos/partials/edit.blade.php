@@ -231,7 +231,7 @@
                 url: "{{ url('borrar') }}"+'/'+idProducto+'/'+idAlergeno,
                 type: "POST",
                 data: {
-                    '_method': 'DELETE',
+                    '_method': 'POST',
                     '_token': csrf_token
                 },
                 success: function(respuesta) {                    

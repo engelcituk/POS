@@ -15,13 +15,6 @@ class BcryptHasher extends AbstractHasher implements HasherContract
     protected $rounds = 10;
 
     /**
-     * Indicates whether to perform an algorithm check.
-     *
-     * @var bool
-     */
-    protected $verifyAlgorithm = false;
-
-    /**
      * Create a new hasher instance.
      *
      * @param  array  $options
@@ -30,7 +23,6 @@ class BcryptHasher extends AbstractHasher implements HasherContract
     public function __construct(array $options = [])
     {
         $this->rounds = $options['rounds'] ?? $this->rounds;
-        $this->verifyAlgorithm = $options['verify'] ?? $this->verifyAlgorithm;
     }
 
     /**
@@ -62,12 +54,10 @@ class BcryptHasher extends AbstractHasher implements HasherContract
      * @param  string  $hashedValue
      * @param  array  $options
      * @return bool
-     *
-     * @throws \RuntimeException
      */
     public function check($value, $hashedValue, array $options = [])
     {
-        if ($this->verifyAlgorithm && $this->info($hashedValue)['algoName'] !== 'bcrypt') {
+        if ($this->info($hashedValue)['algoName'] !== 'bcrypt') {
             throw new RuntimeException('This password does not use the Bcrypt algorithm.');
         }
 

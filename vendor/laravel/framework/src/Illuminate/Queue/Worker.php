@@ -123,7 +123,7 @@ class Worker
             // Finally, we will check to see if we have exceeded our memory limits or if
             // the queue should restart based on other indications. If so, we'll stop
             // this worker and let whatever is "monitoring" it restart the process.
-            $this->stopIfNecessary($options, $lastRestart, $job);
+            $this->stopIfNecessary($options, $lastRestart);
         }
     }
 
@@ -194,17 +194,14 @@ class Worker
      *
      * @param  \Illuminate\Queue\WorkerOptions  $options
      * @param  int  $lastRestart
-     * @param  mixed  $job
      */
-    protected function stopIfNecessary(WorkerOptions $options, $lastRestart, $job = null)
+    protected function stopIfNecessary(WorkerOptions $options, $lastRestart)
     {
         if ($this->shouldQuit) {
             $this->stop();
         } elseif ($this->memoryExceeded($options->memory)) {
             $this->stop(12);
         } elseif ($this->queueShouldRestart($lastRestart)) {
-            $this->stop();
-        } elseif ($options->stopWhenEmpty && is_null($job)) {
             $this->stop();
         }
     }
@@ -398,7 +395,7 @@ class Worker
             return;
         }
 
-        $this->failJob($job, $e = new MaxAttemptsExceededException(
+        $this->failJob($connectionName, $job, $e = new MaxAttemptsExceededException(
             $job->resolveName().' has been attempted too many times or run too long. The job may have previously timed out.'
         ));
 
@@ -419,24 +416,25 @@ class Worker
         $maxTries = ! is_null($job->maxTries()) ? $job->maxTries() : $maxTries;
 
         if ($job->timeoutAt() && $job->timeoutAt() <= Carbon::now()->getTimestamp()) {
-            $this->failJob($job, $e);
+            $this->failJob($connectionName, $job, $e);
         }
 
         if ($maxTries > 0 && $job->attempts() >= $maxTries) {
-            $this->failJob($job, $e);
+            $this->failJob($connectionName, $job, $e);
         }
     }
 
     /**
      * Mark the given job as failed and raise the relevant event.
      *
+     * @param  string  $connectionName
      * @param  \Illuminate\Contracts\Queue\Job  $job
      * @param  \Exception  $e
      * @return void
      */
-    protected function failJob($job, $e)
+    protected function failJob($connectionName, $job, $e)
     {
-        return $job->fail($e);
+        return FailingJob::handle($connectionName, $job, $e);
     }
 
     /**

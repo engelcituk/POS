@@ -22,21 +22,13 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>IdPuntoVenta</th>
-                                        <th>HoraInicio</th>
+                                        <th>Hora Inicio</th>
+                                        <th>Hora Fin</th>
                                         <th>Turno</th>                                        
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>IdPuntoVenta</th>
-                                        <th>HoraInicio</th>
-                                        <th>Turno</th>                                        
-                                        <th class="text-right">Acciones</th>
-                                    </tr>
-                                </tfoot>
+                                
                                 <tbody>
 
                                 </tbody>

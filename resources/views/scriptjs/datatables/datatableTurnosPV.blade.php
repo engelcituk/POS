@@ -10,12 +10,12 @@
                 name: 'id'
             },
             {
-                data: 'idPuntoVenta',
-                name: 'idPuntoVenta'
-            },
-            {
                 data: 'horaInicio',
                 name: 'horaInicio'
+            },
+            {
+                data: 'horaFin',
+                name: 'horaFin'
             },
             {
                 data: 'turno',

@@ -34,7 +34,6 @@ trait DelegatesToResource
      *
      * @param  mixed  $value
      * @return void
-     *
      * @throws \Exception
      */
     public function resolveRouteBinding($value)

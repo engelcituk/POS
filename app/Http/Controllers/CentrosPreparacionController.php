@@ -48,36 +48,28 @@ class CentrosPreparacionController extends Controller
     public function create()
     {
               
-        $impresoras = \App::call( 'App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');  
+        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');  
         return view('centrospreparacion.partials.create', compact('impresoras'));   
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+  
     public function store(Request $request){
         
         $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddCentroPreparacion', [
             'form_params' => [
                 'name' => $request->get('name'),
+                'status' => $request->get('status'),
                 'idImpresora' => $request->get('idImpresora'),
+                'idImpresoraB' => $request->get('idImpresoraB'),
                 'descripcion' => $request->get('descripcion'),
-                'status' => $request->get('status')
+                'imprime' => $request->get('idImpresora')
                 ]
             ]);
 
+        // dd($respuesta);
         return redirect( '/centrospreparacion');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $idCentroPreparacion = $id;
@@ -92,25 +84,21 @@ class CentrosPreparacionController extends Controller
         return view('centrospreparacion.partials.show', compact('impresoras', 'centroPreparacion', 'datosImpresoraCP')); 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $idCentroPreparacion = $id;
         $centroPreparacion = $this->obtenerUnCentroDePreparación($idCentroPreparacion);
 
         $idImpresora = $centroPreparacion->idImpresora;
+        $idImpresoraB = $centroPreparacion->idImpresoraB;
+
         $datosImpresora = new ImpresorasController(); //para obtener los datos de la zona
         $datosImpresoraCP = $datosImpresora->obtenerUnaImpresora($idImpresora); //los datos de la zona lo envio a la vista
-        
+        $datosImpresoraCPB = $datosImpresora->obtenerUnaImpresora($idImpresoraB);
+       
         $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
-        dd( $impresoras);
-
-        return view('centrospreparacion.partials.edit', compact('impresoras', 'centroPreparacion', 'datosImpresoraCP')); 
+        
+        return view('centrospreparacion.partials.edit', compact('impresoras', 'centroPreparacion', 'datosImpresoraCP', 'datosImpresoraCPB')); 
     }
     public function obtenerUnCentroDePreparación($idCentroPreparacion)
     {
@@ -124,29 +112,25 @@ class CentrosPreparacionController extends Controller
     {
         $idCentroPreparacion = $request->get('id');
         
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateCentroPreparacion/{$idCentroPreparacion}", [
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateCentroPreparacion/{$idCentroPreparacion}", [
             'form_params' =>[
                 'name' => $request->get('name'),
+                'status' => $request->get('status'),
                 'idImpresora' => $request->get('idImpresora'),
+                'idImpresoraB' => $request->get('idImpresoraB'),
                 'descripcion' => $request->get('descripcion'),
-                'status' => $request->get('status')
+                'imprime' => $request->get('idImpresora')
             ]            
         ]);
 
         return redirect('/centrospreparacion');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     
-    public function destroy($id)
-    {
-        $idCentroPreparacion = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteCentroPreparacion/{$idCentroPreparacion}");
+    
+    public function destroy( $idCentroPreparacion){        
+        
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteCentroPreparacion/{$idCentroPreparacion}");
         return redirect( '/centrospreparacion');
     }
 }

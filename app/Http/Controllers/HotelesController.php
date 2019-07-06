@@ -77,13 +77,13 @@ class HotelesController extends Controller
     {
         $idHotel= $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateHotel/{$idHotel}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateHotel/{$idHotel}", ['form_params' => $request->except('id')]);
         return redirect('/hoteles');
     }
     public function destroy($id)
     {
         $idHotel = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteHotel/{$idHotel}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteHotel/{$idHotel}");
         return redirect('/hoteles');
     }
 }

@@ -3,11 +3,11 @@
 namespace Illuminate\Foundation\Http\Middleware;
 
 use Closure;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\InteractsWithTime;
 use Symfony\Component\HttpFoundation\Cookie;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Illuminate\Session\TokenMismatchException;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 
 class VerifyCsrfToken
@@ -17,7 +17,7 @@ class VerifyCsrfToken
     /**
      * The application instance.
      *
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var \Illuminate\Foundation\Application
      */
     protected $app;
 
@@ -45,7 +45,7 @@ class VerifyCsrfToken
     /**
      * Create a new middleware instance.
      *
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @param  \Illuminate\Contracts\Encryption\Encrypter  $encrypter
      * @return void
      */
@@ -73,7 +73,7 @@ class VerifyCsrfToken
             $this->tokensMatch($request)
         ) {
             return tap($next($request), function ($response) use ($request) {
-                if ($this->shouldAddXsrfTokenCookie()) {
+                if ($this->addHttpCookie) {
                     $this->addCookieToResponse($request, $response);
                 }
             });
@@ -154,16 +154,6 @@ class VerifyCsrfToken
         }
 
         return $token;
-    }
-
-    /**
-     * Determine if the cookie should be added to the response.
-     *
-     * @return bool
-     */
-    public function shouldAddXsrfTokenCookie()
-    {
-        return $this->addHttpCookie;
     }
 
     /**

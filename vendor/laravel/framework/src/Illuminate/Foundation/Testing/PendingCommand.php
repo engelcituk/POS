@@ -22,7 +22,7 @@ class PendingCommand
     /**
      * The application instance.
      *
-     * @var \Illuminate\Contracts\Foundation\Application
+     * @var \Illuminate\Foundation\Application
      */
     protected $app;
 
@@ -48,17 +48,10 @@ class PendingCommand
     protected $expectedExitCode;
 
     /**
-     * Determine if command has executed.
-     *
-     * @var bool
-     */
-    protected $hasExecuted = false;
-
-    /**
      * Create a new pending console command run.
      *
      * @param  \PHPUnit\Framework\TestCase  $test
-     * @param  \Illuminate\Contracts\Foundation\Application  $app
+     * @param  \Illuminate\Foundation\Application  $app
      * @param  string  $command
      * @param  array  $parameters
      * @return void
@@ -109,47 +102,6 @@ class PendingCommand
         $this->expectedExitCode = $exitCode;
 
         return $this;
-    }
-
-    /**
-     * Execute the command.
-     *
-     * @return int
-     */
-    public function execute()
-    {
-        return $this->run();
-    }
-
-    /**
-     * Execute the command.
-     *
-     * @return int
-     */
-    public function run()
-    {
-        $this->hasExecuted = true;
-
-        $this->mockConsoleOutput();
-
-        try {
-            $exitCode = $this->app[Kernel::class]->call($this->command, $this->parameters);
-        } catch (NoMatchingExpectationException $e) {
-            if ($e->getMethodName() === 'askQuestion') {
-                $this->test->fail('Unexpected question "'.$e->getActualArguments()[0]->getQuestion().'" was asked.');
-            }
-
-            throw $e;
-        }
-
-        if ($this->expectedExitCode !== null) {
-            $this->test->assertEquals(
-                $this->expectedExitCode, $exitCode,
-                "Expected status code {$this->expectedExitCode} but received {$exitCode}."
-            );
-        }
-
-        return $exitCode;
     }
 
     /**
@@ -213,10 +165,21 @@ class PendingCommand
      */
     public function __destruct()
     {
-        if ($this->hasExecuted) {
-            return;
+        $this->mockConsoleOutput();
+
+        try {
+            $exitCode = $this->app[Kernel::class]->call($this->command, $this->parameters);
+        } catch (NoMatchingExpectationException $e) {
+            if ($e->getMethodName() == 'askQuestion') {
+                $this->test->fail('Unexpected question "'.$e->getActualArguments()[0]->getQuestion().'" was asked.');
+            }
         }
 
-        $this->run();
+        if ($this->expectedExitCode != null) {
+            $this->test->assertTrue(
+                $exitCode == $this->expectedExitCode,
+                "Expected status code {$this->expectedExitCode} but received {$exitCode}."
+            );
+        }
     }
 }

@@ -35,8 +35,8 @@ class CartaController extends Controller
         return $cartas;
     }
     
-    public function create() 
-    {
+    public function create(){
+
         $fechaAlta= Carbon::now();//ocupo carbon para obtener fecha actual
         $horaAlta = $fechaAlta->toTimeString(); //obtengo la hora de la fecha
 
@@ -46,24 +46,23 @@ class CartaController extends Controller
 
         return view('cartas.partials.create',compact('fechaAlta', 'horaAlta','restaurantes','turnos'));
     }
-    public function show($id)
-    {
-        $idCarta = $id;
+    public function show( $idCarta){       
+
         $carta = $this->obtenerUnaCarta($idCarta);
+
+        $idPuntoVenta = $carta->idPuntoVenta;
+        $datosPV = new RestaurantesController();
+        $datosPV = $datosPV->obtenerUnRestaurante($idPuntoVenta);
 
         $idTurno = $carta->idTurno;
         $datosTurno = new TurnosController();
-        $datosTurnoPV = $datosTurno->obtenerUnTurno($idTurno);
+        $datosTurno = $datosTurno->obtenerUnTurno($idTurno);
 
-        $idPuntoVenta = $datosTurnoPV->idPuntoVenta; //obtengo el idRestaurante del turno
-        $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
-        $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
-
-        $idHotel = $datosRestaurantePV->idHotel;
+        $idhotel = $datosPV->idHotel;     
         $datosHotel = new HotelesController();
-        $hotelRestaurante = $datosHotel->obtenerUnHotel($idHotel);
+        $datosHotel = $datosHotel->obtenerUnHotel($idhotel);
         
-        return view('cartas.partials.show', ['carta' => $carta, 'datosTurnoPV'=> $datosTurnoPV, 'datosRestaurantePV'=>$datosRestaurantePV, 'hotelRestaurante'=> $hotelRestaurante]);
+        return view('cartas.partials.show', compact('carta','datosPV', 'datosTurno', 'datosHotel'));
     }
     public function edit($id){
         $idCarta = $id;
@@ -71,18 +70,22 @@ class CartaController extends Controller
 
         $idTurno = $carta->idTurno;
         $datosTurno = new TurnosController();
-        $datosTurnoPV = $datosTurno->obtenerUnTurno($idTurno);
+        $datosTurno = $datosTurno->obtenerUnTurno($idTurno);
+
+        $idPuntoVenta = $carta->idPuntoVenta;
+        $datosPV = new RestaurantesController();
+        $datosPV = $datosPV->obtenerUnRestaurante($idPuntoVenta);
 
         $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
         $turnos = \App::call('App\Http\Controllers\TurnosController@obtenerTodosLosTurnos');
 
 
-        return view('cartas.partials.edit', compact('carta', 'datosTurnoPV', 'restaurantes', 'turnos'));       
+        return view('cartas.partials.edit', compact('carta', 'datosPV','datosTurno', 'restaurantes', 'turnos'));       
     }
    
     public function obtenerUnaCarta($idCarta)
     {
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetCarta/{$idCarta}");
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetCarta/{$idCarta}");
         $datos = json_decode($respuesta);
         $carta = $datos->objeto;
         return $carta;
@@ -91,7 +94,7 @@ class CartaController extends Controller
     {
         $idCarta = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateCarta/{$idCarta}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateCarta/{$idCarta}", ['form_params' => $request->except('id')]);
 
         return redirect('/cartas');
     }
@@ -106,7 +109,7 @@ class CartaController extends Controller
     public function destroy($id)
     {
         $idCarta = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase . "DeleteCarta/{$idCarta}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase . "DeleteCarta/{$idCarta}");
 
         return redirect('/cartas');
     }

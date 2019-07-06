@@ -20,23 +20,13 @@
                                 <thead>
                                     <tr>
                                         <th>id</th>
-                                        <th>name</th>
-                                        <th>idPuntoVenta</th>
-                                        <th>status</th>
-                                        <th>descripcion</th>
+                                        <th>Nombre</th>
+                                        <th>Punto de Venta</th>
+                                        <th>Estado</th>
+                                        <th>Descripcion</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>id</th>
-                                        <th>name</th>
-                                        <th>idPuntoVenta</th>
-                                        <th>status</th>
-                                        <th>descripcion</th>
-                                        <th class="text-right">Acciones</th>
-                                    </tr>
-                                </tfoot>
+                                </thead>                                
                                 <tbody>
 
                                 </tbody>

@@ -1,4 +1,5 @@
-<script>   
+<script> 
+  
 $(document).ready(function() {
     $('.listaProductos').select2();
 });
@@ -32,9 +33,10 @@ function addrowTarifa() {
                 var td = $("<td></td>", {
                     "data-name": $(cur_td).data("name")
                 });
-
+                $latest_tr 	= $('#tblMenuCartas tr:last');
+                $('select.select2').select2('destroy');                                
                 var c = $(cur_td).find($(children[0]).prop('tagName')).clone().val("");               
-
+                $('select.select2').select2();
                 var name = $(cur_td).data("name");
                 
                 c.attr("name", $(cur_td).data("name"));

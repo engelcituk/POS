@@ -48,7 +48,7 @@
                                             <i class="fas fa-utensils"></i>
                                         </span>
                                         <div class="form-group">
-                                            <select class="form-control" name="idImpresora" required>
+                                            <select class="form-control" name="idImpresoraB" required>
                                                 <option value="">Impresora backup CP</option>
                                                 @foreach($impresoras as $impresora)
                                                     <option value="{{$impresora->id}}">{{$impresora->name}}</option>

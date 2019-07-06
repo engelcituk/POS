@@ -21,22 +21,11 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Nombre</th>
-                                        <th>FechaAlta</th>
-                                        <th>idUsuario</th>                                        
+                                        <th>FechaAlta</th>                                        
                                         <th>orden</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Nombre</th>
-                                        <th>FechaAlta</th>
-                                        <th>idUsuario</th>                                        
-                                        <th>orden</th>
-                                        <th class="text-right">Acciones</th>
-                                    </tr>
-                                </tfoot>
+                                </thead>                                
                                 <tbody>
 
                                 </tbody>

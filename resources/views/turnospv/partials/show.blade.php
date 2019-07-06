@@ -10,9 +10,9 @@
                         <img class="img" src="{{asset('img/faces/hora.png')}}">
                     </div>
                     <div class="card-content">
-                        <h3 class="category text-black"><strong>Nombre hotel:</strong> {{$hotelRestaurante->name}}</h3><br>
-                        <h4 class="card-title"><strong>Punto de venta:</strong> {{$datosRestaurantePV->name}}</h4><br>
-                        <h4 class="card-title"><strong>hora inicio: </strong>{{$turno->horaInicio}}</h4><br>
+                        
+                        <h4 class="card-title"><strong>Hora inicio: </strong>{{$turno->horaInicio}}</h4><br>
+                        <h4 class="card-title"><strong>Hora fin: </strong>{{$turno->horaInicio}}</h4><br>
 
                         <h4 class="card-title"><strong>Turno: </strong> {{$turno->turno}}</h4><br>
 
