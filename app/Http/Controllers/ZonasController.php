@@ -97,17 +97,15 @@ class ZonasController extends Controller
         $zona = $datos->objeto;
         return $zona;
     }
-    public function actualizar(Request $request)
-    {
+    public function actualizar(Request $request){
         $idZona = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdateZona/{$idZona}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateZona/{$idZona}", ['form_params' => $request->except('id')]);
         return redirect('/zonas');
     }
-    public function destroy($id)
-    {
-        $idZona = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteZona/{$idZona}");
+    public function destroy($idZona){         
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteZona/{$idZona}");
         return redirect('/zonas');
     }
     

@@ -151,9 +151,9 @@
                                 </div>
                             </div>
                             <div class="col-md-7" id="idMesaAddProducts">                              
-                                <ul class="nav nav-tabs navPersonalizado" id="tabs">
+                                {{-- <ul class="nav nav-tabs navPersonalizado" id="tabs">
                                     @foreach($categorias as $categoria)
-                                    <li><a href="#cate{{$categoria->id}}" data-toggle="tab" onclick="GetProductosByCat({{$categoria->id}})">{{$categoria->name}}</a></li>   
+                                    <li><a href="#cate{{$categoria->id}}" data-toggle="tab" onclick="GetProductosByCat({{$categoria->id}})">{{$categoria->name}} {{$loop->count}}</a></li>   
                                     @endforeach                                    
                                 </ul>
                                 <div class="tab-content">
@@ -162,7 +162,25 @@
                                             <ul class="nav nav-pills nav-pills-icons" id="UlList{{$categoria->id}}" role="tablist">                                                               
                                             </ul>
                                         </div>             
-                                    @endforeach                         
+                                    @endforeach                                    
+                                </div> --}}                                 
+                                <div id="contentSlider">
+                                    <div id="carrusel">
+                                        <a href="#" class="left-arrow"><span><i class="fas fa-arrow-left"></i></span></a>
+                                        <a href="#" class="right-arrow"><span><i class="fas fa-arrow-right"></i></span> </a>
+                                        <div class="carrusel">
+                                            @foreach($categorias as $categoria)
+                                                <div class="product" id="categoria_{{$categoria->id}}" onclick="GetProductosByCat({{$categoria->id}})">
+                                                <img src="{{asset('img/carousel/001.jpg')}}"/>
+                                                <p>{{$categoria->name}}</p>                                                   
+                                                </div>                                                    
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="lstProductos">
+                                    <ul class="nav nav-pills nav-pills-icons" id="UlList{{$categoria->id}}" role="tablist">                                                               
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -182,5 +200,10 @@
     @include('ordenar.partials.modalMetodoPago')
 
 </div>
+<script>
+    function getImg() {
+        console.log("hiciste click");
+    }
+    </script>
 @endsection
 

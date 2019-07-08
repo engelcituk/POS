@@ -97,8 +97,8 @@ Route::get('restaurantes/create', 'RestaurantesController@create')->name('restau
 Route::post('restaurantes/store', 'RestaurantesController@store')->name('restaurantes.store');
 Route::get('restaurantes/{restaurante}', 'RestaurantesController@show')->name('restaurantes.show');
 Route::get('restaurantes/{restaurante}/edit', 'RestaurantesController@edit')->name('restaurantes.edit');
-Route::put('restaurantes/actualizar', 'RestaurantesController@actualizar')->name('restaurantes.actualizar');
-Route::delete('restaurantes/{restaurante}', 'RestaurantesController@destroy')->name('restaurantes.destroy');
+Route::post('restaurantes/actualizar', 'RestaurantesController@actualizar')->name('restaurantes.actualizar');
+Route::post('restaurantes/{restaurante}', 'RestaurantesController@destroy')->name('restaurantes.destroy');
 
 //rutas de menu configuracion-->Turnos de punto de venta 
 Route::get('all/turnos', 'TurnosController@AllTurnos')->name('all.turnos');
@@ -117,8 +117,8 @@ Route::get('zonas/create', 'ZonasController@create')->name('zonas.create');
 Route::post('zonas/store', 'ZonasController@store')->name('zonas.store');
 Route::get('zonas/{zona}', 'ZonasController@show')->name('zonas.show');
 Route::get('zonas/{zona}/edit', 'ZonasController@edit')->name('zonas.edit');
-Route::put('zonas/actualizar', 'ZonasController@actualizar')->name('zonas.actualizar');
-Route::delete('zonas/{zona}', 'ZonasController@destroy')->name('zonas.destroy');
+Route::post('zonas/actualizar', 'ZonasController@actualizar')->name('zonas.actualizar');
+Route::post('zonas/{zona}', 'ZonasController@destroy')->name('zonas.destroy');
 
 //rutas de menu configuracion-->mesas 
 Route::get('all/mesas', 'MesasController@AllMesas')->name('all.mesas');
@@ -127,8 +127,8 @@ Route::get('mesas/create', 'MesasController@create')->name('mesas.create');
 Route::post('mesas/store', 'MesasController@store')->name('mesas.store');
 Route::get('mesas/{mesa}', 'MesasController@show')->name('mesas.show');
 Route::get('mesas/{mesa}/edit', 'MesasController@edit')->name('mesas.edit');
-Route::put('mesas/actualizar', 'MesasController@actualizar')->name('mesas.actualizar');
-Route::delete('mesas/{mesa}', 'MesasController@destroy')->name('mesas.destroy');
+Route::post('mesas/actualizar', 'MesasController@actualizar')->name('mesas.actualizar');
+Route::post('mesas/{mesa}', 'MesasController@destroy')->name('mesas.destroy');
 
 //rutas de menu configuracion-->impmresoras 
 Route::get('all/impresoras', 'ImpresorasController@AllImpresoras')->name('all.impresoras');
@@ -175,7 +175,7 @@ Route::get('alergenos/create', 'AlergenoController@create')->name('alergenos.cre
 Route::post('alergenos/store', 'AlergenoController@store')->name('alergenos.store');
 Route::get('alergenos/{alergeno}', 'AlergenoController@show')->name('alergenos.show');
 Route::get('alergenos/{alergeno}/edit', 'AlergenoController@edit')->name('alergenos.edit');
-Route::put('alergenos/actualizar', 'AlergenoController@actualizar')->name('alergenos.actualizar');
+Route::post('alergenos/actualizar', 'AlergenoController@actualizar')->name('alergenos.actualizar');
 Route::post('alergenos/{alergeno}', 'AlergenoController@destroy')->name('alergenos.destroy');
 
 //rutas de menu configuracion-->carta
@@ -214,7 +214,7 @@ Route::get('productos', 'ProductosController@index')->name('productos.index');
 Route::get('productos/create', 'ProductosController@create')->name('productos.create');
 Route::post('productos/store', 'ProductosController@store')->name('productos.store');
 Route::post('productos/{idProducto}/{idAlergeno}', 'ProductosController@guardarProductoAlergeno')->name('productos.storealergeno');
-Route::put('productos/{producto}', 'ProductosController@actualizar')->name('productos.actualizar');
+Route::post('productos/actualizar}', 'ProductosController@actualizar')->name('productos.actualizar');
 Route::get('productos/{producto}', 'ProductosController@show')->name('productos.show');
 Route::get('productos/{producto}/edit', 'ProductosController@edit')->name('productos.edit');        
 Route::post('productos/{producto}', 'ProductosController@destroy')->name('productos.destroy');
@@ -225,9 +225,9 @@ Route::get('all/menuscartas', 'MenusCartasController@AllMenuCartas')->name('all.
 Route::get('menuscartas', 'MenusCartasController@index')->name('menuscartas.index');
 Route::get('menuscartas/create', 'MenusCartasController@create')->name('menuscartas.create');
 Route::post('menuscartas/store', 'MenusCartasController@store')->name('menuscartas.store');
-Route::ppostut('menuscartas/{menuscarta}', 'MenusCartasController@actualizar')->name('menuscartas.actualizar');
 Route::get('menuscartas/{menuscarta}', 'MenusCartasController@show')->name('menuscartas.show');
 Route::get('menuscartas/{menuscarta}/edit', 'MenusCartasController@edit')->name('menuscartas.edit');
+Route::post('menuscartas/actualizar', 'MenusCartasController@actualizar')->name('menuscartas.actualizar');
 Route::post('menuscartas/{menuscarta}', 'MenusCartasController@destroy')->name('menuscartas.destroy');
 
 

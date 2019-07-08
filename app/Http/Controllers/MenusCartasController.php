@@ -127,7 +127,7 @@ class MenusCartasController extends Controller{
     }
 
     
-    public function destroy($idMenuCarta){
+    public function destroy($idMenuCarta){ 
 
         $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteMenu/{$idMenuCarta}");
 

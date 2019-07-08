@@ -60,13 +60,9 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        
-        //agrego mis propios middleware relacionados a roles y permisos
-        'role' => \Caffeinated\Shinobi\Middleware\UserHasRole::class,
-        'permission'=> \Caffeinated\Shinobi\Middleware\UserHasPermission::class,
         'filtroAcceso' => \App\Http\Middleware\IngresoUser::class,
     ];
-    // Caffeinated \Shinobi \Middleware;
+
     /**
      * The priority-sorted list of middleware.
      *

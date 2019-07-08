@@ -71,28 +71,25 @@ class AlergenoController extends Controller
     
     public function actualizar(Request $request){
         
-        $idAlergeno = $request->get('id');    
+        $idAlergeno = $request->get('id');
         $nombre = $request->get('name');
         $imagen = $request->file('icono');
 
         if ($imagen == null) {
-            $array = array();
+            $icono = array();
             $imagen = "SIN IMAGEN";
-            $array = $imagen;
+            $icono = $imagen;
         } else {
             $imagen = file_get_contents($request->file('icono')->path());
 
-            $array = array();
+            $icono = array();
             foreach (str_split($imagen) as $char) {
-                array_push($array, ord($char));
+                array_push($icono, ord($char));
             }
-        }                        
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddAlergeno', [
-            'form_params' => [
-                'name' => $nombre,
-                'icono' => $array
-            ]
-        ]);
+        }
+       
+        $this->actualizarAlergeno($idAlergeno, $nombre, $icono);
+        
         return redirect('/alergenos');
 
     }
@@ -110,30 +107,47 @@ class AlergenoController extends Controller
         $imagen = $request->file('icono');      
 
         if ($imagen == null) {
-            $array = array();
+            $icono = array();
             $imagen = "SIN IMAGEN";
-            $array = $imagen;
+            $icono = $imagen;
         } else {
             $imagen = file_get_contents($request->file('icono')->path());
 
-            $array = array();
+            $icono = array();
             foreach (str_split($imagen) as $char) {
-                array_push($array, ord($char));
+                array_push($icono, ord($char));
             }
-        }        
-        // $icono = base64_encode(file_get_contents($request->file('icono')->path()));        
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddAlergeno', [
+        }
+         $this->guardarAlergeno($nombre, $icono);
+               
+        return redirect('/alergenos');
+        
+    }
+    public function guardarAlergeno($nombre, $icono){
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddAlergeno', [
             'form_params' => [
                 'name' => $nombre,
-                'icono' => $array
-            ] 
-        ]);        
-        return redirect('/alergenos');
+                'icono' => $icono
+            ]
+        ]);
+        return $respuesta;
     }
-    
+    public function actualizarAlergeno($nombre, $icono){
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'UpdateAlergeno', [
+            'form_params' => [
+                'name' => $nombre,
+                'icono' => $icono
+            ]
+        ]);
+        
+        return redirect('/categorias');
+    }
+
     public function destroy($idAlergeno){
         
         $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteAlergeno/{$idAlergeno}");
-        return redirect('/centrospreparacion');
+        return redirect('/alergenos');
     }
 }

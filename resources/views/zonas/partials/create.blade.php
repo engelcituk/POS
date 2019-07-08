@@ -35,19 +35,13 @@
                                         <div class="form-group">
                                             <select class="form-control" name="idPuntoVenta" required>
                                                 <option value="">Seleccione punto de venta </option>
-                                                @foreach($hoteles as $hotel)
-                                                <optgroup label="{{$hotel->name}}">
+                                                
                                                     @foreach($restaurantes as $restaurante)
-                                                    @php
-                                                    $collection = collect(['idHotel' => $restaurante->idHotel, 'idHotel' => $hotel->id]);
-                                                    $respuesta = $collection->contains($restaurante->idHotel);
-                                                    @endphp
-                                                    @if($respuesta==1)
+                                                    
                                                     <option value="{{$restaurante->id}}">{{$restaurante->name}}</option>
-                                                    @endif
+                                                   
                                                     @endforeach
-                                                </optgroup>
-                                                @endforeach
+                                               
                                             </select>
                                         </div>
                                     </div>

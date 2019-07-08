@@ -19,19 +19,19 @@
                                             <!-- <label for="sel1">Select list:</label> -->
                                             <select class="form-control" name="idZona" required>
                                                 <option value="">Seleccione zona para la mesa</option>
-                                                @foreach($restaurantes as $restaurante)
-                                                <optgroup label="{{$restaurante->name}}">
+                                                {{-- @foreach($restaurantes as $restaurante)
+                                                <optgroup label="{{$restaurante->name}}"> --}}
                                                     @foreach($zonas as $zona)
-                                                    @php
+                                                    {{-- @php
                                                     $collection = collect(['idPV' => $zona->idPuntoVenta, 'idPV' => $restaurante->id]);
                                                     $respuesta = $collection->contains($zona->idPuntoVenta);
-                                                    @endphp
-                                                    @if($respuesta==1)
+                                                    @endphp --}}
+                                                    {{-- @if($respuesta==1) --}}
                                                     <option value="{{$zona->id}}">{{$zona->name}}</option>
-                                                    @endif
+                                                    {{-- @endif --}}
                                                     @endforeach
-                                                </optgroup>
-                                                @endforeach
+                                                {{-- </optgroup>
+                                                @endforeach --}}
                                             </select>
                                         </div>
                                     </div>

@@ -2,15 +2,13 @@
 
 namespace App;
 
-use Caffeinated\Shinobi\Traits\ShinobiTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable,ShinobiTrait; /*se la agrega ShinobiTrait para aplicar correctamente los roles
-     y permisos, por el jemplo si un usuario tiene all-access, se salta todo*/
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +18,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
- 
+
     /**
      * The attributes that should be hidden for arrays.
      *

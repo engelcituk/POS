@@ -11,14 +11,17 @@
                         $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default
                         $dataimg = "data:image/png;base64,";                       
                         $imgBase64 = $dataimg.$imgAlergeno;                                        
-                        $resultadoImg = (($imgAlergeno == "AA==") || ($imgAlergeno == NULL)) ? $imgDefault : $imgBase64;    
+                        $resultadoImg = (($imgAlergeno == "AA==") || ($imgAlergeno == NULL)) ? $imgDefault : $imgBase64; 
+                        if($resultadoImg != $imgBase64){
+                            echo "no se asigno img";
+                        }   
                     @endphp
                     <div class="card card-profile">
                         <div class="card-avatar">
                                 <img class="img" src="{{$resultadoImg}}"/> 
                         </div>
                         @csrf
-                        {{ method_field('PUT') }}
+                        {{-- {{ method_field('PUT') }} --}}
                         <input id="name" type="hidden"  class="form-control" name="id" value="{{$alergeno->id}}" required>
                         <div class="row">                            
                             <div class="card-content">

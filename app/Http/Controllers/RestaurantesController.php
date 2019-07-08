@@ -92,14 +92,14 @@ class RestaurantesController extends Controller
     {
         $idRestaurante = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase."UpdatePuntoVenta/{$idRestaurante}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdatePuntoVenta/{$idRestaurante}", ['form_params' => $request->except('id')]);
         return redirect('/restaurantes');
     }
     
     public function destroy($id)
     {
         $idRestaurante = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeletePuntoVenta/{$idRestaurante}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeletePuntoVenta/{$idRestaurante}");
         return redirect( '/restaurantes');
     }
 }

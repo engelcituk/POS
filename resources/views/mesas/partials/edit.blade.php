@@ -8,7 +8,7 @@
                 <div class="col-md-12">
                     <div class="card card-profile">
                         @csrf
-                        {{ method_field('PUT') }}
+                        {{-- {{ method_field('PUT') }} --}}
                         <input id="name" type="hidden" class="form-control" name="id" value="{{$mesa->id}}" required>
                         <div class="row">
                             <div class="card-content">
@@ -21,19 +21,19 @@
                                             <!-- <label for="sel1">Select list:</label> -->
                                             <select class="form-control" name="idZona" required>
                                                 <option value="{{$datosZonaMesa->id}}">{{$datosZonaMesa->name}}</option>
-                                                @foreach($restaurantes as $restaurante)
-                                                <optgroup label="{{$restaurante->name}}">
+                                                {{-- @foreach($restaurantes as $restaurante)
+                                                <optgroup label="{{$restaurante->name}}"> --}}
                                                     @foreach($zonas as $zona)
-                                                    @php
+                                                    {{-- @php
                                                     $collection = collect(['idPV' => $zona->idPuntoVenta, 'idPV' => $restaurante->id]);
                                                     $respuesta = $collection->contains($zona->idPuntoVenta);
                                                     @endphp
-                                                    @if($respuesta==1)
+                                                    @if($respuesta==1) --}}
                                                     <option value="{{$zona->id}}">{{$zona->name}}</option>
-                                                    @endif
+                                                    {{-- @endif --}}
                                                     @endforeach
-                                                </optgroup>
-                                                @endforeach
+                                                {{-- </optgroup>
+                                                @endforeach --}}
                                             </select>
                                         </div>
                                     </div>

@@ -83,7 +83,7 @@ class MesasController extends Controller
         
         $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
         $zonas = \App::call('App\Http\Controllers\ZonasController@obtenerTodasLasZonas');
-        dd($restaurantes);
+        // dd($restaurantes);
 
         return view('mesas.partials.edit', ['mesa'=> $mesa,'datosZonaMesa'=>$datosZonaMesa, 'restaurantes' => $restaurantes, 'zonas' => $zonas]); 
         
@@ -105,14 +105,14 @@ class MesasController extends Controller
     {
         $idMesa = $request->get('id');
 
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBase . "UpdateMesa/{$idMesa}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase . "UpdateMesa/{$idMesa}", ['form_params' => $request->except('id')]);
         return redirect('/mesas');
     }
     //metodo para borrar mesas
     public function destroy($id)
     {
         $idMesa = $id;
-        $respuesta = $this->realizarPeticion('DELETE', $this->urlBase."DeleteMesa/{$idMesa}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteMesa/{$idMesa}");
         return redirect('/mesas');
     }
 }

@@ -17,9 +17,7 @@
                          <img class="img" src="{{$resultadoImg}}"/> 
                     </div>
                     <div class="card-content">                                                                                       
-                    <h4 class="card-title"><strong>Nombre Alergia: </strong> {{$alergeno->name}}</h4><br>
-                          
-                        <h4 class="card-title"><strong>Icono: </strong> </h4><br>                                               
+                    <h4 class="card-title"><strong>Nombre Alergia: </strong> {{$alergeno->name}}</h4><br>                                                                                                
                         <a href="{{ route('alergenos.index') }}" class="btn btn-rose btn-round"><i class="fas fa-arrow-left"></i> Volver</a>
                     </div>
                 </div>

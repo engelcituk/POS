@@ -61,13 +61,20 @@ class ApiUsuarioController extends Controller
 
             $permisosRol = new ApiRolController(); //instancia para trabajar con permisos del rol
             $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUsuario); //los datos lo envio a la vista            
-            //con el ciclo foreach se va guardando los permisos del rol asignado al usuario 
-            foreach ($permisosRol as $permisoRol) {
-                $idPermiso = $permisoRol->idPermiso;
+           
+            $datosPermisos = json_decode($permisosRol);
+            $respuestaOkP = $datosPermisos->ok;
 
-                $this->guardarPermisosUsuario($idUsuario, $idPermiso);
-            }
-            Alert::success('Exito', 'Usuario registrado exitosamente '.$respuestaMensaje);
+            if($respuestaOkP==1){
+                $objetoPermisosRol = $datosPermisos->objeto;                
+                 //con el ciclo foreach se va guardando los permisos del rol asignado al usuario 
+                foreach($objetoPermisosRol as $permisoRol) {
+                    $idPermiso = $permisoRol->idPermiso;
+
+                    $this->guardarPermisosUsuario($idUsuario, $idPermiso);
+                }
+                Alert::success('Exito', 'Usuario registrado exitosamente ' . $respuestaMensaje);
+            }                        
         }else{
             $respuestaMensaje = $datos->mensaje;
             Alert::error('Error', 'El registro del usuario falló '.$respuestaMensaje);
