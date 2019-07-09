@@ -171,7 +171,8 @@
                                         <div class="carrusel">
                                             @foreach($categorias as $categoria)
                                                 <div class="product" id="categoria_{{$categoria->id}}" onclick="GetProductosByCat({{$categoria->id}})">
-                                                <img src="{{asset('img/carousel/001.jpg')}}"/>
+                                                {{-- <img src="{{asset('img/carousel/001.jpg')}}"/> --}}
+                                                <img src="data:image/png;base64,{{$categoria->imagen}}"/>                                              
                                                 <p>{{$categoria->name}}</p>                                                   
                                                 </div>                                                    
                                             @endforeach

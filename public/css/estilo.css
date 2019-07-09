@@ -118,7 +118,7 @@ table #tablaItemProductos { border-collapse: collapse; width: 100%;
     float:left;
     width:600px;
     overflow:hidden;
-    height:130px;
+    height:140px;
     position:relative;
     /* margin-top:20px; */
     margin-bottom:10px;
@@ -151,7 +151,7 @@ table #tablaItemProductos { border-collapse: collapse; width: 100%;
 
 .carrusel>div {
     float: left;
-    height: 130px;
+    height: 140px;
     margin-right: 5px;
     width: 125px;
     text-align:center;
@@ -163,4 +163,9 @@ table #tablaItemProductos { border-collapse: collapse; width: 100%;
 
 .product {
     border:#CCCCCC 1px solid;
+}
+/* Estilo img productos por categoria */
+.productosWell {
+  width: 125px;
+  height: auto;
 }

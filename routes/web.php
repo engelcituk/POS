@@ -214,7 +214,7 @@ Route::get('productos', 'ProductosController@index')->name('productos.index');
 Route::get('productos/create', 'ProductosController@create')->name('productos.create');
 Route::post('productos/store', 'ProductosController@store')->name('productos.store');
 Route::post('productos/{idProducto}/{idAlergeno}', 'ProductosController@guardarProductoAlergeno')->name('productos.storealergeno');
-Route::post('productos/actualizar}', 'ProductosController@actualizar')->name('productos.actualizar');
+Route::post('productos/actualizar', 'ProductosController@actualizar')->name('productos.actualizar');
 Route::get('productos/{producto}', 'ProductosController@show')->name('productos.show');
 Route::get('productos/{producto}/edit', 'ProductosController@edit')->name('productos.edit');        
 Route::post('productos/{producto}', 'ProductosController@destroy')->name('productos.destroy');

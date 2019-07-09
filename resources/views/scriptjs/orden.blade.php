@@ -246,6 +246,7 @@ $("#zonaElige").change(function() {
                             var idMenuCarta=objeto[i]["id"];
                             var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
                             var precio=objeto[i]["precio"];
+                            var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
                             console.log("sus Alergenos",alergenosP);
                            if(alergenosP.length >0 ){
@@ -256,11 +257,17 @@ $("#zonaElige").change(function() {
                                             colorAlergeno="label-warning";
                                     }
                                 } 
-                            }                                                                                
+                            }
+                            var dataImg = 'data:image/png;base64,';                       
+                            var imgProducto = imagen;
+                            var imgBase64 = dataImg+imgProducto;
+
+                            var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
+                            resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
                             // console.log("sus Alergenos",alergenosPOk);
-                           listaProductos+="<li data-toggle='tooltip' data-placement='top' title='"+
-                           nombreProducto+"'><div class='well well-sm'><div id='producto"+idProducto
-                           +"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"'  style='cursor: pointer;' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")'></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+
+                           nombreProducto+"' id='producto"+idProducto
+                           +"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"'  style='cursor: pointer;' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")'><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
                     $("#UlList"+idCategoria).html(listaProductos);

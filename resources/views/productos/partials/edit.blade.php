@@ -3,8 +3,9 @@
 <div class="content">
     <div class="container-fluid">
         <a href="{{ route('productos.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <div class="row">
-                <div class="col-md-12">
+        <form method="POST" action="{{ route('productos.actualizar')}}" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-12">                                     
                     @php
                         $imgProducto =$producto->imagen;
                         $img =asset('img/faces/defaultProducto.png'); //Esto es para la imagen por default
@@ -13,10 +14,22 @@
                         $resultadoImg = (($imgProducto == "AA==") || ($imgProducto == NULL)) ? $img : $imgconfoto;    
                     @endphp
                     <div class="card card-profile">
+                        <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                            <div class="fileinput-preview fileinput-exists thumbnail"></div>                                                
+                            <div>
+                                <span class="btn btn-rose btn-round btn-file">
+                                    <span class="fileinput-new"> <i class="fas fa-file-image"></i> Cambiar imagen</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" id="imagenP" name="imagen" onchange="return fileValidation()"/>
+                                </span>
+                                <a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                            </div>
+                        </div>                               
                         <div class="card-avatar">
-                        <img class="img" src="{{$resultadoImg}}"/>                                                        
-                    </div>
+                            <img class="img" src="{{$resultadoImg}}"/>                                                        
+                        </div>
                         @csrf
+                        <input id="name" type="hidden" class="form-control" name="id" value="{{$producto->id}}" required>
                         <div class="row">
                             <div class="card-content">                                
                                 <div class="col-md-4">
@@ -25,8 +38,8 @@
                                             <i class="fas fa-grip-horizontal"></i>
                                         </span>
                                         <div class="form-group">
-                                            <select class="form-control" name="idCategoria" required>
-                                                <option value="">Elija categoria del producto </option>
+                                            <select class="form-control listaCategoriaEdit" name="idCategoria" required>
+                                            <option value="{{$categoriaProducto->id}}">{{$categoriaProducto->name}}</option>
                                                 @foreach($categorias as $categoria)
                                                     <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                                                 @endforeach
@@ -151,7 +164,7 @@
                                     <div class="form-group">
                                         Estado
                                         <div class="radio">
-                                           @php
+                                            @php
                                             $estado= $producto->status;//para obtener si tiene status
                                             $radios = ($estado == 1) ?
                                             "<label><input type='radio' name='status' value='True' checked>Activado</label>
@@ -162,12 +175,11 @@
                                             @endphp
                                         </div>
                                     </div>
-                                </div>
-
+                                </div>                                          
                                 <h4>Seleccione un alergeno si el producto tiene alergenos</h4>
                                 @foreach($alergenos as $alergeno)
                                 @php    
-                                                            	
+                                                                
                                     $resultado = $idAlergenosColeccion->contains($alergeno->id);
                                     $checked = ($resultado == 1) ? "checked" : "";
                                     $idProducto =$producto->id;
@@ -176,7 +188,7 @@
                                     $nombreProducto=$producto->nombreProducto;
                                 @endphp                              
                                     <div class="col-md-4">
-	                                    <div class="checkbox checkbox-group required">                              
+                                        <div class="checkbox checkbox-group required">                              
                                             <label class="labelCheckbox ">
                                             <input type="checkbox" nombreProducto={{$nombreProducto}} nombreAlergeno="{{$nombreAlergeno}}" name="idAlergeno[]" id="checkAlergeno{{$idAlergeno}}" idProducto="{{$idProducto}}" value="{{$idAlergeno}}" {{$checked}} onclick="AddDeleteProductoAlergeno({{$idAlergeno}})"><strong>{{$nombreAlergeno}}</strong>
                                             </label>                                            
@@ -189,6 +201,7 @@
                     </div>
                 </div>
             </div>
+        </form>        
     </div>
 </div>
 <script>
@@ -253,5 +266,37 @@
             });
         }
     }
+    $(document).ready(function() {
+        $('.listaCategoriaEdit').select2();
+    });
+    // validao img
+    function fileValidation(){
+    var fileInput = document.getElementById('imagenP');
+    var filePath = fileInput.value;
+    var allowedExtensions = /(.png)$/i;
+
+    if(!allowedExtensions.exec(filePath)){
+        if (fileInput.value != ''){
+            $.notify({	
+                message: '<i class="fas fa-sun"></i><strong>Nota:</strong> No se ha podigo cargar la imagen:'+filePath+', favor de seleccionar solo formato:<trong>png</strong>' 
+                },{	
+                    type: 'danger',
+                    delay: 5000
+                });
+
+        }
+        fileInput.value = '';
+        return false;
+    }else{
+    //Image preview
+        if (fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('imagePreview').innerHTML = '<img src="'+e.target.result+'"/>';
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+}
 </script>
 @endsection

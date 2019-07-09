@@ -76,7 +76,11 @@ class ProductosController extends Controller
 
         $producto = $this->obtenerUnProducto($idProducto);
 
-        // dd( $producto);
+        $idCategoria = $producto->idCategoria;
+        $categoriaProducto = new CategoriaController();
+        $categoriaProducto = $categoriaProducto->obtenerUnaCategoria($idCategoria);
+
+        // dd( $categoriaProducto);
         $alergenosProducto = $this->obtenerAlergenosProducto($idProducto);//obtengo un objeto con una respuesta ok
         $respuestaOk = $alergenosProducto->ok;
 
@@ -93,7 +97,7 @@ class ProductosController extends Controller
             $idAlergenosColeccion = new Collection([]);
          }
                                
-        return view('productos.partials.edit', compact('categorias',  'alergenos','producto', 'idAlergenosColeccion')); 
+        return view('productos.partials.edit', compact('categorias',  'alergenos','producto', 'categoriaProducto', 'idAlergenosColeccion')); 
     }
     public function obtenerUnProducto($idProducto){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProducto/{$idProducto}");
@@ -167,6 +171,51 @@ class ProductosController extends Controller
                 $this->guardarProductoAlergeno($idProducto, $idAlergeno);
             }
         }
+        return redirect('/productos');
+    }
+
+    public function actualizar(Request $request){
+        
+        $idProducto = $request->get('id');
+        $imagen = $request->file('imagen');      
+        $idCategoria = $request->get('idCategoria');
+        $codigoProducto = $request->get('codigoProducto');
+        $nombreProducto = $request->get('nombreProducto');
+        $propina = $request->get('propina');
+        $tipoPropina = $request->get('tipoPropina');
+        $montoPropina = $request->get('montoPropina');
+        $precio = $request->get('precio');
+        $complemento = $request->get('complemento');
+        $status = $request->get('status');
+        // dd( $imagen);
+        if ($imagen == null) {
+            $array = array();
+            $imagen = "SIN IMAGEN";
+            $array = $imagen;
+        } else {
+            $imagen = file_get_contents($request->file('imagen')->path());
+
+            $array = array();
+            foreach (str_split($imagen) as $char) {
+                array_push($array, ord($char));
+            }
+        }
+        // dd( $array);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateProducto/{$idProducto}", [
+            'form_params' => [
+                'codigoProducto' => $codigoProducto,
+                'idCategoria' => $idCategoria,
+                'nombreProducto' => $nombreProducto,
+                'propina' => $propina,
+                'tipoPropina' => $tipoPropina,
+                'montoPropina' => $montoPropina,
+                'precio' => $precio,
+                'complemento' => $complemento,
+                'imagen' => $array,
+                'status' => $status,
+            ]
+        ]);
+        
         return redirect('/productos');
     }
 

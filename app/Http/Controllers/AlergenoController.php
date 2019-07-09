@@ -85,16 +85,16 @@ class AlergenoController extends Controller
             $icono = array();
             foreach (str_split($imagen) as $char) {
                 array_push($icono, ord($char));
-            }
+            } 
         }
        
-        $this->actualizarAlergeno($idAlergeno, $nombre, $icono);
+        $this->actualizarAlergeno( $idAlergeno, $nombre, $icono);
         
         return redirect('/alergenos');
 
     }
-    public function obtenerUnAlergeno($idAlergeno)
-    {
+    public function obtenerUnAlergeno($idAlergeno){
+
         $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetAlergeno/{$idAlergeno}");
         $datos = json_decode($respuesta);
         $alergeno = $datos->objeto;
@@ -133,16 +133,16 @@ class AlergenoController extends Controller
         ]);
         return $respuesta;
     }
-    public function actualizarAlergeno($nombre, $icono){
-
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'UpdateAlergeno', [
+    public function actualizarAlergeno($idAlergeno,$nombre, $icono){
+        
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase. "UpdateAlergeno/{$idAlergeno}", [
             'form_params' => [
                 'name' => $nombre,
                 'icono' => $icono
             ]
         ]);
         
-        return redirect('/categorias');
+        return $respuesta;
     }
 
     public function destroy($idAlergeno){

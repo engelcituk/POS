@@ -3,14 +3,14 @@
 <div class="content">
     <div class="container-fluid">
         <a href="{{ route('categorias.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <form method="POST" action="{{ route('categorias.store')}}">
+        <form method="POST" action="{{ route('categorias.store')}}" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-12"> 
                     <div class="card card-profile">
                         @csrf
                         <div class="row">
                             <div class="card-content">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fab fa-elementor"></i>
@@ -26,7 +26,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 hidden">
+                                <div class="col-md-4 hidden">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fab fa-elementor"></i>
@@ -38,7 +38,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="form-group label-floating">
                                             <label class="control-label">orden</label>
                                             <input id="ordenCategoria" type="number" class="form-control{{ $errors->has('orden') ? ' is-invalid' : '' }}" name="orden" required>
@@ -48,7 +48,28 @@
                                             </span>
                                             @endif
                                         </div>
-                                </div>                                
+                                </div> 
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-file-image"></i>
+                                        </span>
+                                        <div class="form-group">                                            
+                                            <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+                                                <div class="fileinput-preview fileinput-exists thumbnail"></div>
+                                                {{-- <img src="data:image/png;base64,{{$alergeno->icono}}"> --}}
+                                                <div>
+                                                    <span class="btn btn-rose btn-round btn-file">
+                                                        <span class="fileinput-new"> <i class="fas fa-file-image"></i> Cambiar imagen</span>
+                                                        <span class="fileinput-exists">Change</span>
+                                                        <input type="file" id="imagen" name="imagen" onchange="return fileValidation()"/>
+                                                    </span>
+                                                    <a href="#" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                             
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>
