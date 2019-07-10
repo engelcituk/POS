@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class IngresoUser
+class Historico
 {
     /**
      * Handle an incoming request.
@@ -14,10 +14,10 @@ class IngresoUser
      * @return mixed
      */
     public function handle($request, Closure $next){
-      
-        if (!$request->session()->has('UsuarioLogueado')) {
-            return redirect('/');// si no existe el usuario lo mando lejos XD
+
+        if (!$request->session()->has('accesoHistorico')) {
+            return redirect('/ordenar'); // si no existe el usuario lo mando lejos XD
         }
-        return $next($request); 
+        return $next($request);
     }
 }

@@ -105,12 +105,22 @@ class OrdenController extends Controller
     //     return $subCategorias;
     // }
 
-    public function getProductosBySubCat( Request $request, $idCategoria){
+    public function getProductosByCat(Request $request){
         $idCarta = $request->session()->get('idCarta');
+        $idCategoria = $request->get('idCategoria');
 
         $respuesta = $this->realizarPeticion('GET', $this->urlMenuCarta."GetProductosMenuCarta/{$idCarta}/{$idCategoria}");
         
         return $respuesta;        
+    }
+
+    public function getProductosFavoritos(Request $request){
+        $idPV = $request->get('idPuntoVenta');
+        $idCarta = $request->get('idCarta');
+
+        // $respuesta = $this->realizarPeticion('GET', $this->urlMenuCarta . "GetProductosMenuCarta/{$idPV}/{$idCarta}");
+
+        return "su idPV es: ". $idPV. " y su idCarta es: ".$idCarta;
     }
 
     public function guardarCuenta(Request $request){

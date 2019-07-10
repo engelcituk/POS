@@ -1,13 +1,17 @@
 <script>
 $(document ).ready(function() {
-    var valDefault = $("#zonaElige").children('option:first').val();    
+    var valDefault = $("#zonaElige").children('option:first').val();  
+      
     if (valDefault != "") {                        
         $(".zonas").hide();
         $("#" + valDefault).show();
         //     if (valDefault == "todos") {
         //         $(".zonas").show();
         // }
-    } 
+    }     
+    // var t= tiempoOrdenInicial();
+    // console.log("su tiempo elegido al iniciar es; ",t);
+
 });
 //para mostrar zonas y sus mesas respectivamente
 $("#zonaElige").change(function() {
@@ -32,7 +36,7 @@ $("#zonaElige").change(function() {
     var estadoMesa = $("#mesaAbrir"+idMesa).attr("estadoMesa");//obtengo el id de la mesa
     $('#idMesaModal').val(idMesa);
     var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
-    var idMenuCarta = $("#idMemuCartaPVModal").val();
+    var idMenuCarta = $("#idCartaPVModal").val();
 
     if(estadoMesa=="disponible"){//si la mesa está disponible abro modal para obtener datos de huesped
         $('#myModal').modal({backdrop: 'static', keyboard: false });
@@ -227,10 +231,11 @@ $("#zonaElige").change(function() {
         alergenosIdHuesped[i]= alergenosCuenta[i].idAlergeno;
     }
     $.ajax({
-            url: "{{url('obtener/productos')}}"+'/'+idCategoria,
+            url: "{{url('obtener/productos')}}",
             type: "GET",
             data: {
                 '_method': 'GET',
+                'idCategoria':idCategoria,
                 '_token': csrf_token
             },            
             success: function(respuesta) {
@@ -265,9 +270,7 @@ $("#zonaElige").change(function() {
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
                             resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
                             // console.log("sus Alergenos",alergenosPOk);
-                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+
-                           nombreProducto+"' id='producto"+idProducto
-                           +"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"'  style='cursor: pointer;' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")'><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
                     $("#UlList"+idCategoria).html(listaProductos);
@@ -280,9 +283,9 @@ $("#zonaElige").change(function() {
             console.log(respuesta);
             }
     });
-    $('body').tooltip({
-        selector: '[data-toggle="tooltip"]'
-    })
+    // $('body').tooltip({
+    //     selector: '[data-toggle="tooltip"]'
+    // })
  }
  
  function addCantidadProductoModal(idProducto,idMenuCarta) {
@@ -313,7 +316,6 @@ $("#cantidadProducto").change(function(){
 var lstProductos=[];
 function addProducto() { 
       
-
     var idPV= $("#idPVModalOrdenar").val();
     var idMenuCarta = $("#idMenuCartaModal").val();
     var idUsuario = $("#idUserModalOrdenar").val();
@@ -833,8 +835,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
      }else{
          longitud =datosCuentaTemporal.length
      }
-    //  console.log("cuentaTemporal",datosCuentaTemporal);
-     
+    //  console.log("cuentaTemporal",datosCuentaTemporal);     
     if(longitud==0 ){
         $('#modalMetodoPago').modal({backdrop: 'static', keyboard: false });
         $("#idCuentaCerrar").val(idCuenta);
@@ -945,7 +946,53 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
             console.log("respuesta",respuesta); 
         }
     });
- }
+ } 
+
+//para cambiar color del botón de tiempo seleccionado
+ $(document).on("click", "#opcionesTiempo span", function(){
+    $("span.btn-success").removeClass("btn-success");
+    $(this).addClass("btn-success");
+ });
+function getProductosMasVendidos(){
+    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+    var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
+    var idCarta = $("#idCartaPVModal").val();    
+    $.ajax({
+            url: "{{ url('ordenar/getfavoritos') }}",
+            type: "GET",
+            data: {
+                '_method': 'GET',                
+                'idPuntoVenta':idPV,'idCarta':idCarta,
+                '_token': csrf_token
+            },        
+            success: function(respuesta) {
+                // var resultado = JSON.parse(respuesta);
+                console.log("resultado", respuesta);
+                // var ok = resultado["ok"];
+                // if(ok){
+                   
+                // }else{
+                    
+                // }                
+            },
+            error: function(respuesta) {
+            console.log(JSON.parse(respuesta));
+        }
+    });
+
+}
+function tiempoOrden() {    
+    // var tiempoElegido = $("#opcionesTiempo").children('span:first').attr("tiempo");
+    if($("#tiempo1").hasClass("btn-success")){
+        var tiempoElegido=$("#tiempo1").attr("tiempo");
+    }else if($("#tiempo2").hasClass("btn-success")){
+        var tiempoElegido=$("#tiempo2").attr("tiempo");
+    }else if($("#tiempo3").hasClass("btn-success")){
+        var tiempoElegido=$("#tiempo3").attr("tiempo");
+    }
+    return tiempoElegido;
+}
+
 </script>
 
                         

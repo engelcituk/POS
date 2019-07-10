@@ -83,6 +83,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-content">
+                        
                         <a href="{{ route('ordenar.index') }}" class="btn btn-warning btn-sm pull-right volverMesas"><i class="fas fa-undo-alt"></i></i> Volver</a>
                         <h4 class="card-title">Tomar Orden</h4>
                         <div class="row">
@@ -150,32 +151,30 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-7" id="idMesaAddProducts">                              
-                                {{-- <ul class="nav nav-tabs navPersonalizado" id="tabs">
-                                    @foreach($categorias as $categoria)
-                                    <li><a href="#cate{{$categoria->id}}" data-toggle="tab" onclick="GetProductosByCat({{$categoria->id}})">{{$categoria->name}} {{$loop->count}}</a></li>   
-                                    @endforeach                                    
-                                </ul>
-                                <div class="tab-content">
-                                    @foreach($categorias as $categoria)                                        
-                                        <div id="cate{{$categoria->id}}" class="tab-pane">  
-                                            <ul class="nav nav-pills nav-pills-icons" id="UlList{{$categoria->id}}" role="tablist">                                                               
-                                            </ul>
-                                        </div>             
-                                    @endforeach                                    
-                                </div> --}}                                 
+                            <div class="col-md-7" id="idMesaAddProducts">
+                                <div id="opcionesTiempo">
+                                    <span class="btn btn-success btn-sm pull-left" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
+                                    <span class="btn btn-sm pull-left " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
+                                    <span class="btn btn-sm pull-left" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
+                                </div>                
                                 <div id="contentSlider">
                                     <div id="carrusel">
                                         <a href="#" class="left-arrow"><span><i class="fas fa-arrow-left"></i></span></a>
                                         <a href="#" class="right-arrow"><span><i class="fas fa-arrow-right"></i></span> </a>
                                         <div class="carrusel">
+                                            {{-- @php
+                                               $idPV=Session::get('idPuntoVenta');
+                                               $idCarta=Session::get('idCarta'); 
+                                            @endphp --}}
+                                            <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
+                                                <img src="{{asset('img/faces/masvendidos.png')}}"/>                   
+                                                <strong>Más vendidos</strong>  
+                                            </div>
                                             @foreach($categorias as $categoria)
-                                                <div class="product" id="categoria_{{$categoria->id}}" onclick="GetProductosByCat({{$categoria->id}})">
-                                                {{-- <img src="{{asset('img/carousel/001.jpg')}}"/> --}}
-                                                <img src="data:image/png;base64,{{$categoria->imagen}}"/>                                              
-                                                <p>{{$categoria->name}}</p>                                                   
+                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})">                                  <img src="data:image/png;base64,{{$categoria->imagen}}"/>
+                                                    <strong>{{$categoria->name}}</strong>            
                                                 </div>                                                    
-                                            @endforeach
+                                            @endforeach                                            
                                         </div>
                                     </div>
                                 </div>

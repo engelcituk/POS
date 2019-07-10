@@ -23,7 +23,7 @@
                             <input id="codigoHotel" type="text" class="form-control" name="codigoHotel" value="CARACOL">
                             <input id="idMesaModal" type="number" class="form-control" name="idMesaModal">   
                             <input id="idPVModalOrdenar" type="number" class="form-control" name="idPVModalOrdenar" value="{{Session::get('idPuntoVenta')}}">  
-                            <input type="text" class="form-control" name="idMemuCartaPVModal" id="idMemuCartaPVModal" value="{{Session::get('idCarta')}} "> 
+                            <input type="text" class="form-control" name="idCartaPVModal" id="idCartaPVModal" value="{{Session::get('idCarta')}} "> 
                             <input id="idUserModalOrdenar" type="text" class="form-control" name="idUserModalOrdenar" value="{{Session::get('idUsuarioLogueado')}}">
                         </div>
                     </div>

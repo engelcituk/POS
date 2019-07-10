@@ -108,9 +108,12 @@
                                 <li class="">
                                     <a href="{{ route('ordenar.index') }}">Tomar orden</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('historico.index') }}">Historico</a>
-                                </li>
+                                @if(session()->has('accesoHistorico'))
+                                    <li>
+                                        <a href="{{ route('historico.index') }}">Historico</a>
+                                    </li>
+                                @endif
+                                
                             </ul>
                         </div>
                     </li>

@@ -169,3 +169,7 @@ table #tablaItemProductos { border-collapse: collapse; width: 100%;
   width: 125px;
   height: auto;
 }
+.invisible-scrollbar::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; 
+}

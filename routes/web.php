@@ -19,7 +19,8 @@ Route::post('ordenar/addcuenta', 'OrdenController@guardarCuenta')->name('ordenar
 Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name('ordenar.enviarcuenta');
 Route::post('ordenar/cerrarcuenta/{cuenta}', 'OrdenController@cerraCuenta')->name('ordenar.cerrarcuenta');
 Route::post('ordenar/cerrardia/{idpv}', 'OrdenController@cerrarDia')->name('ordenar.cerrardia');
-Route::get('obtener/productos/{idsubcat}', 'OrdenController@getProductosBySubCat')->name('obtener.productos');
+Route::get('obtener/productos', 'OrdenController@getProductosByCat')->name('obtener.productos');
+Route::get('ordenar/getfavoritos', 'OrdenController@getProductosFavoritos')->name('obtener.productosfavoritos');
 Route::get('buscar/alergenos/{idproducto}', 'OrdenController@obtenerAlergenosProducto')->name('buscar.getalergenos');
 Route::get('obtenercuenta/{idcuenta}', 'OrdenController@obtenerCuentaApi')->name('obtenercuenta.api');
 Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarProductoCuenta')->name('cancelardetalle.api');
