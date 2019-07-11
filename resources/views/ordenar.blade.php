@@ -167,19 +167,20 @@
                                                $idCarta=Session::get('idCarta'); 
                                             @endphp --}}
                                             <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
-                                                <img src="{{asset('img/faces/masvendidos.png')}}"/>                   
-                                                <strong>Más vendidos</strong>  
+                                                <img src="{{asset('img/faces/masvendidos.png')}}"/> 
+                                                <span class="label" categoria="masVendidos">Más vendidos</span>                                                                 
                                             </div>
                                             @foreach($categorias as $categoria)
                                                 <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})">                                  <img src="data:image/png;base64,{{$categoria->imagen}}"/>
-                                                    <strong>{{$categoria->name}}</strong>            
+                                                    <strong></strong>    
+                                                    <span class="label label-default" categoria="{{$categoria->name}}">{{$categoria->name}}</span>         
                                                 </div>                                                    
                                             @endforeach                                            
                                         </div>
                                     </div>
-                                </div>
+                                </div><br><br>
                                 <div id="lstProductos">
-                                    <ul class="nav nav-pills nav-pills-icons" id="UlList{{$categoria->id}}" role="tablist">                                                               
+                                    <ul class="nav nav-pills nav-pills-icons" id="UlList" role="tablist">                                                               
                                     </ul>
                                 </div>
                             </div>

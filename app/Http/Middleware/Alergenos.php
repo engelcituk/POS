@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Historico
+class Alergenos
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class Historico
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('accesoHistorico')) {
+        if (!$request->session()->has('accesoAlergenos')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

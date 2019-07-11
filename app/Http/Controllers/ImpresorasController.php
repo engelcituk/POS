@@ -7,17 +7,11 @@ use Yajra\DataTables\DataTables;
 
 class ImpresorasController extends Controller
 {
-    //
-    public function __construct() 
-    {
-        // $this->middleware('auth');
+   
+    public function __construct(){
+        
+        // $this->middleware('accesoImpresorasFiltro');
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public $urlBase = "http://localhost/TPVApi/Impresoras/";
     public function index()
     {

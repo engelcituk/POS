@@ -10,7 +10,12 @@ class CategoriaController extends Controller
 {
     
     public $urlBase = "http://localhost/TPVApi/Categoria/";
-    
+
+    public function __construct()
+    {
+
+        // $this->middleware('accesoCategoriasFiltro');
+    }
     public function index(){
         
         return view('categorias');

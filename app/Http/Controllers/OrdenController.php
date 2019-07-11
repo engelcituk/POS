@@ -115,12 +115,14 @@ class OrdenController extends Controller
     }
 
     public function getProductosFavoritos(Request $request){
+        $urlBase = "http://172.16.4.229/TPVApi/menucarta/";
+        // http://localhost/TPVApi/menucarta/GetProductosMenuCartaFav/1034/10
         $idPV = $request->get('idPuntoVenta');
         $idCarta = $request->get('idCarta');
 
-        // $respuesta = $this->realizarPeticion('GET', $this->urlMenuCarta . "GetProductosMenuCarta/{$idPV}/{$idCarta}");
+        $respuesta = $this->realizarPeticion('GET', $urlBase."GetProductosMenuCartaFav/{$idCarta}/{$idPV}");
 
-        return "su idPV es: ". $idPV. " y su idCarta es: ".$idCarta;
+        return $respuesta;
     }
 
     public function guardarCuenta(Request $request){

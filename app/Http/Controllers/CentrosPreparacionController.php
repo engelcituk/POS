@@ -7,12 +7,13 @@ use Yajra\DataTables\DataTables;
 
 class CentrosPreparacionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public $urlBase = "http://localhost/TPVApi/CentrosPreparacion/";
+    
+    public function __construct()    {
+
+        // $this->middleware('accesoCPFiltro');
+    }
     public function index()
     {
         return view('centrosprep');

@@ -13,7 +13,11 @@ class ApiUsuarioController extends Controller
     
     public $urlBase = "http://localhost/TPVApi/Usuarios/";
     public $urlBasePermisosUsuario = "http://localhost/TPVApi/PermisosUsuario/";
-    
+
+    public function __construct(){
+
+        // $this->middleware('accesoUsuariosFiltro');
+    }
 
     public function index()
     {

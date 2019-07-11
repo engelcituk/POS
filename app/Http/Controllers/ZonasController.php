@@ -7,18 +7,13 @@ use Yajra\DataTables\DataTables;
 
 class ZonasController extends Controller
 {
-    //
+    public $urlBase = "http://localhost/TPVApi/Zonas/"; 
+    
     public function __construct()
     {
-        // $this->middleware('auth');
+        // $this->middleware('accesoZonasfiltro');
     }
- 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public $urlBase = "http://localhost/TPVApi/Zonas/"; 
+    
     public function index()
     {
         return view('zonas');

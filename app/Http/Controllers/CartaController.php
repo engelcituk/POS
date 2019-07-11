@@ -11,6 +11,11 @@ class CartaController extends Controller
 {
     
     public $urlBase = "http://localhost/TPVApi/Cartas/";
+    public function __construct()
+    {
+
+        // $this->middleware('accesoCartasFiltro');
+    }
     public function index()
     {
         return view('cartas');

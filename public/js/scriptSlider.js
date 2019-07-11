@@ -3,7 +3,7 @@ var current = 0;
 var imagenes = new Array();
 
 $(document).ready(function() {
-    var numImages = 6;
+    var numImages = 8;
     if (numImages <= 3) {
         $('.right-arrow').css('display', 'none');
         $('.left-arrow').css('display', 'none');

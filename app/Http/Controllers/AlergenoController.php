@@ -8,18 +8,15 @@ use Yajra\DataTables\DataTables;
 
 class AlergenoController extends Controller
 {
-   
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public $urlBase = "http://localhost/TPVApi/Alergenos/";
+
     public $urlBase = "http://localhost/TPVApi/Alergenos/";
-    
-    public function index()
-    {
-        return view('alergenos');
+
+    public function __construct(){
+
+        // $this->middleware('accesoAlergenosFiltro');
+    }     
+    public function index(){
+        return view('alergenos');        
         
     }
 

@@ -12,18 +12,12 @@ class ProductosController extends Controller
     public $urlBase = "http://localhost/TPVApi/Producto/";
     public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
 
-    public function __construct()
-    {
-        // $this->middleware('auth');
+    public function __construct(){
+
+        // $this->middleware('accesoProductosFiltro');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
+    public function index(){
         // $productos = $this->obtenerTodosLosProductos();
 
         return view('productos');

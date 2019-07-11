@@ -10,7 +10,11 @@ class MenusCartasController extends Controller{
 
     public $urlBase = "http://localhost/TPVApi/MenuCarta/";
     // public $urlBaseProductoAlergeno = "http://localhost/TPVApi/productoalergeno/";
+    public function __construct()
+    {
 
+        // $this->middleware('accesoMenusCartaFiltro');
+    }
     public function index(){
         return view('menuscartas');
     }

@@ -16,7 +16,7 @@ class HistoricoController extends Controller
 
     public function __construct()
     {
-        $this->middleware('accesoHistoricoFiltro');
+        // $this->middleware('accesoHistoricoFiltro');
     }     
     public function index(){ 
         

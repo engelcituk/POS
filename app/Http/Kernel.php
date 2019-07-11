@@ -61,7 +61,24 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'filtroAcceso' => \App\Http\Middleware\IngresoUser::class,
-        'accesoHistoricoFiltro' => \App\Http\Middleware\historico::class,
+        'accesoHistoricoFiltro' => \App\Http\Middleware\Historico::class,
+        'accesoAlergenosFiltro' => \App\Http\Middleware\Alergenos::class,
+        'accesoCartasFiltro' => \App\Http\Middleware\Cartas::class,
+        'accesoCategoriasFiltro' => \App\Http\Middleware\Categorias::class,
+        'accesoCPFiltro' => \App\Http\Middleware\CentrosPreparacion::class,
+        'accesoHotelesFiltro' => \App\Http\Middleware\Hoteles::class,
+        'accesoImpresorasFiltro' => \App\Http\Middleware\Impresoras::class,
+        'accesoMenusCartaFiltro' => \App\Http\Middleware\MenusCarta::class,
+        'accesoMesasFiltro' => \App\Http\Middleware\Mesas::class,
+        'accesoMPFiltro' => \App\Http\Middleware\MetodosPago::class,
+        'accesoModosFiltro' => \App\Http\Middleware\Modos::class,
+        'accesoProductoFiltro' => \App\Http\Middleware\Productos::class,
+        'accesoPVentaFiltro' => \App\Http\Middleware\PuntosVenta::class,
+        'accesoRolesFiltro' => \App\Http\Middleware\Roles::class,
+        'accesoTurnosFiltro' => \App\Http\Middleware\Turnos::class,
+        'accesoUsuariosFiltro' => \App\Http\Middleware\Usuarios::class,
+        'accesoZonasFiltro' => \App\Http\Middleware\Zonas::class,
+        
     ];
 
     /**

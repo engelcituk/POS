@@ -14,14 +14,14 @@ use Alert;
 
 class ApiRolController extends Controller
 { 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public $urlBase = "http://localhost/TPVApi/Roles/";
     public $urlBaseRolPermisos = "http://localhost/TPVApi/PermisosRol/";
     
+    public function __construct(){
+
+        // $this->middleware('accesoRolesFiltro');
+    } 
     public function index()
     {
         return view('apiroles');

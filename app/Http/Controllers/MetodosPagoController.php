@@ -7,18 +7,13 @@ use Yajra\DataTables\DataTables;
 
 class MetodosPagoController extends Controller
 {
-    //
+    public $urlBase = "http://localhost/TPVApi/MetodosPago/";
+    
     public function __construct()
     {
-        // $this->middleware('auth');
+        // $this->middleware('accesoMPFiltro');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public $urlBase = "http://localhost/TPVApi/MetodosPago/";
     public function index()
     {
         return view('metodospago'); 

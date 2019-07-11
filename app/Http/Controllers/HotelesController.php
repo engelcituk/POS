@@ -8,16 +8,13 @@ use Yajra\DataTables\DataTables;
 class HotelesController extends Controller
 {
     
-    public function __construct()
-    {
-        // $this->middleware('auth');
-    }
-        /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public $urlBase = "http://localhost/TPVApi/Hoteles/";
+
+    public function __construct(){
+           
+        // $this->middleware('accesoHotelesFiltro');
+    }
+        
     public function index()
     {
         return view('hoteles');

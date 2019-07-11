@@ -7,12 +7,14 @@ use Yajra\DataTables\DataTables;
 
 class TurnosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public $urlBase = "http://localhost/TPVApi/Turnos/";
+    public function __construct()
+    {
+
+        // $this->middleware('accesoTurnosFiltro');
+    }
+
     public function index()
     {
         return view('turnospv');

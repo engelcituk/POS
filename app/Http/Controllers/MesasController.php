@@ -7,18 +7,14 @@ use Yajra\DataTables\DataTables;
 
 class MesasController extends Controller
 {
-    // 
+    
+    public $urlBase = "http://localhost/TPVApi/Mesas/"; 
+
     public function __construct()
     {
-        // $this->middleware('auth');
+        // $this->middleware('accesoMesasFiltro');
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public $urlBase = "http://localhost/TPVApi/Mesas/"; 
+    
     public function index()
     {       
         

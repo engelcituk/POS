@@ -7,18 +7,13 @@ use Yajra\DataTables\DataTables;
 
 class RestaurantesController extends Controller
 {
-    //
+    public $urlBase = "http://localhost/TPVApi/PuntosVenta/";    
+    
     public function __construct()
     {
-        // $this->middleware('auth');
+        // $this->middleware('accesoPVentaFiltro');
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public $urlBase = "http://localhost/TPVApi/PuntosVenta/";    
+    
     public function index()
     {
         return view('restaurantes');

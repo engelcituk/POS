@@ -108,11 +108,11 @@
                                 <li class="">
                                     <a href="{{ route('ordenar.index') }}">Tomar orden</a>
                                 </li>
-                                @if(session()->has('accesoHistorico'))
+                                {{-- @if(session()->has('accesoHistorico')) --}}
                                     <li>
-                                        <a href="{{ route('historico.index') }}">Historico</a>
+                                        <a href="{{ route('historico.index')}}">Historico</a>
                                     </li>
-                                @endif
+                                {{-- @endif --}}
                                 
                             </ul>
                         </div>
@@ -120,65 +120,104 @@
 
                     <!--  -->
                     <li>
-                        <a data-toggle="collapse" href="#componentsExamples">
-                            <i class="fas fa-cogs"></i>
-                            <p>Configuración
-                                <b class="caret"></b>
-                            </p>
-                        </a>
+                        {{-- @if(session()->has('accesoHoteles')|| session()->has('accesoRoles')||session()->has('accesoUsuarios')||session()->has('accesoPuntosVenta')||session()->has('accesoImpresoras')||session()->has('accesoCentrosPreparacion')||session()->has('accesoTurnos')||session()->has('accesoZonas')||session()->has('accesoMesas')||session()->has('accesoCartas')||session()->has('accesoCategorias')||session()->has('accesoProductos')||session()->has('accesoMenusCarta')||session()->has('accesoMetodosPago')||session()->has('accesoModos')||session()->has('accesoAlergenos')) --}}
+                            <a data-toggle="collapse" href="#componentsExamples">
+                                <i class="fas fa-cogs"></i>
+                                <p>Configuración
+                                    <b class="caret"></b>
+                                </p>
+                            </a>        
+                        {{-- @endif                          --}}
                         <div class="collapse" id="componentsExamples">
                             <ul class="nav">
-                                <li>
-                                    <a href="{{ route('hoteles.index') }}">Hoteles</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('rolesapi.index') }}">Roles</a>
-                                </li>
-
-                                <li>
-                                    <a href="{{ route('users.index') }}">Usuarios</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('restaurantes.index') }}">Puntos de venta</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('impresoras.index') }}">Impresoras</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('centrospreparacion.index') }}">Centros de preparación</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('turnos.index') }}">Turnos PV</a>
-                                </li>
-                                <li>
-                                <li>
-                                    <a href="{{ route('zonas.index') }}">Zonas</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('mesas.index') }}">Mesas</a>
-                                </li>
-                                <li>                               
-                                    <a href="{{ route('cartas.index') }}">Cartas</a>
-                                </li>
-                               <li>                               
-                                    <a href="{{ route('categorias.index') }}">Categorias</a>
-                                </li>
+                                {{-- @if(session()->has('accesoHoteles')) --}}
+                                    <li>
+                                        <a href="{{ route('hoteles.index') }}">Hoteles</a>
+                                    </li>
+                                {{-- @endif                                 --}}
+                                {{-- @if(session()->has('accesoRoles')) --}}
+                                    <li>
+                                        <a href="{{ route('rolesapi.index') }}">Roles</a>
+                                    </li>
+                                {{-- @endif --}}
+                                {{-- @if(session()->has('accesoUsuarios')) --}}
+                                    <li>
+                                        <a href="{{ route('users.index') }}">Usuarios</a>
+                                    </li>
+                                {{-- @endif --}}
+                                {{-- @if(session()->has('accesoPuntosVenta')) --}}
+                                    <li>
+                                        <a href="{{ route('restaurantes.index') }}">Puntos de venta</a>
+                                    </li>
+                                {{-- @endif --}}
+                                 {{-- @if(session()->has('accesoImpresoras')) --}}
+                                    <li>
+                                        <a href="{{ route('impresoras.index') }}">Impresoras</a>
+                                    </li>
+                                {{-- @endif --}}
+                                 {{-- @if(session()->has('accesoCentrosPreparacion')) --}}
+                                    <li>
+                                        <a href="{{ route('centrospreparacion.index') }}">Centros de preparación</a>
+                                    </li>
+                                {{-- @endif --}}
+                                 {{-- @if(session()->has('accesoTurnos')) --}}
+                                    <li>
+                                        <a href="{{ route('turnos.index') }}">Turnos PV</a>
+                                    </li>
+                                {{-- @endif --}}
+                                 {{-- @if(session()->has('accesoZonas')) --}}
+                                    <li>
+                                        <a href="{{ route('zonas.index') }}">Zonas</a>
+                                    </li>
+                                {{-- @endif --}}
+                                {{-- @if(session()->has('accesoMesas')) --}}
+                                    <li>
+                                        <a href="{{ route('mesas.index') }}">Mesas</a>
+                                    </li>
+                                {{-- @endif  --}}
+                                {{-- @if(session()->has('accesoCartas')) --}}
+                                    <li>                               
+                                        <a href="{{ route('cartas.index') }}">Cartas</a>
+                                    </li>
+                                {{-- @endif  --}}
+                                {{-- @if(session()->has('accesoCategorias')) --}}
+                                    <li>                        
+                                        <a href="{{ route('categorias.index') }}">Categorias</a>
+                                    </li>
+                                {{-- @endif  --}}
+                                {{-- @if(session()->has('accesoProductos')) --}}
+                                    <li>
+                                        <a href="{{ route('productos.index') }}">Productos</a>
+                                    </li>
+                                {{-- @endif  --}}
+                                {{-- @if(session()->has('accesoMenusCarta')) --}}
+                                    <li>
+                                        <a href="{{ route('menuscartas.index') }}">Menús cartas</a>
+                                    </li>
+                                {{-- @endif  --}}
+                                {{-- @if(session()->has('accesoMetodosPago')) --}}
+                                    <li>
+                                        <a href="{{ route('metodospago.index') }}">Métodos de pago</a>
+                                    </li>
+                                {{-- @endif  --}}
+                                {{-- @if(session()->has('accesoModos')) --}}
+                                    <li>
+                                        <a href="{{ route('modos.index') }}">Modos</a>
+                                    </li>
+                                {{-- @endif --}}
+                                {{-- @if(session()->has('accesoAlergenos')) --}}
+                                    <li>
+                                        <a href="{{ route('alergenos.index') }}">Alergénos</a>
+                                    </li>
+                                {{-- @endif --}}
+                                
                                
-                                <li>
-                                    <a href="{{ route('productos.index') }}">Productos</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('menuscartas.index') }}">Menús cartas</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('metodospago.index') }}">Métodos de pago</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('modos.index') }}">Modos</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('alergenos.index') }}">Alergénos</a>
-                                </li>                                
+                               
+                                
+                                
+                                
+                                
+                                                                
                             </ul>
                         </div>
                     </li>                    
