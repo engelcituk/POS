@@ -682,7 +682,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
                             title: 'Exito',
                             text: '¡Operacion realizada con exito!',
                             type: 'success',
-                            timer: '1500'
+                            // timer: '1500'
                         }).then(function(){ 
                             location.reload();
                         }
@@ -886,7 +886,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
                             title: 'Exito',
                             text: '¡Operacion realizada con exito!',
                             type: 'success',
-                            timer: '1500'
+                            // timer: '1500'
                         }).then(function(){ 
                             location.reload();
                         }

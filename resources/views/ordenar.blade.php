@@ -178,7 +178,7 @@
                                             @endforeach                                            
                                         </div>
                                     </div>
-                                </div><br><br>
+                                </div>
                                 <div id="lstProductos">
                                     <ul class="nav nav-pills nav-pills-icons" id="UlList" role="tablist">                                                               
                                     </ul>

@@ -26,8 +26,7 @@
                 </span>
                 <div class="form-group label-floating">
                     <strong>Habitación</strong>
-                    <input  type="text" id="habitacion" class="form-control" name="habitacion" disabled>
-                    
+                    <input  type="text" id="habitacion" class="form-control" name="habitacion" disabled>                    
                 </div>
             </div>
           </div>
@@ -89,7 +88,21 @@
                 </tbody>
             </table>
            </div><!--End Invoice-->         
-        </div>            
+        </div> 
+        <div class="row">
+          <div class="col-md-4 pull-right">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fas fa-money-check-alt"></i>
+                </span>
+                <div class="form-group label-floating">
+                    <strong>Total cuenta</strong>
+                    <input  type="text" id="sumSubTotales" class="form-control" name="sumSubTotales" disabled>
+                    
+                </div>
+            </div>
+          </div>
+        </div>           
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning pull-right" data-dismiss="modal"> <i class="fas fa-sign-out-alt"></i> Salir</button>        

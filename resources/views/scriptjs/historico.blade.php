@@ -25,9 +25,7 @@
                     $("#habitacion").val(habitacion)
                     $("#pax").val(pax)
                     $("#reserva").val(reserva)
-                    $("#nombreCliente").val(nombreCliente)
-                  
-                      
+                    $("#nombreCliente").val(nombreCliente)                                        
                 }                 
             },
             error: function(respuesta) {
@@ -60,7 +58,8 @@ function verCuentaDetalles(id) {
                     var objeto=respuesta["objeto"];
                     var longitud=objeto.length;                    
                     if(longitud>0){
-                        console.log("cuenta",objeto);                                                                        
+                        // console.log("cuenta",objeto);
+                        var sumaSubTotales=0;
                         for (i = 0; i < longitud; i++) {                           
                             var idCuenta = objeto[i]["idCuenta"];
                             var cantidad = objeto[i]["cantidad"];
@@ -87,13 +86,14 @@ function verCuentaDetalles(id) {
                             }else if(fechaAlta!=null && fechaImpresion==null && fechaCancela==null){
                                 estado=pedido;
                             }
-
+                            sumaSubTotales = sumaSubTotales + subTotal; 
                             itemCuenta="<tr><td>"+cantidad+"</td><td>"+nombreProducto+"</td><td>"+precio+"</td><td>"+subTotal+"</td><td>"+estado+"</td></tr>";
                             $("#detalleCuenta tbody").append(itemCuenta); 
                             // console.log("fechaCancela",fechaCancela);                             
                             // console.log("fechaImpresion",fechaAlta); 
                             // console.log("fechaAlta",fechaAlta); 
-                    }    
+                    }
+                    $("#sumSubTotales").val(sumaSubTotales);
                 }else{
                     itemCuenta="<tr><td colspan='4'>Esta cuenta no tiene detalles a mostrar</td></tr>";                   
                     $("#detalleCuenta tbody").append(itemCuenta); 
