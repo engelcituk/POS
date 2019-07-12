@@ -18,8 +18,10 @@
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{asset('css/demo.css')}}" rel="stylesheet" />
     {{-- estilos swtiches --}}
-    <link href="{{asset('css/estilo.css')}}" rel="stylesheet"/>
     <link href="{{asset('css/carousel.css')}}" rel="stylesheet"/>
+    <link href="{{asset('css/owl.carousel.min.css')}}" rel="stylesheet"/>
+    {{-- <link href="{{asset('css/owl.theme.min.css')}}" rel="stylesheet"/> --}}
+    <link href="{{asset('css/estilo.css')}}" rel="stylesheet"/>
 
     <!--     Fonts and icons     -->
     <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet" />
@@ -27,9 +29,12 @@
     <link href="{{asset('css/google-roboto-300-700.css')}}" rel="stylesheet" />
     <link href="{{asset('css/select2.min.css')}}" rel="stylesheet"/>
     <script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>
+    <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{asset('js/select2.min.js')}}"></script>
-    <script src="{{asset('js/bootstrap-timepicker.js')}}"></script>    
+    <script src="{{asset('js/bootstrap-timepicker.js')}}"></script> 
+    <script src="{{asset('js/MultiCarousel.js')}}"></script>   
     <script src="{{asset('js/scriptSlider.js')}}"></script>
+    <script src="{{asset('js/slider.js')}}"></script>
     
     
 </head>
@@ -284,7 +289,7 @@
 <!--   Core JS Files   -->
 
 <script src="{{asset('js/jquery-ui.min.js')}}" type="text/javascript"></script>
-<script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
+
 <script src="{{asset('js/material.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('js/perfect-scrollbar.jquery.min.js')}}" type="text/javascript"></script>
 <!-- Forms Validations Plugin -->
@@ -329,6 +334,7 @@
 <!-- <script src="{{asset('js/demo.js')}}"></script> -->
 <!-- <script src="{{asset('js/init.js')}}"></script> -->
 <script src="{{asset('js/datatables.js')}}"></script>
+<script src="{{asset('js/owl.carousel.min.js')}}"></script>
 
 
 

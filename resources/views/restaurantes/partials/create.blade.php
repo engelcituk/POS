@@ -89,20 +89,20 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-dollar-sign"></i>
                                         </span>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Moneda</label>
-                                            <input id="moneda" type="text" class="form-control{{ $errors->has('moneda') ? ' is-invalid' : '' }}" name="moneda" required>
-                                            @if ($errors->has('moneda'))
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('moneda') }}</strong>
-                                            </span>
-                                            @endif
+                                        <div class="form-group">
+                                            <!-- <label for="sel1">Select list:</label> -->
+                                            <select class="form-control" name="idMoneda" required>
+                                                <option value="">Seleccione moneda</option>
+                                                @foreach($monedas as $moneda)
+                                                <option value="{{ $moneda->id }}">{{$moneda->moneda}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

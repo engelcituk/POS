@@ -37,14 +37,24 @@ class RestaurantesController extends Controller
         $datos = json_decode($respuesta);
         $restaurantes = $datos->objeto;
         return $restaurantes;
+    }
+    public function obtenerMonedas(){ 
+        /*metodo no protected porque lo ocuparé en otros metodos de otros controladores */
+        //es una funcion que esta en el controller principal
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetMoneda');
+
+        $datos = json_decode($respuesta);
+        $monedas = $datos->objeto;
+        return $monedas;
     } 
     protected function create(){
         /*Obtendo todos los hoteles que me trae mi controlador HOTELESCONTROLLER con su metodo OBTENERTODOSLOSHOTELES*/
 
         $hoteles =\App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
-        $impresoras = \App::call( 'App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras'); 
-        
-        return view('restaurantes.partials.create',['hoteles'=> $hoteles, 'impresoras'=> $impresoras]);
+        $impresoras = \App::call( 'App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
+        $monedas = $this->obtenerMonedas();
+        // dd($monedas);
+        return view('restaurantes.partials.create', compact('hoteles', 'impresoras', 'monedas'));
     }   
     public function show($id)
     {        

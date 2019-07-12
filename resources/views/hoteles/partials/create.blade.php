@@ -59,7 +59,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
-                            </div>
+                            </div>                                                       
                         </div>
                     </div>
                 </div>

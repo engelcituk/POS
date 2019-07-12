@@ -55,14 +55,12 @@
                                 $nombreMesa=$mesa->name;
                                 $estadoMesa= $mesa->status;
                                 $mesaStatus = ($estadoMesa == 1) ? "disponible" : "ocupado";
-                                $mesaCss = ($estadoMesa != 1) ? "bordeMesaOcupada" : "";
-                                @endphp
-                                
-                                        
-                                    <li class="abrirMesa {{$mesaCss}}" idMesa="{{$idMesa}}">
+                                $mesaCss = ($estadoMesa == 1) ? "mesaOrdenLibre" : "mesaOrdenOcupada";
+                                @endphp                                                                        
+                                    <li class="abrirMesa " idMesa="{{$idMesa}}">
                                         <a id="mesaAbrir{{$idMesa}}" class="" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})" estadoMesa="{{$mesaStatus}}">
                                             <span class="label label-success">1</span><span class="label label-warning">2</span><span class="label label-default">3</span><br><br>
-                                            <div class="well well-sm mesaOrden {{$mesaStatus}}"><strong>{{$nombreMesa}}</strong></div>
+                                            <div class="well well-sm mesaOrden {{$mesaCss}}"><strong>{{$nombreMesa}}</strong></div>
                                             {{-- <img  class="{{$mesaStatus}}" src="{{asset('img/mesa.png')}}">   --}}
                                         </a>
                                         
@@ -82,10 +80,8 @@
         <div class="row hidden" id="zonaTomarOrden">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-content">
-                        
-                        <a href="{{ route('ordenar.index') }}" class="btn btn-warning btn-sm pull-right volverMesas"><i class="fas fa-undo-alt"></i></i> Volver</a>
-                        <h4 class="card-title">Tomar Orden</h4>
+                    <div class="card-content">                                               
+                        {{-- <h4 class="card-title">Tomar Orden</h4> --}}
                         <div class="row">
                             <div class="col-md-5">
                                 <div id="wrapper">
@@ -152,33 +148,41 @@
                                 </div>
                             </div>
                             <div class="col-md-7" id="idMesaAddProducts">
-                                <div id="opcionesTiempo">
-                                    <span class="btn btn-success btn-sm pull-left" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
-                                    <span class="btn btn-sm pull-left " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
-                                    <span class="btn btn-sm pull-left" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
-                                </div>                
-                                <div id="contentSlider">
-                                    <div id="carrusel">
-                                        <a href="#" class="left-arrow"><span><i class="fas fa-arrow-left"></i></span></a>
-                                        <a href="#" class="right-arrow"><span><i class="fas fa-arrow-right"></i></span> </a>
-                                        <div class="carrusel">
-                                            {{-- @php
-                                               $idPV=Session::get('idPuntoVenta');
-                                               $idCarta=Session::get('idCarta'); 
-                                            @endphp --}}
-                                            <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
-                                                <img src="{{asset('img/faces/masvendidos.png')}}"/> 
-                                                <span class="label" categoria="masVendidos">Más vendidos</span>                                                                 
-                                            </div>
-                                            @foreach($categorias as $categoria)
-                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})">                                  <img src="data:image/png;base64,{{$categoria->imagen}}"/>
-                                                    <strong></strong>    
-                                                    <span class="label label-default" categoria="{{$categoria->name}}">{{$categoria->name}}</span>         
-                                                </div>                                                    
-                                            @endforeach                                            
-                                        </div>
-                                    </div>
+                                
+                                <div class="row">
+                                    <div id="opcionesTiempo">
+                                        <span class="btn btn-success btn-sm pull-left" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
+                                        <span class="btn btn-sm pull-left " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
+                                        <span class="btn btn-sm pull-left" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
+                                    </div> 
+                                    <a href="{{ route('ordenar.index') }}" class="btn btn-warning btn-sm pull-right volverMesas"><i class="fas fa-undo-alt"></i></i> Volver</a>
                                 </div>
+                                <div id="news-slider11" class="owl-carousel">
+                                    <div class="slideProductos">
+                                        <div class="post-img">                                            
+                                            <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
+                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}"/>       
+                                                {{-- <span class="label" categoria="masVendidos">Más vendidos</span>          --}}
+                                            </div>
+                                        </div>
+                                        <p class="post-title" categoria="masVendidos">
+                                            Más vendidos
+                                        </p>                                        
+                                    </div>
+                                    @foreach($categorias as $categoria)
+                                        <div class="slideProductos">
+                                            <div class="post-img">                                                
+                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})">                                  <img style="cursor: pointer;" src="data:image/png;base64,{{$categoria->imagen}}" />
+                                                    {{-- <span class="label label-default" categoria="{{$categoria->name}}">{{$categoria->name}}</span>          --}}
+                                                </div>
+                                            </div>
+                                            <p class="post-title bg-success">
+                                                {{$categoria->name}}
+                                            </p>
+                                        </div>                
+                                    @endforeach                                    
+                                </div>                                         
+                              
                                 <div id="lstProductos">
                                     <ul class="nav nav-pills nav-pills-icons" id="UlList" role="tablist">                                                               
                                     </ul>

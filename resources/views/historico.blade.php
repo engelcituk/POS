@@ -52,7 +52,7 @@
                                         <th>SubTotal</th>
                                         <th>% Descuento</th>
                                         <th>Total</th>
-                                        <th>Estado</th>
+                                        <th>Fecha</th>
                                         <th class="disabled-sorting text-right">Herramientas</th>
                                     </tr>
                                 </thead>

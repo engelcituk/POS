@@ -9,9 +9,9 @@ $(document ).ready(function() {
         //         $(".zonas").show();
         // }
     }     
-    var catMasVendido = $(".product").children('span:first').attr("categoria");
+    var catMasVendido = $(".slideProductos").children('p:first').attr("categoria");
     if (catMasVendido != "") {                        
-        $(".product").children('span:first').addClass("label-success");                
+        $(".slideProductos").children('p:first').addClass("bg-primary");                
     } 
    
 
@@ -47,7 +47,8 @@ $("#zonaElige").change(function() {
 
         $("#btnEnviarCP").attr("idPVCPBtn",idPV);
         $("#btnEnviarCP").attr("idMesaCPBtn",idMesa);
-        $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);                
+        $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
+                       
     }else if(estadoMesa=="ocupado"){
         $("#zonaTomarOrden").removeClass("hidden");
         $("#zonaMesas").addClass("hidden");
@@ -148,8 +149,7 @@ $("#zonaElige").change(function() {
         $("#zonaMesas").addClass("hidden");
         $("#myModal").modal("hide"); 
 
-       guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta
-
+       guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta       
      }else{
         swal({
             title: 'Oops...',
@@ -198,6 +198,7 @@ $("#zonaElige").change(function() {
                     // console.log("respuesta folio "+folio);
                     $("#btnAddDescuento").attr("btnIdCuenta",idCuenta);//creo los atributos
                     localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto
+                    getProductosMasVendidos();
                 }else{
                     var mensaje=resultado["mensaje"];
                     swal({
