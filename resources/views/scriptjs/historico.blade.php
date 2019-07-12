@@ -37,6 +37,7 @@
 
 function verCuentaDetalles(id) {
         $("#detalleCuenta tbody").empty();//limpio la tabla para cargale lo que traigo por ajax
+        $("#sumSubTotales").val("");
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         $('#modalVerDetalle').modal('show');    
                
