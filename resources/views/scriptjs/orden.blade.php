@@ -1,19 +1,11 @@
 <script>
 $(document ).ready(function() {
-    var valDefault = $("#zonaElige").children('option:first').val();  
-      
-    if (valDefault != "") {                        
-        $(".zonas").hide();
-        $("#" + valDefault).show();
-        //     if (valDefault == "todos") {
-        //         $(".zonas").show();
-        // }
-    }     
+        
     var catMasVendido = $(".slideProductos").children('p:first').attr("categoria");
     if (catMasVendido != "") {                        
         $(".slideProductos").children('p:first').addClass("bg-primary");                
     } 
-   
+   getZonas();
 
 });
 //para mostrar zonas y sus mesas respectivamente
@@ -34,6 +26,103 @@ $("#zonaElige").change(function() {
     //     });
     // }
 });
+function getZonas(){
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    $.ajax({
+            url: "{{ url('ordenar/obtenerzonas') }}",
+            type: "GET",
+            data: {
+                '_method': 'GET',               
+                '_token': csrf_token
+            },        
+            success: function(respuesta) {
+                var respuesta = JSON.parse(respuesta);
+                // console.log("respuesta", respuesta);
+                var ok = respuesta["ok"];
+                if(ok){
+                    var objeto=respuesta["objeto"]; 
+                    // console.log("objeto",objeto);
+                    listaZonas="";
+                    for(i =0;  i<objeto.length; i++){
+                        var idZona=objeto[i]["id"];
+                        var nombre=objeto[i]["name"];
+                        var idPV=objeto[i]["idPuntoVenta"];
+                        var estado=objeto[i]["status"];
+                        // console.log("idZona",idZona);
+                        listaZonas+="<div id='zona"+idZona+"' class='zonas'><strong>"+nombre+"</strong><ul class='nav nav-pills nav-pills-icons' role='tablist' id='zonaListaMesas"+idZona+"'></ul></div>";
+                        getMesasPorZona(idZona);
+                    }
+                    listaZonas+="";                     
+                    $("#zonasPV").html(listaZonas);
+                }else{
+                    $("#zonasPV").html('<p>Sin zonas para este punto de venta</p>');
+                }                
+            },
+            error: function(respuesta) {
+            console.log(JSON.parse(respuesta));
+        }
+    }); 
+}
+function getMesasPorZona(idZona) {
+   var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+
+    $.ajax({
+            url: "{{ url('ordenar/obtenermesaszona')}}"+'/'+idZona,
+            type: "GET",
+            data: {
+                '_method': 'GET',               
+                '_token': csrf_token
+            },        
+            success: function(respuesta) {
+                var respuesta = JSON.parse(respuesta);                
+                var ok = respuesta["ok"];
+                if(ok){
+                    var objeto=respuesta["objeto"];                     
+                    listaMesas="";
+                    for(i =0;  i<objeto.length; i++){
+                        var idMesa=objeto[i]["id"];
+                        // var idZona=objeto[i]["idZona"];
+                        // var nombre=objeto[i]["name"];                        
+                        var estado=objeto[i]["status"];
+                        var cuenta=objeto[i]["cuenta"];
+                                                
+                        mesaStatus = (estado == 1) ? "disponible" : "ocupado";
+                        mesaCss = (estado == 1) ? "mesaOrdenLibre" : "mesaOrdenOcupada";
+
+                        var logintudCuenta=cuenta.length;
+                        if(logintudCuenta>0){
+                            idCuenta=cuenta[0]["cuenta"];
+                            nombre= cuenta[0]["nombre"];
+                            room= cuenta[0]["room"];
+                            total= cuenta[0]["total"];
+                        }else{
+                            idCuenta= "NO";
+                            nombre= "SN";
+                            room= "Sin Hab";
+                            total= "0";
+                        }                       
+                        listaMesas+="<li class='abrirMesa' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><br><div class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+idMesa+"</span><br>"+idCuenta+"<br>"+nombre+"<br> "+room+"<br>"+total+"</div></a></li>";
+                    }
+                    listaMesas+="";                     
+                    $("#zonaListaMesas"+idZona).html(listaMesas);
+                    
+                    var valDefault = $("#zonaElige").children('option:first').val();            
+                    if (valDefault != "") {                        
+                        $(".zonas").hide();
+                        $("#" + valDefault).show();
+                        //     if (valDefault == "todos") {
+                        //         $(".zonas").show();
+                        // }
+                    } 
+                }else{
+                    $("#zonaListaMesas"+idZona).html('<p>Sin mesas para esta zona</p>');
+                }                
+            },
+            error: function(respuesta) {
+            console.log(JSON.parse(respuesta));
+        }
+    });
+}
  function aperturaMesa(idMesa) {
     //muestro el modal pero no lo dejo salir al hacer click fuera de este
     var estadoMesa = $("#mesaAbrir"+idMesa).attr("estadoMesa");//obtengo el id de la mesa

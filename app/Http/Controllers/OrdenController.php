@@ -15,6 +15,7 @@ class OrdenController extends Controller
     public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
     public $urlBaseProducto = "http://localhost/TPVApi/Producto/";
     public $urlMenuCarta= "http://localhost/TPVApi/MenuCarta/";
+    public $urlMesas = "http://172.16.4.229/TPVApi/Mesas/";
 //
     public function __construct(){
         // $this->middleware('auth');
@@ -24,34 +25,38 @@ class OrdenController extends Controller
         $idPuntoVenta = $request->session()->get('idPuntoVenta');
         $idCarta = $request->session()->get('idCarta');
 
-        $respuesta = $this->obtenerTodasLasZonasPV($idPuntoVenta);
+        $respuestaZonas = $this->ZonasPV($idPuntoVenta);        
+        $zonas = $respuestaZonas->objeto;
 
         $categorias=$this->obtenerCategoriasCarta($idCarta);
-
         
-        // $respuesta = json_decode($respuesta);
-        $zonas = $respuesta->objeto;
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');//se cargan en un modal
         //$categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
         $metodosPago = \App::call('App\Http\Controllers\MetodosPagoController@obtenerTodosLosMetodosPagos');//se carga en subtabs
-        // $productos = \App::call( 'App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
-
-        // $idSubCatsCollection = new Collection([]);
-        // foreach ($subcategorias as $subCat) {
-        //     $idSubCatsCollection->push($subCat->id);
-        // }
-        // dd($metodosPago);
-
+        
         return view('ordenar', compact('zonas','alergenos','categorias', 'metodosPago'));
     }
-   
-    public function obtenerTodasLasZonasPV($idPuntoVenta){
-        //es una funcion que esta en el controller principal        
+    public function ZonasPV($idPuntoVenta){
+        
         $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetZonaPV/{$idPuntoVenta}");
-
         $respuesta= json_decode($respuesta);        
+        return $respuesta;
+    }
+    public function obtenerTodasLasZonasPV(Request $request){
+
+        $idPuntoVenta = $request->session()->get('idPuntoVenta');
+              
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetZonaPV/{$idPuntoVenta}");
+
+        // $respuesta= json_decode($respuesta);        
 
         return $respuesta;
+    }
+     public function getMesasPorZona($idZona){
+        
+        $respuesta = $this->realizarPeticion('GET', $this->urlMesas."GetMesaPorZona/{$idZona}");       
+
+        return  $respuesta;
     }
     public function obtenerCategoriasCarta($idCarta){
         

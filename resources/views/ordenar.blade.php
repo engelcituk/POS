@@ -41,13 +41,18 @@
                         {{-- <h4 class="card-title">Tomar Orden </h4> --}}
                          <button class="btn btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})"><i class="far fa-window-close"></i> Cerrar día</button>
                          <br>
-                        @foreach($zonas as $zona)                            
+                         <div id="zonasPV">
+                            
+                         </div>
+                        {{-- @foreach($zonas as $zona)                            
                             <div id="zona{{$zona->id}}" class="zonas">
                             <strong>{{$zona->name}}</strong>
                             @php                                
                                $idZona=$zona->id;                          
                                $mesas=App\Http\Controllers\OrdenController::obtenerMesasPorZona($idZona); 
-                            @endphp                                                            
+                            //    $cuenta = json_decode($mesas->cuenta);
+                            //    dd($mesas);
+                            @endphp                                                             
                              <ul class="nav nav-pills nav-pills-icons" role="tablist">
                                 @foreach($mesas as $mesa)
                                 @php                                
@@ -60,15 +65,14 @@
                                     <li class="abrirMesa " idMesa="{{$idMesa}}">
                                         <a id="mesaAbrir{{$idMesa}}" class="" role="tab" data-toggle="tab" aria-expanded="true" onclick="aperturaMesa({{$idMesa}})" estadoMesa="{{$mesaStatus}}">
                                             <span class="label label-success">1</span><span class="label label-warning">2</span><span class="label label-default">3</span><br><br>
-                                            <div class="well well-sm mesaOrden {{$mesaCss}}"><strong>{{$nombreMesa}}</strong></div>
-                                            {{-- <img  class="{{$mesaStatus}}" src="{{asset('img/mesa.png')}}">   --}}
+                                            <div class="well well-sm mesaOrden {{$mesaCss}}"><strong>{{$nombreMesa}}</strong></div>                                            
                                         </a>
                                         
                                     </li>
                                 @endforeach                                
                             </ul> 
                         </div>
-                        @endforeach
+                        @endforeach --}}
                     </div>
                     <!-- end content-->
                 </div>

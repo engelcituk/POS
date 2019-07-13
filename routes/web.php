@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 Route::get('/', function () {
     $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
@@ -14,6 +14,8 @@ Route::middleware(['filtroAcceso'])->group(function () {
 
 // Route::get('all/zonaspv', 'OrdenController@AllZonasPV')->name('all.zonas');
 Route::get('ordenar', 'OrdenController@index')->name('ordenar.index');
+Route::get('ordenar/obtenerzonas', 'OrdenController@obtenerTodasLasZonasPV')->name('ordenar.getzonas');
+Route::get('ordenar/obtenermesaszona/{idZona}', 'OrdenController@getMesasPorZona')->name('ordenar.obtenermesaszona');
 Route::get('ordenar/{codhotel}/{room}', 'OrdenController@obtenerDatosHuesped')->name('ordenar.obtenerhuesped');
 Route::post('ordenar/addcuenta', 'OrdenController@guardarCuenta')->name('ordenar.addcuenta');
 Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name('ordenar.enviarcuenta');
