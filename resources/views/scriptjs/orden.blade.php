@@ -91,9 +91,10 @@ function getMesasPorZona(idZona) {
 
                         var logintudCuenta=cuenta.length;
                         if(logintudCuenta>0){
+                            room = (cuenta[0]["room"] == null) ? "Sin Hab" : cuenta[0]["room"];
                             idCuenta=cuenta[0]["cuenta"];
                             nombre= cuenta[0]["nombre"];
-                            room= cuenta[0]["room"];
+                            // room= cuenta[0]["room"];
                             total= cuenta[0]["total"];
                         }else{
                             idCuenta= "NO";
@@ -233,7 +234,7 @@ function getMesasPorZona(idZona) {
      var brazalete = $("#brazalete").val().length > 0;
 
      $("#idMesaAddProducts").attr("idMesaValue",idMesa); //le envio el id de la mesa a este atributo que me creo
-     if(reserva && nombre && room && pax && fechaSalida && brazalete){
+     if(nombre && pax ){
         $("#zonaTomarOrden").removeClass("hidden");
         $("#zonaMesas").addClass("hidden");
         $("#myModal").modal("hide"); 
@@ -242,13 +243,26 @@ function getMesasPorZona(idZona) {
      }else{
         swal({
             title: 'Oops...',
-            text: '¡Tiene un campo vacio!'+idMesa,
+            text: '¡Tiene un campo vacio!',
             type: 'error',
             timer: '2000'
         });
      }
-
  }
+//  para evitar poner valores diferentes a cero y que no sean numericos
+ $("#ocupante").change(function(){ 	
+ 	var pax = $("#ocupante").val(); 	
+ 	var soloNumeros = this.value.replace(/[^0-9]/g,''); 	
+	    if(soloNumeros > 0 && pax !=''){	        
+	        $("#addProductoBtn").removeAttr("disabled");	        
+	    }else{
+	        swal("Oops", "Ingrese un valor numerico mayor a cero" ,  "error");
+	        $("#ocupante").val(1);	        	        
+	    }	 
+ });
+ $(document).on("input", "#ocupante", function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+     });
  function guardarCuenta(idMesa){
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      var reserva  = $("#reserva").val();
@@ -273,7 +287,7 @@ function getMesasPorZona(idZona) {
             data: {
                 '_method': 'POST',
                 'alergenos':alergenos,
-                'idMesa':idMesa,'reserva':reserva,'nombreCliente':nombreCliente,'habitacion':habitacion,
+                'idMesa':idMesa,'reserva':reserva,'nombreCliente':nombreCliente,'habitacion':habitacion, 'pax':pax,
                 '_token': csrf_token
             },        
             success: function(respuesta) {
@@ -394,6 +408,7 @@ function getMesasPorZona(idZona) {
        $("#addProductoBtn").attr("disabled", cant <= 0);                
     });
  }
+ //para evitar poner valores que no sean numreos
 $("#cantidadProducto").change(function(){ 	
  	var cantidad = $("#cantidadProducto").val(); 	
  	var soloNumeros = this.value.replace(/[^0-9]/g,''); 	

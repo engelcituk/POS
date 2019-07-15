@@ -65,7 +65,7 @@
                         </span>
                         <div class="form-group label-floating">
                             {{-- <label class="control-label">Nombre</label> --}}
-                            <input type="text" class="form-control" id="nombre" name="nombre" readonly>  
+                            <input type="text" class="form-control" id="nombre" name="nombre">  
                         </div>
                     </div>
                   </div>
@@ -85,11 +85,11 @@
                   <div class="col-md-6">
                       <div class="input-group">
                         <span class="input-group-addon">
-                            {{-- <i class="fas fa-users"></i> --}}Ocupante
+                            {{-- <i class="fas fa-users"></i> --}}Pax
                         </span>
                         <div class="form-group label-floating">
                             {{-- <label class="control-label">Ocupante</label> --}}
-                            <input type="number" class="form-control" id="ocupante" name="ocupante" >  
+                            <input type="number" min="1" class="form-control" id="ocupante" name="ocupante" >  
                         </div>
                     </div>
                   </div>

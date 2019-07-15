@@ -137,6 +137,7 @@ class OrdenController extends Controller
         $reserva = $request->get( 'reserva');
         $habitacion = $request->get('habitacion');
         $nombreCliente = $request->get('nombreCliente');
+        $pax = $request->get('pax');
         $idPuntoVenta = $request->session()->get('idPuntoVenta'); //obtengo el id del punto de venta
 
         $alergenos = $request->get('alergenos'); //obtengo el array de alergenos desde ajax
@@ -156,6 +157,7 @@ class OrdenController extends Controller
                 'reserva' => $reserva,
                 'habitacion' => $habitacion,
                 'nombreCliente' => $nombreCliente,
+                'pax' => $pax,
                 'idPuntoVenta' => $idPuntoVenta,
                 'TPV_AlergenosCuenta' => 
                     $arrayAlergenos                                
