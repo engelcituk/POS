@@ -19,6 +19,7 @@ class LoginController extends Controller
         $idHotel= $request->get('idHotel'); 
         $idPuntoVenta = $request->get('listaPuntosVenta');
         $idCarta = $request->get('listaCartas');
+        $ruta= "ordenar";
         
         //para crear sesion del usuario, datos del usuario
         $usuario = $request->get('usuario');
@@ -32,18 +33,29 @@ class LoginController extends Controller
 
             foreach ($usuario as $item) {
               $idUsuario= $item->id;
-              $nombreCompleto = $item->name;
+            //   $nombreCompleto = $item->name;
               $nombreDeUsuario = $item->usuario;
             }
+            if($nombreDeUsuario=="admin"){
+                $admin=1;
+                $ruta = "hoteles";
+                $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
+                $request->session()->put('idUsuarioLogueado', $idUsuario);
+                $request->session()->put('UsuarioAdmin', $admin);
+            }else{
+                $request->session()->put('idHotel', $idHotel);
+                $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
+                $request->session()->put('idUsuarioLogueado', $idUsuario);
+                $request->session()->put('idPuntoVenta', $idPuntoVenta);
+                $request->session()->put('idCarta', $idCarta);
 
-            $request->session()->put('idHotel', $idHotel);
-            $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
-            $request->session()->put('idUsuarioLogueado', $idUsuario);
-            $request->session()->put('idPuntoVenta', $idPuntoVenta);
-            $request->session()->put('idCarta', $idCarta);
+                $request->session()->put('accesoOrden', 1);
+                $request->session()->put('accesoHistorico', 1);
+            }
+            
             // $usuarioSesion = $request->session()->get('UsuarioLogueado'); 
                      
-            return  redirect('ordenar');
+            return  redirect($ruta);
         }         
         return back()->withErrors(['usuario'=>'Estas credenciales no coinciden con nuestros registros']);
     }
@@ -70,7 +82,11 @@ class LoginController extends Controller
     }
     public function logout(Request $request){
 
-        // $usuario = $request->get('UsuarioLogueado');
+        $usuario = $request->session()->get('UsuarioLogueado');
+        $ruta="/";
+        if($usuario=="admin"){
+            $ruta="admin";
+        }       
         //$usuarioLogueado = $request->session()->get('UsuarioLogueado');
         // $password = $request->get('password');
         // dd($usuarioLogueado);
@@ -79,8 +95,11 @@ class LoginController extends Controller
         $request->session()->forget('idUsuarioLogueado');
         $request->session()->forget('idPuntoVenta');
         $request->session()->forget('idCarta');
+        $request->session()->forget('UsuarioAdmin');
+
+        $request->session()->forget('accesoOrden');
+        $request->session()->forget('accesoHistorico');
         
-        
-        return redirect('/');
+        return redirect($ruta);
     }
 }

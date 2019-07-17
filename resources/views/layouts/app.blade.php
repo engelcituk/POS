@@ -132,4 +132,7 @@
 @if(request()->is('/'))
     @include('scriptjs/login')   
 @endif
+@if(request()->is('admin'))
+    @include('scriptjs/login')   
+@endif
 </html>

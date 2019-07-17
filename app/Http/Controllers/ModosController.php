@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 
 class ModosController extends Controller
 {
+    public $urlBase = "http://localhost/TPVApi/Modos/";
     public function __construct(){
 
         // $this->middleware('accesoModosFiltro');
@@ -29,81 +30,79 @@ class ModosController extends Controller
     }
     protected function obtenerTodosLosModos()
     {
-        //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', 'https://api.myjson.com/bins/uyyya');
+        //es una funcion que esta en el controller principal       
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetModos');
 
         $datos = json_decode($respuesta);
 
-        $modos = $datos->modos;
+        $modos = $datos->objeto;
 
         return $modos;
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   public function obtenerUnModo($idModo){
+
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetModo/{$idModo}");
+        $datos = json_decode($respuesta);
+        $modo = $datos->objeto;
+        return $modo;
+   }
     public function create()
     {
         return view('modos.partials.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    
     public function store(Request $request)
     {
-        //
+        $descripcion = $request->get('descripcion');
+        $idUsuario = $request->session()->get('idUsuarioLogueado');
+      
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddModo', [
+            'form_params' => [
+                'descripcion' => $descripcion,
+                "idUsuarioAlta" => $idUsuario
+            ]
+        ]);
+
+        return redirect('/modos');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function show($idModo)
     {
-        $modo= $id;
+        $modo = $this->obtenerUnModo($idModo);
 
-        return view('modos.partials.show', ['modo' => $modo]);
+        $idUsuario = $modo->idUsuarioAlta; 
+        $usuario = new ApiUsuarioController();
+        $usuario = $usuario->obtenerUnUsuario($idUsuario);        
+
+        return view('modos.partials.show', ['modo' => $modo,'usuario'=> $usuario]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+       
+    public function edit($idModo)
     {
-        $modo = $id;
+        $modo = $this->obtenerUnModo($idModo);
         return view('modos.partials.edit', ['modo' => $modo]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+        
+    public function actualizar(Request $request)
     {
-        //
+        $idModo = $request->get('id');
+        $descripcion = $request->get('descripcion');
+        $idUsuario = $request->session()->get('idUsuarioLogueado');
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateModo/{$idModo}", [
+            'form_params' => [
+                'descripcion' => $descripcion,
+                "idUsuarioAlta" => $idUsuario
+            ]
+        ]);
+
+        return redirect('/modos');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function destroy($idModo){
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteModo/{$idModo}");
+        return redirect('/impresoras');
+
     }
 }

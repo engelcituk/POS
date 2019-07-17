@@ -3,48 +3,29 @@
 <div class="content">
     <div class="container-fluid">
         <a href="{{ route('modos.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card card-profile">
-
-                    <form method="POST" action="{{ route('modos.store')}}">
+        <form method="POST" action="{{ route('modos.actualizar')}}">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-profile">
                         @csrf
-                        <div class="card-content">
-                            El id del modo {{$modo}}
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="material-icons">create</i>
-                                </span>
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Nombre zona</label>
-                                    <input id="nombre" type="text" class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}" name="nombre" required autofocus>
-                                    @if ($errors->has('nombre'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('nombre') }}</strong>
-                                    </span>
-                                    @endif
+                        <input id="name" type="hidden" class="form-control" name="id" value="{{$modo->id}}" required>
+                        <div class="row">
+                            <div class="card-content">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="descripcion">Descripcion:</label>
+                                            <textarea class="form-control" rows="1" name="descripcion"> {{$modo->descripcion}}</textarea>
+                                        <span class="material-input"></span>
+                                    </div>                                                                      
                                 </div>
+                                {{-- <small>En la api se registra el <cite title="idPuntoVenta">fechaAlta/horaAlta</cite></small> --}}
+                                <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="material-icons">create</i>
-                                </span>
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Empresa</label>
-                                    <input id="direccion" type="text" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }}" name="empresa" required>
-                                    @if ($errors->has('empresa'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('empresa') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 @endsection

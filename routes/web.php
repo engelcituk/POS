@@ -4,6 +4,9 @@ Route::get('/', function () {
     $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
     return view('auth.login', compact('hoteles'));
 });
+Route::get('/admin', function () {    
+    return view('authAdmin.login');
+});
 // Auth::routes();
 Route::get('login/getpuntosventa/{hotel}', 'Auth\LoginController@obtenerPuntosVenta')->name('login.puntosventa');
 Route::get('login/getcartas/{idpv}', 'Auth\LoginController@obtenerCartasPuntosVenta')->name('login.cartas');
@@ -170,6 +173,8 @@ Route::get('modos/create', 'ModosController@create')->name('modos.create');
 Route::post('modos/store', 'ModosController@store')->name('modos.store');
 Route::get('modos/{modos}', 'ModosController@show')->name('modos.show');
 Route::get('modos/{modos}/edit', 'ModosController@edit')->name('modos.edit');
+Route::post('modos/actualizar', 'ModosController@actualizar')->name('modos.actualizar');
+Route::post('modos/{modo}', 'ModosController@destroy')->name('modos.destroy');
 
 //rutas de menu configuracion-->alergenos
 Route::get('all/alergenos', 'AlergenoController@AllAlergenos')->name('all.alergenos');

@@ -4,17 +4,8 @@
 
 <div class="content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-8">
-                <nav aria-label="breadcrumb" role="navigation">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-hotel"></i> NombreHotel</a></li>
-                        <li class="breadcrumb-item"><a href="#"><i class="fas fa-concierge-bell"></i> CentroConsumo</a></li>                 
-                        {{-- <li class="breadcrumb-item actualizarMesas"><a href="#"><i class="fas fa-sync-alt"></i> Actualizar</a></li>  --}}
-                    </ol>                                       
-                </nav>
-            </div>
-            <div class="col-md-offset-1 col-md-3">
+        <div class="row">            
+            <div class="col-md-3 pull-right">
                 <nav aria-label="breadcrumb" role="navigation">
                     <div class="input-group">
                         <span class="input-group-addon">

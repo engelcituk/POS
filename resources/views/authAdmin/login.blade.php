@@ -7,48 +7,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{ route('login') }}" >
                         @csrf
                         <div class="card card-login card-hidden">
                             <div class="card-header text-center" data-background-color="blue">
-                                <h4 class="card-title">Inicio de sesión</h4>                                
+                                <h4 class="card-title">Inicio de sesión ADMIN</h4>                                
                             </div>                            
-                            <div class="card-content">
-                                
-                                <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-h-square"></i>
-                                        </span>
-                                        <div class="form-group">                                            
-                                            <select class="form-control" id="idHotel" name="idHotel" onchange="eligeHotel()" required>
-                                                <option value="">Seleccione hotel</option>
-                                                @foreach($hoteles as $hotel)
-                                                <option value="{{ $hotel->id }}">{{ $hotel->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                </div>                                
-                                <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-utensils"></i>
-                                        </span>
-                                        <div class="form-group">                                            
-                                            <select class="form-control" name="listaPuntosVenta" id="listaPuntosVenta"  onchange="obtenerCartasPV()" required>
-                                              <option value="">Seleccione punto de venta</option>
-                                          </select>
-                                        </div>
-                                </div>
-                                <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-bars"></i>
-                                        </span>
-                                        <div class="form-group">                                            
-                                            <select class="form-control" name="listaCartas" id="listaCartas" required>
-                                              <option value="">Seleccione carta</option>
-                                          </select>
-                                        </div>
-                                </div>
-
+                            <div class="card-content">                                        
                                 <p class="category text-center">
                                     Ingrese sus datos de acceso
                                 </p>
@@ -58,7 +23,7 @@
                                     </span>
                                     <div class="form-group label-floating">
                                         <label class="control-label">Nombre de usuario</label>
-                                        <input id="email" type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="usuario" value="{{ old('email') }}" required autofocus>
+                                        <input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="usuario" id="usuarioAdmin" value="{{ old('email') }}" required autofocus onchange="verificaSiEsAdmin()">
                                         @if ($errors->has('email'))
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $errors->first('email') }}</strong>
@@ -95,7 +60,7 @@
                             </div>
                             <div class="footer text-center">
                                 <!-- <button type="submit" class="btn btn-primary btn-simple btn-wd btn-lg">Let's go</button> -->
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" id="btnIngresoAdmin" class="btn btn-primary" disabled>
                                     <i class="fas fa-sign-in-alt"></i> {{ __('Ingresar') }}
                                 </button>
                             </div>

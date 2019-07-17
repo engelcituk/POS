@@ -29,8 +29,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>id</th>
-                                        
+                                        <th>id</th>                                        
                                         <th>name</th>
                                         <th>ipImpresora</th>
                                         <th>status</th>
@@ -38,7 +37,19 @@
                                     </tr>
                                 </tfoot>
                                 <tbody>
-
+                                     @foreach($impresoras as $impresora)                                            
+                                        <tr>
+                                            <td>{{$impresora->id}}</td>
+                                            <td>{{$impresora->name}}</td>
+                                            <td>{{$impresora->ipImpresora}}</td>
+                                            <td>{{$impresora->status}}</td>
+                                            <td>
+                                                <a href="{{ route('impresoras.show', $impresora->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('impresoras.edit', $impresora->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
+                                                <a onclick="deleteImpresora({{$impresora->id}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

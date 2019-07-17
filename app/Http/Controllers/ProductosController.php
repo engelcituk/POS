@@ -19,8 +19,8 @@ class ProductosController extends Controller
 
     public function index(){
         // $productos = $this->obtenerTodosLosProductos();
-
-        return view('productos');
+        $productos = $this->obtenerTodosLosProductos();
+        return view('productos',compact('productos'));
         
     }
     protected function create(){

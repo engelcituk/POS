@@ -58,7 +58,7 @@ function verCuentaDetalles(id) {
                 if(ok){
                     var objeto=respuesta["objeto"];
                     var longitud=objeto.length;                    
-                    if(longitud>0){
+                    if(longitud>0){ 
                         // console.log("cuenta",objeto);
                         var sumaSubTotales=0;
                         for (i = 0; i < longitud; i++) {                           

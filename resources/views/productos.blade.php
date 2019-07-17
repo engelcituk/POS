@@ -31,20 +31,24 @@
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>codProducto</th>
-                                        <th>Nombre</th>
-                                        <th>fechaAlta</th>
-                                        <th>propina</th>
-                                        <th>Complemento</th>
-                                        <th>Estado</th>
-                                        <th class="text-right">Acciones</th>
-                                    </tr>
-                                </tfoot>
+                                
                                 <tbody>
-
+                                    @foreach($productos as $producto)                                            
+                                        <tr>
+                                            <td>{{$producto->id}}</td>
+                                            <td>{{$producto->codigoProducto}}</td>
+                                            <td>{{$producto->nombreProducto}}</td>
+                                            <td>{{$producto->fechaAlta}}</td>
+                                            <td>{{$producto->propina}}</td>
+                                            <td>{{$producto->complemento}}</td>
+                                            <td>{{$producto->status}}</td>
+                                            <td>
+                                                <a href="{{ route('productos.show', $producto->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('productos.edit', $producto->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
+                                                <a onclick="deleteProducto({{$producto->id}})" class="btn btn-xs btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

@@ -15,7 +15,9 @@ class ImpresorasController extends Controller
     public $urlBase = "http://localhost/TPVApi/Impresoras/";
     public function index()
     {
-        return view('impresoras'); 
+        $impresoras = $this->obtenerTodasLasImpresoras();
+
+        return view('impresoras',compact('impresoras')); 
     }
 
     public function AllImpresoras()
@@ -42,9 +44,8 @@ class ImpresorasController extends Controller
          
         return view('impresoras.partials.create');      
     }
-    public function show($id)
-    {        
-        $idImpresora = $id;
+    public function show($idImpresora)
+    {                
         $impresora = $this->obtenerUnaImpresora($idImpresora);        
 
         return view('impresoras.partials.show', ['impresora' => $impresora]);
@@ -78,9 +79,8 @@ class ImpresorasController extends Controller
         $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateImpresora/{$idImpresora}", ['form_params' =>$request->except('id')]);
         return redirect('/impresoras');
     }
-    public function destroy($id)
-    {
-        $idImpresora = $id;
+    public function destroy($idImpresora){        
+        
         $respuesta = $this->realizarPeticion('POST', $this->urlBase ."DeleteImpresora/{$idImpresora}");
         return redirect('/impresoras');
     }

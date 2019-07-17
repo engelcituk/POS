@@ -15,7 +15,7 @@
                     
                     var ok = respuesta["ok"];                
                     if(ok){//si ok es true
-                        var objeto= respuesta["objeto"]; 
+                        var objeto= respuesta["objeto"];  
                         // console.log("respuestaContoller",objeto[]);
                         listaPuntosVenta="<select class='form-control' name='listaPuntosVenta' id='listaPuntosVenta' required><option value=''>Elige punto de venta</option>"
                             for (i =0;  i<objeto.length; i++) {
@@ -93,5 +93,17 @@
             listaCartas="<select class='form-control' name='listaCartas' id='listaCartas' required><option value=''>Sin cartas</option></select>";
             $("#listaCartas").html(listaCartas);          
         }
-    }    
+}
+
+
+function verificaSiEsAdmin(){
+    var usuario = $("#usuarioAdmin").val();    
+    if(usuario=="admin"){
+        $("#btnIngresoAdmin").removeAttr("disabled")
+    }else if( usuario=="" || usuario !="admin"){
+         $("#btnIngresoAdmin").attr("disabled", true); 
+    }
+}
 </script> 
+
+{{--  --}}

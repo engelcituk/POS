@@ -15,10 +15,11 @@ class OrdenController extends Controller
     public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
     public $urlBaseProducto = "http://localhost/TPVApi/Producto/";
     public $urlMenuCarta= "http://localhost/TPVApi/MenuCarta/";
-    public $urlMesas = "http://172.16.4.229/TPVApi/Mesas/";
+    public $urlMesas = "http://localhost/TPVApi/Mesas/";
 //
     public function __construct(){
         // $this->middleware('auth');
+        $this->middleware('accesoTomarOrdenFiltro');
     }
     public function index(Request $request){
         
@@ -120,7 +121,7 @@ class OrdenController extends Controller
     }
 
     public function getProductosFavoritos(Request $request){
-        $urlBase = "http://172.16.4.229/TPVApi/menucarta/";
+        $urlBase = "http://localhost/TPVApi/menucarta/";
         // http://localhost/TPVApi/menucarta/GetProductosMenuCartaFav/1034/10
         $idPV = $request->get('idPuntoVenta');
         $idCarta = $request->get('idCarta');
