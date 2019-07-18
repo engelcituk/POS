@@ -28,6 +28,7 @@ Route::get('obtener/productos', 'OrdenController@getProductosByCat')->name('obte
 Route::get('ordenar/getfavoritos', 'OrdenController@getProductosFavoritos')->name('obtener.productosfavoritos');
 Route::get('buscar/alergenos/{idproducto}', 'OrdenController@obtenerAlergenosProducto')->name('buscar.getalergenos');
 Route::get('obtenercuenta/{idcuenta}', 'OrdenController@obtenerCuentaApi')->name('obtenercuenta.api');
+Route::get('getcuenta/{idcuenta}', 'OrdenController@getCuenta')->name('getcuenta.api');
 Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarProductoCuenta')->name('cancelardetalle.api');
 // Route::get('/prueba','Controller@obtenerAccessToken');
 

@@ -102,7 +102,7 @@ function getMesasPorZona(idZona) {
                             room= "Sin Hab";
                             total= "0";
                         }                       
-                        listaMesas+="<li class='abrirMesa' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><br><div class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+idMesa+"</span><br>"+idCuenta+"<br>"+nombre+"<br> "+room+"<br>"+total+"</div></a></li>";
+                        listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><br><div class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+idMesa+"</span><br>"+idCuenta+"<br>"+nombre+"<br> "+room+"<br>"+total+"</div></a></li>";
                     }
                     listaMesas+="";                     
                     $("#zonaListaMesas"+idZona).html(listaMesas);
@@ -161,9 +161,41 @@ function getMesasPorZona(idZona) {
  }
  function getIdCuenta(idPV,idMesa){    
     var variable=idPV+idMesa;
-    var cuenta = JSON.parse(localStorage.getItem(variable));
-    var idCuenta =cuenta["id"];
+    var cuenta = JSON.parse(localStorage.getItem(variable));    
+    if(cuenta==null){  
+        //obtengo la cuenta y creo la variable localstorage de acuerdo a la mesa     
+        idCuenta=$("#mesa"+idMesa).attr("idCuenta");     
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');    
+        $.ajax({
+                url: "{{url('getcuenta')}}"+'/'+idCuenta,
+                type: "GET",
+                data: {
+                    '_method': 'GET',
+                    '_token': csrf_token
+                },            
+                success: function(respuesta) {
+                    var respuesta=JSON.parse(respuesta);
+                    var ok = respuesta["ok"];
+                    if(ok){
+                        var objeto =  respuesta["objeto"];                          
+                        localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto
+                        var cuentaGet = JSON.parse(localStorage.getItem(variable));
+                        var idCuenta =cuentaGet["id"];
+                    }                 
+                },
+                error: function(respuesta) {
+                respuesta=JSON.parse(respuesta); 
+                console.log(respuesta);
+                }
+        });
+    }else{
+        idCuenta =cuenta["id"];
+    }
+   
     return idCuenta;
+ }
+ function getCuenta(idMesa) {
+     
  }
  function buscarHuesped(){
     //  e.preventDefault();
@@ -362,7 +394,7 @@ function getMesasPorZona(idZona) {
                             // console.log("sus Alergenos",alergenosP);
                            if(alergenosP.length >0 ){
                                 //operador ternario
-                            alergenosIdP = [];                            
+                            // alergenosIdP = [];                            
                                 for (j = 0; j < alergenosP.length; j++) {
                                     if(alergenosIdHuesped.indexOf(alergenosP[j].idAlergeno)!=-1){
                                             colorAlergeno="label-warning";
@@ -1066,18 +1098,20 @@ function getProductosMasVendidos(){
     var idCarta = $("#idCartaPVModal").val(); 
 
     var idMesaLS = localStorage.getItem("idMesaLS");
-    var variableLS =idPV+idMesaLS;
     var idCuenta =getIdCuenta(idPV,idMesaLS); 
+    var variableLS =idPV+idMesaLS;
     $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
 
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
     // console.log(variableLS);
-    var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
     alergenosIdHuesped = [];
-    for (i = 0; i < alergenosCuenta.length; i++) {
-        alergenosIdHuesped[i]= alergenosCuenta[i].idAlergeno;
+    if(datosCuentaObjeto != null){
+        var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
+        for (i = 0; i < alergenosCuenta.length; i++) {
+            alergenosIdHuesped[i]= alergenosCuenta[i].idAlergeno;
+        }
     }
-
+    
     $.ajax({
             url: "{{ url('ordenar/getfavoritos') }}",
             type: "GET",
@@ -1101,10 +1135,11 @@ function getProductosMasVendidos(){
                             var precio=objeto[i]["precio"];
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
+                            
                             // console.log("sus Alergenos",alergenosP);
-                           if(alergenosP.length >0 ){
+                           if(alergenosP.length >0 && alergenosIdHuesped.length > 0 ){
                                 //operador ternario
-                            alergenosIdP = [];                            
+                            // alergenosIdP = [];                            
                                 for (j = 0; j < alergenosP.length; j++) {
                                     if(alergenosIdHuesped.indexOf(alergenosP[j].idAlergeno)!=-1){
                                             colorAlergeno="label-warning";

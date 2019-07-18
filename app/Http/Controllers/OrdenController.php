@@ -205,6 +205,11 @@ class OrdenController extends Controller
         ]);
         return $respuesta;
     }
+    public function getCuenta($idCuenta){
+
+        $respuesta = $this->realizarPeticion('GET', $this->urlVenta."GetCuenta/{$idCuenta}");
+        return $respuesta;
+    }
     public function obtenerCuentaApi($idCuenta){
 
         $respuesta = $this->realizarPeticion('GET', $this->urlVenta."GetDetalleCuenta/{$idCuenta}");

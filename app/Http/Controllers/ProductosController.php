@@ -26,10 +26,10 @@ class ProductosController extends Controller
     protected function create(){
         
         $categorias= \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
-        //$subcategorias = \App::call('App\Http\Controllers\SubCategoriaController@obtenerTodasLasSubCategorias');
+        $modos = \App::call('App\Http\Controllers\ModosController@obtenerTodosLosModos');
         $alergenos = \App::call( 'App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
-
-        return view('productos.partials.create', compact('categorias','alergenos'));  
+       
+        return view('productos.partials.create', compact('categorias','alergenos', 'modos'));  
     }
     public function AllProduct()
     {
@@ -77,7 +77,6 @@ class ProductosController extends Controller
         // dd( $categoriaProducto);
         $alergenosProducto = $this->obtenerAlergenosProducto($idProducto);//obtengo un objeto con una respuesta ok
         $respuestaOk = $alergenosProducto->ok;
-
          
         if ($respuestaOk== 1) {
             $alergenosProducto = $alergenosProducto->objeto;
@@ -158,7 +157,6 @@ class ProductosController extends Controller
         $respuestaObjeto = $datos->objeto;
 
         $idProducto = $respuestaObjeto->id;
-
 
         if ($arrayIdAlergenos != null) {
             foreach ($arrayIdAlergenos as $idAlergeno) {
