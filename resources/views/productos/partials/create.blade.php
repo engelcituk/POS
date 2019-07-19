@@ -3,7 +3,7 @@
 <div class="content">
     <div class="container-fluid">
         <a href="{{ route('productos.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <form method="POST" action="{{ route('productos.store')}}"  enctype="multipart/form-data">
+        <form method="POST" action="{{ route('productos.store')}}"  enctype="multipart/form-data" >
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-profile">
@@ -18,7 +18,7 @@
                                             </span>
                                             <div class="form-group">
                                                 <select class="form-control selectCategoria" name="idCategoria" required>
-                                                    <option value="">Elija subcategoria del producto </option>
+                                                    <option value="">Elija categoria del producto </option>
                                                     @foreach($categorias as $categoria)
                                                         <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                                                     @endforeach
@@ -172,18 +172,34 @@
                                         @endforeach 
                                     </div>
                                     <div class="row">
-                                        <h4>Seleccione un modo de preparación para el producto</h4>
-                                        @foreach($modos as $modo) 
-                                                                          
-                                            <div class="col-md-4">
-                                                <div class="checkbox checkbox-group required">                              
-                                                    <label class="labelCheckbox ">
-                                                    <input type="checkbox" name="idModo[]" value="{{$modo->id}}" {!! $loop->first ? 'checked': '' !!} {!! $loop->first ? 'onclick="return false;"': '' !!}><strong>{{$modo->descripcion}}</strong>
-                                                    </label>                                            
-                                                </div>
-                                            </div>                                         
-                                        @endforeach   
-                                    </div>
+                                        <h4>Seleccione un modo y establece uno como principal</h4>
+                                        <div class="col-md-12">                                            
+                                        <table class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">                  
+                                            <tr id="id1" class="tr_clone">
+                                                <td>
+                                                    <select class="form-control listaProductos" id="templateLista" name="idModo[]">
+                                                        <option value="">Elija modo</option>
+                                                                @foreach($modos as $modo)
+                                                        <option value="{{$modo->id}}">{{$modo->descripcion}}</option>
+                                                                @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input id="radioP1" type="radio" name="principalRadio[]" onclick="seleccionarRadio()" checked> Principal                          
+                                                        <input type="text" id="valorP1" class="hidden" name="principal[]" value="true" readonly>                                                    
+                                                    </label>
+                                                </div>                                                               
+                                                </td>                                                     
+                                                <td>
+                                                    <a class='btn btn-primary btn-sm tr_clone_add'> <i class="fas fa-plus"></i></a> 
+                                                    <a class='btn btn-danger btn-sm tr_clone_remove'> <i class="fas fa-remove"></i></a>
+                                                    <td>
+                                            </tr>
+                                        </table>                                          
+                                        </div>                                            
+                                    </div> 
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>

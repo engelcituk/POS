@@ -420,11 +420,12 @@
 @endif
 @if(request()->is('productos'))
     @include('scriptjs/datatables/datatableProductos')
-    @include('scriptjs/sweetalerts/sweetalertProducto')   
+    @include('scriptjs/sweetalerts/sweetalertProducto') 
+     @include('scriptjs/productosModos')  
 @endif
 @if(request()->is('productos/create'))
     @include('scriptjs/validacionImgProducto')
-     
+    @include('scriptjs/productosModos')
 @endif
     
 @if(request()->is('menuscartas'))

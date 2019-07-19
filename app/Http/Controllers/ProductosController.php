@@ -11,6 +11,7 @@ class ProductosController extends Controller
 {
     public $urlBase = "http://localhost/TPVApi/Producto/";
     public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
+    public $urlPModo= "http://localhost/TPVApi/ProductoModo/";
 
     public function __construct(){
 
@@ -20,7 +21,11 @@ class ProductosController extends Controller
     public function index(){
         // $productos = $this->obtenerTodosLosProductos();
         $productos = $this->obtenerTodosLosProductos();
-        return view('productos',compact('productos'));
+
+        $modos = new ModosController();
+        $modos = $modos->obtenerTodosLosModos(); 
+
+        return view('productos',compact('productos','modos'));
         
     }
     protected function create(){
@@ -109,6 +114,10 @@ class ProductosController extends Controller
     public function store(Request $request){
 
         $arrayIdAlergenos = $request->get('idAlergeno');
+        $arrayIdModos = $request->get('idModo');
+        $arrayModoPrincipal = $request->get('principal');//0 o 1 
+
+        // dd($arrayIdModos);
         $imagen = $request->file('imagen');
         //$imagenb = base64_encode(file_get_contents($request->file('imagen')->path()));
         $idCategoria = $request->get( 'idCategoria');       
@@ -163,9 +172,30 @@ class ProductosController extends Controller
                 $this->guardarProductoAlergeno($idProducto, $idAlergeno);
             }
         }
+        // guardo los modos para el producto
+        if($arrayIdModos != null){
+            $contador = -1;
+            foreach ($arrayIdModos as $idModo) {
+                $contador = $contador + 1;
+                $principal = $arrayModoPrincipal[$contador];
+                $this->guardarProductoModo($idProducto, $idModo, $principal);
+            }
+        }
+        
+
         return redirect('/productos');
     }
+    public function guardarProductoModo($idProducto, $idModo, $principal){
 
+        $respuesta = $this->realizarPeticion('POST', $this->urlPModo.'AddProductoModo', [
+            'form_params' => [               
+                'idProducto' => $idProducto,
+                'idModo' => $idModo,
+                'principal' => $principal
+            ]
+        ]);
+        return $respuesta;
+    }
     public function actualizar(Request $request){
         
         $idProducto = $request->get('id');
