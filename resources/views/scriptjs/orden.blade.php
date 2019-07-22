@@ -479,7 +479,16 @@ function addProducto() {
         lstProductos=[];
     }else{
         lstProductos=datosCuentaTemporal;	              
-    }       
+    }   
+    var logintudCuentaTemp= datosCuentaTemporal.length;
+    if(logintudCuentaTemp>0){       
+        var idProductoB=$("#idProductoModal").val();
+        var resultado = lstProductos.filter(producto => producto.idProducto == idProductoB);
+        console.log("respuesta filtro",resultado);
+
+    }else{
+    console.log("la cuenta no tiene productos"); 
+    }
 
     var subTotal = precio*cantidad;    
     lstProductos.push({"idCuenta":idCuenta,
@@ -495,16 +504,61 @@ function addProducto() {
                        "nota":"",
                        "precioUnitario":parseFloat(precio),
                        "subTotal":parseFloat(subTotal)});
-    // console.log("su cuenta",cuentaObjeto);
-    // console.log("su lista de productos", lstProductos);
-    //var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+    
     localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));   
-    // var count = lstProductos.length-1; 
-    // //estructura html para agregar algo a la tabla
-    // var filaTabla = "<tr ><td><button class='btn btn-danger btn-xs' id='pos"+count+"' name='itemProducto'  onclick='deleteProductoItem("+count+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr><td colspan='5'><input type='text' id='nota"+count+"' class='form-control' value='' placeholder='Agregar nota' onchange='addNota("+count+","+idPV+","+idMesa+")'></td></tr>";
-    // $("table tbody").append(filaTabla);      
+    //  getModosProductoModal(idProducto);    
     leerCuentaTemporal(idPV,idMesa);  
-    //console.log("hiciste click mesa "+numeroDeMesa+" Idproducto: "+idProducto+" nombreProducto: "+nombreProducto);    
+       
+ }
+ function getModosProductoModal(idProducto){
+    
+    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+    $.ajax({
+        url: "{{ url('productos/getmodos') }}",
+        type: "GET",
+        data: {
+            '_method': 'GET',                
+            'idProducto':idProducto,
+            '_token': csrf_token
+        },        
+        success: function(respuesta) {
+            var respuesta=JSON.parse(respuesta);                 
+            var ok = respuesta["ok"];                            
+            if(ok){
+                var objeto=respuesta["objeto"];                                    
+                console.log("respuesta: ",objeto);
+                $('#modalModosProducto').modal({backdrop: 'static', keyboard: false });
+                
+                listaModos="<h4>Seleccione un modo para el producto</h4>";
+                for(i =0;  i<objeto.length; i++){
+                    var checkedRadio = (objeto[i]["principal"] == true) ? "checked" : "";// ternario                   
+                    var idModo=objeto[i]["idModo"];
+                    listaModos+="<div class='col-md-4'><label><input id='radioModo' type='radio' name='idModo[]' value='"+idModo+"' "+checkedRadio+"> "+idModo+"</label></div>";
+                }              
+                 $("#modosProducto").html(listaModos);               
+            }else{
+                var mensaje=respuesta["mensaje"];
+                $.notify({							
+                    message: '<i class="fas fa-sun"></i><strong>Nota:</strong> No hay modos de preparacion para el producto dado.'
+                    },{								
+                        type: 'warning',
+                        delay: 3000
+                    });
+            }                
+        },
+        error: function(respuesta) {
+        // console.log(JSON.parse(respuesta));
+        console.log(respuesta);
+        }
+    });
+ }
+ function seleccionarModo(){
+    console.log("llegaste aqui");
+    $("#modalModosProducto").modal("hide");
+    //reseteo los valores de los campos del modal por si acaso 
+     $('#modalModosProducto').on('hidden.bs.modal', function (e) {
+        $(this).find('form')[0].reset();
+    });
  }
 
  function leerCuentaTemporal(idPV, idMesa) {

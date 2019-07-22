@@ -185,6 +185,15 @@ class ProductosController extends Controller
 
         return redirect('/productos');
     }
+    public function getModosProducto(Request $request){
+
+        $idProducto = $request->get('idProducto');
+
+        $respuesta = $this->realizarPeticion('GET', $this->urlPModo."GetModoProducto/{$idProducto}");
+        // $datos = json_decode($respuesta);
+        // $producto = $datos->objeto;
+        return $respuesta;
+    }
     public function guardarProductoModo($idProducto, $idModo, $principal){
 
         $respuesta = $this->realizarPeticion('POST', $this->urlPModo.'AddProductoModo', [
@@ -194,6 +203,31 @@ class ProductosController extends Controller
                 'principal' => $principal
             ]
         ]);
+        return $respuesta;
+    }
+    //para agregar, quitar modos de preparaciona prodcutos , mediante ajax 
+    public function AddProductoModoEdit(Request $request){
+
+        $idProducto = $request->get('idProducto');
+        $idModo = $request->get('idModo');
+        $principal = $request->get('principal');
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlPModo.'AddProductoModo', [
+            'form_params' => [
+                'idProducto' => $idProducto,
+                'idModo' => $idModo,
+                'principal' => $principal
+            ]
+        ]);
+        return $respuesta;
+    }
+    public function deleteModoProducto(Request $request){
+
+        $idProducto = $request->get('idProducto');
+        $idModo = $request->get('idModo');
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlPModo."DeleteProductoModo/{$idProducto}/{$idModo}");
+        
         return $respuesta;
     }
     public function actualizar(Request $request){

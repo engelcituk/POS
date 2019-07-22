@@ -9,7 +9,7 @@
       </div>
        <form action="">
             <div class="modal-body">
-                <input type="text" class="form-control" id="idProductoModo">   
+                <input type="text" class="form-control hidden" id="idProductoModo" readonly>   
                 <table id="productos" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                     <thead>
                         <tr>
@@ -26,14 +26,14 @@
                                 <td>
                                     <div class="checkbox checkbox-group required">                              
                                         <label class="labelCheckbox ">
-                                        <input type="checkbox" id="checkModo{{$modo->id}}" name="idModo[]" value="{{$modo->id}}" onclick="seleccionarCheckModo({{$modo->id}})">
+                                        <input type="checkbox" id="checkModo{{$modo->id}}" name="idModo[]" value="{{$modo->id}}" onclick="AddDeleteModoProducto({{$modo->id}})" nombreModo="{{$modo->descripcion}}">
                                         </label>                                            
                                     </div>                                    
                                 </td>
                                 <td>                                    
                                     <label>
-                                        <input id="radioModo{{$modo->id}}" type="radio" name="principalRadio[]" onclick="seleccionarRadioModo({{$modo->id}})" value="{{$modo->id}}"> Principal                          
-                                        <input type="text" id="inputPrincipalModo{{$modo->id}}" class="hidden" name="principal[]" value="true" readonly> 
+                                        <input id="radioModo{{$modo->id}}" type="radio" name="principalRadio[]" onclick="seleccionarRadioModo({{$modo->id}})" value="{{$modo->id}}"> Principal     
+                                        <input type="text" id="inputPrincipalModo{{$modo->id}}" class="" name="principal[]"  readonly> 
                                     </label>
                                 </td>
                             </tr>
@@ -43,7 +43,7 @@
             </div>
        </form>      
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Salir</button>
       </div>
     </div>
 

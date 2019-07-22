@@ -195,6 +195,7 @@
     @include('ordenar.partials.modalOpenMesa')
     @include('ordenar.partials.modalAlergenos')
     @include('ordenar.partials.modalCantidad')
+    @include('ordenar.partials.modalModosProducto')
     @include('ordenar.partials.modalCancelarProducto')
     @include('ordenar.partials.modalAgregarDesc')
     @include('ordenar.partials.modalMetodoPago')

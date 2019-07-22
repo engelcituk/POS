@@ -221,9 +221,12 @@ Route::delete('subcategorias/{carta}', 'SubCategoriaController@destroy')->name('
 Route::get('all/productos', 'ProductosController@AllProduct')->name('all.productos');
 Route::get('productos', 'ProductosController@index')->name('productos.index');
 Route::get('productos/create', 'ProductosController@create')->name('productos.create');
+Route::get('productos/getmodos', 'ProductosController@getModosProducto')->name('productos.getmodoproducto');
 Route::post('productos/store', 'ProductosController@store')->name('productos.store');
 Route::post('productos/{idProducto}/{idAlergeno}', 'ProductosController@guardarProductoAlergeno')->name('productos.storealergeno');
 Route::post('productos/actualizar', 'ProductosController@actualizar')->name('productos.actualizar');
+Route::post('productos/addmodo', 'ProductosController@AddProductoModoEdit')->name('productos.AddProductoModoEdit');
+Route::post('productos/deletemodo', 'ProductosController@deleteModoProducto')->name('productos.deletemodoproducto');
 Route::get('productos/{producto}', 'ProductosController@show')->name('productos.show');
 Route::get('productos/{producto}/edit', 'ProductosController@edit')->name('productos.edit');        
 Route::post('productos/{producto}', 'ProductosController@destroy')->name('productos.destroy');

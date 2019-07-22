@@ -10,7 +10,10 @@ function seleccionarRadio(){
                 $("input[name='principal[]']").each(function(){
                     $(this).val("false");
                 });
-            $("#valorP"+idNumero).val("true");            
+            $("#valorP"+idNumero).val("true");
+            $("#inputPrincipalModo"+idNumero).val("true");
+            // document.getElementById("#chekModo"+idNumero).disabled = true;                       
+                      
         }	
     });
 }
@@ -48,11 +51,131 @@ function seleccionarRadio(){
 function productoModos(idProducto){
 // console.log("click");
 $("#idProductoModo").val(idProducto);
+    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+    $.ajax({
+        url: "{{ url('productos/getmodos') }}",
+        type: "GET",
+        data: {
+            '_method': 'GET',                
+            'idProducto':idProducto,
+            '_token': csrf_token
+        },        
+        success: function(respuesta) {
+            var respuesta=JSON.parse(respuesta);                 
+            var ok = respuesta["ok"];                            
+            if(ok){
+                var objeto=respuesta["objeto"];                                    
+                modosId=[];
+                for(i =0;  i<objeto.length; i++){
+                    modosId[i]= objeto[i].idModo;
+                } 
+                 
+                console.log("modosP",modosPrincipal);                          
+                $("input[name='idModo[]']").each( function () {                   
+                    if((modosId.indexOf(parseInt($(this).val()))!=-1) ) {               
+                        $(this).prop('checked', true);                                                
+                    }	
+                });
+                // if(modosPrincipal[contador]==false){ 
+                // var contador=0; 
+                // $("input[name='principalRadio[]']").each( function () {                   
+                //     if(modosPrincipal[contador]==false ) {               
+                //         $(this).prop('checked', false);                                                
+                //     }else{
+                //     $(this).prop('checked', true); 
+                // }
+                //     contador++;	
+                // });
+                // radioModo
+            }else{
+                var mensaje=respuesta["mensaje"];
+                console.log("respuesta: ",mensaje);
+            }                
+        },
+        error: function(respuesta) {
+        // console.log(JSON.parse(respuesta));
+        console.log(respuesta);
+        }
+    });
+    
 }
 function seleccionarRadioModo(idModo){
-    console.log("click ",idModo);
+    if($("#checkModo"+idModo).is(':checked')) {              
+        $("#radioModo"+idModo).prop("checked", true);         
+        seleccionarRadio(); 
+    } else {  
+        $("#radioModo"+idModo).prop("checked", false);
+         swal("Oops", "Primero tiene que agregar este modo a este producto" ,  "error"); 
+         seleccionarRadio();            
+    }
 }
-function seleccionarCheckModo(idModo){
-    console.log("click ",idModo);
-}
+
+function AddDeleteModoProducto(idModo){
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        var idProducto = $("#idProductoModo").val();
+        var principal = $("#inputPrincipalModo"+idModo).val();
+        
+        var nombreModo = $("#checkModo"+idModo).attr("nombreModo");    
+
+        // console.log("idProducto "+idProducto+" IdModo: "+idModo+" principal "+principal+ "nombreModo "+nombreModo);
+        valorCheck=$("#checkModo"+idModo).prop("checked");//obtengo true o false
+
+        if(valorCheck) {    
+            $.ajax({
+                url: "{{ url('productos/addmodo') }}",
+                type: "POST",
+                data: {
+                    '_method': 'POST',
+                    'idProducto':idProducto, 'idModo':idModo, 'principal':principal,
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {
+                    $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Se ha registrado modo: <strong>'+nombreModo+'</strong> para el producto.'
+                        },{								
+                            type: 'info',
+                            delay: 5000
+                        });                    
+                },
+                error: function() {
+                   $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Ocurrió un error al hacerse la petición'
+                        },{								
+                            type: 'danger',
+                            delay: 5000
+                        });
+                }
+            });
+        }else{
+            $.ajax({
+                url: "{{ url('productos/deletemodo') }}",
+                type: "POST",
+                data: {
+                    '_method': 'POST',
+                    'idProducto':idProducto, 'idModo':idModo,
+                    '_token': csrf_token
+                },
+                success: function(respuesta) {                    
+                    $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Se ha borrado modo: <strong>'+nombreModo+'</strong> para el producto.'
+                        },{								
+                            type: 'warning',
+                            delay: 5000
+                        });
+                },
+                error: function() {
+                   $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Ocurrió un error al hacerse la petición'
+                        },{								
+                            type: 'danger',
+                            delay: 5000
+                        });
+                }
+            });
+        }
+     }
+     //limpio datos del modal que hay en el formulario
+     $('#myModalModos').on('hidden.bs.modal', function (e) {
+        $(this).find('form')[0].reset();
+    });
  </script>

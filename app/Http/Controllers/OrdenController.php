@@ -33,8 +33,9 @@ class OrdenController extends Controller
         
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');//se cargan en un modal
         //$categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
-        $metodosPago = \App::call('App\Http\Controllers\MetodosPagoController@obtenerTodosLosMetodosPagos');//se carga en subtabs
-        
+        $metodosPago = \App::call('App\Http\Controllers\MetodosPagoController@obtenerTodosLosMetodosPagos'); //se carga en subtabs
+        // $modos = \App::call('App\Http\Controllers\ModosController@obtenerTodosLosModos');
+        // dd($modos);
         return view('ordenar', compact('zonas','alergenos','categorias', 'metodosPago'));
     }
     public function ZonasPV($idPuntoVenta){
