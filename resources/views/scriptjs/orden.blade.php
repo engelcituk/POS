@@ -149,7 +149,9 @@ function getMesasPorZona(idZona) {
         $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
         var idCuenta =getIdCuenta(idPV,idMesa);            
         $("#btnAddDescuento").attr("btnIdCuenta",idCuenta); 
-        $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);         
+        $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);
+        var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+        // localStorage.setItem(cuentaTemporal,[]);       
         obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
         getProductosMasVendidos();
         //obtengo los datos de productos de la cuenta temporal
@@ -408,7 +410,7 @@ function getMesasPorZona(idZona) {
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
                             resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
                             // console.log("sus Alergenos",alergenosPOk);
-                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
                     $("#UlList").html(listaProductos);
@@ -426,93 +428,71 @@ function getMesasPorZona(idZona) {
     // })
  }
  
- function addCantidadProductoModal(idProducto,idMenuCarta) {
-     $('#modalCantidadProducto').modal({backdrop: 'static', keyboard: false });
-     $("#idProductoModal").val(idProducto);
-     $("#idMenuCartaModal").val(idMenuCarta);
-
-     $(document).on("input", "#cantidadProducto", function() {
-        this.value = this.value.replace(/[^0-9]/g, '');
-     });
-     //valido que se ingrese un valor mayor  a cero
-    $("#cantidadProducto").on('input', function(){
-        var cant = parseInt(this.value, 10);
-       $("#addProductoBtn").attr("disabled", cant <= 0);                
-    });
- }
- //para evitar poner valores que no sean numreos
-$("#cantidadProducto").change(function(){ 	
- 	var cantidad = $("#cantidadProducto").val(); 	
- 	var soloNumeros = this.value.replace(/[^0-9]/g,''); 	
-	    if(soloNumeros > 0 && cantidad !=''){	        
-	        $("#addProductoBtn").removeAttr("disabled");	        
-	    }else{
-	        swal("Oops", "Ingrese un valor numerico mayor a cero" ,  "error");
-	        $("#cantidadProducto").val(1);	        	        
-	    }	 
- });
-
 var lstProductos=[];
-function addProducto() { 
+function addProducto(idProducto, idMenuCarta,idModo) { 
       
-    var idPV= $("#idPVModalOrdenar").val();
-    var idMenuCarta = $("#idMenuCartaModal").val();
+    var idPV= $("#idPVModalOrdenar").val(); 
     var idUsuario = $("#idUserModalOrdenar").val();
-    var idProducto=$("#idProductoModal").val();
-    var cantidad=$("#cantidadProducto").val();
+    var cantidad=1;
+    var tiempo=tiempoOrden();
     var idMesa = localStorage.getItem("idMesaLS");
     var cuentaObjeto = JSON.parse(localStorage.getItem(idPV+idMesa));
     var idCuenta = cuentaObjeto["id"];
     var nombreProducto = $("#producto"+idProducto).attr("nProducto");
     // var nota = $("#producto"+idProducto).attr("nota");
     var precio = $("#producto"+idProducto).attr("precio");
-    $("#modalCantidadProducto").modal("hide");
-    //reseteo los valores de los campos del modal por si acaso 
-     $('#modalCantidadProducto').on('hidden.bs.modal', function (e) {
-        $(this).find('form')[0].reset();
-    });
-    
+       
     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
     var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
 
     if (typeof datosCuentaTemporal === 'undefined' || datosCuentaTemporal === null) {
         lstProductos=[];
     }else{
-        lstProductos=datosCuentaTemporal;	              
-    }   
-    var logintudCuentaTemp= datosCuentaTemporal.length;
-    if(logintudCuentaTemp>0){       
-        var idProductoB=$("#idProductoModal").val();
-        var resultado = lstProductos.filter(producto => producto.idProducto == idProductoB);
-        console.log("respuesta filtro",resultado);
+        lstProductos=datosCuentaTemporal;
+        for (i = 0; i < datosCuentaTemporal.length; i++) {
 
-    }else{
-    console.log("la cuenta no tiene productos"); 
+            if (datosCuentaTemporal[i]["idProducto"]==idProducto) {                
+                var cantPrevia= datosCuentaTemporal[i]["cantidad"];                 
+                datosCuentaTemporal[i]["cantidad"] = cantPrevia+1;
+                localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+                leerCuentaTemporal(idPV,idMesa);
+                return;               
+            }
+            
+        }
+        // getModosProductoModal(idProducto);        
+        var subTotal = precio*cantidad; 
+
+         lstProductos.push({"idCuenta":idCuenta,
+                "idPV":parseInt(idPV),
+                "idMesa":parseInt(idMesa),
+                "idMenuCarta":parseInt(idMenuCarta),
+                "idProducto":parseInt(idProducto),
+                "nombreProducto":nombreProducto,
+                "cantidad":parseInt(cantidad),
+                "comensal":3,
+                "tiempo":parseInt(tiempo),
+                "idUsuarioAlta":parseInt(idUsuario),
+                "nota":"",
+                "modo":parseInt(idModo),
+                "precioUnitario":parseFloat(precio),
+                "subTotal":parseFloat(subTotal)});
+    
+        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
+        leerCuentaTemporal(idPV,idMesa); 
+
     }
-
-    var subTotal = precio*cantidad;    
-    lstProductos.push({"idCuenta":idCuenta,
-                       "idPV":parseInt(idPV),
-                       "idMesa":parseInt(idMesa),
-                       "idMenuCarta":parseInt(idMenuCarta),
-                       "idProducto":parseInt(idProducto),
-                       "nombreProducto":nombreProducto,
-                       "cantidad":parseInt(cantidad),
-                       "comensal":3,
-                       "tiempo":2,
-                       "idUsuarioAlta":parseInt(idUsuario),
-                       "nota":"",
-                       "precioUnitario":parseFloat(precio),
-                       "subTotal":parseFloat(subTotal)});
-    
-    localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));   
-    //  getModosProductoModal(idProducto);    
-    leerCuentaTemporal(idPV,idMesa);  
-       
+    localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));             
+    leerCuentaTemporal(idPV,idMesa);   
  }
- function getModosProductoModal(idProducto){
-    
-    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+ function getModosProductoModal(idProducto,idMenuCarta){    
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+    // var idPV= $("#idPVModalOrdenar").val(); 
+    // var idMesa = localStorage.getItem("idMesaLS");
+               
+    // var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+
     $.ajax({
         url: "{{ url('productos/getmodos') }}",
         type: "GET",
@@ -525,17 +505,22 @@ function addProducto() {
             var respuesta=JSON.parse(respuesta);                 
             var ok = respuesta["ok"];                            
             if(ok){
-                var objeto=respuesta["objeto"];                                    
+                var objeto=respuesta["objeto"]; 
+
                 console.log("respuesta: ",objeto);
+                
                 $('#modalModosProducto').modal({backdrop: 'static', keyboard: false });
                 
-                listaModos="<h4>Seleccione un modo para el producto</h4>";
+                listaModos="";
                 for(i =0;  i<objeto.length; i++){
                     var checkedRadio = (objeto[i]["principal"] == true) ? "checked" : "";// ternario                   
                     var idModo=objeto[i]["idModo"];
-                    listaModos+="<div class='col-md-4'><label><input id='radioModo' type='radio' name='idModo[]' value='"+idModo+"' "+checkedRadio+"> "+idModo+"</label></div>";
+                    listaModos+="<div class='col-md-4'><label><input id='radioModo' type='radio' name='idModo' value='"+idModo+"' "+checkedRadio+"> "+idModo+"</label></div>";
                 }              
-                 $("#modosProducto").html(listaModos);               
+                 $("#modosProducto").html(listaModos); 
+                 $("#idProductoModalModo").val(idProducto);
+                 $("#idMenuCartaModalModo").val(idMenuCarta);
+
             }else{
                 var mensaje=respuesta["mensaje"];
                 $.notify({							
@@ -544,6 +529,8 @@ function addProducto() {
                         type: 'warning',
                         delay: 3000
                     });
+                    var idModo="";
+                    addProducto(idProducto, idMenuCarta,idModo);
             }                
         },
         error: function(respuesta) {
@@ -553,12 +540,16 @@ function addProducto() {
     });
  }
  function seleccionarModo(){
-    console.log("llegaste aqui");
+    var idProducto = $("#idProductoModalModo").val();
+    var idMenuCarta = $("#idMenuCartaModalModo").val();
+    var idModo = $("input[name='idModo']:checked").val();
+    
     $("#modalModosProducto").modal("hide");
-    //reseteo los valores de los campos del modal por si acaso 
+    //reseteo los valores de los campos del modal
      $('#modalModosProducto').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
     });
+    addProducto(idProducto, idMenuCarta,idModo);
  }
 
  function leerCuentaTemporal(idPV, idMesa) {
@@ -571,10 +562,10 @@ function addProducto() {
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
     if (typeof datosCuentaTemporal === 'undefined' || datosCuentaTemporal === null) {
-        console.log("no tienes definido la variable");
+        console.log("no tienes definido la variable: "+cuentaTemporal);
         mostrarTotales(cadena);
     }else{
-        console.log(datosCuentaTemporal);
+        // console.log(datosCuentaTemporal);
         // console.log(datosCuentaTemporal[0]["idCuenta"]);
         var sumaSubTotales=0;
         var counter=-1;
@@ -633,10 +624,8 @@ function mostrarTotales(cadena) {
     if (typeof objCuentaAPi === 'undefined' || objCuentaAPi === null) {
         console.log("no tienes definido la variable");
     }else{
-        console.log(objCuentaAPi);
-        // console.log(objCuentaAPi[0]["idCuenta"]);
-      
-        
+        // console.log(objCuentaAPi);
+        // console.log(objCuentaAPi[0]["idCuenta"]);              
         for (i = 0; i < objCuentaAPi.length; i++) {
             var idCuenta = objCuentaAPi[i]["idCuenta"];
             var idPV = objCuentaAPi[i]["idPV"];
@@ -674,7 +663,7 @@ function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
                 if(ok){
                     var cuentaApi="cuentaBD"+idPV+idMesa;//creo la variable
                     var objeto=respuesta["objeto"];                    
-                    console.log(objeto);
+                    // console.log(objeto);
                      lstProductos=[];
                         for(i =0;  i<objeto.length; i++){                           
                             var menuCarta = objeto[i]["TPV_MenuCarta"];
@@ -709,7 +698,7 @@ function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
                 localStorage.setItem(cuentaApi,JSON.stringify(lstProductos));   
                 } 
                 leerCuentaTemporal(idPV, idMesa);
-                 console.log(respuesta);
+                //  console.log(respuesta);
             },
             error: function(respuesta) {
             respuesta=JSON.parse(respuesta); 
@@ -721,18 +710,30 @@ function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
      
-      console.log(datosCuentaTemporal);
-      
-    $("table tbody").find('#pos'+pos).each(function(){
-        $(this).parents("tr").remove();
-    });
-    $("table tbody").find('#nota'+pos).each(function(){
-        $(this).parents("tr").remove();
-    });
-    // delete splice[productoNum];
-    datosCuentaTemporal.splice(pos,1);
-	    
-    localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
+      var cantidadProducto= datosCuentaTemporal[pos]["cantidad"];
+      if(cantidadProducto>1){
+          datosCuentaTemporal[pos]["cantidad"] = cantidadProducto-1;
+          localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));                
+          leerCuentaTemporal(idPV,idMesa);
+          return;
+      }else{
+          $.notify({							
+            message: '<i class="fas fa-sun"></i><strong>Producto eliminado de la lista</strong>'
+            },{								
+                type: 'warning',
+                delay: 2000
+            });
+
+            $("table tbody").find('#pos'+pos).each(function(){
+                $(this).parents("tr").remove();
+            });
+            $("table tbody").find('#nota'+pos).each(function(){
+                $(this).parents("tr").remove();
+            });
+            // delete splice[productoNum];
+            datosCuentaTemporal.splice(pos,1);
+            localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
+      }      	        
     leerCuentaTemporal(idPV, idMesa);
 }
 
@@ -1206,7 +1207,7 @@ function getProductosMasVendidos(){
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
                             resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
                             // console.log("sus Alergenos",alergenosPOk);
-                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='addCantidadProductoModal("+idProducto+","+idMenuCarta+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
                     $("#UlList").html(listaProductos);

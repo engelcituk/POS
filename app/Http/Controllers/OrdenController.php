@@ -184,6 +184,8 @@ class OrdenController extends Controller
             $precioUnitario = $cuentaTemporal[$contador]["precioUnitario"];
             $idUsuarioAlta = $cuentaTemporal[$contador]["idUsuarioAlta"];
             $nota = $cuentaTemporal[$contador]["nota"];
+            $tiempo = $cuentaTemporal[$contador]["tiempo"];
+            $modo = $cuentaTemporal[$contador]["modo"];
             
             $arrayCuenta[] =  array('idCuenta' => (int) $idCuenta,
                                     'idMenuCarta'=> (int) $idMenuCarta,
@@ -192,7 +194,8 @@ class OrdenController extends Controller
                                     'tiempo' =>(int) $tiempo,
                                     'precioUnitario' => number_format($precioUnitario, 2),
                                     'idUsuarioAlta' => (int) $idUsuarioAlta,
-                                    'nota' => $nota                                    
+                                    'nota' => $nota,
+                                    'idModo' => $modo                                   
                                     );
 
             $contador++;  

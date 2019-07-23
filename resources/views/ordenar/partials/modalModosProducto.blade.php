@@ -8,9 +8,11 @@
         <form action="">
             <div class="modal-body">                                                   
                 <div class="row">
-                    <div class="col-md-12">
-                        <input type="number" class="form-control" id="idProductoModalModo">        
-                        <input type="number" class="form-control" id="idMenuCartaModalModo">                                             
+                    <div class="col-md-3">
+                        <input type="number" class="form-control hidden" id="idProductoModalModo">           
+                    </div>
+                    <div class="col-md-3">                               
+                        <input type="number" class="form-control hidden" id="idMenuCartaModalModo">                                             
                     </div>
                 </div>
                 <div class="row" id="modosProducto">
