@@ -199,8 +199,7 @@ class OrdenController extends Controller
                                     );
 
             $contador++;  
-        }
-        // return json_encode($arrayCuenta);    
+        }          
         $respuesta = $this->realizarPeticion('POST', $this->urlVenta.'AddDetalleCuenta', [
             'form_params' => [
                 'ldetalleCuenta' =>

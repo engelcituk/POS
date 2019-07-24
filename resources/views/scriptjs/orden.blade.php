@@ -134,10 +134,13 @@ function getMesasPorZona(idZona) {
     if(estadoMesa=="disponible"){//si la mesa está disponible abro modal para obtener datos de huesped
         $('#myModal').modal({backdrop: 'static', keyboard: false });
         localStorage.setItem("idMesaLS", idMesa);
-
         $("#btnEnviarCP").attr("idPVCPBtn",idPV);
         $("#btnEnviarCP").attr("idMesaCPBtn",idMesa);
         $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
+
+        var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+        lstProductos=[];
+        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
                        
     }else if(estadoMesa=="ocupado"){
         $("#zonaTomarOrden").removeClass("hidden");
@@ -149,15 +152,11 @@ function getMesasPorZona(idZona) {
         $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
         var idCuenta =getIdCuenta(idPV,idMesa);            
         $("#btnAddDescuento").attr("btnIdCuenta",idCuenta); 
-        $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);
-        var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
-        // localStorage.setItem(cuentaTemporal,[]);       
+        $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);        
+
         obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
         getProductosMasVendidos();
-        //obtengo los datos de productos de la cuenta temporal
-        // var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
-        // var datosCuentaTemporal = localStorage.getItem(cuentaTemporal);
-        // console.log("datosCuentaTemporal ",datosCuentaTemporal);
+        
     }
 
  }
@@ -393,6 +392,7 @@ function getMesasPorZona(idZona) {
                             var precio=objeto[i]["precio"];
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
+                            var modosProducto = JSON.stringify(objeto[i]["TPV_Producto"]["TPV_ProductoModos"]); 
                             // console.log("sus Alergenos",alergenosP);
                            if(alergenosP.length >0 ){
                                 //operador ternario
@@ -410,7 +410,7 @@ function getMesasPorZona(idZona) {
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
                             resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
                             // console.log("sus Alergenos",alergenosPOk);
-                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
                     $("#UlList").html(listaProductos);
@@ -427,129 +427,232 @@ function getMesasPorZona(idZona) {
     //     selector: '[data-toggle="tooltip"]'
     // })
  }
- 
+ function getProductosMasVendidos(){
+    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+    var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
+    var idCarta = $("#idCartaPVModal").val(); 
+
+    var idMesaLS = localStorage.getItem("idMesaLS");
+    var idCuenta =getIdCuenta(idPV,idMesaLS); 
+    var variableLS =idPV+idMesaLS;
+    $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
+
+    var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
+    // console.log(variableLS);
+    alergenosIdHuesped = [];
+    if(datosCuentaObjeto != null){
+        var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
+        for (i = 0; i < alergenosCuenta.length; i++) {
+            alergenosIdHuesped[i]= alergenosCuenta[i].idAlergeno;
+        }
+    }
+    
+    $.ajax({
+            url: "{{ url('ordenar/getfavoritos') }}",
+            type: "GET",
+            data: {
+                '_method': 'GET',                
+                'idPuntoVenta':idPV,'idCarta':idCarta,
+                '_token': csrf_token
+            },        
+            success: function(respuesta) {
+                var respuesta=JSON.parse(respuesta);                 
+                var ok = respuesta["ok"];                
+                if(ok){
+                    var objeto=respuesta["objeto"];                    
+                    // console.log(objeto);
+                    listaProductos=""
+                        for(i =0;  i<objeto.length; i++){
+                            var colorAlergeno = "label-info";
+                            var idProducto=objeto[i]["TPV_Producto"]["id"];
+                            var idMenuCarta=objeto[i]["id"];
+                            var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
+                            var precio=objeto[i]["precio"];
+                            var imagen=objeto[i]["TPV_Producto"]["imagen"];
+                            var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
+                            var modosProducto = JSON.stringify(objeto[i]["TPV_Producto"]["TPV_ProductoModos"]);                            
+                            // console.log("sus modosProducto",modosProducto);                           
+                           if(alergenosP.length >0 && alergenosIdHuesped.length > 0 ){
+                                //operador ternario
+                            // alergenosIdP = [];                            
+                                for (j = 0; j < alergenosP.length; j++) {
+                                    if(alergenosIdHuesped.indexOf(alergenosP[j].idAlergeno)!=-1){
+                                            colorAlergeno="label-warning";
+                                    }
+                                } 
+                            }
+                            var dataImg = 'data:image/png;base64,';                       
+                            var imgProducto = imagen;
+                            var imgBase64 = dataImg+imgProducto;
+                            var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
+                            resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
+                            // console.log("sus Alergenos",alergenosPOk);
+                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                        }
+                    listaProductos+="";                     
+                    $("#UlList").html(listaProductos);
+                }else{
+                    $("#UlList").html('<p>Sin productos para la categoria</p>');
+                }                
+            },
+            error: function(respuesta) {
+            console.log(JSON.parse(respuesta));
+        }
+    });
+}
+function getModosProductoModal(idProducto,idMenuCarta,modosProducto){    
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    var longitudModos = modosProducto.length;
+    var idPV= $("#idPVModalOrdenar").val(); 
+    var idMesa = localStorage.getItem("idMesaLS");
+                     
+    if(longitudModos>0){        
+        $('#modalModosProducto').modal({backdrop: 'static', keyboard: false });
+            listaModos="";
+            for(i =0;  i<modosProducto.length; i++){
+                var checkedRadio = (modosProducto[i]["principal"] == true) ? "checked" : "";// ternario                   
+                var idModo=modosProducto[i]["idModo"];
+                listaModos+="<div class='col-md-4'><label><input id='radioModo' type='radio' name='idModo' value='"+idModo+"' "+checkedRadio+"> "+idModo+"</label></div>";
+            }              
+            $("#modosProducto").html(listaModos); 
+            $("#idProductoModalModo").val(idProducto);
+            $("#idMenuCartaModalModo").val(idMenuCarta);
+            
+    }else{
+       var tieneModos=false;
+        $.notify({							
+            message: '<i class="fas fa-sun"></i><strong>Nota:</strong> No hay modos de preparacion para el producto dado. '
+        },{								
+            type: 'warning',
+            delay: 3000
+        });
+       var idModo="";
+       addProducto(idProducto, idMenuCarta,idModo,tieneModos)       
+    }    
+ }
 var lstProductos=[];
-function addProducto(idProducto, idMenuCarta,idModo) { 
+function addProducto(idProducto, idMenuCarta,idModo,tieneModos) { 
       
     var idPV= $("#idPVModalOrdenar").val(); 
-    var idUsuario = $("#idUserModalOrdenar").val();
-    var cantidad=1;
+    var idUsuario = $("#idUserModalOrdenar").val();        
     var tiempo=tiempoOrden();
+    var cantidad=1;
+    var comensal=3;
     var idMesa = localStorage.getItem("idMesaLS");
     var cuentaObjeto = JSON.parse(localStorage.getItem(idPV+idMesa));
     var idCuenta = cuentaObjeto["id"];
+    var nota = "";
     var nombreProducto = $("#producto"+idProducto).attr("nProducto");
     // var nota = $("#producto"+idProducto).attr("nota");
     var precio = $("#producto"+idProducto).attr("precio");
-       
+    var subTotal = precio*cantidad;
+
+    var datosProducto=JSON.stringify({
+        "idPV":idPV,
+        "idMesa":idMesa,
+        "idCuenta":idCuenta,
+        "idMenuCarta":idMenuCarta,
+        "idProducto":idProducto,
+        "nombreProducto":nombreProducto,
+        "cantidad":cantidad,
+        "comensal":comensal,
+        "tiempo":tiempo,
+        "idUsuarioAlta":idUsuario,
+        "nota":nota,
+        "modo":idModo,
+        "precioUnitario":precio,
+        "subTotal":subTotal});
+
     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
-    var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
-
+    var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));    
     if (typeof datosCuentaTemporal === 'undefined' || datosCuentaTemporal === null) {
-        lstProductos=[];
+        lstProductos=[];        
+        console.log("problemas "+tieneModos); 
+        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));        
     }else{
-        lstProductos=datosCuentaTemporal;
-        for (i = 0; i < datosCuentaTemporal.length; i++) {
-
-            if (datosCuentaTemporal[i]["idProducto"]==idProducto) {                
-                var cantPrevia= datosCuentaTemporal[i]["cantidad"];                 
-                datosCuentaTemporal[i]["cantidad"] = cantPrevia+1;
-                localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
-                leerCuentaTemporal(idPV,idMesa);
-                return;               
-            }
-            
-        }
-        // getModosProductoModal(idProducto);        
-        var subTotal = precio*cantidad; 
-
-         lstProductos.push({"idCuenta":idCuenta,
-                "idPV":parseInt(idPV),
-                "idMesa":parseInt(idMesa),
-                "idMenuCarta":parseInt(idMenuCarta),
-                "idProducto":parseInt(idProducto),
-                "nombreProducto":nombreProducto,
-                "cantidad":parseInt(cantidad),
-                "comensal":3,
-                "tiempo":parseInt(tiempo),
-                "idUsuarioAlta":parseInt(idUsuario),
-                "nota":"",
-                "modo":parseInt(idModo),
-                "precioUnitario":parseFloat(precio),
-                "subTotal":parseFloat(subTotal)});
-    
-        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
-        leerCuentaTemporal(idPV,idMesa); 
-
-    }
-    localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));             
-    leerCuentaTemporal(idPV,idMesa);   
+        lstProductos=datosCuentaTemporal;        
+        if(lstProductos!=""){                        
+            cuentaTemporalConValor(idPV,idMesa,datosCuentaTemporal,datosProducto,tieneModos);
+        }else{
+            cuentaTemporalVacia(idPV,idMesa,datosCuentaTemporal,datosProducto,tieneModos);
+        }          
+    }       
  }
- function getModosProductoModal(idProducto,idMenuCarta){    
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-
-    // var idPV= $("#idPVModalOrdenar").val(); 
-    // var idMesa = localStorage.getItem("idMesaLS");
-               
-    // var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
-
-    $.ajax({
-        url: "{{ url('productos/getmodos') }}",
-        type: "GET",
-        data: {
-            '_method': 'GET',                
-            'idProducto':idProducto,
-            '_token': csrf_token
-        },        
-        success: function(respuesta) {
-            var respuesta=JSON.parse(respuesta);                 
-            var ok = respuesta["ok"];                            
-            if(ok){
-                var objeto=respuesta["objeto"]; 
-
-                console.log("respuesta: ",objeto);
-                
-                $('#modalModosProducto').modal({backdrop: 'static', keyboard: false });
-                
-                listaModos="";
-                for(i =0;  i<objeto.length; i++){
-                    var checkedRadio = (objeto[i]["principal"] == true) ? "checked" : "";// ternario                   
-                    var idModo=objeto[i]["idModo"];
-                    listaModos+="<div class='col-md-4'><label><input id='radioModo' type='radio' name='idModo' value='"+idModo+"' "+checkedRadio+"> "+idModo+"</label></div>";
-                }              
-                 $("#modosProducto").html(listaModos); 
-                 $("#idProductoModalModo").val(idProducto);
-                 $("#idMenuCartaModalModo").val(idMenuCarta);
-
-            }else{
-                var mensaje=respuesta["mensaje"];
-                $.notify({							
-                    message: '<i class="fas fa-sun"></i><strong>Nota:</strong> No hay modos de preparacion para el producto dado.'
-                    },{								
-                        type: 'warning',
-                        delay: 3000
-                    });
-                    var idModo="";
-                    addProducto(idProducto, idMenuCarta,idModo);
-            }                
-        },
-        error: function(respuesta) {
-        // console.log(JSON.parse(respuesta));
-        console.log(respuesta);
-        }
-    });
+ function cuentaTemporalVacia(idPV,idMesa,datosCuentaTemporal,datosProducto,tieneModos) {
+    console.log("cuenta temporal vacia");      
+    var datosProducto=JSON.parse(datosProducto);
+    var idProducto=datosProducto["idProducto"];    
+    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;    
+    
+    if(tieneModos){        
+        lstProductos.push(datosProducto);
+        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+        leerCuentaTemporal(idPV,idMesa);                 
+    }else{                          
+        lstProductos.push(datosProducto);
+        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+        leerCuentaTemporal(idPV,idMesa);
+    }
+ }
+ function cuentaTemporalConValor(idPV,idMesa,datosCuentaTemporal,datosProducto,tieneModos) {    
+    var seRepiteProducto=seRepiteProductoCuentaTemporal(datosCuentaTemporal,datosProducto); 
+    var datosProducto=JSON.parse(datosProducto);
+    var idProducto=datosProducto["idProducto"];    
+    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;    
+    if(tieneModos){
+        if(seRepiteProducto){            
+            lstProductos.push(datosProducto);
+            localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+            leerCuentaTemporal(idPV,idMesa);
+        }else{            
+            lstProductos.push(datosProducto);
+            localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+            leerCuentaTemporal(idPV,idMesa);
+        }                 
+    }else{
+        if(seRepiteProducto){            
+            for (i = 0; i < datosCuentaTemporal.length; i++) {
+                if(datosCuentaTemporal[i]["idProducto"]==idProducto ){
+                    var cantPrevia= datosCuentaTemporal[i]["cantidad"];
+                    datosCuentaTemporal[i]["cantidad"] = cantPrevia+1;
+                    localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+                    leerCuentaTemporal(idPV,idMesa);
+                }
+            }
+        }else{            
+            lstProductos.push(datosProducto);
+            localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+            leerCuentaTemporal(idPV,idMesa);
+        }        
+    }  
+ }
+ function seRepiteProductoCuentaTemporal(datosCuentaTemporal,datosProducto){
+    var seRepiteProducto=false;        
+    var logintudCuentaTemp= datosCuentaTemporal.length;    
+    var datosProducto=JSON.parse(datosProducto);      
+    if(logintudCuentaTemp>0){
+        var idProductoB=datosProducto["idProducto"];
+        var resultado = datosCuentaTemporal.filter(producto => producto.idProducto == idProductoB);
+        var longResultado=resultado.length;
+        if(longResultado>0){
+             seRepiteProducto=true;
+        }else{
+            seRepiteProducto=false;                      
+        }           
+    }    
+    return seRepiteProducto;
  }
  function seleccionarModo(){
     var idProducto = $("#idProductoModalModo").val();
     var idMenuCarta = $("#idMenuCartaModalModo").val();
     var idModo = $("input[name='idModo']:checked").val();
-    
+    var tieneModos=true;
     $("#modalModosProducto").modal("hide");
     //reseteo los valores de los campos del modal
      $('#modalModosProducto').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
     });
-    addProducto(idProducto, idMenuCarta,idModo);
+    addProducto(idProducto, idMenuCarta,idModo,tieneModos);
  }
 
  function leerCuentaTemporal(idPV, idMesa) {
@@ -864,10 +967,10 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
                 '_token': csrf_token
             },        
             success: function(respuesta) {
-                // console.log("su respuesta desde CONtroller", respuesta);
+                //  console.log("su respuesta desde CONtroller", respuesta);
                 var respuesta = JSON.parse(respuesta);
                 var ok = respuesta["ok"];
-                console.log("respuesta",respuesta);
+                // console.log("respuesta",respuesta);
                 if(ok){//si ok es true
                      localStorage.setItem(cuentaTemporal, null);
                      swal({
@@ -881,7 +984,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
                     );
                 }
             },
-            error: function() {
+            error: function(respuesta) {
                 console.log(respuesta);
         }
     });          
@@ -1147,80 +1250,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
     $("span.btn-success").removeClass("btn-success");
     $(this).addClass("btn-success");
  });
-function getProductosMasVendidos(){
-    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
-    var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
-    var idCarta = $("#idCartaPVModal").val(); 
 
-    var idMesaLS = localStorage.getItem("idMesaLS");
-    var idCuenta =getIdCuenta(idPV,idMesaLS); 
-    var variableLS =idPV+idMesaLS;
-    $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
-
-    var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
-    // console.log(variableLS);
-    alergenosIdHuesped = [];
-    if(datosCuentaObjeto != null){
-        var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
-        for (i = 0; i < alergenosCuenta.length; i++) {
-            alergenosIdHuesped[i]= alergenosCuenta[i].idAlergeno;
-        }
-    }
-    
-    $.ajax({
-            url: "{{ url('ordenar/getfavoritos') }}",
-            type: "GET",
-            data: {
-                '_method': 'GET',                
-                'idPuntoVenta':idPV,'idCarta':idCarta,
-                '_token': csrf_token
-            },        
-            success: function(respuesta) {
-                var respuesta=JSON.parse(respuesta);                 
-                var ok = respuesta["ok"];                
-                if(ok){
-                    var objeto=respuesta["objeto"];                    
-                    // console.log(objeto);
-                    listaProductos=""
-                        for(i =0;  i<objeto.length; i++){
-                            var colorAlergeno = "label-info";
-                            var idProducto=objeto[i]["TPV_Producto"]["id"];
-                            var idMenuCarta=objeto[i]["id"];
-                            var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
-                            var precio=objeto[i]["precio"];
-                            var imagen=objeto[i]["TPV_Producto"]["imagen"];
-                            var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
-                            
-                            // console.log("sus Alergenos",alergenosP);
-                           if(alergenosP.length >0 && alergenosIdHuesped.length > 0 ){
-                                //operador ternario
-                            // alergenosIdP = [];                            
-                                for (j = 0; j < alergenosP.length; j++) {
-                                    if(alergenosIdHuesped.indexOf(alergenosP[j].idAlergeno)!=-1){
-                                            colorAlergeno="label-warning";
-                                    }
-                                } 
-                            }
-                            var dataImg = 'data:image/png;base64,';                       
-                            var imgProducto = imagen;
-                            var imgBase64 = dataImg+imgProducto;
-                            var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
-                            resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
-                            // console.log("sus Alergenos",alergenosPOk);
-                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
-                        }
-                    listaProductos+="";                     
-                    $("#UlList").html(listaProductos);
-                }else{
-                    $("#UlList").html('<p>Sin productos para la categoria</p>');
-                }                
-            },
-            error: function(respuesta) {
-            console.log(JSON.parse(respuesta));
-        }
-    });
-
-}
 function tiempoOrden() {    
     // var tiempoElegido = $("#opcionesTiempo").children('span:first').attr("tiempo");
     if($("#tiempo1").hasClass("btn-success")){
