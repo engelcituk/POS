@@ -39,17 +39,10 @@
     
 </head>
 
-<body>
-    {{-- @if(request()->is('historico')) onload="mostrarHistorico({{$fechaHoy}}, {{$fechaHoy}})" @endif --}}
-    
+<body>       
     <div class="wrapper">
         <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{{asset('img/sidebar-1.jpg')}}">
-            <!--
-        Tip 1: You can change the color of active element of the sidebar using: data-active-color="purple | blue | green | orange | red | rose"
-        Tip 2: you can also add an image using data-image tag
-        Tip 3: you can change the color of the sidebar with data-background-color="white | black"
-    -->
-            <div class="logo">
+              <div class="logo">
                 <a href="#" class="simple-text">
                     SANDOS TPV
                 </a>
@@ -73,34 +66,11 @@
                             @endif
                             {{-- <b class="caret"></b> --}}
                         </a>
-                        {{-- <div class="collapse" id="collapseExample">
-                            <ul class="nav">
-                                <li>
-                                    <a href="#">My Profile</a>
-                                </li>
-                                <li>
-                                    <a href="#">Edit Profile</a>
-                                </li>
-                                <li>
-                                    <a href="#">Settings</a>
-                                </li>
-                            </ul>
-                        </div> --}}
+                        
                     </div>
                 </div>
                 <ul class="nav">
-                    <!--  <li class="">
-                        <a href="home">
-                            <i class="fas fa-home"></i>
-                            <p>Inicio</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="home">
-                            <i class="fas fa-users"></i>
-                            <p>Usuarios</p>
-                        </a>
-                    </li> -->
+                    
                     <li>
                         @if(session()->has('accesoOrden') || session()->has('accesoHistorico'))
                             <a data-toggle="collapse" href="#pagesExamples">
@@ -219,15 +189,7 @@
                                     <li>
                                         <a href="{{ route('alergenos.index') }}">Alergénos</a>
                                     </li>
-                                {{-- @endif --}}
-                                
-                               
-                               
-                                
-                                
-                                
-                                
-                                                                
+                                {{-- @endif --}}                                                               
                             </ul>
                         </div>
                     </li>                    
@@ -250,10 +212,29 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        {{-- <a class="navbar-brand" href="#"> PanelControl </a> --}}
+                        {{-- <a class="navbar-brand" href="#"> PanelControl </a> --}}                        
                     </div>
+                    @if(request()->is('ordenar'))        
+                        <div class="col-md-3">
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </span>
+                                    <div class="form-group">                               
+                                        <select class="form-control" id="zonaElige">                             
+                                        @foreach($zonas as $zona)
+                                        <option value="zona{{$zona->id}}">{{$zona->name}}</option>
+                                        @endforeach                                
+                                        </select>
+                                    </div>
+                                </div>
+                            </nav>                                                
+                        </div>                                                                              
+                    @endif
+                    
                     <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav navbar-right">                                                        
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fas fa-user"></i>
@@ -279,8 +260,7 @@
 
                             </li>
                             <li class="separator hidden-lg hidden-md"></li>
-                        </ul>
-                        
+                        </ul>                        
                     </div>
                 </div>
             </nav>

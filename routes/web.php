@@ -20,6 +20,7 @@ Route::get('ordenar', 'OrdenController@index')->name('ordenar.index');
 Route::get('ordenar/obtenerzonas', 'OrdenController@obtenerTodasLasZonasPV')->name('ordenar.getzonas');
 Route::get('ordenar/obtenermesaszona/{idZona}', 'OrdenController@getMesasPorZona')->name('ordenar.obtenermesaszona');
 Route::get('ordenar/{codhotel}/{room}', 'OrdenController@obtenerDatosHuesped')->name('ordenar.obtenerhuesped');
+Route::get('modos/getmodo/{modo}', 'OrdenController@getInfoModo')->name('ordenar.getinfomodo');
 Route::post('ordenar/addcuenta', 'OrdenController@guardarCuenta')->name('ordenar.addcuenta');
 Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name('ordenar.enviarcuenta');
 Route::post('ordenar/cerrarcuenta/{cuenta}', 'OrdenController@cerraCuenta')->name('ordenar.cerrarcuenta');

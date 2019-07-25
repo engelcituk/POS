@@ -167,6 +167,13 @@ class OrdenController extends Controller
         ]);
         return $respuesta;
     }
+    public function getInfoModo($idModo){
+        $urlModos = "http://localhost/TPVApi/Modos/";
+
+        $respuesta = $this->realizarPeticion('GET', $urlModos."GetModo/{$idModo}");
+                
+        return $respuesta;
+    }
     public function obtenerAlergenosProducto($idProducto){
         $respuesta = $this->realizarPeticion('GET', $this->urlBaseProductoAlergeno."GetAlergenosProducto/{$idProducto}");        
         return $respuesta;

@@ -18,6 +18,9 @@
                 <div class="row" id="modosProducto">
                     
                 </div>
+                <div class="row" id="descProducto">
+                    
+                </div>
                 {{-- <div class="row">
                     <h4>Seleccione un modo para el producto</h4>
                     @foreach($modos as $modo)                                
