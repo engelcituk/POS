@@ -155,7 +155,7 @@ function getMesasPorZona(idZona) {
         $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);        
 
         obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
-        comprobarCuentaHabitacion(idPV,idMesa);
+        // comprobarCuentaHabitacion(idPV,idMesa);
         getProductosMasVendidos();
         
     }
@@ -224,6 +224,7 @@ function getMesasPorZona(idZona) {
                 var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
                 
                 if(errorCode==0){
+                    // console.log("datos",objeto);
                     $("#mensajeRespuesta").html('<div class="alert alert-success"><strong>Datos encontrados</strong></div>');
                     $("#reserva").val(reserva);
                     $("#nombre").val(nombre);
@@ -279,10 +280,10 @@ function getMesasPorZona(idZona) {
                 var nombre=objeto["nombre"];
                 var room=objeto["room"];
                 var ocupante=objeto["Ocupante"];
-                var fechaSalida=objeto["FechaSalida"];                
-                var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
-                
+                // var fechaSalida=objeto["FechaSalida"];                
+                // var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario                
                 if(errorCode==0){
+                    
                     $("#mensajeRespuestaModal").html('<div class="alert alert-success"><strong>Datos encontrados</strong></div>');
                     $("#reservaModal").val(reserva);
                     $("#nombreModal").val(nombre);
@@ -310,9 +311,7 @@ function getMesasPorZona(idZona) {
         }) 
     }    
  }
- $('#myModalAddRoom').on('hidden.bs.modal', function (e) {
-     $(this).find('form')[0].reset();
-});
+
   function abrirCuenta() {
      var idMesa = $("#idMesaModal").val();     
 
@@ -339,7 +338,7 @@ function getMesasPorZona(idZona) {
         });
      }
  }
-//  para evitar poner valores diferentes a cero y que no sean numericos
+//  para evitar poner valores diferentes a cero y que no sean numericos--campo pax
  $("#ocupante").change(function(){ 	
  	var pax = $("#ocupante").val(); 	
  	var soloNumeros = this.value.replace(/[^0-9]/g,''); 	
@@ -351,6 +350,20 @@ function getMesasPorZona(idZona) {
 	    }	 
  });
  $(document).on("input", "#ocupante", function() {
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
+    //para pax al agregar habitacion posterior
+$("#ocupanteModal").change(function(){ 	
+ 	var pax = $("#ocupanteModal").val(); 	
+ 	var soloNumeros = this.value.replace(/[^0-9]/g,''); 	
+	    if(soloNumeros > 0 && pax !=''){	        
+	        // $("#addProductoBtn").removeAttr("disabled");	        
+	    }else{
+	        swal("Oops", "Ingrese un valor numerico mayor a cero" ,  "error");
+	        $("#ocupanteModal").val(1);	        	        
+	    }	 
+ });
+ $(document).on("input", "#ocupanteModal", function() {
         this.value = this.value.replace(/[^0-9]/g, '');
      });
  function guardarCuenta(idMesa){
@@ -566,7 +579,7 @@ function getModosProductoModal(idProducto,idMenuCarta,modosProducto){
     if(longitudModos>0){        
         $('#modalModosProducto').modal({backdrop: 'static', keyboard: false });        
             
-            listaModos="";
+            listaModos="<div class='col-md-3 col-md-offset-1 col-sm-3 col-sm-offset-1'><div class='input-group'><span class='input-group-addon'><i class='fas fa-sitemap'></i></span><div class='form-group'><select class='form-control' name='idModo' id='modoSelect'>";
             for(i =0;  i<modosProducto.length; i++){
                 
                 var checkedRadio = (modosProducto[i]["principal"] == true) ? "checked" : "";// ternario                   
@@ -574,10 +587,13 @@ function getModosProductoModal(idProducto,idMenuCarta,modosProducto){
                 //entro a un subarray para obtener los datos del modo
                 var datosModosProducto = modosProducto[i]["TPV_Modo"];
                 var descripcion = datosModosProducto["descripcion"];                
-                listaModos+="<div class='col-md-4 radiosModos'><label id='descripcionLbl"+idModo+"'><input id='radioModo"+idModo+"' type='radio' name='idModo' value='"+idModo+"' "+checkedRadio+">"+descripcion+"</label></div>"; 
+                listaModos+="<option value='"+idModo+"'>" +descripcion+ "</option>"; 
                                                                              
-            }              
+            }
+            listaModos += "</select></div></div></div>";          
             $("#modosProducto").html(listaModos); 
+            $("#modoSelect option:first").attr('selected','selected');;//selecciono el primer elemento de la lista
+            $('#modoSelect').select2();
             $("#idProductoModalModo").val(idProducto);
             $("#idMenuCartaModalModo").val(idMenuCarta);
             
@@ -707,8 +723,8 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
  function seleccionarModo(){
     var idProducto = $("#idProductoModalModo").val();
     var idMenuCarta = $("#idMenuCartaModalModo").val();
-    var idModo = $("input[name='idModo']:checked").val();
-    var descripcionModo =$("#descripcionLbl"+idModo).text();//se convierte en la nota
+    var idModo = $("#modoSelect option:selected" ).val();
+    var descripcionModo =$("#modoSelect option:selected").text();//se convierte en la nota
     var tieneModos=true;
     $("#modalModosProducto").modal("hide");
     //reseteo los valores de los campos del modal
@@ -1008,19 +1024,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
         }	
     });        
 });
-function comprobarCuentaHabitacion(idPV,idMesa) {
-    var variable=idPV+idMesa;
-    var cuenta = JSON.parse(localStorage.getItem(variable)); 
-    idCuenta =cuenta["id"];
-    habitacion =cuenta["habitacion"];
-    /* si no existe habitacion, muestro botón para agregar habitacion a la cuenta */
-    if(habitacion==null){
-        button=" <button type='button' class='btn btn-info' id='btnAddRoomCuenta' data-dismiss='modal' onclick='asignarHabitacionModal()'><i class='fas fa-bed'></i> Habitación</button>";
-        $("#btnAddRoom").append(button);        
-    }else{
-        $("#btnAddRoom").addClass("hidden");
-    }
-}
+
 function asignarHabitacionModal(){
     var idPV= $("#idPVModalOrdenar").val();
     var idMesa= $("#idMesaModal").val();
@@ -1032,9 +1036,77 @@ function asignarHabitacionModal(){
     if(habitacion==null){
         $("#idCuentaModal").val(idCuenta);        
         $('#myModalAddRoom').modal({backdrop: 'static', keyboard: false });
-    }    
+    }else{
+        $("#idCuentaModal").val(idCuenta);
+
+        $("#reservaModal").val(cuenta["reserva"]);
+        $("#nombreModal").val(cuenta["nombreCliente"]);
+        $("#roomModal").val(cuenta["habitacion"]);
+        $("#ocupanteModal").val(cuenta["pax"]);
+       
+        $('#myModalAddRoom').modal({backdrop: 'static', keyboard: false });
+    }   
    
 }
+function updateRoom() {
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    var idCuenta=$("#idCuentaModal").val();
+
+    var reserva=$("#reservaModal").val();
+    var nombre=$("#nombreModal").val();
+    var habitacion=$("#roomModal").val();
+    var pax=$("#ocupanteModal").val();
+
+    var nombreD = $("#nombreModal").val().length > 0
+    var paxD = $("#ocupanteModal").val().length > 0;
+
+    var idPV= $("#idPVModalOrdenar").val();
+    var idMesa= localStorage.getItem("idMesaLS");
+    // var idCuenta =getIdCuenta(idPV,idMesa);     
+    var variableCuenta=idPV+idMesa;
+    var cuenta = JSON.parse(localStorage.getItem(variableCuenta)); 
+
+    if(nombreD && paxD ){
+        $.ajax({
+            url: "{{ url('ordenar/updatecuenta') }}"+'/'+idCuenta,
+            type: "POST",
+            data: {
+                '_method': 'POST',           
+                'reserva': reserva,'nombre':nombre,'habitacion':habitacion,'pax':pax,
+                '_token': csrf_token
+            },
+            success: function(respuesta) {             
+                var respuesta = JSON.parse(respuesta);
+                var ok = respuesta["ok"];
+                
+                if(ok){//si ok es true
+                    var objeto =respuesta["objeto"];
+                    // console.log("Respuesta controlador",objeto); 
+                     localStorage.setItem(variableCuenta, JSON.stringify(objeto));
+                     swal({
+                            title: 'Oops...',
+                            text: '¡Operacion realizada con exito!',
+                            type: 'success',
+                            timer: '2000'
+                        });
+                        $("#myModalAddRoom").modal("hide");                    
+                    
+                }             
+                                                    
+            }
+        });           
+     }else{
+        swal({
+            title: 'Oops...',
+            text: 'Tiene campo(s) sin datos',
+            type: 'error',
+            timer: '2000'
+        });
+     }    
+}
+ $('#myModalAddRoom').on('hidden.bs.modal', function (e) {
+     $(this).find('form')[0].reset();
+});
  function enviarCentroPrep() {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      var idPV = $("#btnEnviarCP").attr("idPVCPBtn");
@@ -1369,7 +1441,7 @@ $(document).on("click", ".slideProductos", function(){
     // textoCat.addClass("bg-successs");                        
     // textoCat.remove("bg-success");
 })
-    
+
     
 </script>
 

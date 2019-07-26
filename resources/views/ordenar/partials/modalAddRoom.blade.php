@@ -14,7 +14,7 @@
                           <i class="fas fa-user-circle"></i>
                       </span>
                       <div class="form-group label-floating">
-                        cuenta                      
+                        Cuenta                      
                           <input id="idCuentaModal" type="text" class="form-control" name="idCuentaModal" readonly>
                           <input id="codigoHotelModal" type="text" class="form-control hidden" name="codigoHotelModal" value="CARACOL" readonly>                     
                       </div>
@@ -50,7 +50,7 @@
                   <div class="input-group">
                     <span class="input-group-addon"> <i class="fas fa-file-signature"></i> Nombre</span>
                     <div class="form-group label-floating">
-                        <input type="text" class="form-control" id="nombreModal" name="nombreModal" readonly>  
+                        <input type="text" class="form-control" id="nombreModal" name="nombreModal">  
                     </div>
                 </div>
               </div>
@@ -73,7 +73,7 @@
                 </div>
               </div>
           </div>
-          <div class="row">    
+          {{-- <div class="row">    
               <div class="col-md-6">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fas fa-calendar-alt"></i> Fecha salida</span>
@@ -90,12 +90,12 @@
                     </div>
                 </div>
               </div>
-          </div>
+          </div> --}}
         </form>                         
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-warning pull-left" data-dismiss="modal"> <i class="fas fa-undo"></i> Descartar</button>
-        <button type="button" class="btn btn-primary" onclick="addRoom()"><i class="fas fa-plus-circle"></i> Agregar</button>        
+        <button type="button" class="btn btn-primary" onclick="updateRoom()"><i class="fas fa-plus-circle"></i> Guardar</button>        
       </div>
     </div>
   </div>

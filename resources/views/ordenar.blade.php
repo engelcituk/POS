@@ -59,7 +59,7 @@
 
                                         <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
                                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                               <div class="btn-group" role="group" id="btnAddRoom">                                                                                                                  
+                                               <div class="btn-group" role="group" id="btnAddRoom">                                               <button type="button" class="btn btn-info" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"><i class='fas fa-bed'></i>  Habitación</button>                                                                   
                                                 </div>
                                                 <div class="btn-group" role="group">                                                              
                                                     <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "><i class="fas fa-paper-plane"></i> Enviar</button>

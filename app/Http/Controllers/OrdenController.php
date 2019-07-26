@@ -167,11 +167,22 @@ class OrdenController extends Controller
         ]);
         return $respuesta;
     }
-    public function getInfoModo($idModo){
-        $urlModos = "http://localhost/TPVApi/Modos/";
+    public function updateCuentaRoom(Request $request,$idCuenta){
 
-        $respuesta = $this->realizarPeticion('GET', $urlModos."GetModo/{$idModo}");
-                
+        $reserva = $request->get('reserva');
+        $habitacion = $request->get('habitacion');
+        $nombreCliente = $request->get('nombre');
+        $pax = $request->get('pax');
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlVenta."UpdateCuenta/{$idCuenta}", [
+            'form_params' => [
+                'reserva' => $reserva,
+                'habitacion' => $habitacion,
+                'nombreCliente' => $nombreCliente,
+                'pax' => $pax
+            ]
+        ]);
+        
         return $respuesta;
     }
     public function obtenerAlergenosProducto($idProducto){

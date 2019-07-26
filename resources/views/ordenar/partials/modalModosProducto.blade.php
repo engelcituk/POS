@@ -1,9 +1,9 @@
-<div class="modal fade" id="modalModosProducto" tabindex="-1" role="dialog" aria-labelledby="modalModosProducto">
-  <div class="modal-dialog" role="document">
+<div class="modal fade" id="modalModosProducto" role="dialog" aria-labelledby="modalModosProducto">
+  <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header modal-header-personalizado">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"> <strong>Indique modo de preparacion para el producto</strong></h4>
+        <h4 class="modal-title" id="myModalLabel"> <strong>Elija modo de preparacion</strong></h4>
       </div>     
         <form action="">
             <div class="modal-body">                                                   
@@ -17,22 +17,7 @@
                 </div>
                 <div class="row" id="modosProducto">
                     
-                </div>
-                <div class="row" id="descProducto">
-                    
-                </div>
-                {{-- <div class="row">
-                    <h4>Seleccione un modo para el producto</h4>
-                    @foreach($modos as $modo)                                
-                        <div class="col-md-4">  
-                          <div class="radio">
-                            <label>
-                                <input id="radioModo" type="radio" name="idModo[]" value="{{$modo->id}}"> {{$modo->descripcion}}
-                            </label>
-                          </div>                                                       
-                        </div>                                         
-                    @endforeach 
-                </div> --}}
+                </div>                                
             </div>
             <div class="modal-footer">                                
                 <button type="button" class="btn btn-danger pull-left" data-dismiss="modal"> <i class="fas fa-undo"></i> Descartar</button>

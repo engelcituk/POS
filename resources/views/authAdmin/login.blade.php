@@ -82,11 +82,4 @@
         </div> --}}
     </footer>
 </div>
-<script>
-$(document).ready(function() {
-    $('#idHotel').select2();
-    $('#listaPuntosVenta').select2();
-    $('#listaCartas').select2();
-});
-</script>
 @endsection 
