@@ -11,7 +11,8 @@
                         <div class="row">
                             <div class="card-content">                                
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    @if ($categorias!=""))
+                                       <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-grip-horizontal"></i>
@@ -26,6 +27,21 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @else 
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-grip-horizontal"></i>
+                                            </span>
+                                            <div class="form-group">
+                                                <select class="form-control selectCategoria" name="idCategoria" required>
+                                                    <option value=""> Sin categorías registradas aun</option>      
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    @endif
+                                    
                                     <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -119,7 +135,7 @@
                                                 </div>
                                             </div>                                       
                                         </div>                           
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 Con propina
                                                 <div class="radio">
@@ -132,7 +148,7 @@
                                                 </div>
                                             </div>
                                         </div>                               
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 Complemento
                                                 <div class="radio">
@@ -145,7 +161,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                Temporada
+                                                <div class="radio">
+                                                    <label>
+                                                        <input type="radio" name="temporada" value="true"> Sí
+                                                    </label>
+                                                    <label>
+                                                        <input type="radio" name="temporada" checked="true"  value="false"> No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
                                             <div class="form-group">
                                                 Estado
                                                 <div class="radio">
@@ -158,8 +187,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>                                                           
-                                    <div class="row">
+                                    </div>
+                                    @if ($alergenos!=""))
+                                       <div class="row">
                                         <h4>Seleccione un alergeno si el producto tiene alergenos</h4>
                                         @foreach($alergenos as $alergeno)                                
                                             <div class="col-md-4">
@@ -168,10 +198,15 @@
                                                     <input type="checkbox" name="idAlergeno[]" value="{{$alergeno->id}}"><strong>{{$alergeno->name}}</strong>
                                                     </label>                                            
                                                 </div>
-                                            </div>                                         
+                                            </div>                                          
                                         @endforeach 
                                     </div>
-                                    <div class="row">
+                                    @else 
+                                        <div class="row"><h4>Sin alergenos registrados para seleccionar</h4></div>
+                                    @endif                                                          
+                                    
+                                    @if ($modos!=""))
+                                        <div class="row">
                                         <h4>Seleccione un modo y establece uno como principal</h4>
                                         <div class="col-md-12">                                            
                                         <table class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">                  
@@ -199,7 +234,13 @@
                                             </tr>
                                         </table>                                          
                                         </div>                                            
-                                    </div> 
+                                    </div>
+                                    @else 
+                                        <div class="row">                                            
+                                            <h4>Sin modos registrados para seleccionar</h4>
+                                        </div>
+                                    @endif
+                                     
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
                         </div>

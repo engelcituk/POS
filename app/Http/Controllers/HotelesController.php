@@ -17,12 +17,15 @@ class HotelesController extends Controller
         
     public function index()
     {
-        return view('hoteles');
+        $hoteles = $this->obtenerTodosLosHoteles();
+        // dd($hoteles);
+        return view('hoteles', compact('hoteles'));
     }
 
     public function AllHoteles()
     {
         $hoteles = $this->obtenerTodosLosHoteles();
+        
         $acciones = 'hoteles.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($hoteles)
             ->addColumn('acciones', $acciones)

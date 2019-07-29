@@ -128,7 +128,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             Con propina
                                             <div class="radio">
@@ -145,7 +145,7 @@
 
                                         </div>
                                     </div>                               
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             Complemento
                                             <div class="radio">
@@ -161,8 +161,24 @@
                                             </div>
 
                                         </div>
-                                    </div>                                
-                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            Temporada
+                                            <div class="radio">
+                                                @php
+                                                $temporada= $producto->temporada;//para obtener si tiene status
+                                                $radios = ($temporada == 1) ?
+                                                "<label><input type='radio' name='temporada' value='True' checked>Activado</label>
+                                                <label><input type='radio' name='temporada' value='False'>Desactivado</label>" :
+                                                "<label><input type='radio' name='temporada' value='True'>Activado</label>
+                                                <label><input type='radio' name='temporada' value='False' checked>Desactivado</label>";
+                                                echo $radios;
+                                                @endphp
+                                            </div>
+                                        </div>
+                                    </div>                               
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             Estado
                                             <div class="radio">

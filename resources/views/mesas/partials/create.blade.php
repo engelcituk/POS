@@ -10,32 +10,49 @@
                         @csrf
                         <div class="row">
                             <div class="card-content">
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-grip-horizontal"></i>
-                                        </span>
-                                        <div class="form-group">
-                                            <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" name="idZona" required>
-                                                <option value="">Seleccione zona para la mesa</option>
-                                                {{-- @foreach($restaurantes as $restaurante)
-                                                <optgroup label="{{$restaurante->name}}"> --}}
-                                                    @foreach($zonas as $zona)
-                                                    {{-- @php
-                                                    $collection = collect(['idPV' => $zona->idPuntoVenta, 'idPV' => $restaurante->id]);
-                                                    $respuesta = $collection->contains($zona->idPuntoVenta);
-                                                    @endphp --}}
-                                                    {{-- @if($respuesta==1) --}}
-                                                    <option value="{{$zona->id}}">{{$zona->name}}</option>
-                                                    {{-- @endif --}}
-                                                    @endforeach
-                                                {{-- </optgroup>
-                                                @endforeach --}}
-                                            </select>
+                                @if ($zonas!=""))
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-grip-horizontal"></i>
+                                            </span>
+                                            <div class="form-group">
+                                                <!-- <label for="sel1">Select list:</label> -->
+                                                <select class="form-control" name="idZona" required>
+                                                    <option value="">Seleccione zona para la mesa</option>
+                                                    {{-- @foreach($restaurantes as $restaurante)
+                                                    <optgroup label="{{$restaurante->name}}"> --}}
+                                                        @foreach($zonas as $zona)
+                                                        {{-- @php
+                                                        $collection = collect(['idPV' => $zona->idPuntoVenta, 'idPV' => $restaurante->id]);
+                                                        $respuesta = $collection->contains($zona->idPuntoVenta);
+                                                        @endphp --}}
+                                                        {{-- @if($respuesta==1) --}}
+                                                        <option value="{{$zona->id}}">{{$zona->name}}</option>
+                                                        {{-- @endif --}}
+                                                        @endforeach
+                                                    {{-- </optgroup>
+                                                    @endforeach --}}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>    
+                                @else 
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-grip-horizontal"></i>
+                                            </span>
+                                            <div class="form-group">
+                                                <!-- <label for="sel1">Select list:</label> -->
+                                                <select class="form-control" name="idZona" required>
+                                                    <option value="">Aun no se tiene una lista de zonas</option>                                                    
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
+                                
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">

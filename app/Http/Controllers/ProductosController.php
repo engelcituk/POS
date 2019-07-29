@@ -21,10 +21,10 @@ class ProductosController extends Controller
     public function index(){
         // $productos = $this->obtenerTodosLosProductos();
         $productos = $this->obtenerTodosLosProductos();
-
+        // dd($productos);
         $modos = new ModosController();
         $modos = $modos->obtenerTodosLosModos(); 
-
+        // dd($modos);
         return view('productos',compact('productos','modos'));
         
     }
@@ -128,6 +128,7 @@ class ProductosController extends Controller
         $montoPropina = $request->get('montoPropina');
         $precio = $request->get('precio');
         $complemento = $request->get('complemento');
+        $temporada = $request->get('temporada');
         $status = $request->get('status');
         
         // dd( $imagen);
@@ -157,6 +158,7 @@ class ProductosController extends Controller
                 'complemento' => $complemento,
                 'imagen' => $array,
                 'status' => $status,
+                'temporada' => $temporada
 
 
             ]
@@ -243,6 +245,7 @@ class ProductosController extends Controller
         $precio = $request->get('precio');
         $complemento = $request->get('complemento');
         $status = $request->get('status');
+        $temporada = $request->get('temporada');
         // dd( $imagen);
         if ($imagen == null) {
             $array = array();
@@ -269,6 +272,7 @@ class ProductosController extends Controller
                 'complemento' => $complemento,
                 'imagen' => $array,
                 'status' => $status,
+                'temporada' => $temporada,
             ]
         ]);
         

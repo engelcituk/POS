@@ -16,15 +16,17 @@ class CentrosPreparacionController extends Controller
     }
     public function index()
     {
-        return view('centrosprep');
+        $centrosP = $this->obtenerTodosLosCentrosDePreparacion();
+        // dd($centrosP);
+        return view('centrosprep',compact('centrosP'));
     }
 
     public function AllCentrosPreparacion()
     {
-        $impresoras = $this-> obtenerTodosLosCentrosDePreparacion();
+        $centrosP = $this-> obtenerTodosLosCentrosDePreparacion();
 
         $acciones = 'centrospreparacion.datatables.botones'; /*creo los botones de acciones en una vista*/
-        return Datatables::of($impresoras)
+        return Datatables::of($centrosP)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
@@ -36,9 +38,9 @@ class CentrosPreparacionController extends Controller
 
         $datos = json_decode($respuesta);
 
-        $impresoras = $datos->objeto;
+        $centrosP = $datos->objeto;
 
-        return $impresoras;
+        return $centrosP;
     }
 
     /**
@@ -49,7 +51,8 @@ class CentrosPreparacionController extends Controller
     public function create()
     {
               
-        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');  
+        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
+        // dd($impresoras);  
         return view('centrospreparacion.partials.create', compact('impresoras'));   
     }
 

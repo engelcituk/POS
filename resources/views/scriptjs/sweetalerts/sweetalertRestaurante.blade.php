@@ -20,7 +20,8 @@
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    tablaRestaurantes.ajax.reload();
+                    // tablaRestaurantes.ajax.reload();
+                     location.reload();
                     swal({
                         title: '¡Exito!',
                         text: '¡Su dato ha sido borrado!',

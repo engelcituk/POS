@@ -20,7 +20,8 @@
                     </thead>
                     
                     <tbody>
-                        @foreach($modos as $modo)                                            
+                        @if ($modos!=""))
+                            @foreach($modos as $modo)                                            
                             <tr>
                                 <td>{{$modo->descripcion}}</td>                                
                                 <td>
@@ -37,7 +38,13 @@
                                     </label>
                                 </td>
                             </tr>
-                        @endforeach
+                            @endforeach
+                        @else 
+                             <tr>
+                                Sin modos registrados aun
+                            </tr>
+                        @endif
+                        
                     </tbody>
                 </table>
             </div>

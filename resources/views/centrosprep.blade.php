@@ -15,12 +15,13 @@
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
-                        <div class="material-datatables">
-                            <table id="centrosPreparacion" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <div class="material-datatables">                            
+                            @if ($centrosP!="")
+                              <table id="CP" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Nombre</th>                                        
+                                        <th>Nombre</th>
                                         <th>Impresora</th>
                                         <th>Impresora B</th>
                                         <th>Descripción</th> 
@@ -28,11 +29,29 @@
                                         <th>Estado</th>                                        
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                </thead>                                
+                                </thead>
                                 <tbody>
-
+                                     @foreach($centrosP as $cp)                                            
+                                        <tr>
+                                            <td>{{$cp->id}}</td>
+                                            <td>{{$cp->name}}</td>
+                                            <td>{{$cp->impresora}}</td>
+                                            <td>{{$cp->impresoraB}}</td>
+                                            <td>{{$cp->descripcion}}</td>
+                                            <td>{{$cp->imprime}}</td>
+                                            <td>{{$cp->status}}</td>                                          
+                                            <td>
+                                                <a href="{{ route('centrospreparacion.show', $cp->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('centrospreparacion.edit', $cp->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
+                                                <a onclick="deleteCentroPreparacion({{$cp->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
+                             @else
+                                     No hay Centros de preparación 
+                             @endif
                         </div>
                     </div>
                     <!-- end content-->

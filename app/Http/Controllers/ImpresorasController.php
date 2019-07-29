@@ -16,7 +16,7 @@ class ImpresorasController extends Controller
     public function index()
     {
         $impresoras = $this->obtenerTodasLasImpresoras();
-
+        // dd($impresoras);
         return view('impresoras',compact('impresoras')); 
     }
 

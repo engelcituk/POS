@@ -32,13 +32,19 @@
                                         <span class="input-group-addon">
                                             <i class="fas fa-utensils"></i>
                                         </span>
-                                        <div class="form-group">
-                                            <select class="form-control" name="idImpresora" required>
-                                                <option value="">Impresora para el centro de preparacion</option>
+                                        <div class="form-group">                                            
+                                            @if ($impresoras!="")
+                                              <select class="form-control" name="idImpresora" required>
+                                                <option value="">Seleccione impresora</option>
                                                 @foreach($impresoras as $impresora)
-                                                    <option value="{{$impresora->id}}">{{$impresora->name}}</option>
+                                                <option value="{{ $impresora->id }}">{{$impresora->name}}</option>
                                                 @endforeach
-                                            </select>
+                                            </select>  
+                                            @else
+                                                <select class="form-control" name="idImpresora" required>
+                                                    <option value="">Aun no hay impresoras</option>                           
+                                                </select> 
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -47,13 +53,19 @@
                                         <span class="input-group-addon">
                                             <i class="fas fa-utensils"></i>
                                         </span>
-                                        <div class="form-group">
-                                            <select class="form-control" name="idImpresoraB" required>
+                                        <div class="form-group">                                            
+                                            @if ($impresoras!="")
+                                              <select class="form-control" name="idImpresoraB" required>
                                                 <option value="">Impresora backup CP</option>
                                                 @foreach($impresoras as $impresora)
-                                                    <option value="{{$impresora->id}}">{{$impresora->name}}</option>
+                                                <option value="{{ $impresora->id }}">{{$impresora->name}}</option>
                                                 @endforeach
-                                            </select>
+                                            </select>  
+                                            @else
+                                                <select class="form-control" name="idImpresoraB" required>
+                                                    <option value="">Aun no hay impresoras</option>                           
+                                                </select> 
+                                            @endif
                                         </div>
                                     </div>
                                 </div>                                                                

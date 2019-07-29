@@ -459,6 +459,7 @@ $("#ocupanteModal").change(function(){
                             var idProducto=objeto[i]["TPV_Producto"]["id"];
                             var idMenuCarta=objeto[i]["id"];
                             var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
+                            var temporada=objeto[i]["TPV_Producto"]["temporada"];
                             var precio=objeto[i]["precio"];
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
@@ -480,7 +481,7 @@ $("#ocupanteModal").change(function(){
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
                             resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
                             // console.log("sus Alergenos",alergenosPOk);
-                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
                     $("#UlList").html(listaProductos);
@@ -537,6 +538,7 @@ $("#ocupanteModal").change(function(){
                             var idProducto=objeto[i]["TPV_Producto"]["id"];
                             var idMenuCarta=objeto[i]["id"];
                             var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
+                            var temporada=objeto[i]["TPV_Producto"]["temporada"];
                             var precio=objeto[i]["precio"];
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
@@ -557,7 +559,7 @@ $("#ocupanteModal").change(function(){
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
                             resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
                             // console.log("sus Alergenos",alergenosPOk);
-                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                           listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }
                     listaProductos+="";                     
                     $("#UlList").html(listaProductos);
@@ -615,12 +617,13 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
     var idUsuario = $("#idUserModalOrdenar").val();        
     var tiempo=tiempoOrden();
     var cantidad=1;
-    var comensal=3;
     var idMesa = localStorage.getItem("idMesaLS");
     var cuentaObjeto = JSON.parse(localStorage.getItem(idPV+idMesa));
     var idCuenta = cuentaObjeto["id"];
+    var comensal = cuentaObjeto["pax"];    
     var nota = descripcionModo;
     var nombreProducto = $("#producto"+idProducto).attr("nProducto");
+    var temporada = $("#producto"+idProducto).attr("temporada");
     // var nota = $("#producto"+idProducto).attr("nota");
     var precio = $("#producto"+idProducto).attr("precio");
     var subTotal = precio*cantidad;
@@ -638,6 +641,7 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
         "idUsuarioAlta":idUsuario,
         "nota":nota,
         "modo":idModo,
+        "temporada":temporada,
         "precioUnitario":precio,
         "subTotal":subTotal});
 
@@ -654,7 +658,8 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
         }else{
             cuentaTemporalVacia(idPV,idMesa,datosCuentaTemporal,datosProducto,tieneModos);
         }          
-    }       
+    }
+    leerCuentaTemporal(idPV,idMesa);         
  }
  function cuentaTemporalVacia(idPV,idMesa,datosCuentaTemporal,datosProducto,tieneModos) {
     console.log("cuenta temporal vacia");      
@@ -760,12 +765,15 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
             var nombreProducto = datosCuentaTemporal[i]["nombreProducto"];
             var nota = datosCuentaTemporal[i]["nota"];
             var cantidad = datosCuentaTemporal[i]["cantidad"];
+            var temporada = datosCuentaTemporal[i]["temporada"];
+            var modificarPrecio = (temporada === "false") ? "disabled" : "";// ternario
+
             var precio = datosCuentaTemporal[i]["precioUnitario"];
             var subTotal = datosCuentaTemporal[i]["subTotal"]; 
             sumaSubTotales = sumaSubTotales + subTotal; //este son los totales de la cuenta temporal
             counter++;
             counterTem++;
-           lstProductosTr="<tr class='success'><td><button id='pos"+counterTem+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td class='text-right'>"+precio+"</td><td class='text-right'>"+subTotal+"</td></tr><tr class='success'><td colspan='5'><input type='text' id='nota"+counterTem+"' class='form-control'  placeholder='Escribe nota' value='"+nota+"' onchange='addNota("+counterTem+","+idPV+","+idMesa+")'></td></tr>";
+           lstProductosTr="<tr class='success'><td><button id='pos"+counterTem+"'  class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'><i class='fas fa-times'></i></button></td><td>"+nombreProducto+"</td><td style='text-align:center;'>"+cantidad+"</td><td><input type='text' id='precioProdTemp"+counterTem+"' class='form-control' value='"+precio+"' "+modificarPrecio+" onchange='modificarPrecioProducto("+counterTem+","+idPV+","+idMesa+")'></td><td class='text-right'>"+subTotal+"</td></tr><tr class='success'><td colspan='5'><input type='text' id='nota"+counterTem+"' class='form-control'  placeholder='Escribe nota' value='"+nota+"' onchange='addNota("+counterTem+","+idPV+","+idMesa+")'></td></tr>";
            $("table tbody").append(lstProductosTr);
            
         }    
@@ -776,6 +784,24 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
     }
     return sumaSubTotales;
 }
+function modificarPrecioProducto(posicion, idPV, idMesa) {
+    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+    var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
+
+    var precioActual= datosCuentaTemporal[posicion]["precioUnitario"];
+    console.log("precio actual: "+precioActual);
+
+    var precio = $("#precioProdTemp"+posicion).val(); 	
+ 	// var soloNumeros = this.value.replace(/[^0-9]/g,'');
+
+    // if(soloNumeros > 0  && precio !=''){	                               
+    //     console.log("todo ok");	        
+    // }else{
+    //     swal("Oops", "Ingrese un valor numerico mayor a 0" ,  "error");
+    //     $("#cantidadDescuento").val(precioActual);	        	        
+    // }
+}
+
 function mostrarTotales(cadena) {
        var cuenta = JSON.parse(localStorage.getItem(cadena));  
        var subtotal=  cuenta["subtotalCuenta"];

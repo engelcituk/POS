@@ -20,7 +20,7 @@
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    tablaImpresoras.ajax.reload();
+                    location.reload();
                     swal({
                         title: '¡Exito!',
                         text: '¡Su dato ha sido borrado!',

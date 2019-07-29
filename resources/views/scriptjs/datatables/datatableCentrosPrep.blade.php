@@ -59,5 +59,25 @@
                 "sPrevious": "Anterior"
             }
         }
-    });  
+    }); 
+//    $(document).ready(function() {
+//         var tablaHotel = $('#CP').DataTable( {
+//             "processing": true,
+//             "serverSide": true,
+//             language: {
+//             sLengthMenu: "Mostrar _MENU_ registros",
+//             processing: "Procesando",
+//             search: "_INPUT_",
+//             searchPlaceholder: "Buscar registros",
+//             sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+//             oPaginate: {
+//                 "sFirst": "Primero",
+//                 "sLast": "Último",
+//                 "sNext": "Siguiente",
+//                 "sPrevious": "Anterior"
+//             }
+//         }
+//         });
+        
+//     });
 </script>

@@ -16,7 +16,9 @@ class RestaurantesController extends Controller
     
     public function index()
     {
-        return view('restaurantes');
+        $restaurantes = $this->obtenerTodosLosRestaurantes();
+        // dd($restaurantes);      
+        return view('restaurantes', compact('restaurantes'));
     }
  
     public function AllRestaurantes()

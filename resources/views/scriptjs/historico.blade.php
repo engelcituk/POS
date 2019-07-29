@@ -110,6 +110,7 @@ function verCuentaDetalles(id) {
     //funcion con sweetalert para reimprimir cuenta
     function imprimirCuenta(idCuenta) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        // console.log("click");
         swal({
             title: '¿Seguro de realizar la impresión de la cuenta?',
             type: 'warning',

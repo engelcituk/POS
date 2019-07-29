@@ -65,12 +65,19 @@
                                         </span>
                                         <div class="form-group">
                                             <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" name="idImpresora" required>
+                                            @if ($impresoras!="")
+                                              <select class="form-control" name="idImpresora" required>
                                                 <option value="">Seleccione impresora</option>
                                                 @foreach($impresoras as $impresora)
                                                 <option value="{{ $impresora->id }}">{{$impresora->name}}</option>
                                                 @endforeach
-                                            </select>
+                                            </select>  
+                                            @else
+                                                <select class="form-control" name="idImpresora" required>
+                                                    <option value="">Aun no hay impresoras</option>                           
+                                                </select> 
+                                            @endif
+                                            
                                         </div>
                                     </div>
                                 </div>                                
