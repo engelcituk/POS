@@ -17,8 +17,9 @@ class CategoriaController extends Controller
         // $this->middleware('accesoCategoriasFiltro');
     }
     public function index(){
-        
-        return view('categorias');
+
+        $categorias = $this->obtenerTodasLasCategorias();
+        return view('categorias',compact('categorias'));
     }
 
     public function AllCategorias(){

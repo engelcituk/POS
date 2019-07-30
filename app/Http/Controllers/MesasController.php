@@ -16,9 +16,10 @@ class MesasController extends Controller
     }
     
     public function index()
-    {       
-        
-        return view('mesas');
+    {
+        $mesas = $this->obtenerTodosLasMesas();
+
+        return view('mesas',compact('mesas'));
     }
 
     public function AllMesas()

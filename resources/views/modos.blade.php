@@ -17,32 +17,41 @@
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
-                        <div class="material-datatables">
+                        <div class="material-datatables">                            
+                            @if ($modos!="")
                             <table id="modos" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
                                         <th>Descripción</th>
                                         <th>FechaAlta</th>                                        
-                                        <th>horaAlta</th>
-                                        <th>idUsuarioAlta</th>
+                                        <th>horaAlta</th>                                        >
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Descripción</th>
-                                        <th>FechaAlta</th>
-                                        <th>horaAlta</th>                                        
-                                        <th>idUsuarioAlta</th>
-                                        <th class="text-right">Acciones</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
-                                        
+                                    @foreach($modos as $modo)
+                                    @php
+                                        $fecha = substr($modo->fechaAlta, 0,10);
+                                        $hora = $modo->horaAlta;
+                                    @endphp                    
+                                        <tr>
+                                            <td>{{$modo->id}}</td>
+                                            <td>{{$modo->descripcion}}</td> 
+                                            <td>{{$fecha}}</td>                                                                
+                                            <td>{{$hora}}</td>                                                                      
+                                            <td>
+                                                <a href="{{ route('modos.show', $modo->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('modos.edit', $modo->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
+                                                <a onclick="deleteModo({{$modo->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
+                            @else
+                                    No hay modos 
+                            @endif
                         </div>
                     </div>
                     <!-- end content-->

@@ -77,14 +77,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <div class="radio">
-                                            <strong>Estado</strong>
+                                            <strong>Imprime</strong>
                                             @php
                                             $estado= $centroPreparacion->imprime;//para obtener el estado de la mesa
                                             $radios = ($estado == 1) ?
-                                            "<label><input type='radio' name='imprime' value='True' checked>Activado</label>
-                                            <label><input type='radio' name='imprime' value='False'>Desactivado</label>" :
-                                            "<label><input type='radio' name='imprime' value='True'>Activado</label>
-                                            <label><input type='radio' name='imprime' value='False' checked>Desactivado</label>";
+                                            "<label><input type='radio' name='imprime' value='True' checked>Sí</label>
+                                            <label><input type='radio' name='imprime' value='False'>No</label>" :
+                                            "<label><input type='radio' name='imprime' value='True'>Si</label>
+                                            <label><input type='radio' name='imprime' value='False' checked>No</label>";
                                             echo $radios;
                                             @endphp
                                         </div>

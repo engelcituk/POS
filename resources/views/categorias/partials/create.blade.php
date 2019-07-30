@@ -60,7 +60,7 @@
                                                 {{-- <img src="data:image/png;base64,{{$alergeno->icono}}"> --}}
                                                 <div>
                                                     <span class="btn btn-rose btn-round btn-file">
-                                                        <span class="fileinput-new"> <i class="fas fa-file-image"></i> Cambiar imagen</span>
+                                                        <span class="fileinput-new"> <i class="fas fa-file-image"></i> Subir imagen</span>
                                                         <span class="fileinput-exists">Change</span>
                                                         <input type="file" id="imagen" name="imagen" onchange="return fileValidation()"/>
                                                     </span>

@@ -31,15 +31,20 @@
                                         <span class="input-group-addon">
                                             <i class="fas fa-h-square"></i>
                                         </span>
-                                        <div class="form-group">
-                                            <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" name="idHotel" required>
+                                        <div class="form-group">                                            
+                                           @if ($hoteles!="")
+                                              <select class="form-control" name="idHotel" required>
                                                 <option value="">Seleccione hotel</option>
                                                 @foreach($hoteles as $hotel)
                                                 <option value="{{ $hotel->id }}">{{ $hotel->name }}</option>
                                                 @endforeach
-                                            </select>
-                                        </div>
+                                              </select>  
+                                            @else
+                                                <select class="form-control" name="idHotel" required>
+                                                    <option value="">Aun no hay Hoteles</option>                           
+                                                </select> 
+                                            @endif   
+                                        </div>                                        
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -49,7 +54,7 @@
                                         </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">homoclave</label>
-                                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="homoclave" required autofocus>
+                                            <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="homoclave" maxlength="5" required >
                                             @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
@@ -88,7 +93,7 @@
                                         </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Código centro Productivo</label>
-                                            <input id="centroProd" type="text" class="form-control{{ $errors->has('centroProd') ? ' is-invalid' : '' }}" name="centroProd" required>
+                                            <input id="centroProd" type="text" class="form-control{{ $errors->has('centroProd') ? ' is-invalid' : '' }}" name="centroProd" maxlength="50" required>
                                             @if ($errors->has('centroProd'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('centroProd') }}</strong>

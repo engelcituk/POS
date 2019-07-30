@@ -4,7 +4,7 @@
 <div class="content">
     <div class="container-fluid">
 
-        <a href="{{ route('productos.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo producto</a>
+        <a href="{{ route('productos.create') }}" class="btn btn-success"><i class="fab fa-product-hunt"></i> Nuevo producto</a>
 
         <div class="row">
             <div class="col-md-12">
@@ -28,21 +28,38 @@
                                         <th>fechaAlta</th>
                                         <th>propina</th>
                                         <th>Complemento</th>
+                                        <th>Temporada</th>
                                         <th>Estado</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
                                 
                                 <tbody>
-                                    @foreach($productos as $producto)                                            
+                                    @foreach($productos as $producto)  
+                                    @php
+                                        $fecha = substr($producto->fechaAlta, 0,10); 
+
+                                        $colorPropina = $producto->propina==1 ? 'success' : 'warning' ;
+                                        $conPropina = $producto->propina==1 ? 'Si' : 'No';
+
+                                        $colorComplemento = $producto->complemento==1 ? 'success' : 'warning' ;
+                                        $esComplemento = $producto->complemento==1 ? 'Si' : 'No';
+
+                                        $colorTemporada = $producto->temporada==1 ? 'success' : 'warning' ;
+                                        $deTemporada = $producto->temporada==1 ? 'Si' : 'No';
+                                        
+                                        $colorEstado = $producto->status==1 ? 'success' : 'warning' ;
+                                        $estado = $producto->status==1 ? 'Activo' : 'Desactivado';                                       
+                                    @endphp                                          
                                         <tr>
                                             <td>{{$producto->id}}</td>
                                             <td>{{$producto->codigoProducto}}</td>
                                             <td>{{$producto->nombreProducto}}</td>
-                                            <td>{{$producto->fechaAlta}}</td>
-                                            <td>{{$producto->propina}}</td>
-                                            <td>{{$producto->complemento}}</td>
-                                            <td>{{$producto->status}}</td>
+                                            <td>{{$fecha}}</td>                                           
+                                            <td><button class="btn btn-{{$colorPropina}} btn-xs">{{$conPropina}}</button></td> 
+                                            <td><button class="btn btn-{{$colorComplemento}} btn-xs">{{$esComplemento}}</button></td>
+                                            <td><button class="btn btn-{{$colorTemporada}} btn-xs">{{$deTemporada}}</button></td>
+                                            <td><button class="btn btn-{{$colorEstado}} btn-xs">{{$estado}}</button></td> 
                                             <td>
                                                 <a href="{{ route('productos.show', $producto->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('productos.edit', $producto->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>

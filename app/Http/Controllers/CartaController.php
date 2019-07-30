@@ -18,7 +18,9 @@ class CartaController extends Controller
     }
     public function index()
     {
-        return view('cartas');
+        $cartas = $this->obtenerTodosLasCartas();
+        // dd($cartas);
+        return view('cartas',compact('cartas'));
     }
     public function AllCartas()
     {

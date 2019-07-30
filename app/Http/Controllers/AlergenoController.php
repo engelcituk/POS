@@ -16,7 +16,9 @@ class AlergenoController extends Controller
         // $this->middleware('accesoAlergenosFiltro');
     }     
     public function index(){
-        return view('alergenos');        
+        $alergenos = $this->obtenerTodosLosAlergenos();
+        // dd($alergenos);
+        return view('alergenos', compact('alergenos'));        
         
     }
 

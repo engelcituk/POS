@@ -18,7 +18,7 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
-                            <table id="alergenos" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            {{-- <table id="alergenos" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
@@ -36,7 +36,33 @@
                                 <tbody>
 
                                 </tbody>
+                            </table> --}}
+                            @if ($alergenos!="")
+                            <table id="alergenos" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>name</th>                                        
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($alergenos as $alergeno)                     
+                                        <tr>
+                                            <td>{{$alergeno->id}}</td>
+                                            <td>{{$alergeno->name}}</td>                                                                      
+                                            <td>
+                                                <a href="{{ route('alergenos.show', $alergeno->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('alergenos.edit', $alergeno->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
+                                                <a onclick="deleteAlergeno({{$alergeno->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
+                            @else
+                                    No hay alergenos 
+                            @endif
                         </div>
                     </div>
                     <!-- end content-->

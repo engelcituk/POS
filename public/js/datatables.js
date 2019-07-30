@@ -126,6 +126,29 @@ $(document).ready(function() {
         }
     });
     $('.card .material-restaurantes label').addClass('form-group');
+    
+    //para el datatable de centros de preparacion
+    $('#centroP').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    $('.card .material-zonas label').addClass('form-group');
 
     //para el datatable de zonas
     $('#zonas').DataTable({
@@ -218,7 +241,28 @@ $(document).ready(function() {
         }
     });
     $('.card .material-categorias label').addClass('form-group');
-
+    //para el datatable de categorias
+    $('#cartas').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    $('.card .material-cartas label').addClass('form-group');
     //para el datatable de productos
     $('#productos').DataTable({
         "pagingType": "full_numbers",
@@ -242,8 +286,8 @@ $(document).ready(function() {
     });
     $('.card .material-productos label').addClass('form-group');
 
-    //para el datatable de formas de pago
-    $('#formaspago').DataTable({
+    //para el datatable menus cartas
+    $('#menucartas').DataTable({
         "pagingType": "full_numbers",
         "lengthMenu": [
             [10, 25, 50, -1],
@@ -263,6 +307,75 @@ $(document).ready(function() {
             }
         }
     });
-    $('.card .material-formaspago label').addClass('form-group');
+    $('.card .material-menucartas label').addClass('form-group');
+
+    //para el datatable de formas de pago
+    $('#metodosPago').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    $('.card .material-metodosPago label').addClass('form-group');
+
+    //para el datatable de modos
+    $('#modos').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    $('.card .material-modos label').addClass('form-group');
+
+    //para el datatable de alergenos
+    $('#alergenos').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    $('.card .material-alergenos label').addClass('form-group');
 });
 

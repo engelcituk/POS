@@ -33,16 +33,19 @@
                                             <i class="fas fa-utensils"></i>
                                         </span>
                                         <div class="form-group">
-                                            <select class="form-control" name="idPuntoVenta" required>
-                                                <option value="">Seleccione punto de venta </option>
-                                                
-                                                    @foreach($restaurantes as $restaurante)
-                                                    
-                                                    <option value="{{$restaurante->id}}">{{$restaurante->name}}</option>
-                                                   
-                                                    @endforeach
-                                               
-                                            </select>
+                                            @if ($restaurantes!="")
+                                             <select class="form-control" name="idPuntoVenta" required>
+                                                <option value="">Seleccione punto de venta </option>                                    
+                                                    @foreach($restaurantes as $restaurante)                                              
+                                                    <option value="{{$restaurante->id}}">{{$restaurante->name}}</option>                  
+                                                    @endforeach                                               
+                                            </select>  
+                                            @else
+                                                <select class="form-control" name="idPuntoVenta" required>
+                                                    <option value="">Aun no hay puntos de venta</option>                           
+                                                </select> 
+                                            @endif
+                                            
                                         </div>
                                     </div>
                                 </div> 

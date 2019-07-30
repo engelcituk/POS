@@ -32,12 +32,20 @@
                                             <i class="fas fa-utensils"></i>
                                         </span>
                                         <div class="form-group">
-                                            <select class="form-control" name="idPuntoVenta" required>
+                                            @if ($restaurantes!="")
+                                              <select class="form-control" name="idPuntoVenta" required>
                                                 <option value="">Seleccione PV para la carta</option>
                                                 @foreach($restaurantes as $restaurante)         
                                                     <option value="{{$restaurante->id}}"> {{$restaurante->name}}</option>
                                                 @endforeach
-                                            </select>
+                                            </select>  
+                                            @else
+                                                <select class="form-control" name="idPuntoVenta" required>
+                                                    <option value="">Aun no hay puntos de venta</option>                           
+                                                </select> 
+                                            @endif
+
+                                            
                                         </div>
                                     </div>
                                 </div> 
@@ -47,12 +55,19 @@
                                             <i class="fas fa-utensils"></i>
                                         </span>
                                         <div class="form-group">
-                                            <select class="form-control" name="idTurno" required>
-                                                <option value="">Seleccione turno para la carta</option>
-                                                @foreach($turnos as $turno)         
-                                                    <option value="{{$turno->id}}"> {{$turno->turno}}</option>
-                                                @endforeach
-                                            </select>
+                                           
+                                            @if ($turnos!="")
+                                               <select class="form-control" name="idTurno" required>
+                                                    <option value="">Seleccione turno para la carta</option>
+                                                    @foreach($turnos as $turno)         
+                                                        <option value="{{$turno->id}}"> {{$turno->turno}}</option>
+                                                    @endforeach
+                                                </select> 
+                                            @else
+                                                <select class="form-control" name="idTurno" required>
+                                                    <option value="">Aun no hay turnos registrados</option>                           
+                                                </select> 
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

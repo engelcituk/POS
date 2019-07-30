@@ -15,9 +15,9 @@
                         <div class="toolbar">
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
-                        <div class="material-datatables">                            
+                        <div class="material-datatables">
                             @if ($centrosP!="")
-                              <table id="CP" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <table id="centroP" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
@@ -31,15 +31,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     @foreach($centrosP as $cp)                                            
+                                    @foreach($centrosP as $cp) 
+                                        @php
+                                            $color = $cp->status==1 ? 'success' : 'warning' ;
+                                            $estado = $cp->status==1 ? 'Activo' : 'Desactivado'; 
+                                        
+                                            $colorImprime = $cp->imprime==1 ? 'success' : 'warning' ;
+                                            $imprime = $cp->imprime==1 ? 'SI' : 'NO';
+                                        @endphp                                                                
                                         <tr>
                                             <td>{{$cp->id}}</td>
                                             <td>{{$cp->name}}</td>
                                             <td>{{$cp->impresora}}</td>
                                             <td>{{$cp->impresoraB}}</td>
                                             <td>{{$cp->descripcion}}</td>
-                                            <td>{{$cp->imprime}}</td>
-                                            <td>{{$cp->status}}</td>                                          
+                                            <td><button class="btn btn-{{$colorImprime}} btn-xs">{{$imprime}}</button></td>
+                                            <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>                                          
                                             <td>
                                                 <a href="{{ route('centrospreparacion.show', $cp->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('centrospreparacion.edit', $cp->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
@@ -49,10 +56,10 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                             @else
-                                     No hay Centros de preparación 
-                             @endif
-                        </div>
+                            @else
+                                    No hay Centros de preparación 
+                            @endif 
+                            </div>
                     </div>
                     <!-- end content-->
                 </div>

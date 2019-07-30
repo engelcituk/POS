@@ -14,9 +14,10 @@ class MetodosPagoController extends Controller
         // $this->middleware('accesoMPFiltro');
     }
 
-    public function index()
-    {
-        return view('metodospago'); 
+    public function index(){
+        
+        $metodosPago = $this->obtenerTodosLosMetodosPagos();
+        return view('metodospago', compact('metodosPago')); 
     }
     public function AllMetodosPago()
     {

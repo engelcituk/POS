@@ -17,7 +17,9 @@ class TurnosController extends Controller
 
     public function index()
     {
-        return view('turnospv');
+        $turnos = $this->obtenerTodosLosTurnos();
+
+        return view('turnospv', compact('turnos'));
     }
     public function AllTurnos()
     {

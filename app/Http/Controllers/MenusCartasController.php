@@ -16,7 +16,9 @@ class MenusCartasController extends Controller{
         // $this->middleware('accesoMenusCartaFiltro');
     }
     public function index(){
-        return view('menuscartas');
+        $menucartas = $this->obtenerTodosLosMenusCartas();
+
+        return view('menuscartas', compact('menucartas'));
     }
 
     public function AllMenuCartas(){
@@ -74,6 +76,7 @@ class MenusCartasController extends Controller{
                 'idCentroPrep' => $idCentroPrep
             ]
         ]);
+        // dd($respuesta);
         return $respuesta;
         
     }

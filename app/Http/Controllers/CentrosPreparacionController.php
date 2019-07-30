@@ -43,11 +43,6 @@ class CentrosPreparacionController extends Controller
         return $centrosP;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
               
@@ -66,7 +61,7 @@ class CentrosPreparacionController extends Controller
                 'idImpresora' => $request->get('idImpresora'),
                 'idImpresoraB' => $request->get('idImpresoraB'),
                 'descripcion' => $request->get('descripcion'),
-                'imprime' => $request->get('idImpresora')
+                'imprime' => $request->get('imprime')
                 ]
             ]);
 
@@ -123,7 +118,7 @@ class CentrosPreparacionController extends Controller
                 'idImpresora' => $request->get('idImpresora'),
                 'idImpresoraB' => $request->get('idImpresoraB'),
                 'descripcion' => $request->get('descripcion'),
-                'imprime' => $request->get('idImpresora')
+                'imprime' => $request->get('imprime')
             ]            
         ]);
 

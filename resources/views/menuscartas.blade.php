@@ -4,7 +4,7 @@
 <div class="content">
     <div class="container-fluid">
 
-        <a href="{{route('menuscartas.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo menú carta</a>
+        <a href="{{route('menuscartas.create') }}" class="btn btn-success"><i class="fas fa-list-alt"></i> Nuevo menú carta</a>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -17,7 +17,9 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
-                            <table id="menucartas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%"> 
+                            
+                            @if ($menucartas!="")
+                            <table id="metodosPago" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>id</th>
@@ -27,12 +29,28 @@
                                         <th>Centro</th>                                        
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                </thead>                                
-                                
+                                </thead>
                                 <tbody>
+                                    @foreach($menucartas as $mc)                                                      
+                                        <tr>
+                                            <td>{{$mc->id}}</td>
+                                            <td>{{$mc->carta}}</td>                                           
+                                            <td>{{$mc->producto}}</td>                                                         
+                                            <td>{{$mc->precio}}</td> 
+                                            <td>{{$mc->centro}}</td> 
 
+                                            <td>
+                                                <a href="{{ route('menuscartas.show', $mc->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('menuscartas.edit', $mc->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
+                                                <a onclick="deleteMenuCarta({{$mc->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
+                            @else
+                                    No hay menú cartas 
+                            @endif
                         </div>
                     </div>
                     <!-- end content-->

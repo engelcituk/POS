@@ -64,12 +64,18 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     @foreach($impresoras as $impresora)                                            
+                                    
+                                     @foreach($impresoras as $impresora) 
+                                     @php
+                                        $color = $impresora->status==1 ? 'success' : 'warning' ;
+                                        $estado = $impresora->status==1 ? 'Activo' : 'Desactivado' ;
+                                     @endphp
+                                        
                                         <tr>
                                             <td>{{$impresora->id}}</td>
                                             <td>{{$impresora->name}}</td>
                                             <td>{{$impresora->ipImpresora}}</td>
-                                            <td>{{$impresora->status}}</td>                                          
+                                            <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>                                          
                                             <td>
                                                 <a href="{{ route('impresoras.show', $impresora->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('impresoras.edit', $impresora->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>    

@@ -16,7 +16,7 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
-                            <table id="zonas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            {{-- <table id="zonas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>id</th>
@@ -30,7 +30,43 @@
                                 <tbody>
 
                                 </tbody>
+                            </table> --}}
+                            @if ($zonas!="")
+                              <table id="zonas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>id</th>
+                                        <th>Nombre</th>
+                                        <th>Punto de Venta</th>
+                                        <th>Descripcion</th>
+                                        <th>Estado</th>
+                                        <th class="disabled-sorting text-right">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                     @foreach($zonas as $zona) 
+                                     @php
+                                        $color = $zona->status==1 ? 'success' : 'warning' ;
+                                        $estado = $zona->status==1 ? 'Activo' : 'Desactivado' ;
+                                     @endphp                                          
+                                        <tr>
+                                            <td>{{$zona->id}}</td>
+                                            <td>{{$zona->name}}</td>
+                                            <td>{{$zona->pv}}</td>
+                                            <td>{{$zona->descripcion}}</td>                                           
+                                            <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td> 
+                                            <td>
+                                                <a href="{{ route('zonas.show', $zona->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('zonas.edit', $zona->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                        
+                                                <a onclick="deleteZona({{$zona->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
                             </table>
+                             @else
+                                     no hay zonas aún 
+                             @endif
                         </div>
                     </div>
                     <!-- end content-->

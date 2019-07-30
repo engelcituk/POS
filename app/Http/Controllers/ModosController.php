@@ -16,7 +16,9 @@ class ModosController extends Controller
 
     public function index()
     {
-        return view('modos'); 
+        $modos = $this->obtenerTodosLosModos();
+
+        return view('modos',compact('modos')); 
     }
 
     public function AllModos()

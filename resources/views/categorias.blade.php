@@ -16,20 +16,37 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
+                            
+                            @if ($categorias!="")
                             <table id="categorias" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Id</th>
                                         <th>Nombre</th>
-                                        <th>FechaAlta</th>                                        
-                                        <th>orden</th>
+                                        <th>FechaAlta</th>                                                                                
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
-                                </thead>                                
+                                </thead>
                                 <tbody>
-
+                                    @foreach($categorias as $categoria)                                                                    @php
+                                        $fecha = substr($categoria->fechaAlta, 0,10);
+                                    @endphp                       
+                                        <tr>
+                                            <td>{{$categoria->id}}</td>
+                                            <td>{{$categoria->name}}</td>
+                                            <td>{{$fecha}}</td>                           
+                                            <td>
+                                                <a href="{{ route('categorias.show', $categoria->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('categorias.edit', $categoria->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
+                                                <a onclick="deleteCategoria({{$categoria->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
+                            @else
+                                    No hay categorias 
+                            @endif
                         </div>
                     </div>
                     <!-- end content-->

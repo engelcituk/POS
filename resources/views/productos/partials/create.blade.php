@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="card-content">                                
                                 <div class="row">
-                                    @if ($categorias!=""))
+                                    @if ($categorias!="")
                                        <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -188,7 +188,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if ($alergenos!=""))
+                                    @if ($alergenos!="")
                                        <div class="row">
                                         <h4>Seleccione un alergeno si el producto tiene alergenos</h4>
                                         @foreach($alergenos as $alergeno)                                
@@ -205,7 +205,7 @@
                                         <div class="row"><h4>Sin alergenos registrados para seleccionar</h4></div>
                                     @endif                                                          
                                     
-                                    @if ($modos!=""))
+                                    @if ($modos!="")
                                         <div class="row">
                                         <h4>Seleccione un modo y establece uno como principal</h4>
                                         <div class="col-md-12">                                            

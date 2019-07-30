@@ -16,7 +16,8 @@ class ZonasController extends Controller
     
     public function index()
     {
-        return view('zonas');
+        $zonas = $this->obtenerTodasLasZonas();
+        return view('zonas',compact('zonas'));
     }
 
     public function AllZonas()
@@ -82,7 +83,7 @@ class ZonasController extends Controller
     public function store(Request $request)
     {
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddZona', ['form_params' => $request->all()]);
-
+// dd($respuesta);
         return redirect('/zonas');
     }
     public function obtenerUnaZona($idZona)

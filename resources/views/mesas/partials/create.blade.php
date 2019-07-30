@@ -10,7 +10,7 @@
                         @csrf
                         <div class="row">
                             <div class="card-content">
-                                @if ($zonas!=""))
+                                @if ($zonas!="")
                                     <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">

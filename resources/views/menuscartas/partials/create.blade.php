@@ -16,12 +16,18 @@
                                             <i class="fas fa-grip-horizontal"></i>
                                         </span>
                                         <div class="form-group">
+                                            @if ($cartas!="")
                                             <select class="form-control" name="idCarta" required>
                                                 <option value="">Elija carta</option>
                                                     @foreach($cartas as $carta)
                                                         <option value="{{$carta->id}}">{{$carta->name}}</option>
                                                     @endforeach
-                                            </select>
+                                            </select>  
+                                            @else
+                                                <select class="form-control" name="idCarta" required>
+                                                    <option value="">Aun no hay cartas</option>                           
+                                                </select> 
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -39,24 +45,37 @@
                                     </thead>
                                     <tbody>
                                         <tr id="addr0" data-id="0" id="listaClon">
-                                            <td data-name="idProducto" >        
+                                            <td data-name="idProducto" >                                                        
+                                                @if ($productos!="")
                                                 <select class="form-control listaProductos" id="templateLista" name="idProducto[]" required>
                                                     <option value="">Elija producto</option>
                                                             @foreach($productos as $producto)
                                                     <option value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
                                                             @endforeach
-                                                </select>                                                                                              
+                                                </select>  
+                                                @else
+                                                    <select class="form-control" name="idCarta" required>
+                                                        <option value="">Aun no hay productos</option>                           
+                                                    </select> 
+                                                @endif                                                                                             
                                             </td>
                                             <td data-name="precio">
                                                 <input id="precio" type="number" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="precio[]"  required>
                                             </td>
                                             <td data-name="idCentroPrep">
-                                            <select class="form-control" name="idCentroPrep[]" required>
+                                            
+                                            @if ($centrosPreparacion!="")
+                                                <select class="form-control" name="idCentroPrep[]" required>
                                                     <option value="">Centro Preparacion</option>
                                                         @foreach($centrosPreparacion as $cp)
                                                             <option value="{{$cp->id}}">{{$cp->name}}</option>
                                                         @endforeach
-                                                </select>
+                                                </select>  
+                                                @else
+                                                    <select class="form-control" name="idCarta" required>
+                                                        <option value="">No hay centros de preparacion</option>                           
+                                                    </select> 
+                                                @endif
                                             </td> 
                                             <td data-name="del">
                                                 <button name="del0" class='btn btn-danger fa fa-remove btn-sm row-remove'></button>

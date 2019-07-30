@@ -15,18 +15,19 @@
             $.ajax({
                 url: "{{ url('zonas') }}" + '/' + id,
                 type: "POST",
-                data: {
+                data: { 
                     '_method': 'POST',
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    tablaZonas.ajax.reload();
+                    // tablaZonas.ajax.reload();
                     swal({
                         title: '¡Exito!',
                         text: '¡Su dato ha sido borrado!',
                         type: 'success',
                         timer: '1500'
                     })
+                    location.reload();
                 },
                 error: function() {
                     swal({

@@ -21,13 +21,14 @@
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    tablaMenuCartas.ajax.reload();
+                    // tablaMenuCartas.ajax.reload();
                     swal({
                         title: '¡Exito!',
                         text: '¡Su dato ha sido borrado!',
                         type: 'success',
                         timer: '1500'
                     })
+                    location.reload();
                 },
                 error: function() {
                     swal({
