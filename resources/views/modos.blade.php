@@ -24,8 +24,8 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Descripción</th>
-                                        <th>FechaAlta</th>                                        
-                                        <th>horaAlta</th>                                        >
+                                        <th>Fecha Alta</th>                                        
+                                        <th>Hora Alta</th>                                        
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>

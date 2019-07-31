@@ -130,6 +130,7 @@ class AlergenoController extends Controller
                 'icono' => $icono
             ]
         ]);
+        // dd($respuesta);
         return $respuesta;
     }
     public function actualizarAlergeno($idAlergeno,$nombre, $icono){

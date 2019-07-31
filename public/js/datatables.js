@@ -1,4 +1,5 @@
 $(document).ready(function() {   
+    $.fn.dataTableExt.sErrMode = 'throw'; 
           
     $('#historico').DataTable({
         // ajax: "{{route('all/usuarios')}}",        

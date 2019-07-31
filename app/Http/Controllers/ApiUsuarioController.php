@@ -19,9 +19,10 @@ class ApiUsuarioController extends Controller
         // $this->middleware('accesoUsuariosFiltro');
     }
 
-    public function index()
-    {
-        return view('users');
+    public function index(){
+
+        $users = $this->obtenerTodosLosUsuarios();
+        return view('users', compact('users'));
     }
     public function AllApiUsuario()
     {

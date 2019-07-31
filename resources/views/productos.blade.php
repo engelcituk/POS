@@ -25,7 +25,7 @@
                                         <th>Id</th>
                                         <th>codProducto</th>
                                         <th>Nombre</th>
-                                        <th>fechaAlta</th>
+                                        {{-- <th>fechaAlta</th> --}}
                                         <th>propina</th>
                                         <th>Complemento</th>
                                         <th>Temporada</th>
@@ -55,7 +55,7 @@
                                             <td>{{$producto->id}}</td>
                                             <td>{{$producto->codigoProducto}}</td>
                                             <td>{{$producto->nombreProducto}}</td>
-                                            <td>{{$fecha}}</td>                                           
+                                            {{-- <td>{{$fecha}}</td>                                            --}}
                                             <td><button class="btn btn-{{$colorPropina}} btn-xs">{{$conPropina}}</button></td> 
                                             <td><button class="btn btn-{{$colorComplemento}} btn-xs">{{$esComplemento}}</button></td>
                                             <td><button class="btn btn-{{$colorTemporada}} btn-xs">{{$deTemporada}}</button></td>

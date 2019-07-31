@@ -32,7 +32,7 @@
                         <div class="row">
                             <div class="col-md-5">
                                 <div id="wrapper">
-                                    <div id="receiptData">
+                                    <div id="receiptData"> 
                                         <div class="no-print">
                                         </div>
                                         <div id="receipt-data">

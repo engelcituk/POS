@@ -35,7 +35,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Zona</th>                                        
-                                        <th>status</th>
+                                        <th>Estado</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>

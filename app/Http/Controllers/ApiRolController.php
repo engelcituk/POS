@@ -22,9 +22,10 @@ class ApiRolController extends Controller
 
         // $this->middleware('accesoRolesFiltro');
     } 
-    public function index()
-    {
-        return view('apiroles');
+    public function index(){
+
+        $roles = $this->obtenerTodosLosRoles();
+        return view('apiroles', compact('roles'));
     }
 
     public function AllApiRol()

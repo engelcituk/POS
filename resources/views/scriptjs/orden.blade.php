@@ -788,18 +788,28 @@ function modificarPrecioProducto(posicion, idPV, idMesa) {
     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
     var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
 
-    var precioActual= datosCuentaTemporal[posicion]["precioUnitario"];
-    console.log("precio actual: "+precioActual);
+    var precioActual= datosCuentaTemporal[posicion]["precioUnitario"];    
+    var precioNuevo= $("#precioProdTemp"+posicion).val();   	
+ 	var soloNumeros = precioNuevo.replace(/[^0-9]/g,'');
 
-    var precio = $("#precioProdTemp"+posicion).val(); 	
- 	// var soloNumeros = this.value.replace(/[^0-9]/g,'');
+    var cantidad = datosCuentaTemporal[posicion]["cantidad"];                                       
+    
+    if(soloNumeros >= 0  && precioNuevo !=''){
+        datosCuentaTemporal[posicion]["precioUnitario"]=precioNuevo;
+        datosCuentaTemporal[posicion]["subTotal"]=cantidad * precioNuevo;
+       
+        localStorage.setItem(cuentaTemporal, JSON.stringify(datosCuentaTemporal));
+        leerCuentaTemporal(idPV, idMesa) 	        
+    }else{
+        swal("Oops", "Ingrese un valor numerico" ,  "error");
+        $("#precioProdTemp"+posicion).val(precioActual);
+        
+        datosCuentaTemporal[posicion]["precioUnitario"]=precioActual; 
+        datosCuentaTemporal[posicion]["subTotal"]=cantidad * precioActual;
 
-    // if(soloNumeros > 0  && precio !=''){	                               
-    //     console.log("todo ok");	        
-    // }else{
-    //     swal("Oops", "Ingrese un valor numerico mayor a 0" ,  "error");
-    //     $("#cantidadDescuento").val(precioActual);	        	        
-    // }
+        localStorage.setItem(cuentaTemporal, JSON.stringify(datosCuentaTemporal));
+        leerCuentaTemporal(idPV, idMesa)        	        	        
+    }
 }
 
 function mostrarTotales(cadena) {
