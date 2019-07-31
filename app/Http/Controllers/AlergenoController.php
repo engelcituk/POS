@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
 
 class AlergenoController extends Controller
 {
@@ -72,22 +73,25 @@ class AlergenoController extends Controller
         
         $idAlergeno = $request->get('id');
         $nombre = $request->get('name');
+        $nombreImgApi = $request->get('iconoValor');
         $imagen = $request->file('icono');
 
-        if ($imagen == null) {
-            $icono = array();
-            $imagen = "SIN IMAGEN";
-            $icono = $imagen;
-        } else {
-            $imagen = file_get_contents($request->file('icono')->path());
+        $nombreImgApi = $request->get('iconoValor');
 
-            $icono = array();
-            foreach (str_split($imagen) as $char) {
-                array_push($icono, ord($char));
-            } 
-        }
-       
-        $this->actualizarAlergeno( $idAlergeno, $nombre, $icono);
+        if ($imagen == null) {
+            $nombreImg = $nombreImgApi;
+        } else {
+            $rutaImg= "/storage/alergenos/".$nombreImgApi;
+
+            $imgUrlBorrar=str_replace('storage','public', $rutaImg);
+
+            Storage::delete($imgUrlBorrar);
+
+            $imgUrl = $imagen->store('public/alergenos');
+            $nombreImg = basename($imgUrl);
+        }       
+        // dd($imgUrlBorrar);
+        $this->actualizarAlergeno($idAlergeno, $nombre, $nombreImg);
         
         return redirect('/alergenos');
 
@@ -118,6 +122,7 @@ class AlergenoController extends Controller
     }
     public function guardarAlergeno($nombre, $icono){
 
+        
         $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddAlergeno', [
             'form_params' => [
                 'name' => $nombre,
@@ -127,12 +132,12 @@ class AlergenoController extends Controller
         // dd($respuesta);
         return $respuesta;
     }
-    public function actualizarAlergeno($idAlergeno,$nombre, $icono){
+    public function actualizarAlergeno($idAlergeno,$nombre, $nombreImg){
         
         $respuesta = $this->realizarPeticion('POST', $this->urlBase. "UpdateAlergeno/{$idAlergeno}", [
             'form_params' => [
                 'name' => $nombre,
-                'icono' => $icono
+                'icono' => $nombreImg
             ]
         ]);
         

@@ -7,10 +7,8 @@
             <div class="row">
                 <div class="col-md-12">
                     @php
-                        $imgAlergeno =$alergeno->icono;
-                    $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default
-                    // $dataimg = "data:image/png;base64,";                       
-                    // $imgBase64 = $dataimg.$imgAlergeno;                                        
+                    $imgAlergeno =$alergeno->icono;
+                    $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default                              
                     $resultadoImg = (($imgAlergeno == "SIN IMAGEN") || ($imgAlergeno == NULL)) ? $imgDefault : "/storage/alergenos/".$imgAlergeno; 
                     @endphp
                     <div class="card card-profile">
@@ -29,8 +27,16 @@
                                         </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Nombre del alergeno</label>
-                                        <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{$alergeno->name}}" required autofocus>
-                                            
+                                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{$alergeno->name}}" required autofocus>          
+                                        </div>
+                                    </div>
+                                    <div class="input-group hidden">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-code"></i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">valor icono</label>
+                                                <input type="text" class="form-control" name="iconoValor" value="{{$imgAlergeno}}" readonly>
                                         </div>
                                     </div>
                                 </div>
