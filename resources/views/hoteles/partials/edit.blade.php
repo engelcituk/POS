@@ -19,6 +19,7 @@
                                                 <i class="material-icons">create</i>
                                             </span>
                                             <div class="form-group label-floating">
+                                                <label class="control-label">Hotel</label>
                                                 <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{$hotel->name}}" required autofocus>
                                             </div>
                                         </div>
@@ -29,6 +30,7 @@
                                                 <i class="material-icons">create</i>
                                             </span>
                                             <div class="form-group label-floating">
+                                                <label class="control-label">Empresa</label>
                                                 <input id="direccion" type="text" class="form-control{{ $errors->has('empresa') ? ' is-invalid' : '' }}" name="empresa" value="{{$hotel->empresa}}" required>
                                             </div>
                                         </div>

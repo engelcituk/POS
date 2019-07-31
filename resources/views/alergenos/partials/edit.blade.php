@@ -8,13 +8,10 @@
                 <div class="col-md-12">
                     @php
                         $imgAlergeno =$alergeno->icono;
-                        $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default
-                        $dataimg = "data:image/png;base64,";                       
-                        $imgBase64 = $dataimg.$imgAlergeno;                                        
-                        $resultadoImg = (($imgAlergeno == "AA==") || ($imgAlergeno == NULL)) ? $imgDefault : $imgBase64; 
-                        if($resultadoImg != $imgBase64){
-                            echo "no se asigno img";
-                        }   
+                    $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default
+                    // $dataimg = "data:image/png;base64,";                       
+                    // $imgBase64 = $dataimg.$imgAlergeno;                                        
+                    $resultadoImg = (($imgAlergeno == "SIN IMAGEN") || ($imgAlergeno == NULL)) ? $imgDefault : "/storage/alergenos/".$imgAlergeno; 
                     @endphp
                     <div class="card card-profile">
                         <div class="card-avatar">

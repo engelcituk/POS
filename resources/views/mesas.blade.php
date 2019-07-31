@@ -35,6 +35,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Zona</th>                                        
+                                        <th>Nombre</th> 
                                         <th>Estado</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
@@ -48,7 +49,8 @@
                                         <tr>
                                             <td>{{$mesa->id}}</td>
                                             <td>{{$mesa->zona}}</td>
-                                             <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>                                                                                                                                                                          
+                                            <td>{{$mesa->name}}</td>
+                                            <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>                                                                                                                                                                          
                                             <td>
                                                 <a href="{{ route('mesas.show', $mesa->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('mesas.edit', $mesa->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                

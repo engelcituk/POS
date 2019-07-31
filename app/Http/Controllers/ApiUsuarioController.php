@@ -22,7 +22,11 @@ class ApiUsuarioController extends Controller
     public function index(){
 
         $users = $this->obtenerTodosLosUsuarios();
-        return view('users', compact('users'));
+
+        $permisos = new PermisosController(); //Traigo toda mi lista de permisos
+        $permisos = $permisos->obtenerTodosLosPermisos(); //los datos lo envio a la vista
+        // dd($permisos);
+        return view('users', compact('users','permisos'));
     }
     public function AllApiUsuario()
     {

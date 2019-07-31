@@ -8,9 +8,9 @@
                 @php
                     $imgAlergeno =$alergeno->icono;
                     $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default
-                    $dataimg = "data:image/png;base64,";                       
-                    $imgBase64 = $dataimg.$imgAlergeno;                                        
-                    $resultadoImg = (($imgAlergeno == "AA==") || ($imgAlergeno == NULL)) ? $imgDefault : $imgBase64;    
+                    // $dataimg = "data:image/png;base64,";                       
+                    // $imgBase64 = $dataimg.$imgAlergeno;                                        
+                    $resultadoImg = (($imgAlergeno == "SIN IMAGEN") || ($imgAlergeno == NULL)) ? $imgDefault : "/storage/alergenos/".$imgAlergeno;    
                 @endphp
                 <div class="card card-profile">
                     <div class="card-avatar">

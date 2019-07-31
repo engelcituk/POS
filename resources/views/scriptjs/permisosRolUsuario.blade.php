@@ -1,4 +1,10 @@
 <script>
+
+    function showPermisosModal(idRol) {
+        console.log("su id",idRol);
+        $('#modalShowUserPermisos').modal({backdrop: 'static', keyboard: false });
+        
+    }
     function addQuitarPermisoUsuario(idUsuario,idPermiso){
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         var valorCheck=$("#chekPermiso"+idPermiso).prop("checked");

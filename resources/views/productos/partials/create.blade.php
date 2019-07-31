@@ -163,7 +163,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <div class="form-group">
-                                                Temporada
+                                                Precio Manual
                                                 <div class="radio">
                                                     <label>
                                                         <input type="radio" name="temporada" value="true"> Sí

@@ -103,22 +103,16 @@ class AlergenoController extends Controller
     public function store(Request $request){
         
         $nombre = $request->get('name');
-        $imagen = $request->file('icono');      
+        $imagen = $request->file('icono');
 
-        if ($imagen == null) {
-            $icono = array();
-            $imagen = "SIN IMAGEN";
-            $icono = $imagen;
-        } else {
-            $imagen = file_get_contents($request->file('icono')->path());
-
-            $icono = array();
-            foreach (str_split($imagen) as $char) {
-                array_push($icono, ord($char));
-            }
-        }
-         $this->guardarAlergeno($nombre, $icono);
-               
+        if($imagen == null){
+            $nombreImg="SIN IMAGEN";
+        }else{
+            $imgUrl = $imagen->store('public/alergenos');
+            $nombreImg = basename($imgUrl);
+        }        
+         $this->guardarAlergeno($nombre, $nombreImg);
+                         
         return redirect('/alergenos');
         
     }
