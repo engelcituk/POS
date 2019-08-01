@@ -474,12 +474,12 @@ $("#ocupanteModal").change(function(){
                                     }
                                 } 
                             }
-                            var dataImg = 'data:image/png;base64,';                       
-                            var imgProducto = imagen;
-                            var imgBase64 = dataImg+imgProducto;
+                            // var dataImg = 'data:image/png;base64,';                       
+                            var imgProducto =imagen;
+                            var imgFinal= "/storage/productos/"+imgProducto;
 
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
-                            resultadoImg = ((imgProducto == "AA==") || (imgProducto == null)) ? imgDefault : imgBase64;                                                                             
+                            resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;                                                                             
                             // console.log("sus Alergenos",alergenosPOk);
                            listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
                         }

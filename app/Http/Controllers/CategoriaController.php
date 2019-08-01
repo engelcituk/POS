@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\Storage;
 use Alert;
  
 class CategoriaController extends Controller
@@ -56,30 +57,25 @@ class CategoriaController extends Controller
         $imagen = $request->file('imagen');
 
         if ($imagen == null) {
-            $icono = array();
-            $imagen = "SIN IMAGEN";
-            $icono = $imagen;
+            $nombreImg = "SIN IMAGEN";
         } else {
-            $imagen = file_get_contents($request->file('imagen')->path());
-
-            $icono = array();
-            foreach (str_split($imagen) as $char) {
-                array_push($icono, ord($char));
-            }
+            $imgUrl = $imagen->store('public/categorias');
+            $nombreImg = basename($imgUrl);
         }
+
         // dd( $icono);
-        $this->guardarCategoria($nombreCategoria, $idUsuario, $orden, $icono);
+        $this->guardarCategoria($nombreCategoria, $idUsuario, $orden, $nombreImg);
 
         return redirect('/categorias');
     }
-    public function guardarCategoria($nombreCategoria, $idUsuario, $orden, $icono){
+    public function guardarCategoria($nombreCategoria, $idUsuario, $orden, $nombreImg){
 
         $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddCategoria', [
             'form_params' => [
                 'name' => $nombreCategoria,
                 "idUsuarioAlta" => $idUsuario,
                 'orden' => $orden,
-                "imagen" => $icono
+                "imagen" =>$nombreImg
             ]
         ]);
         return $respuesta;
@@ -121,31 +117,33 @@ class CategoriaController extends Controller
         $orden = $request->get('orden');
         $imagen = $request->file('imagen');
 
-        if ($imagen == null) {
-            $icono = array();
-            $imagen = "SIN IMAGEN";
-            $icono = $imagen;
-        } else {
-            $imagen = file_get_contents($request->file('imagen')->path());
+        $nombreImgApi = $request->get('imagenValor');
 
-            $icono = array();
-            foreach (str_split($imagen) as $char) {
-                array_push($icono, ord($char));
-            }
+        if ($imagen == null) {
+            $nombreImg = $nombreImgApi;
+        } else {
+            $rutaImg = "/storage/categorias/" . $nombreImgApi;
+
+            $imgUrlBorrar = str_replace('storage', 'public', $rutaImg);
+
+            Storage::delete($imgUrlBorrar);
+
+            $imgUrl = $imagen->store('public/categorias');
+            $nombreImg = basename($imgUrl);
         }
         // dd( $icono);     
-        $this-> actualizarCategoria($idCategoria, $nombreCategoria, $idUsuario, $orden, $icono);
+        $this-> actualizarCategoria($idCategoria, $nombreCategoria, $idUsuario, $orden, $nombreImg);
       
         return redirect('/categorias');
     }
-    public function actualizarCategoria($idCategoria,$nombreCategoria,$idUsuario,$orden, $icono){
+    public function actualizarCategoria($idCategoria,$nombreCategoria,$idUsuario,$orden, $nombreImg){
 
         $respuesta = $this->realizarPeticion('POST', $this->urlBase . "UpdateCategoria/{$idCategoria}", [
             'form_params' => [
                 'name' => $nombreCategoria,
                 "idUsuarioAlta"=> $idUsuario,
                 'orden' => $orden,
-                "imagen"=> $icono
+                "imagen"=> $nombreImg
             ]
         ]);
 

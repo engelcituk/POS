@@ -2,12 +2,12 @@
 function fileValidation(){
     var fileInput = document.getElementById('file');
     var filePath = fileInput.value;
-    var allowedExtensions = /(.png)$/i;
+    var allowedExtensions = /(.jpg|.jpeg|.png|.gif)$/i;
 
     if(!allowedExtensions.exec(filePath)){
         if (fileInput.value != ''){
             $.notify({	
-                message: '<i class="fas fa-sun"></i><strong>Nota:</strong> No se ha podigo cargar la imagen:'+filePath+', favor de seleccionar solo formato:<trong>png</strong>' 
+                message: '<i class="fas fa-sun"></i><strong>Nota:</strong> No se ha podigo cargar la imagen:'+filePath+', favor de seleccionar solo formatos para :<trong> IMAGENES</strong>' 
                 },{	
                     type: 'danger',
                     delay: 5000

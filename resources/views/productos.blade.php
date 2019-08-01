@@ -28,7 +28,7 @@
                                         {{-- <th>fechaAlta</th> --}}
                                         <th>propina</th>
                                         <th>Complemento</th>
-                                        <th>Temporada</th>
+                                        <th>Precio Manual</th>
                                         <th>Estado</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>

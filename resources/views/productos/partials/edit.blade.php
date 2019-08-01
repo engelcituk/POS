@@ -6,12 +6,11 @@
         <form method="POST" action="{{ route('productos.actualizar')}}" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-12">                                     
+                    
                     @php
                         $imgProducto =$producto->imagen;
-                        $img =asset('img/faces/defaultProducto.png'); //Esto es para la imagen por default
-                        $dataimg = "data:image/png;base64,";                       
-                        $imgconfoto = $dataimg.$imgProducto;                                        
-                        $resultadoImg = (($imgProducto == "AA==") || ($imgProducto == NULL)) ? $img : $imgconfoto;    
+                        $imgDefault=asset('img/faces/defaultProducto.png'); //Esto es para la imagen por default                    
+                        $resultadoImg = (($imgProducto == "SIN IMAGEN") || ($imgProducto == NULL)) ? $imgDefault : "/storage/productos/".$imgProducto;    
                     @endphp
                     <div class="row">
                         <div class="card card-profile">
@@ -31,6 +30,7 @@
                             </div>
                             @csrf
                             <input id="name" type="hidden" class="form-control" name="id" value="{{$producto->id}}" required>
+                            <input id="nombreImg" class="form-control hidden" name="nombreImg" value="{{$producto->imagen}}">
                             <div class="row">
                                 <div class="card-content">                                                                     
                                     <div class="row">
@@ -87,10 +87,21 @@
                                                 <i class="fas fa-file-signature"></i>
                                             </span>
                                             <div class="form-group">
+                                                @php
+                                                    $valorTipoPropina=$producto->tipoPropina;
+                                                    if($valorTipoPropina==0){
+                                                        $texto="Sin Propina";
+                                                    }elseif ($valorTipoPropina==1) {
+                                                       $texto="Porcentaje";
+                                                    }elseif ($valorTipoPropina==2) {
+                                                       $texto="Dinero";
+                                                    }
+                                                @endphp
                                                 <select class="form-control" name="tipoPropina" required>
-                                                    <option value="{{$producto->tipoPropina}}">Tipo propina </option>                    
+                                                <option value="{{$producto->tipoPropina}}">{{$texto}}</option>                    
+                                                        <option value="0">Sin propina</option>
                                                         <option value="1">Porcentaje</option>
-                                                        <option value="2">Dinero</option>         
+                                                        <option value="2">Dinero</option>        
                                                     </optgroup>                                        
                                                 </select>
                                             </div>
@@ -135,8 +146,8 @@
                                                 @php
                                                 $estado= $producto->propina;//para obtener si tiene propina
                                                 $radios = ($estado == 1) ?
-                                                "<label><input type='radio' name='propina' value='True' checked>Activado</label>
-                                                <label><input type='radio' name='propina' value='False'>Desactivado</label>" :
+                                                "<label><input type='radio' name='propina' value='True' checked>SI</label>
+                                                <label><input type='radio' name='propina' value='False'>NO</label>" :
                                                 "<label><input type='radio' name='propina' value='True'>a</label>
                                                 <label><input type='radio' name='propina' value='False' checked>d</label>";
                                                 echo $radios;
@@ -147,15 +158,15 @@
                                     </div>                               
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            Complemento
+                                           Es complemento
                                             <div class="radio">
                                                 @php
                                                 $estado= $producto->complemento;//para obtener si tiene complemento
                                                 $radios = ($estado == 1) ?
-                                                "<label><input type='radio' name='complemento' value='True' checked>Activado</label>
-                                                <label><input type='radio' name='complemento' value='False'>Desactivado</label>" :
-                                                "<label><input type='radio' name='complemento' value='True'>Activado</label>
-                                                <label><input type='radio' name='complemento' value='False' checked>Desactivado</label>";
+                                                "<label><input type='radio' name='complemento' value='True' checked>Si</label>
+                                                <label><input type='radio' name='complemento' value='False'>No</label>" :
+                                                "<label><input type='radio' name='complemento' value='True'>Si</label>
+                                                <label><input type='radio' name='complemento' value='False' checked>No</label>";
                                                 echo $radios;
                                                 @endphp
                                             </div>
@@ -164,15 +175,15 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            Temporada
+                                            Con precio manual
                                             <div class="radio">
                                                 @php
                                                 $temporada= $producto->temporada;//para obtener si tiene status
                                                 $radios = ($temporada == 1) ?
-                                                "<label><input type='radio' name='temporada' value='True' checked>Activado</label>
-                                                <label><input type='radio' name='temporada' value='False'>Desactivado</label>" :
-                                                "<label><input type='radio' name='temporada' value='True'>Activado</label>
-                                                <label><input type='radio' name='temporada' value='False' checked>Desactivado</label>";
+                                                "<label><input type='radio' name='temporada' value='True' checked>Si</label>
+                                                <label><input type='radio' name='temporada' value='False'>No</label>" :
+                                                "<label><input type='radio' name='temporada' value='True'>Si</label>
+                                                <label><input type='radio' name='temporada' value='False' checked>No</label>";
                                                 echo $radios;
                                                 @endphp
                                             </div>
@@ -263,7 +274,7 @@
                             delay: 5000
                         });
                 }
-            });
+            }); 
         }else{
             $.ajax({
                 url: "{{ url('borrar') }}"+'/'+idProducto+'/'+idAlergeno,
@@ -298,7 +309,8 @@
     function fileValidation(){
     var fileInput = document.getElementById('imagenP');
     var filePath = fileInput.value;
-    var allowedExtensions = /(.png)$/i;
+    var allowedExtensions = /(.jpg|.jpeg|.png|.gif)$/i;
+    
 
     if(!allowedExtensions.exec(filePath)){
         if (fileInput.value != ''){

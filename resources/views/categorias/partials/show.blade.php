@@ -5,13 +5,11 @@
         <a href="{{ route('categorias.index') }}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-profile">
+                <div class="card card-profile">                    
                     @php
-                        $imgAlergeno =$categoria->imagen;
-                        $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default
-                        $dataimg = "data:image/png;base64,";                       
-                        $imgBase64 = $dataimg.$imgAlergeno;                                        
-                        $resultadoImg = (($imgAlergeno == "AA==") || ($imgAlergeno == NULL)) ? $imgDefault : $imgBase64;      
+                        $imgCategoria =$categoria->imagen;
+                        $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default                    
+                        $resultadoImg = (($imgCategoria == "SIN IMAGEN") || ($imgCategoria == NULL)) ? $imgDefault : "/storage/categorias/".$imgCategoria;    
                     @endphp
                     <div class="card-avatar">
                         <img class="img" src="{{$resultadoImg}}"/> 

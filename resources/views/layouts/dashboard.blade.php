@@ -387,7 +387,7 @@
 @if(request()->is('cartas'))
     @include('scriptjs/datatables/datatableCartas')
     @include('scriptjs/sweetalerts/sweetalertCarta')
-    @include('scriptjs/cartas') {{--  --}}
+    {{-- @include('scriptjs/cartas') --}}
 @endif
 @if(request()->is('categorias'))
     @include('scriptjs/datatables/datatableCategorias')
@@ -413,7 +413,7 @@
     @include('scriptjs/sweetalerts/sweetalertMenuCarta')
 @endif
 @if(request()->is('menuscartas/create'))
-    @include('scriptjs/cartas')
+    @include('scriptjs/menucartas')
 @endif
 
 @if(request()->is('metodospago'))

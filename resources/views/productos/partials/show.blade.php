@@ -5,12 +5,11 @@
         <a href="{{ route('productos.index') }}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
         <div class="row">
             <div class="col-md-12">
+                
                 @php
                     $imgProducto =$producto->imagen;
-                    $img =asset('img/faces/defaultProducto.png'); //Esto es para la imagen por default
-                    $dataimg = "data:image/png;base64,";                       
-                    $imgconfoto = $dataimg.$imgProducto;                                        
-                    $resultadoImg = (($imgProducto == "AA==") || ($imgProducto == NULL)) ? $img : $imgconfoto;    
+                    $imgDefault=asset('img/faces/defaultProducto.png'); //Esto es para la imagen por default                    
+                    $resultadoImg = (($imgProducto == "SIN IMAGEN") || ($imgProducto == NULL)) ? $imgDefault : "/storage/productos/".$imgProducto;    
                 @endphp
                 <div class="card card-profile">
                     <div class="card-avatar">

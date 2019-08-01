@@ -80,10 +80,11 @@
                                                 <i class="fas fa-file-signature"></i>
                                             </span>
                                             <div class="form-group">
-                                                <select class="form-control" name="tipoPropina" required>
-                                                    <option value="">Seleccione tipo de propina </option>                    
+                                                <select class="form-control" name="tipoPropina">
+                                                    <option value="">Seleccione tipo de propina </option>
+                                                        <option value="0">Sin propina</option>
                                                         <option value="1">Porcentaje</option>
-                                                        <option value="2">Dinero</option>         
+                                                        <option value="2">Dinero</option>          
                                                     </optgroup>                                        
                                                 </select>
                                             </div>
@@ -96,7 +97,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Monto propina</label>
-                                                <input id="montoPropina" type="number" class="form-control{{ $errors->has('montoPropina') ? ' is-invalid' : '' }}" name="montoPropina" required>
+                                                <input id="montoPropina" type="number" class="form-control{{ $errors->has('montoPropina') ? ' is-invalid' : '' }}" name="montoPropina">
                                                 @if ($errors->has('montoPropina'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('montoPropina') }}</strong>
@@ -161,7 +162,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-3"> 
                                             <div class="form-group">
                                                 Precio Manual
                                                 <div class="radio">
@@ -190,7 +191,7 @@
                                     </div>
                                     @if ($alergenos!="")
                                        <div class="row">
-                                        <h4>Seleccione un alergeno si el producto tiene alergenos</h4>
+                                        <h4>Seleccione un alergeno si el producto tiene alergenos (opcional)</h4>
                                         @foreach($alergenos as $alergeno)                                
                                             <div class="col-md-4">
                                                 <div class="checkbox checkbox-group required">                              
@@ -207,7 +208,7 @@
                                     
                                     @if ($modos!="")
                                         <div class="row">
-                                        <h4>Seleccione un modo y establece uno como principal</h4>
+                                        <h4>Seleccione un modo y establece uno como principal (opcional)</h4>
                                         <div class="col-md-12">                                            
                                         <table class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">                  
                                             <tr id="id1" class="tr_clone">

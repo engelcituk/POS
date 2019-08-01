@@ -42,12 +42,7 @@ class AlergenoController extends Controller
 
         return $alergenos;
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function create(){
         return view('alergenos.partials.create');
     }

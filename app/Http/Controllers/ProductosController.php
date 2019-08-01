@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Storage;
  
 class ProductosController extends Controller
 {
@@ -86,7 +87,7 @@ class ProductosController extends Controller
         if ($respuestaOk== 1) {
             $alergenosProducto = $alergenosProducto->objeto;
 
-            $idAlergenosColeccion = new Collection([]);
+            $idAlergenosColeccion = new Collection([]); 
             foreach ($alergenosProducto as $alergeno) {
                 $idAlergenosColeccion->push($alergeno->idAlergeno);
             }
@@ -132,19 +133,13 @@ class ProductosController extends Controller
         $status = $request->get('status');
         
         // dd( $imagen);
-       
+               
         if ($imagen == null) {
-            $array = array();
-            $imagen = "SIN IMAGEN";
-            $array=$imagen;
-        } else {            
-            $imagen = file_get_contents($request->file('imagen')->path());
-
-            $array = array();
-            foreach (str_split($imagen) as $char) {
-                array_push($array, ord($char));
-            }
-        }
+            $nombreImg = "SIN IMAGEN";
+        } else {
+            $imgUrl = $imagen->store('public/productos');
+            $nombreImg = basename($imgUrl);
+        }        
                        
         $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddProducto', [
             'form_params' => [
@@ -156,7 +151,7 @@ class ProductosController extends Controller
                 'montoPropina' => $montoPropina,
                 'precio' => $precio,
                 'complemento' => $complemento,
-                'imagen' => $array,
+                'imagen' => $nombreImg,
                 'status' => $status,
                 'temporada' => $temporada
 
@@ -246,19 +241,22 @@ class ProductosController extends Controller
         $complemento = $request->get('complemento');
         $status = $request->get('status');
         $temporada = $request->get('temporada');
-        // dd( $imagen);
-        if ($imagen == null) {
-            $array = array();
-            $imagen = "SIN IMAGEN";
-            $array = $imagen;
-        } else {
-            $imagen = file_get_contents($request->file('imagen')->path());
 
-            $array = array();
-            foreach (str_split($imagen) as $char) {
-                array_push($array, ord($char));
-            }
-        }
+        $nombreImgApi = $request->get('nombreImg');
+        // dd(request()->all());
+        if ($imagen == null) {
+            $nombreImg = $nombreImgApi;
+        } else {
+            $rutaImg = "/storage/productos/".$nombreImgApi;
+
+            $imgUrlBorrar = str_replace('storage', 'public', $rutaImg);
+
+            Storage::delete($imgUrlBorrar);
+
+            $imgUrl = $imagen->store('public/productos');
+            $nombreImg = basename($imgUrl);
+        }       
+    
         // dd( $array);
         $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateProducto/{$idProducto}", [
             'form_params' => [
@@ -270,12 +268,11 @@ class ProductosController extends Controller
                 'montoPropina' => $montoPropina,
                 'precio' => $precio,
                 'complemento' => $complemento,
-                'imagen' => $array,
+                'imagen' => $nombreImg,
                 'status' => $status,
                 'temporada' => $temporada,
             ]
-        ]);
-        
+        ]);        
         return redirect('/productos');
     }
 

@@ -108,9 +108,10 @@
                                     @foreach($categorias as $categoria)
                                         <div class="slideProductos">
                                             <div class="post-img">                                                
-                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})">                                  <img style="cursor: pointer;" src="data:image/png;base64,{{$categoria->imagen}}" />
+                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="/storage/categorias/{{$categoria->imagen}}" />
                                                     {{-- <span class="label label-default" categoria="{{$categoria->name}}">{{$categoria->name}}</span>          --}}
                                                 </div>
+                        
                                             </div>
                                             <p class="post-title bg-success">{{$categoria->name}}</p>
                                         </div>                

@@ -79,9 +79,4 @@
         </form>
     </div>
 </div>
-<script>
-    $(document).ready(function() {
-        $('.selectUsuarios').select2();
-    });
-</script>
 @endsection

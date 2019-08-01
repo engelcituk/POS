@@ -106,7 +106,7 @@ class OrdenController extends Controller
     //     if ($respuestaOk == 1) { 
     //         $subCategorias = $respuesta->objeto;
     //     }else{
-    //         $subCategorias = 0;
+    //         $subCategorias = 0; 
     //     }
 
     //     return $subCategorias;

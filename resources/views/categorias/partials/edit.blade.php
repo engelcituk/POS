@@ -7,15 +7,11 @@
             <div class="row">
                 <div class="col-md-12"> 
                     <div class="card card-profile">
-                        @php
-                            $imgAlergeno =$categoria->imagen;
-                            $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default
-                            $dataimg = "data:image/png;base64,";                       
-                            $imgBase64 = $dataimg.$imgAlergeno;                                        
-                            $resultadoImg = (($imgAlergeno == "AA==") || ($imgAlergeno == NULL)) ? $imgDefault : $imgBase64; 
-                            if($resultadoImg != $imgBase64){
-                                echo "no se asigno img";
-                            }   
+                        
+                         @php
+                            $imgCategoria =$categoria->imagen;
+                            $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default                    
+                            $resultadoImg = (($imgCategoria == "SIN IMAGEN") || ($imgCategoria == NULL)) ? $imgDefault : "/storage/categorias/".$imgCategoria;    
                         @endphp
                         <div class="card-avatar">
                                 <img class="img" src="{{$resultadoImg}}"/> 
@@ -23,6 +19,7 @@
                         @csrf                        
                         {{-- {{ method_field('PUT') }} --}}
                         <input id="name" type="hidden" class="form-control" name="id" value="{{$categoria->id}}" required>
+                        <input id="name"  class="form-control hidden" name="imagenValor" value="{{$categoria->imagen}}">
                         <div class="row">
                             <div class="card-content">
                                 <div class="col-md-4">
@@ -94,4 +91,36 @@
         </form>
     </div>
 </div>
+<script>
+      // validao img
+function fileValidation(){
+    var fileInput = document.getElementById('imagen');
+    var filePath = fileInput.value;
+    var allowedExtensions = /(.jpg|.jpeg|.png|.gif)$/i;
+    
+
+    if(!allowedExtensions.exec(filePath)){
+        if (fileInput.value != ''){
+            $.notify({	
+                message: '<i class="fas fa-sun"></i><strong>Nota:</strong> No se ha podigo cargar la imagen:'+filePath+', favor de seleccionar solo formatos para:<trong> IMAGENES</strong>' 
+                },{	
+                    type: 'danger',
+                    delay: 5000
+                });
+
+        }
+        fileInput.value = '';
+        return false;
+    }else{
+    //Image preview
+        if (fileInput.files && fileInput.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('imagePreview').innerHTML = '<img src="'+e.target.result+'"/>';
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+        }
+    }
+}
+</script>
 @endsection

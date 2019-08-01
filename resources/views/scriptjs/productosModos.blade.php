@@ -47,7 +47,7 @@ function seleccionarRadio(){
         seleccionarRadio();    
     });
 
-/*=====  END OF PARA QUE AL MENOS UN PERMISO ESTE SELECCIONADO  ======*/
+
 function productoModos(idProducto){
 // console.log("click");
 $("#idProductoModo").val(idProducto);
@@ -75,18 +75,7 @@ $("#idProductoModo").val(idProducto);
                     if((modosId.indexOf(parseInt($(this).val()))!=-1) ) {               
                         $(this).prop('checked', true);                                                
                     }	
-                });
-                // if(modosPrincipal[contador]==false){ 
-                // var contador=0; 
-                // $("input[name='principalRadio[]']").each( function () {                   
-                //     if(modosPrincipal[contador]==false ) {               
-                //         $(this).prop('checked', false);                                                
-                //     }else{
-                //     $(this).prop('checked', true); 
-                // }
-                //     contador++;	
-                // });
-                // radioModo
+                });                
             }else{
                 var mensaje=respuesta["mensaje"];
                 console.log("respuesta: ",mensaje);
