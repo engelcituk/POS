@@ -49,7 +49,7 @@
                                             <tr id="id1" class="clonarTr">
                                                 <td>
                                                     @if ($productos!="")
-                                                    <select class="form-control listaProductos" id="lstProductos1" name="idProducto[]" required >
+                                                    <select class="form-control listaProductos" id="lstProductos1" name="idProducto[]" required>
                                                         <option value="">Elija producto</option>
                                                                 @foreach($productos as $producto)
                                                                     <option precio="{{$producto->precio}}" value="{{$producto->id}}">{{$producto->nombreProducto}}</option>

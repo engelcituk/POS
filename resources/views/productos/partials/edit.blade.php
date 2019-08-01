@@ -89,17 +89,14 @@
                                             <div class="form-group">
                                                 @php
                                                     $valorTipoPropina=$producto->tipoPropina;
-                                                    if($valorTipoPropina==0){
-                                                        $texto="Sin Propina";
-                                                    }elseif ($valorTipoPropina==1) {
+                                                    if($valorTipoPropina==1){
                                                        $texto="Porcentaje";
-                                                    }elseif ($valorTipoPropina==2) {
+                                                   }elseif ($valorTipoPropina==2) {                                                    
                                                        $texto="Dinero";
                                                     }
                                                 @endphp
                                                 <select class="form-control" name="tipoPropina" required>
-                                                <option value="{{$producto->tipoPropina}}">{{$texto}}</option>                    
-                                                        <option value="0">Sin propina</option>
+                                                <option value="{{$producto->tipoPropina}}">{{$texto}}</option>                 
                                                         <option value="1">Porcentaje</option>
                                                         <option value="2">Dinero</option>        
                                                     </optgroup>                                        

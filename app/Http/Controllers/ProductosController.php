@@ -158,7 +158,7 @@ class ProductosController extends Controller
 
             ]
         ]);
-
+        // dd($respuesta);
         $datos = json_decode($respuesta);
         $respuestaObjeto = $datos->objeto;
 

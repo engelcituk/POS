@@ -81,8 +81,6 @@
                                             </span>
                                             <div class="form-group">
                                                 <select class="form-control" name="tipoPropina">
-                                                    <option value="">Seleccione tipo de propina </option>
-                                                        <option value="0">Sin propina</option>
                                                         <option value="1">Porcentaje</option>
                                                         <option value="2">Dinero</option>          
                                                     </optgroup>                                        
