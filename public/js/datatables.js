@@ -1,29 +1,29 @@
 $(document).ready(function() {   
-    $.fn.dataTableExt.sErrMode = 'throw'; 
+    // $.fn.dataTableExt.sErrMode = 'throw'; 
           
-    $('#historico').DataTable({
-        // ajax: "{{route('all/usuarios')}}",        
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Todos"]
-        ],
-        responsive: true,
-        language: {
-            sLengthMenu: "Mostrar _MENU_ registros",
-            search: "_INPUT_",
-            searchPlaceholder: "Buscar registros",
-            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
-            oPaginate: {
-                "sFirst": "Primero",
-                "sLast": "Último",
-                "sNext": "Siguiente",
-                "sPrevious": "Anterior"
-            }
-        }
+    // $('#historico').DataTable({
+    //     // ajax: "{{route('all/usuarios')}}",        
+    //     "pagingType": "full_numbers",
+    //     "lengthMenu": [
+    //         [10, 25, 50, -1],
+    //         [10, 25, 50, "Todos"]
+    //     ],
+    //     responsive: true,
+    //     language: {
+    //         sLengthMenu: "Mostrar _MENU_ registros",
+    //         search: "_INPUT_",
+    //         searchPlaceholder: "Buscar registros",
+    //         sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+    //         oPaginate: {
+    //             "sFirst": "Primero",
+    //             "sLast": "Último",
+    //             "sNext": "Siguiente",
+    //             "sPrevious": "Anterior"
+    //         }
+    //     }
         
-    });
-    $('.card .material-historico label').addClass('form-group');
+    // });
+    // $('.card .material-historico label').addClass('form-group');
       
     //para el datatable de hoteles
     $('#hoteles').DataTable({
@@ -138,7 +138,30 @@ $(document).ready(function() {
             }
         }
     });
-    $('.card .material-zonas label').addClass('form-group');
+    $('.card .material-centroP label').addClass('form-group');
+
+    //para el datatable de turno
+    $('#turnos').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    $('.card .material-turnos label').addClass('form-group');
 
     //para el datatable de zonas
     $('#zonas').DataTable({

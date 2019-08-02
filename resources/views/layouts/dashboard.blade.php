@@ -324,7 +324,10 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <!-- <script src="{{asset('js/demo.js')}}"></script> -->
 <!-- <script src="{{asset('js/init.js')}}"></script> -->
-<script src="{{asset('js/datatables.js')}}"></script>
+@if(request()->is('hoteles') || request()->is('rolesapi') || request()->is('users') || request()->is('restaurantes') || request()->is('impresoras') || request()->is('centrospreparacion') || request()->is('turnos') || request()->is('zonas') || request()->is('mesas') || request()->is('cartas') || request()->is('categorias') || request()->is('productos') || request()->is('menuscartas') || request()->is('metodospago') || request()->is('modos') || request()->is('alergenos')) 
+<script src="{{asset('js/datatables.js')}}"></script>   
+@endif
+
 <script src="{{asset('js/owl.carousel.min.js')}}"></script>
 
 
