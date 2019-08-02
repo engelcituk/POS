@@ -286,16 +286,31 @@ class ProductosController extends Controller
         return $respuesta;
     }
 
-    public function destroy($idProducto){        
+    public function destroy(Request $request, $idProducto){
+
+        $nombreImg = $request->get('nombreImagen');
+
         $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteProducto/{$idProducto}");
+
+        $datos = json_decode($respuesta);
+
+        $ok = $datos->ok;
+        //si respuesta de api es true borro en mi carpeta el archivo
+        if ($ok) {
+            $rutaImg = "/storage/productos/".$nombreImg;
+
+            $imgUrlBorrar = str_replace('storage', 'public', $rutaImg);
+
+            Storage::delete($imgUrlBorrar);
+        }
 
         return redirect('/productos');
     }
 
     public function destroyAlergeno($idProducto, $idAlergeno){
-
+                
         $respuesta = $this->realizarPeticion('POST', $this->urlBaseProductoAlergeno."DeleteProductoAlergeno/{$idProducto}/{$idAlergeno}");
-
+        
         return $respuesta;
     }
 

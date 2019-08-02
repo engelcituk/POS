@@ -64,7 +64,7 @@
                                                 <a href="{{ route('productos.show', $producto->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('productos.edit', $producto->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
                                                 <a onclick="productoModos({{$producto->id}})" class="btn btn-xs btn-success" data-toggle="modal" data-target="#myModalModos">M</a>
-                                                <a onclick="deleteProducto({{$producto->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                <a onclick="deleteProducto({{$producto->id}},'{{$producto->imagen}}')" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

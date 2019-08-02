@@ -103,7 +103,7 @@ class AlergenoController extends Controller
         
         $nombre = $request->get('name');
         $imagen = $request->file('icono');
-
+ 
         if($imagen == null){
             $nombreImg="SIN IMAGEN";
         }else{
@@ -139,9 +139,23 @@ class AlergenoController extends Controller
         return $respuesta;
     }
 
-    public function destroy($idAlergeno){
+    public function destroy(Request $request,$idAlergeno){
         
+        $nombreImg = $request->get('nombreImagen');
+
         $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteAlergeno/{$idAlergeno}");
+
+        $datos = json_decode($respuesta);
+
+        $ok = $datos->ok;
+        //si respuesta de api es true borro en mi carpeta el archivo
+        if($ok){
+            $rutaImg = "/storage/alergenos/".$nombreImg;
+
+            $imgUrlBorrar = str_replace('storage', 'public', $rutaImg);
+
+            Storage::delete($imgUrlBorrar);
+        }        
         return redirect('/alergenos');
     }
 }

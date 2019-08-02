@@ -1,6 +1,6 @@
 <script>
 //funcion con sweetalert para borrar una subcategoria
-    function deleteCategoria(id) {
+    function deleteCategoria(id, nombreImagen) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         swal({
             title: '¿Seguro de borrar esta categoria?',
@@ -17,6 +17,7 @@
                 type: "POST",
                 data: {
                     '_method': 'POST',
+                    'nombreImagen': nombreImagen,
                     '_token': csrf_token
                 },
                 success: function(data) {

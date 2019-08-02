@@ -54,7 +54,7 @@
                                             <td>
                                                 <a href="{{ route('alergenos.show', $alergeno->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('alergenos.edit', $alergeno->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteAlergeno({{$alergeno->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                <a imgNombre="{{$alergeno->icono}}" onclick="deleteAlergeno({{$alergeno->id}},'{{$alergeno->icono}}')" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

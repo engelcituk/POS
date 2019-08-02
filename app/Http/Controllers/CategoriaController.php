@@ -150,10 +150,26 @@ class CategoriaController extends Controller
         return $respuesta;
     }
 
-    public function destroy($idCategoria){
+    public function destroy(Request $request, $idCategoria){
         
+        $nombreImg = $request->get('nombreImagen');
+
         $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteCategoria/{$idCategoria}");
 
+        $datos = json_decode($respuesta);
+
+        $ok = $datos->ok;
+        //si respuesta de api es true borro en mi carpeta el archivo
+        if ($ok) {
+            $rutaImg = "/storage/categorias/".$nombreImg;
+
+            $imgUrlBorrar = str_replace('storage', 'public', $rutaImg);
+
+            Storage::delete($imgUrlBorrar);
+        }
+
         return redirect('/categorias');
+
+
     }
 }

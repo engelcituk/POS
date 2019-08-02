@@ -38,7 +38,7 @@
                                             <td>
                                                 <a href="{{ route('categorias.show', $categoria->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('categorias.edit', $categoria->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteCategoria({{$categoria->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                <a onclick="deleteCategoria({{$categoria->id}},'{{$categoria->imagen}}')" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

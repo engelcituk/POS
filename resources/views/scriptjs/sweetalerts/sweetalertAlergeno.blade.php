@@ -1,7 +1,9 @@
 <script>    
    //funcion con sweetalert para borrar un alergeno
-    function deleteAlergeno(id) {
+    function deleteAlergeno(id,nombreImagen) {
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        // var nombreImagen=$(this).attr("imgNombre");         
+        // console.log("img"+nombreImagen);      
         swal({
             title: '¿Seguro de borrar este alergeno?',
             text: "¡No podrás revertir esto!",
@@ -17,6 +19,7 @@
                 type: "POST",
                 data: {
                     '_method': 'POST',
+                    'nombreImagen': nombreImagen,
                     '_token': csrf_token
                 },
                 success: function(data) {

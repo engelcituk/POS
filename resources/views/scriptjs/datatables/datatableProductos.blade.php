@@ -86,20 +86,20 @@
 //         }
 //     });
 // });
- $(document).ready(function() {
-        var dataTable = $('#productos').DataTable( {
-            "processing": true,
-            "serverSide": true,
-            "ajax":{
-                url :"{{ route('all.productos') }}", // json datasource
-                type: "get",  // method  , by default get
-                error: function(){  // error handling
-                    $(".employee-grid-error").html("");
-                    $("#productos").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
-                    $("#productos_processing").css("display","none");
+//  $(document).ready(function() {
+//         var dataTable = $('#productos').DataTable( {
+//             "processing": true,
+//             "serverSide": true,
+//             "ajax":{
+//                 url :"{{ route('all.productos') }}", // json datasource
+//                 type: "get",  // method  , by default get
+//                 error: function(){  // error handling
+//                     $(".employee-grid-error").html("");
+//                     $("#productos").append('<tbody class="employee-grid-error"><tr><th colspan="3">No data found in the server</th></tr></tbody>');
+//                     $("#productos_processing").css("display","none");
  
-                }
-            }
-        } );
-    } );
+//                 }
+//             }
+//         } );
+//     } );
 </script>

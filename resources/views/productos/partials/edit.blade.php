@@ -145,8 +145,8 @@
                                                 $radios = ($estado == 1) ?
                                                 "<label><input type='radio' name='propina' value='True' checked>SI</label>
                                                 <label><input type='radio' name='propina' value='False'>NO</label>" :
-                                                "<label><input type='radio' name='propina' value='True'>a</label>
-                                                <label><input type='radio' name='propina' value='False' checked>d</label>";
+                                                "<label><input type='radio' name='propina' value='True'>SI</label>
+                                                <label><input type='radio' name='propina' value='False' checked>No</label>";
                                                 echo $radios;
                                                 @endphp
                                             </div>
@@ -155,7 +155,7 @@
                                     </div>                               
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                           Es complemento
+                                           Complemento
                                             <div class="radio">
                                                 @php
                                                 $estado= $producto->complemento;//para obtener si tiene complemento
@@ -172,7 +172,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            Con precio manual
+                                            Precio manual
                                             <div class="radio">
                                                 @php
                                                 $temporada= $producto->temporada;//para obtener si tiene status

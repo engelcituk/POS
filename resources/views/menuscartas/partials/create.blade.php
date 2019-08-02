@@ -96,4 +96,8 @@
         </form>
     </div>
 </div> 
+<script>    
+
+// $('.listaProductos').selectize();
+</script>
 @endsection
