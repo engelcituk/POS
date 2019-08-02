@@ -31,24 +31,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($users as $rol)  
+                                    @foreach($users as $usuario)  
                                     @php
-                                        $fecha = substr($rol->fechaAlta, 0,10);
+                                        $fecha = substr($usuario->fechaAlta, 0,10);
 
-                                        $color = $rol->status==1 ? 'success' : 'warning' ;
-                                        $estado = $rol->status==1 ? 'Activo' : 'Desactivado' ;
+                                        $color = $usuario->status==1 ? 'success' : 'warning' ;
+                                        $estado = $usuario->status==1 ? 'Activo' : 'Desactivado' ;
                                     @endphp                                                     
                                         <tr>
-                                            <td>{{$rol->id}}</td>
-                                            <td>{{$rol->name}}</td>                                           
-                                            <td>{{$rol->usuario}}</td>                                                         
+                                            <td>{{$usuario->id}}</td>
+                                            <td>{{$usuario->name}}</td>                                           
+                                            <td>{{$usuario->usuario}}</td>                                                         
                                             <td>{{$fecha}}</td> 
                                             <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>                      
                                             <td>
-                                                <a href="{{ route('users.show', $rol->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('users.edit', $rol->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
-                                                <a onclick="showPermisosModal({{$rol->id}})" class="btn btn-xs btn-primary" ><i class="fas fa-key"></i></a>
-                                                <a onclick="deleteRol({{$rol->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                <a href="{{ route('users.show', $usuario->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('users.edit', $usuario->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
+                                                <a onclick="showPermisosModal({{$usuario->id}})" class="btn btn-xs btn-primary" ><i class="fas fa-key"></i></a>
+                                                <a onclick="deleteRol({{$usuario->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

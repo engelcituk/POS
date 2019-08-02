@@ -23,7 +23,7 @@
                     <tr>
                         <td>
                             <div class="checkbox checkbox-group required">                              
-                                <label class="labelCheckbox">
+                                <label class="">
                                    <strong>{{$permiso->name}}</strong> 
                                 <input type="checkbox" id="chekPermiso{{$permiso->id}}" name="permiso[]" value="{{$permiso->id}}">
                                 </label>                                            
@@ -68,7 +68,7 @@
         @endif                                                                               
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-warning pull-left" data-dismiss="modal"> <i class="fas fa-undo"></i> Descartar</button>     
+        <button type="button" class="btn btn-warning pull-right" data-dismiss="modal"> <i class="fas fa-undo"></i> Salir</button>     
       </div>
     </div>
   </div>

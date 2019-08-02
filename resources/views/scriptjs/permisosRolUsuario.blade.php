@@ -1,10 +1,56 @@
 <script>
 
-    function showPermisosModal(idRol) {
-        console.log("su id",idRol);
+    function showPermisosModal(idUsuario) {
         $('#modalShowUserPermisos').modal({backdrop: 'static', keyboard: false });
         
+        console.log("su id",idUsuario);
+
+        marcarPermisosUsuario(idUsuario);
+        
     }
+    function marcarPermisosUsuario(idUsuario){
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        $.ajax({
+            url: "{{url('users/getpermisos')}}"+'/'+idUsuario,
+            type: "GET",
+            data: {
+                '_method': 'GET',                        
+                '_token': csrf_token
+            },
+            success: function(respuesta) { 
+                var respuesta = JSON.parse(respuesta); 
+                var ok = respuesta["ok"];                
+                if(ok){
+                    var objeto =respuesta["objeto"];
+                    idPermisoLst = [];
+                    for (i = 0; i < objeto.length; i++) {
+                        var idPermiso=objeto[i]["idPermiso"];
+                        var crear=objeto[i]["crear"];
+                        var leer=objeto[i]["leer"];
+                        var actualizar=objeto[i]["actualizar"];
+                        var borrar=objeto[i]["borrar"];
+                        // console.log("crear",crear);
+                        idPermisoLst.push(idPermiso);//creo un array con los idPermisos del usuario
+
+                        $("#crear"+idPermiso).prop('checked', crear);//marca los valores booleanos que se me trae del usuario
+                        $("#leer"+idPermiso).prop('checked', leer);
+                        $("#actualizar"+idPermiso).prop('checked', actualizar);
+                        $("#borrar"+idPermiso).prop('checked', borrar);
+                    }
+                    console.log("objeto",objeto);
+                    $("input[name='permiso[]']").each( function () {                       
+                        if((idPermisoLst.indexOf(parseInt($(this).val()))!=-1)){
+                           $(this).prop('checked', true);                            
+                        }
+                    });
+                }                
+            }
+        }); 
+    }
+    $('#modalShowUserPermisos').on('hidden.bs.modal', function (e) {
+         $(this).find('form')[0].reset();
+    });
+    
     function addQuitarPermisoUsuario(idUsuario,idPermiso){
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         var valorCheck=$("#chekPermiso"+idPermiso).prop("checked");
