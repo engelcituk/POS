@@ -133,7 +133,8 @@ class ProductosController extends Controller
         $status = $request->get('status');
         
         // dd( $imagen);
-               
+       $mntPropina = ($montoPropina == NULL) ? 0 : $montoPropina;    
+
         if ($imagen == null) {
             $nombreImg = "SIN IMAGEN";
         } else {
@@ -148,7 +149,7 @@ class ProductosController extends Controller
                 'nombreProducto' => $nombreProducto,
                 'propina' => $propina,
                 'tipoPropina' => $tipoPropina,
-                'montoPropina' => $montoPropina,
+                'montoPropina' => $mntPropina,
                 'precio' => $precio,
                 'complemento' => $complemento,
                 'imagen' => $nombreImg,
@@ -244,6 +245,8 @@ class ProductosController extends Controller
 
         $nombreImgApi = $request->get('nombreImg');
         // dd(request()->all());
+        $mntPropina = ($montoPropina == NULL) ? 0 : $montoPropina;    
+
         if ($imagen == null) {
             $nombreImg = $nombreImgApi;
         } else {
@@ -265,7 +268,7 @@ class ProductosController extends Controller
                 'nombreProducto' => $nombreProducto,
                 'propina' => $propina,
                 'tipoPropina' => $tipoPropina,
-                'montoPropina' => $montoPropina,
+                'montoPropina' => $mntPropina,
                 'precio' => $precio,
                 'complemento' => $complemento,
                 'imagen' => $nombreImg,

@@ -3,7 +3,7 @@
 <div class="content">
     <div class="container-fluid">
         <a href="{{ route('menuscartas.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <form method="POST" action="{{ route('menuscartas.store')}}">
+        <form method="POST" action="{{ route('menuscartas.store')}}" id='monsters'>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-profile">
@@ -35,8 +35,9 @@
                                     <div class="well well-sm"><strong>No repita productos al ir generando la lista para el menú</strong></div>
                                 </div>                                                                
                             <div class="panel-body">
+                                	
                                 <div class="viewcontent">                                
-                                    <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                                 <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                         <thead>
                                             <tr class="info">
                                                 <th><strong>Producto</strong></th>
@@ -49,12 +50,15 @@
                                             <tr id="id1" class="clonarTr">
                                                 <td>
                                                     @if ($productos!="")
-                                                    <select class="form-control listaProductos" id="lstProductos1" name="idProducto[]" required>
-                                                        <option value="">Elija producto</option>
-                                                                @foreach($productos as $producto)
-                                                                    <option precio="{{$producto->precio}}" value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
-                                                                @endforeach
-                                                    </select>  
+                                                    <div class="lista ">
+                                                        <select class="form-control listaProductos combobox" id="lstProductos1" name="idProducto[]" required>
+                                                            <option value="">Elija producto</option>
+                                                                    @foreach($productos as $producto)
+                                                                        <option precio="{{$producto->precio}}" value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
+                                                                    @endforeach
+                                                        </select>
+                                                    </div>
+                                                      
                                                     @else
                                                         <select class="form-control" id="lstProductos1" name="idProducto[]" required>
                                                             <option value="">Aun no hay productos</option>                           
@@ -83,8 +87,11 @@
                                                     <a class='btn btn-danger btn-sm clonTr_remove'> <i class="fas fa-remove"></i></a>
                                                 </td>
                                             </tr>
-                                    </table>    
-                                </div>                                                  
+                                    </table>     
+                                    
+                                
+                                </div> 
+                                                                                 
                                 <button type="submit" class="btn btn-primary pull-left"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                                                                
                                 </div>                                

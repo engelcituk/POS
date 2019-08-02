@@ -82,7 +82,8 @@ function getMesasPorZona(idZona) {
                     for(i =0;  i<objeto.length; i++){
                         var idMesa=objeto[i]["id"];
                         // var idZona=objeto[i]["idZona"];
-                        // var nombre=objeto[i]["name"];                        
+                        // var nombre=objeto[i]["name"]; 
+                        var nombreMesa=objeto[i]["name"];                       
                         var estado=objeto[i]["status"];
                         var cuenta=objeto[i]["cuenta"];
                                                 
@@ -102,7 +103,7 @@ function getMesasPorZona(idZona) {
                             room= "Sin Hab";
                             total= "0";
                         }                       
-                        listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><br><div class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+idMesa+"</span><br>"+idCuenta+"<br>"+nombre+"<br> "+room+"<br>"+total+"</div></a></li>";
+                        listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><br><div class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+nombreMesa+"</span><br>"+idCuenta+"<br>"+nombre+"<br> "+room+"<br>"+total+"</div></a></li>";
                     }
                     listaMesas+="";                     
                     $("#zonaListaMesas"+idZona).html(listaMesas);

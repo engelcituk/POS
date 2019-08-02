@@ -6,6 +6,7 @@
 
 var regex = /^(.*)(\d)+$/i;
     var cindex = 1;
+	// selectizeme();
     $(document).on("click", ".addCloneTr", function(){
     // $("input.clonarTr_add").on('click', function() {
         var $tr    = $(this).closest('.clonarTr');
@@ -22,7 +23,7 @@ var regex = /^(.*)(\d)+$/i;
                     this.id = match[1] + (cindex);
                 }
         });
-        $tr.after($clone);
+        $tr.after($clone);         
     });
     $(document).on("click", ".clonTr_remove", function(){
         var id= $(this).closest("tr").attr('id');
@@ -39,5 +40,6 @@ var regex = /^(.*)(\d)+$/i;
         var precio= $('option:selected',this).attr('precio');
         $("#precio"+id).val(precio); //le pongo el precio en el campo correspondiente        
     });
+
     
 </script>
