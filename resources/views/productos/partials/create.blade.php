@@ -79,7 +79,8 @@
                                             <span class="input-group-addon">
                                                 <i class="fas fa-file-signature"></i>
                                             </span>
-                                            <div class="form-group">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Tipo propina</label>
                                                 <select class="form-control" name="tipoPropina">
                                                         <option value="1">Porcentaje</option>
                                                         <option value="2">Dinero</option>          

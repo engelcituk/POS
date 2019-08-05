@@ -37,7 +37,7 @@
                         $("#actualizar"+idPermiso).prop('checked', actualizar);
                         $("#borrar"+idPermiso).prop('checked', borrar);
                     }
-                    console.log("objeto",objeto);
+                    // console.log("objeto",objeto);
                     $("input[name='permiso[]']").each( function () {                       
                         if((idPermisoLst.indexOf(parseInt($(this).val()))!=-1)){
                            $(this).prop('checked', true);                            

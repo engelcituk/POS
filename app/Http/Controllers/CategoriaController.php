@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Image;
 use Alert;
  
 class CategoriaController extends Controller
@@ -56,11 +57,25 @@ class CategoriaController extends Controller
         $orden = $request->get('orden');
         $imagen = $request->file('imagen');
 
+        //Creamos una instancia de la libreria instalada   
+        // $imagen = Image::make(\Input::file('imagen'));
+        // Cambiar de tamaño
+        // $imagen->resize(400, 400);
+
         if ($imagen == null) {
             $nombreImg = "SIN IMAGEN";
         } else {
-            $imgUrl = $imagen->store('public/categorias');
-            $nombreImg = basename($imgUrl);
+            $imgUrl = $imagen->store('public/categorias');//guardo la img
+            $nombreImg = basename($imgUrl); //obtengo su nombre el que se guarda en la db          
+            $image = Image::make(Storage::get($imgUrl)); //obtengo la img
+            
+            $image->resize(400, 300);
+            // $image->resize(400, 300, function ($constraint) { //le modifco las medidas
+            //     $constraint->aspectRatio();
+            //     $constraint->upsize();
+            // });
+
+            Storage::put($imgUrl, (string) $image->encode('jpg', 50)); //reemplazo la imagen anterior.
         }
 
         // dd( $icono);
@@ -130,6 +145,16 @@ class CategoriaController extends Controller
 
             $imgUrl = $imagen->store('public/categorias');
             $nombreImg = basename($imgUrl);
+            //modifico las dimensiones de la img agregada
+            $image = Image::make(Storage::get($imgUrl)); //obtengo la img
+            $image->resize(400, 300);
+            // $image->resize(400, 300, function ($constraint) { //le modifco las medidas
+            //     $constraint->aspectRatio();
+            //     $constraint->upsize();
+            // });
+
+            Storage::put($imgUrl, (string) $image->encode('jpg', 50)); //reemplazo la imagen anterior.
+            
         }
         // dd( $icono);     
         $this-> actualizarCategoria($idCategoria, $nombreCategoria, $idUsuario, $orden, $nombreImg);

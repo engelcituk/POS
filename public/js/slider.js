@@ -2,7 +2,7 @@
 $(document).ready(function() {
     
     $("#sliderProductos").owlCarousel({
-        items : 5,
+        items : 4,
         itemsDesktop:[1199,3],
         itemsDesktopSmall:[980,4],
         itemsMobile : [600,3],

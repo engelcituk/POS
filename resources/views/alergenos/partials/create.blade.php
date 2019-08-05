@@ -29,7 +29,7 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="fas fa-file-image"></i>
+                                            {{-- <i class="fas fa-file-image"></i> --}}
                                         </span>
                                         <div class="form-group">
                                              {{-- <label for="sel1">Subir icono:</label> --}}

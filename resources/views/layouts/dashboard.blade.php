@@ -39,7 +39,7 @@
     {{-- <script src="{{asset('js/selectize.js')}}"></script> --}}
     <script src="{{asset('js/select2.min.js')}}"></script>
     <script src="{{asset('js/bootstrap-timepicker.js')}}"></script> 
-    <script src="{{asset('js/MultiCarousel.js')}}"></script>   
+    {{-- <script src="{{asset('js/MultiCarousel.js')}}"></script>    --}}
     <script src="{{asset('js/scriptSlider.js')}}"></script>
     <script src="{{asset('js/slider.js')}}"></script>
     

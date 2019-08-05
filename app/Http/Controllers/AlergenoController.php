@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Image;
 
 class AlergenoController extends Controller
 {
@@ -84,6 +85,11 @@ class AlergenoController extends Controller
 
             $imgUrl = $imagen->store('public/alergenos');
             $nombreImg = basename($imgUrl);
+
+            //modifico las dimensiones de la img agregada
+            $image = Image::make(Storage::get($imgUrl)); //obtengo la img
+            $image->resize(200, 100);            
+            Storage::put($imgUrl, (string) $image->encode('jpg', 50));//reemplazo la imagen anterior.
         }       
         // dd($imgUrlBorrar);
         $this->actualizarAlergeno($idAlergeno, $nombre, $nombreImg);
@@ -109,6 +115,10 @@ class AlergenoController extends Controller
         }else{
             $imgUrl = $imagen->store('public/alergenos');
             $nombreImg = basename($imgUrl);
+
+            $image = Image::make(Storage::get($imgUrl)); //obtengo la img
+            $image->resize(200, 100); //redimensiono
+            Storage::put($imgUrl, (string) $image->encode('jpg', 50)); //reemplazo la imagen anterior.
         }        
          $this->guardarAlergeno($nombre, $nombreImg);
                          
