@@ -2,9 +2,8 @@
 
     function showPermisosModal(idUsuario) {
         $('#modalShowUserPermisos').modal({backdrop: 'static', keyboard: false });
-        
-        console.log("su id",idUsuario);
-
+        $('#idUsuarioPermisoRolModal').val(idUsuario);
+        // console.log("su id",idUsuario);
         marcarPermisosUsuario(idUsuario);
         
     }
@@ -51,12 +50,12 @@
          $(this).find('form')[0].reset();
     });
     
-    function addQuitarPermisoUsuario(idUsuario,idPermiso){
+    function addQuitarPermisoUsuario(idPermiso){
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         var valorCheck=$("#chekPermiso"+idPermiso).prop("checked");
+        var idUsuario =  $('#idUsuarioPermisoRolModal').val();
         
-        if(valorCheck) {    
-            console.log("hiciste click "+valorCheck);
+        if(valorCheck){            
             $.ajax({
                     url: "{{url('users')}}"+'/'+idUsuario+'/'+idPermiso,
                     type: "POST",
@@ -64,144 +63,92 @@
                         '_method': 'POST',                        
                         '_token': csrf_token
                     },
-                    success: function(respuesta) {                                                                       
-                        $.notify({							
-                            message: '<i class="fas fa-sun"></i><strong>Nota:</strong> '+respuesta
-                            },{								
-                                type: 'info',
-                                delay: 4000
-                            });                    
-                    },
-                    error: function() {                         
-                    $.notify({							
-                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Error '+respuesta
-                        },{								
-                            type: 'danger',
-                            delay: 4000
-                        });                         
+                    success: function(respuesta) {
+                        var respuesta = JSON.parse(respuesta); 
+                        var ok = respuesta["ok"];
+                        var mensaje= respuesta["mensaje"];                                              
+                        if(ok){
+                            $.notify({							
+                                message: '<i class="fas fa-sun"></i><strong>Nota:</strong> '+mensaje
+                                },{								
+                                    type: 'info',
+                                    delay: 3000,
+                                    z_index: 2000,
+                            });
+                        }                                           
                     }
                 });           
-        }else{
-            console.log("hiciste click "+valorCheck);
+        }else{            
             $.ajax({
-                    url: "{{url('users')}}"+'/'+idUsuario+'/'+idPermiso,
+                    url: "{{url('users/destroy')}}"+'/'+idUsuario+'/'+idPermiso,
                     type: "POST",
                     data: {
-                        '_method': 'DELETE',                        
+                        '_method': 'POST',                        
                         '_token': csrf_token
                     },
-                    success: function(respuesta) {                                                                       
-                        $.notify({							
-                            message: '<i class="fas fa-sun"></i><strong>Nota:</strong> '+respuesta
+                    success: function(respuesta) { 
+                        var respuesta = JSON.parse(respuesta);
+                        var ok = respuesta["ok"];       
+                        var mensaje= respuesta["mensaje"];                                              
+
+                        if(ok){
+                            $.notify({							
+                                message: '<i class="fas fa-sun"></i><strong>Nota:</strong> '+mensaje
                             },{								
                                 type: 'warning',
-                                delay: 4000
-                            });                    
-                    },
-                    error: function() {                         
-                    $.notify({							
-                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Error '+respuesta
-                        },{								
-                            type: 'danger',
-                            delay: 4000
-                        });                         
-                    }
-                }); 
-        }
-
-    }
-    function addAccionesPermiso(idUsuario,idPermiso, accion){
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');        
-        var estado = $("#"+accion+idPermiso).attr("estado");
-        var campo = $("#"+accion+idPermiso).attr("name");
-        var valorCheck=$("#"+accion+idPermiso).prop("checked");//obtengo true o false
-        var divPermisos =$("#accionesPermisos");
-        var crear = $("#crear"+idPermiso).prop("checked");
-        var leer = $("#leer"+idPermiso).prop("checked");
-        var actualizar = $("#actualizar"+idPermiso).prop("checked");
-        var borrar = $("#borrar"+idPermiso).prop("checked");
-
-        opciones = [];
-        opciones[0] = [crear,leer,actualizar,borrar];
-        
-        if(estado=="activo"){
-            if(valorCheck) {                   
-                $.ajax({
-                    url: "{{url('users')}}"+'/'+idUsuario+'/'+idPermiso,
-                    type: "POST",
-                    data: {
-                        '_method': 'PUT',
-                        'opciones':opciones,
-                        '_token': csrf_token
-                    },
-                    success: function(respuesta) {                                                                       
-                        $.notify({							
-                            message: '<i class="fas fa-sun"></i><strong>Nota:</strong> '+respuesta
-                            },{								
-                                type: 'info',
-                                delay: 4000
-                            }); 
-                            // setTimeout(function(){
-                            //     window.location.reload(1); 
-                            // }, 6000);                   
-                    },
-                    error: function() {                         
-                    $.notify({							
-                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Error '+respuesta
-                        },{								
-                            type: 'danger',
-                            delay: 4000
-                        });
-                        // setTimeout(function(){
-                        //     window.location.reload(1); 
-                        // }, 6000); 
-                    }
-                });
-            }else{
-                // console.log("su valor "+valorCheck);
-                $.ajax({
-                    url: "{{url('users')}}"+'/'+idUsuario+'/'+idPermiso,
-                    type: "POST",
-                    data: {
-                        '_method': 'PUT',
-                        'opciones':opciones,
-                        '_token': csrf_token
-                    },
-                    success: function(respuesta) {                                          
-                        $.notify({							
-                            message: '<i class="fas fa-sun"></i><strong>Nota:</strong> '+respuesta
-                            },{								
-                                type: 'warning',
-                                delay: 4000
+                                delay: 3000,
+                                z_index: 2000,
                             });
-                        // setTimeout(function(){
-                        //     window.location.reload(1); 
-                        // }, 6000); 
-                    },
-                    error: function() {                    
-                    $.notify({							
-                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Error '+respuesta
-                        },{								
-                            type: 'danger',
-                            delay: 4000
-                        });
-                        // setTimeout(function(){
-                        //     window.location.reload(1); 
-                        // }, 6000); 
+                        }                    
                     }
-                });
-            }
-        }else{
-            if(valorCheck) {
-                swal({
-                    title: 'Oops...',
-                    text: '¡Marca el permiso para poder asignar acciones a este!',
-                    type: 'error',
-                    timer: '3000'
-                })
-                $("#"+accion+idPermiso).prop("checked",false); //no permito marcar el chckebox
-            }             
-        }
-        
+            }); 
     }
+}
+function addAccionesPermiso(idPermiso){
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');        
+    
+    var valorCheck=$("#chekPermiso"+idPermiso).prop("checked");//el checkbox del permiso
+    var idUsuario =  $('#idUsuarioPermisoRolModal').val();
+
+    var crear = $("#crear"+idPermiso).prop("checked");
+    var leer = $("#leer"+idPermiso).prop("checked");
+    var actualizar = $("#actualizar"+idPermiso).prop("checked");
+    var borrar = $("#borrar"+idPermiso).prop("checked");
+
+    opciones = [];
+    opciones[0] = [crear,leer,actualizar,borrar];
+    
+    if(valorCheck){       
+         $.ajax({
+            url: "{{url('users/update')}}"+'/'+idUsuario+'/'+idPermiso,
+            type: "POST",
+            data: {
+                '_method': 'POST',
+                'opciones':opciones,
+                '_token': csrf_token
+            },
+            success: function(respuesta) {
+                var respuesta = JSON.parse(respuesta);
+                // var ok = respuesta["ok"];       
+                // var mensaje= respuesta["mensaje"];                                                                                       
+
+                $.notify({							
+                    message: '<i class="fas fa-sun"></i><strong>Nota:</strong> '+respuesta
+                    },{								
+                        type: 'info',
+                        delay: 4000,
+                        z_index: 2000,
+                    });                                       
+            }
+        });
+    }else{        
+        $.notify({							
+            message: '<i class="fas fa-sun"></i><strong>Nota:</strong> Primero tiene que seleccionar el permiso para asignarle acciones a este'
+        },{								
+            type: 'warning',
+            delay: 3000,
+            z_index: 2000,
+        });
+    }                
+}
 </script>

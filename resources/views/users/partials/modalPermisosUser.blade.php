@@ -26,35 +26,35 @@
                             <div class="checkbox checkbox-group required">                              
                                 <label class="">
                                    {{-- <strong>{{$permiso->name}}</strong>  --}}
-                                <input type="checkbox" id="chekPermiso{{$permiso->id}}" name="permiso[]" value="{{$permiso->id}}">
+                                <input type="checkbox" id="chekPermiso{{$permiso->id}}" name="permiso[]" value="{{$permiso->id}}" onclick="addQuitarPermisoUsuario({{$permiso->id}})"
                                 </label>                                            
                             </div>
                         </td>
                         <td>
                             <div class="checkbox checkbox-group required">
                                 <label>
-                                <input type="checkbox" id="crear{{$permiso->id}}">
+                                <input type="checkbox" id="crear{{$permiso->id}}" onclick="addAccionesPermiso({{$permiso->id}})">
                                 </label>                                            
                             </div>
                         </td>                                           
                         <td>
                             <div class="checkbox checkbox-group required">
                                 <label>
-                                <input type="checkbox" id="leer{{$permiso->id}}">
+                                <input type="checkbox" id="leer{{$permiso->id}}" onclick="addAccionesPermiso({{$permiso->id}})">
                                 </label>                                            
                             </div>
                         </td>                                                         
                         <td>
                             <div class="checkbox checkbox-group required">
                                 <label>
-                                <input type="checkbox" id="actualizar{{$permiso->id}}">
+                                <input type="checkbox" id="actualizar{{$permiso->id}}" onclick="addAccionesPermiso({{$permiso->id}})">
                                 </label>                                            
                             </div>
                         </td> 
                         <td>
                             <div class="checkbox checkbox-group required">
                                 <label>
-                                <input type="checkbox" id="borrar{{$permiso->id}}">
+                                <input type="checkbox" id="borrar{{$permiso->id}}" onclick="addAccionesPermiso({{$permiso->id}})">
                                 </label>                                            
                             </div>
                         </td>                      
@@ -62,7 +62,7 @@
                 @endforeach
                 </tbody>
             </table>                                          
-            
+            <input type="number" id="idUsuarioPermisoRolModal" class="form-control hidden" readonly>
         </form>        
         @else
             No hay permisos registrados 

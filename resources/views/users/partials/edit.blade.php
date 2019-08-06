@@ -92,7 +92,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                    <h4><strong>Permisos del rol del usuario: </strong>{{$rolUsuario->name}}</h4> 
+                                    {{-- <h4><strong>Permisos del rol del usuario: </strong>{{$rolUsuario->name}}</h4> 
                                    
                                     @foreach($permisos as $permisoItem)
                                         @php                                             
@@ -144,7 +144,7 @@
                                                 </div>
                                             </div>                                            
                                         </div>                                       
-                                    @endforeach                                  
+                                    @endforeach                                   --}}
                                        
                                                                       
                                     <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>

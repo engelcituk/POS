@@ -48,7 +48,7 @@
                                                 <a href="{{ route('users.show', $usuario->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('users.edit', $usuario->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
                                                 <a onclick="showPermisosModal({{$usuario->id}})" class="btn btn-xs btn-primary" ><i class="fas fa-key"></i></a>
-                                                <a onclick="deleteRol({{$usuario->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                <a onclick="deleteUsuario({{$usuario->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
                                             </td>
                                         </tr>
                                     @endforeach

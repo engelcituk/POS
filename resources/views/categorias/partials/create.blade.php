@@ -52,7 +52,7 @@
                                 <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="fas fa-file-image"></i>
+                                            {{-- <i class="fas fa-file-image"></i> --}}
                                         </span>
                                         <div class="form-group">                                            
                                             <div class="fileinput fileinput-new text-center" data-provides="fileinput">

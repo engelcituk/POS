@@ -84,9 +84,9 @@ Route::get('users/{user}', 'ApiUsuarioController@show')->name('users.show');
 Route::get('users/{user}/edit', 'ApiUsuarioController@edit')->name('users.edit');
 Route::get('users/getpermisos/{user}', 'ApiUsuarioController@obtenerDatosPermisosUsuario')->name('users.getpermisos');
 Route::post('users/actualizar', 'ApiUsuarioController@actualizar')->name('users.actualizar');
-Route::put('users/{user}/{idpermiso}', 'ApiUsuarioController@guardarAccionPermisoUsuario')->name('users.storeaccionpermiso');
+Route::post('users/update/{user}/{idpermiso}', 'ApiUsuarioController@guardarAccionPermisoUsuario')->name('users.storeaccionpermiso');
 Route::post('users/{user}', 'ApiUsuarioController@destroy')->name('users.destroy');
-Route::post('users/{idUsuario}/{idpermiso}', 'ApiUsuarioController@destroyPermisoUsuario')->name('users.destroypermisouser');
+Route::post('users/destroy/{idUsuario}/{idpermiso}', 'ApiUsuarioController@destroyPermisoUsuario')->name('users.destroypermisouser');
 
 //rutas de menu configuracion-->PermisosRolesApi
 Route::get('all/permisos', 'PermisosController@AllPermisos')->name('all.permisos');

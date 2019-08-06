@@ -150,33 +150,7 @@ class ApiUsuarioController extends Controller
         } else {
             $idPermisosRolColeccion = new Collection([]);
         }
-        // $p=[];
-        // foreach ($permisosRol as $permisoRol) {
-        //     $p[] = [$permisoRol->idPermiso];
-        // }
-        // $crear = $p[0][0];
-        // // dd( $crear);
-        // $array = [];
-        // $contador=-1;
-        // foreach($permisos as $permiso) {
-        //     $contador++;
-        //     $array[]=['idPermiso'=> $permiso->id,'nombrePermiso'=>$permiso->name,'idUsuario'=> $usuario->id,'nUsuario' => $usuario->usuario, 'contador'=> $contador,'arP' => $crear];
-            
-        // }
-        // //$crear = $array[1];
-        // // dd( $array);
-        // //creo una colecion de los permisos del rol para enviarlos a la vista        
-        // $crearColeccion = new Collection([]);
-        // $leerColeccion = new Collection([]);
-        // $actualizarColeccion = new Collection([]);
-        // $borrarColeccion = new Collection([]);
-        // foreach ($usuarioPermisos as $usuarioPermiso) {
-        //     $crearColeccion->push($usuarioPermiso->crear);
-        //     $leerColeccion->push($usuarioPermiso->leer);
-        //     $actualizarColeccion->push($usuarioPermiso->actualizar);
-        //     $borrarColeccion->push($usuarioPermiso->borrar);
-        // }
-        //  dd( $borrarColeccion);
+       
         return view('users.partials.edit', compact('usuario', 'rolUsuario', 'roles','permisos', 'idPermisosRolColeccion', 'crearColeccion', 'leerColeccion', 'actualizarColeccion','borrarColeccion'));
     }
     public function obtenerUnUsuario($idUsuario){
@@ -199,32 +173,32 @@ class ApiUsuarioController extends Controller
                 'idPermiso' => $idPermiso
             ]
         ]);
-        $datos = json_decode($respuesta);
-        $respuesta = $datos->mensaje;
+        // $respuesta = json_decode($respuesta);
+        // $respuesta = $datos->mensaje;
         return $respuesta;
     }
     public function guardarAccionPermisoUsuario($idUsuario, $idPermiso, Request $request){
         $opciones= $request->get('opciones');//traigo el array de checks
                 
-        $crear= $opciones[0][0];
-        $leer = $opciones[0][1];
-        $actualizar = $opciones[0][2];
-        $borrar = $opciones[0][3];
+        // $crear= $opciones[0][0];
+        // $leer = $opciones[0][1];
+        // $actualizar = $opciones[0][2];
+        // $borrar = $opciones[0][3];
                
-        $respuesta = $this->realizarPeticion('PUT', $this->urlBasePermisosUsuario."UpdatePermisoUsuario/{$idUsuario}/{$idPermiso}", [
-            'form_params' => [
-                'idUsuario' => $idUsuario,
-                'idPermiso' => $idPermiso,
-                'crear' => $crear,//true o false
-                'leer' =>  $leer,
-                'actualizar' => $actualizar,
-                'borrar' =>  $borrar
-            ]
-        ]);
-        $datos = json_decode($respuesta);
-        $respuesta = $datos->mensaje; 
+        // $respuesta = $this->realizarPeticion('PUT', $this->urlBasePermisosUsuario."UpdatePermisoUsuario/{$idUsuario}/{$idPermiso}", [
+        //     'form_params' => [
+        //         'idUsuario' => $idUsuario,
+        //         'idPermiso' => $idPermiso,
+        //         'crear' => $crear,//true o false
+        //         'leer' =>  $leer,
+        //         'actualizar' => $actualizar,
+        //         'borrar' =>  $borrar
+        //     ]
+        // ]);
+        // $datos = json_decode($respuesta);
+        // $respuesta = $datos->mensaje; 
                                      
-        return $respuesta;
+        return $opciones;
     }
     public function actualizar(Request $request){//actualiza solo los datos del usuario
 
@@ -262,9 +236,9 @@ class ApiUsuarioController extends Controller
     public function destroyPermisoUsuario($idUsuario, $idPermiso){
 
         $respuesta = $this->realizarPeticion('POST', $this->urlBasePermisosUsuario."DeletePermisoUsuario/{$idUsuario}/{$idPermiso}");
-        $datos = json_decode($respuesta);
+        // $datos = json_decode($respuesta);
 
-        $respuesta = $datos->mensaje; 
+        // $respuesta = $datos->mensaje; 
         return $respuesta;        
     }
 }
