@@ -220,26 +220,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         {{-- <a class="navbar-brand" href="#"> PanelControl </a> --}}                        
-                    </div>
-                    @if(request()->is('ordenar'))        
-                        <div class="col-md-3">
-                            <nav aria-label="breadcrumb" role="navigation">
-                                <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="fas fa-map-marker-alt"></i>
-                                    </span>
-                                    <div class="form-group">                               
-                                        <select class="form-control" id="zonaElige">                             
-                                        @foreach($zonas as $zona)
-                                        <option value="zona{{$zona->id}}">{{$zona->name}}</option>
-                                        @endforeach                                
-                                        </select>
-                                    </div>
-                                </div>
-                            </nav>                                                
-                        </div>                                                                              
-                    @endif
-                    
+                    </div>                                        
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">                                                        
                             <li class="dropdown">

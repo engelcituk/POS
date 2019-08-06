@@ -49,7 +49,7 @@ class LoginController extends Controller
                 $request->session()->put('idPuntoVenta', $idPuntoVenta);
                 $request->session()->put('idCarta', $idCarta);
 
-                $request->session()->put('accesoOrden', 1);
+                $request->session()->put('accesoOrden', ["idPermiso" => 1, "crear" => true,"leer"=>true, "actualizar"=>true,"borrar"=>true]);
                 $request->session()->put('accesoHistorico', 1);
             }
             

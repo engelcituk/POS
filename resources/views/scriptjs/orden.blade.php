@@ -103,7 +103,7 @@ function getMesasPorZona(idZona) {
                             room= "Sin Hab";
                             total= "0";
                         }                       
-                        listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><br><div class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+nombreMesa+"</span><br>"+idCuenta+"<br>"+nombre+"<br> "+room+"<br>"+total+"</div></a></li>";
+                        listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"' nombreMesa='"+nombreMesa+"' cuentaMesa='"+idCuenta+"' clienteMesa='"+nombre+"' habMesa='"+room+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><br><div class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+nombreMesa+"</span><br>"+idCuenta+"<br>"+nombre+"<br> "+room+"<br>"+total+"</div></a></li>";
                     }
                     listaMesas+="";                     
                     $("#zonaListaMesas"+idZona).html(listaMesas);
@@ -127,10 +127,18 @@ function getMesasPorZona(idZona) {
 }
  function aperturaMesa(idMesa) {
     //muestro el modal pero no lo dejo salir al hacer click fuera de este
-    var estadoMesa = $("#mesaAbrir"+idMesa).attr("estadoMesa");//obtengo el id de la mesa
+    var estadoMesa = $("#mesaAbrir"+idMesa).attr("estadoMesa");//obtengo el estado de la mesa
+    
+    var cuentaMesa = $("#mesaAbrir"+idMesa).attr("cuentaMesa");//obtengo la cuenta que ocupa la mesa
+    var nombreMesa = $("#mesaAbrir"+idMesa).attr("nombreMesa");//obtengo el nombre de la mesa
+    var clienteMesa = $("#mesaAbrir"+idMesa).attr("clienteMesa");//obtengo cliente
+    var habitacionMesa = $("#mesaAbrir"+idMesa).attr("habMesa");//obtengo la hab.
+
     $('#idMesaModal').val(idMesa);
     var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
     var idMenuCarta = $("#idCartaPVModal").val();
+
+    $("#nombreMesaSpan").text(nombreMesa);$("#clienteMesaSpan").text(clienteMesa);$("#habMesaSpan").text(habitacionMesa); 
 
     if(estadoMesa=="disponible"){//si la mesa está disponible abro modal para obtener datos de huesped
         $('#myModal').modal({backdrop: 'static', keyboard: false });
@@ -138,7 +146,7 @@ function getMesasPorZona(idZona) {
         $("#btnEnviarCP").attr("idPVCPBtn",idPV);
         $("#btnEnviarCP").attr("idMesaCPBtn",idMesa);
         $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
-
+            
         var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
         lstProductos=[];
         localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
@@ -153,8 +161,9 @@ function getMesasPorZona(idZona) {
         $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
         var idCuenta =getIdCuenta(idPV,idMesa);            
         $("#btnAddDescuento").attr("btnIdCuenta",idCuenta); 
-        $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);        
-
+        $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);
+        
+        $("#cuentaMesaSpan").text(cuentaMesa);       
         obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
         // comprobarCuentaHabitacion(idPV,idMesa);
         getProductosMasVendidos();
@@ -401,6 +410,9 @@ $("#ocupanteModal").change(function(){
                 if(ok){
                     var objeto = resultado["objeto"];
                     var idCuenta=objeto["id"];
+                    var nombreCliente=objeto["nombreCliente"];
+                    $("#cuentaMesaSpan").text(idCuenta);
+                    $("#clienteMesaSpan").text(nombreCliente);
                     var folio=objeto["folio"];
                     // console.log("respuesta folio "+folio);
                     $("#btnAddDescuento").attr("btnIdCuenta",idCuenta);//creo los atributos

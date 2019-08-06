@@ -3,19 +3,35 @@
 @section('content')
 
 <div class="content">
-    <div class="container-fluid">
-        
-        <div class="row" id="zonaMesas">            
+    <div class="container-fluid">        
+        <div class="row" id="zonaMesas">                        
             <div class="col-md-12">
                 <div class="card">                    
                     <div class="card-content">
-                        {{-- <h4 class="card-title">Tomar Orden </h4> --}}
-                         <button class="btn btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})"><i class="far fa-window-close"></i> Cerrar día</button>
-                         <br>
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6 col-xs-6">
+                                <nav aria-label="breadcrumb" role="navigation">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-map-marker-alt"></i>
+                                        </span>
+                                        <div class="form-group">                               
+                                            <select class="form-control" id="zonaElige">                             
+                                            @foreach($zonas as $zona)
+                                            <option value="zona{{$zona->id}}">{{$zona->name}}</option>
+                                            @endforeach                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="col-md-9 col-sm-6 col-xs-6">
+                                <button class="btn btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})"><i class="far fa-window-close"></i> Cerrar día</button>
+                            </div>
+                        </div>
                          <div id="zonasPV">
                             
-                         </div>
-                       
+                         </div>                       
                     </div>
                     <!-- end content-->
                 </div>
@@ -29,13 +45,18 @@
                 <div class="card">
                     <div class="card-content">                                               
                         {{-- <h4 class="card-title">Tomar Orden</h4> --}}
+                       
                         <div class="row">
                             <div class="col-md-5">
                                 <div id="wrapper">
-                                    <div id="receiptData"> 
-                                        <div class="no-print">
-                                        </div>
+                                    <div id="receiptData">                                         
                                         <div id="receipt-data">
+                                            <div class="well well-sm">
+                                                <strong>Mesa: </strong><span id="nombreMesaSpan"></span> 
+                                                <strong>Cliente: </strong><span id="clienteMesaSpan"></span> 
+                                                <strong>Cuenta: </strong><span id="cuentaMesaSpan"></span> 
+                                                <strong>Habitación: </strong><span id="habMesaSpan"></span>                            
+                                            </div>
                                             <div class="table-responsive" id="tablaItemProductos">                                             
                                                 <table  class="table table-striped tablaProductos">
                                                     <thead>
@@ -53,8 +74,7 @@
                                                     <tfoot>                                                        
                                                     </tfoot>
                                                 </table>                                                
-                                            </div>
-                                           
+                                            </div>                                           
                                         </div>                                         
 
                                         <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">

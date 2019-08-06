@@ -128,17 +128,18 @@ function addAccionesPermiso(idPermiso){
                 '_token': csrf_token
             },
             success: function(respuesta) {
-                var respuesta = JSON.parse(respuesta);
-                // var ok = respuesta["ok"];       
-                // var mensaje= respuesta["mensaje"];                                                                                       
-
-                $.notify({							
-                    message: '<i class="fas fa-sun"></i><strong>Nota:</strong> '+respuesta
-                    },{								
-                        type: 'info',
-                        delay: 4000,
-                        z_index: 2000,
-                    });                                       
+                var respuesta = JSON.parse(respuesta); 
+                var ok = respuesta["ok"];
+                var mensaje= respuesta["mensaje"];                                              
+                if(ok){
+                    $.notify({							
+                        message: '<i class="fas fa-sun"></i><strong>Nota:</strong> '+mensaje
+                        },{								
+                            type: 'info',
+                            delay: 3000,
+                            z_index: 2000,
+                    });
+                }                                                                                                                                           
             }
         });
     }else{        

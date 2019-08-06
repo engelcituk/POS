@@ -180,25 +180,24 @@ class ApiUsuarioController extends Controller
     public function guardarAccionPermisoUsuario($idUsuario, $idPermiso, Request $request){
         $opciones= $request->get('opciones');//traigo el array de checks
                 
-        // $crear= $opciones[0][0];
-        // $leer = $opciones[0][1];
-        // $actualizar = $opciones[0][2];
-        // $borrar = $opciones[0][3];
+        $crear= $opciones[0][0];
+        $leer = $opciones[0][1];
+        $actualizar = $opciones[0][2];
+        $borrar = $opciones[0][3];
                
-        // $respuesta = $this->realizarPeticion('PUT', $this->urlBasePermisosUsuario."UpdatePermisoUsuario/{$idUsuario}/{$idPermiso}", [
-        //     'form_params' => [
-        //         'idUsuario' => $idUsuario,
-        //         'idPermiso' => $idPermiso,
-        //         'crear' => $crear,//true o false
-        //         'leer' =>  $leer,
-        //         'actualizar' => $actualizar,
-        //         'borrar' =>  $borrar
-        //     ]
-        // ]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBasePermisosUsuario."UpdatePermisoUsuario/{$idUsuario}/{$idPermiso}", [
+            'form_params' => [
+                'idUsuario' => $idUsuario,
+                'idPermiso' => $idPermiso,
+                'crear' => $crear,//true o false
+                'leer' =>  $leer,
+                'actualizar' => $actualizar,
+                'borrar' =>  $borrar
+            ]
+        ]);
         // $datos = json_decode($respuesta);
-        // $respuesta = $datos->mensaje; 
-                                     
-        return $opciones;
+        // $respuesta = $datos->mensaje;                                      
+        return $respuesta;
     }
     public function actualizar(Request $request){//actualiza solo los datos del usuario
 
