@@ -489,7 +489,7 @@ $("#ocupanteModal").change(function(){
                             }
                             // var dataImg = 'data:image/png;base64,';                       
                             var imgProducto =imagen;
-                            var imgFinal= "/storage/productos/"+imgProducto;
+                            var imgFinal= "/sandostpv/storage/productos/"+imgProducto;
 
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
                             resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;                                                                             
@@ -568,7 +568,7 @@ $("#ocupanteModal").change(function(){
                             }
                             // var dataImg = 'data:image/png;base64,';                       
                             var imgProducto =imagen;
-                            var imgFinal= "/storage/productos/"+imgProducto;
+                            var imgFinal= "/sandostpv/storage/productos/"+imgProducto;
 
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
                             resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;                                                                              

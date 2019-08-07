@@ -309,7 +309,7 @@ class ProductosController extends Controller
         $ok = $datos->ok;
         //si respuesta de api es true borro en mi carpeta el archivo
         if ($ok) {
-            $rutaImg = "/storage/productos/".$nombreImg;
+            $rutaImg = "/sandostpv/storage/productos/".$nombreImg;
 
             $imgUrlBorrar = str_replace('storage', 'public', $rutaImg);
 

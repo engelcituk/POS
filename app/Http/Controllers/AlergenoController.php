@@ -160,7 +160,7 @@ class AlergenoController extends Controller
         $ok = $datos->ok;
         //si respuesta de api es true borro en mi carpeta el archivo
         if($ok){
-            $rutaImg = "/storage/alergenos/".$nombreImg;
+            $rutaImg = "/sandostpv/storage/alergenos/".$nombreImg;
 
             $imgUrlBorrar = str_replace('storage', 'public', $rutaImg);
 

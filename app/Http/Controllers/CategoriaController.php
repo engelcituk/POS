@@ -186,7 +186,7 @@ class CategoriaController extends Controller
         $ok = $datos->ok;
         //si respuesta de api es true borro en mi carpeta el archivo
         if ($ok) {
-            $rutaImg = "/storage/categorias/".$nombreImg;
+            $rutaImg = "/sandostpv/storage/categorias/".$nombreImg;
 
             $imgUrlBorrar = str_replace('storage', 'public', $rutaImg);
 
