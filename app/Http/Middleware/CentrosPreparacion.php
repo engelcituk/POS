@@ -15,7 +15,7 @@ class CentrosPreparacion
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('accesoCentrosPreparacion')) {
+        if (!$request->session()->has('CentrosPreparacion')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

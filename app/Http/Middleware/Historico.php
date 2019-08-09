@@ -15,7 +15,7 @@ class Historico
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('accesoHistorico')) {
+        if (!$request->session()->has('Historico')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

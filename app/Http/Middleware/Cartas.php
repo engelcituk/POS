@@ -14,7 +14,7 @@ class Cartas {
      */
     public function handle($request, Closure $next){
         
-        if (!$request->session()->has('accesoCartas')) {
+        if (!$request->session()->has('Cartas')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

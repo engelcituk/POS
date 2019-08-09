@@ -30,7 +30,16 @@ class OrdenController extends Controller
         $zonas = $respuestaZonas->objeto;
 
         $categorias=$this->obtenerCategoriasCarta($idCarta);
-        
+
+        // $idUsuarioSesion = $request->session()->get('idUsuarioLogueado');                      
+        // $permisos= $this->obtenerListaPermisosUsuario(41);
+        // $count = count($permisos);
+        // if($count>0){
+        //     $mensjae="tiene permisos";
+        // }else{
+        //     $mensjae = "no tiene permisos";
+        // }
+        // dd($mensjae);
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');//se cargan en un modal
         //$categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
         $metodosPago = \App::call('App\Http\Controllers\MetodosPagoController@obtenerTodosLosMetodosPagos'); //se carga en subtabs
@@ -38,6 +47,26 @@ class OrdenController extends Controller
         // dd($modos);
         return view('ordenar', compact('zonas','alergenos','categorias', 'metodosPago'));
     }
+
+    public function obtenerListaPermisosUsuario($idUsuario){
+
+        $permisos = new ApiUsuarioController(); //Traigo toda mi lista de permisos
+        $respuesta = $permisos->obtenerDatosPermisosUsuario($idUsuario);
+
+        $permisos = json_decode($respuesta);
+        $respuestaOk = $permisos->ok;
+        
+        if ($respuestaOk == true) {
+            $listaPermisos = $permisos->objeto;
+            foreach ($listaPermisos as $permiso) {
+                $arrayPermisos[] = array('idPermiso' => $permiso->idPermiso,  'nombrePermiso' => $permiso->nombrePermiso, 'crear' => $permiso->crear,'leer' => $permiso->leer,'actualizar' => $permiso->actualizar,'borrar' => $permiso->borrar,);            
+            }            
+        } else {
+            $arrayPermisos = array();
+        }
+        return $arrayPermisos;
+    }
+   
     public function ZonasPV($idPuntoVenta){
         
         $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetZonaPV/{$idPuntoVenta}");
@@ -54,6 +83,7 @@ class OrdenController extends Controller
 
         return $respuesta;
     }
+    
      public function getMesasPorZona($idZona){
         
         $respuesta = $this->realizarPeticion('GET', $this->urlMesas."GetMesaPorZona/{$idZona}");       

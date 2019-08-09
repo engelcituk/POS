@@ -15,7 +15,7 @@ class Categorias
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('accesoCategorias')) {
+        if (!$request->session()->has('Categorias')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

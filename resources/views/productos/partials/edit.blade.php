@@ -10,7 +10,7 @@
                     @php
                         $imgProducto =$producto->imagen;
                         $imgDefault=asset('img/faces/defaultProducto.png'); //Esto es para la imagen por default                    
-                        $resultadoImg = (($imgProducto == "SIN IMAGEN") || ($imgProducto == NULL)) ? $imgDefault : "/sandostpv/storage/productos/".$imgProducto;    
+                        $resultadoImg = (($imgProducto == "SIN IMAGEN") || ($imgProducto == NULL)) ? $imgDefault : "/storage/productos/".$imgProducto;    
                     @endphp
                     <div class="row">
                         <div class="card card-profile">

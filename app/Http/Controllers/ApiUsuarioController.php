@@ -16,7 +16,7 @@ class ApiUsuarioController extends Controller
 
     public function __construct(){
 
-        // $this->middleware('accesoUsuariosFiltro');
+        $this->middleware('accesoUsuariosFiltro');
     }
 
     public function index(){
@@ -130,28 +130,20 @@ class ApiUsuarioController extends Controller
         $idRolUser = $usuario->idRol; //para obtener los datos del rol que tiene asignado el usuario
         $rolUsuario = new ApiRolController();
         $rolUsuario = $rolUsuario->obtenerUnRol($idRolUser); //los datos lo envio a la vista
-
-        $permisos = new PermisosController(); //Traigo toda mi lista de permisos
-        $permisos = $permisos->obtenerTodosLosPermisos(); //los datos lo envio a la vista
-
-        $permisosRol = new ApiRolController(); //instancia para la lista de permisos del rol
-        $permisosRol = $permisosRol->obtenerPermisosPorRol($idRolUser); //los datos lo envio a la vista
-
-        $respuesta = json_decode($permisosRol);
-        $ok = $respuesta->ok;
-        // dd( $permisosRol);
-        if ($ok == 1) {
-            $permisosRol = $respuesta->objeto;
-            //del objeto PermisoRol me creo una colección con los idPermisos del rol
-            $idPermisosRolColeccion = new Collection([]);
-            foreach ($permisosRol as $permisoRol) {
-                $idPermisosRolColeccion->push($permisoRol->idPermiso);
-            }
-        } else {
-            $idPermisosRolColeccion = new Collection([]);
-        }
+        
+        // $respuesta = json_decode($permisosRol);
+        // $ok = $respuesta->ok;        
+        // if ($ok == 1) {
+        //     $permisosRol = $respuesta->objeto;           
+        //     $idPermisosRolColeccion = new Collection([]);
+        //     foreach ($permisosRol as $permisoRol) {
+        //         $idPermisosRolColeccion->push($permisoRol->idPermiso);
+        //     }
+        // } else {
+        //     $idPermisosRolColeccion = new Collection([]);
+        // }
        
-        return view('users.partials.edit', compact('usuario', 'rolUsuario', 'roles','permisos', 'idPermisosRolColeccion', 'crearColeccion', 'leerColeccion', 'actualizarColeccion','borrarColeccion'));
+        return view('users.partials.edit', compact('usuario', 'rolUsuario', 'roles'));
     }
     public function obtenerUnUsuario($idUsuario){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetUsuario/{$idUsuario}");

@@ -15,7 +15,7 @@ class Mesas
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('accesoMesas')) {
+        if (!$request->session()->has('Mesas')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

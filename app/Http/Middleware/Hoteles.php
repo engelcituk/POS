@@ -15,7 +15,7 @@ class Hoteles
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('accesoHoteles')) {
+        if (!$request->session()->has('Hoteles')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

@@ -24,6 +24,7 @@
                                         </div>
                                     </div>
                                 </nav>
+                                {{-- {{Session::get('Usuarios.crear')}} --}} 
                             </div>
                             <div class="col-md-9 col-sm-6 col-xs-6">
                                 <button class="btn btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})"><i class="far fa-window-close"></i> Cerrar día</button>
@@ -128,7 +129,7 @@
                                     @foreach($categorias as $categoria)
                                         <div class="slideProductos">
                                             <div class="post-img">                                                
-                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="/sandostpv/storage/categorias/{{$categoria->imagen}}" />
+                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="/storage/categorias/{{$categoria->imagen}}" />
                                                     {{-- <span class="label label-default" categoria="{{$categoria->name}}">{{$categoria->name}}</span>          --}}
                                                 </div>
                         

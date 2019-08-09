@@ -15,7 +15,7 @@ class MetodosPago
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('accesoMetodosPago')) {
+        if (!$request->session()->has('MetodosPago')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

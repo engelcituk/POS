@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 
@@ -18,9 +19,7 @@ class LoginController extends Controller
         //variables para crear sesiones a nivel hotel,pv,carta
         $idHotel= $request->get('idHotel'); 
         $idPuntoVenta = $request->get('listaPuntosVenta');
-        $idCarta = $request->get('listaCartas');
-        $ruta= "ordenar";
-        
+        $idCarta = $request->get('listaCartas');                
         //para crear sesion del usuario, datos del usuario
         $usuario = $request->get('usuario');
         $password = $request->get('password');
@@ -28,7 +27,7 @@ class LoginController extends Controller
         $respuesta = $this->ingresoUsuario($usuario, $password);
         $respuestaOk = $respuesta->ok;
 
-        if ($respuestaOk == true) {
+        if ($respuestaOk == true) {            
             $usuario = $respuesta->objeto;
 
             foreach ($usuario as $item) {
@@ -43,23 +42,33 @@ class LoginController extends Controller
                 $request->session()->put('idUsuarioLogueado', $idUsuario);
                 $request->session()->put('UsuarioAdmin', $admin);
             }else{
+                
                 $request->session()->put('idHotel', $idHotel);
                 $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
                 $request->session()->put('idUsuarioLogueado', $idUsuario);
                 $request->session()->put('idPuntoVenta', $idPuntoVenta);
                 $request->session()->put('idCarta', $idCarta);
+                /**Bloque que genera las sesiones de los permisos */
+                $idUsuarioSesion = $request->session()->get('idUsuarioLogueado');
+                $permisos = $this->obtenerListaPermisosUsuario($idUsuarioSesion);
+                $count = count($permisos);
+                // $ruta = ($count>0) ? "ordenar" : "sinpermisos";
+                $ruta = "ordenar";
 
-                $request->session()->put('accesoOrden', ["idPermiso" => 1, "crear" => true,"leer"=>true, "actualizar"=>true,"borrar"=>true]);
-                $request->session()->put('accesoHistorico', 1);
-            }
-            
-            // $usuarioSesion = $request->session()->get('UsuarioLogueado'); 
-                     
-            return  redirect($ruta);
+                if ($count > 0) {
+                    $counter = 0;
+                    foreach ($permisos as $permiso) {
+                        $request->session()->put($permisos[$counter]["nombrePermiso"], ["idPermiso" => $permisos[$counter]["idPermiso"], "crear" => $permisos[$counter]["crear"], "leer" => $permisos[$counter]["leer"], "actualizar" => $permisos[$counter]["actualizar"], "borrar" => $permisos[$counter]["borrar"]]);
+                        $counter++;
+                    }
+                } 
+                /**Fin de bloque que genera las sesiones de los permisos */
+            }   
+            // dd($count);                 
+            return  redirect($ruta);//lo redirijo a la ruta de acuerdo si es admin
         }         
         return back()->withErrors(['usuario'=>'Estas credenciales no coinciden con nuestros registros']);
-    }
-
+    }   
     public function ingresoUsuario($usuario, $password){       
 
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'login', [
@@ -71,7 +80,23 @@ class LoginController extends Controller
         $respuesta = json_decode($respuesta);        
         return $respuesta;
     }
+    public function obtenerListaPermisosUsuario($idUsuario){
 
+        $respuesta = app('App\Http\Controllers\ApiUsuarioController')->obtenerDatosPermisosUsuario($idUsuario);
+        
+        $permisos = json_decode($respuesta);
+        $respuestaOk = $permisos->ok;
+
+        if ($respuestaOk == true) {
+            $listaPermisos = $permisos->objeto;
+            foreach ($listaPermisos as $permiso) {
+                $arrayPermisos[] = array('idPermiso' => $permiso->idPermiso,'nombrePermiso'=> $permiso->nombrePermiso,'crear' => $permiso->crear, 'leer' => $permiso->leer, 'actualizar' => $permiso->actualizar, 'borrar' => $permiso->borrar,);
+            }
+        } else {
+            $arrayPermisos = array();
+        }
+        return $arrayPermisos;
+    }
     public function obtenerPuntosVenta($idHotel){
         $respuesta = $this->realizarPeticion('GET', $this->urlPuntoVenta."GetPuntosVentaPorHotel/{$idHotel}");        
         return $respuesta;
@@ -80,16 +105,16 @@ class LoginController extends Controller
         $respuesta = $this->realizarPeticion('GET', $this->urlCartasPV."GetCartasPV/{$idPuntoVenta}");
         return $respuesta;
     }
+      
     public function logout(Request $request){
 
         $usuario = $request->session()->get('UsuarioLogueado');
+        $idUsuarioSesion = $request->session()->get('idUsuarioLogueado');
+        
         $ruta="/";
         if($usuario=="admin"){
             $ruta="admin";
-        }       
-        //$usuarioLogueado = $request->session()->get('UsuarioLogueado');
-        // $password = $request->get('password');
-        // dd($usuarioLogueado);
+        }                      
         $request->session()->forget('idHotel');
         $request->session()->forget('UsuarioLogueado');
         $request->session()->forget('idUsuarioLogueado');
@@ -97,9 +122,17 @@ class LoginController extends Controller
         $request->session()->forget('idCarta');
         $request->session()->forget('UsuarioAdmin');
 
-        $request->session()->forget('accesoOrden');
-        $request->session()->forget('accesoHistorico');
-        
+        $permisos = $this->obtenerListaPermisosUsuario($idUsuarioSesion);//traigo la lista de permisos del usuario
+        $count = count($permisos);//cuento los permisos
+        if ($count > 0) {//si array es mayor a 0
+            $counter = 0;
+            foreach ($permisos as $permiso) { //ejecuto el foreach que borra todos los permisos               
+                $request->session()->forget($permisos[$counter]["nombrePermiso"]);
+                $counter++;
+            }
+        } else {            
+            $request->session()->forget('sinPermisos');
+        }        
         return redirect($ruta);
     }
 }

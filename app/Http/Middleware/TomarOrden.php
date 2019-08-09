@@ -16,8 +16,8 @@ class TomarOrden
     public function handle($request, Closure $next)
     {
 
-        if (!$request->session()->has('accesoOrden')) {
-            return redirect('/hoteles'); // si no existe, al usuario lo mando lejos XD
+        if (!$request->session()->has('TomarOrden')) {
+            return redirect('/sinpermisos'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);
     }

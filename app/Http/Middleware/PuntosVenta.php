@@ -15,7 +15,7 @@ class PuntosVenta
      */
     public function handle($request, Closure $next){
         
-        if (!$request->session()->has('accesoPuntosVenta')) {
+        if (!$request->session()->has('PuntosVenta')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

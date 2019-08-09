@@ -14,8 +14,8 @@ class Usuarios
      * @return mixed
      */
     public function handle($request, Closure $next){
-
-        if (!$request->session()->has('accesoUsuarios')) {
+        
+        if (!$request->session()->has('Usuarios.leer')) {
             return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);

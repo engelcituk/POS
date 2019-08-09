@@ -68,7 +68,7 @@
                         <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                             @if(Session::has('UsuarioLogueado'))
                                 {{Session::get('UsuarioLogueado')}}-
-                                {{Session::get('idUsuarioLogueado')}}-
+                                {{Session::get('idUsuarioLogueado')}}-                                
                                 {{Session::get('idPuntoVenta')}} 
                             @endif
                             {{-- <b class="caret"></b> --}}
@@ -79,7 +79,7 @@
                 <ul class="nav">
                     
                     <li>
-                        @if(session()->has('accesoOrden') || session()->has('accesoHistorico'))
+                        @if(session()->has('TomarOrden') || session()->has('Historico'))
                             <a data-toggle="collapse" href="#pagesExamples">
                                 <i class="fas fa-cart-plus"></i>
                                 <p>Operaciones
@@ -90,12 +90,12 @@
                         
                         <div class="collapse" id="pagesExamples">
                             <ul class="nav">
-                                 @if(session()->has('accesoOrden'))
+                                 @if(session()->has('TomarOrden'))
                                     <li class="">
                                         <a href="{{ route('ordenar.index') }}">Tomar orden</a>
                                     </li>
                                  @endif                                                                                                
-                                @if(session()->has('accesoHistorico'))
+                                @if(session()->has('Historico'))
                                     <li>
                                         <a href="{{ route('historico.index')}}">Historico</a>
                                     </li>
@@ -107,7 +107,7 @@
 
                     <!--  -->
                     <li>
-                        {{-- @if(session()->has('accesoHoteles')|| session()->has('accesoRoles')||session()->has('accesoUsuarios')||session()->has('accesoPuntosVenta')||session()->has('accesoImpresoras')||session()->has('accesoCentrosPreparacion')||session()->has('accesoTurnos')||session()->has('accesoZonas')||session()->has('accesoMesas')||session()->has('accesoCartas')||session()->has('accesoCategorias')||session()->has('accesoProductos')||session()->has('accesoMenusCarta')||session()->has('accesoMetodosPago')||session()->has('accesoModos')||session()->has('accesoAlergenos')) --}}
+                        {{-- @if(session()->has('Hoteles')||session()->has('Roles')||session()->has('Usuarios')||session()->has('PuntoVenta')||session()->has('Zonas')||session()->has('Mesas')||session()->has('Impresoras')||session()->has('Productos')||session()->has('MetodosPago')||session()->has('Modos')||session()->has('Alergenos')||session()->has('Cartas')||session()->has('TurnosPV')||session()->has('Categorias') ||session()->has('MenusCarta')||session()->has('CentrosPreparacion'))  --}}
                             <a data-toggle="collapse" href="#componentsExamples">
                                 <i class="fas fa-cogs"></i>
                                 <p>Configuración
@@ -117,82 +117,82 @@
                         {{-- @endif                          --}}
                         <div class="collapse" id="componentsExamples">
                             <ul class="nav">
-                                {{-- @if(session()->has('accesoHoteles')) --}}
+                                {{-- @if(session()->has('Hoteles')) --}}
                                     <li>
                                         <a href="{{ route('hoteles.index') }}">Hoteles</a>
                                     </li>
                                 {{-- @endif                                 --}}
-                                {{-- @if(session()->has('accesoRoles')) --}}
+                                {{-- @if(session()->has('Roles')) --}}
                                     <li>
                                         <a href="{{ route('rolesapi.index') }}">Roles</a>
                                     </li>
                                 {{-- @endif --}}
-                                {{-- @if(session()->has('accesoUsuarios')) --}}
+                                {{-- @if(session()->has('Usuarios')) --}}
                                     <li>
                                         <a href="{{ route('users.index') }}">Usuarios</a>
                                     </li>
                                 {{-- @endif --}}
-                                {{-- @if(session()->has('accesoPuntosVenta')) --}}
+                                {{-- @if(session()->has('PuntoVenta')) --}}
                                     <li>
                                         <a href="{{ route('restaurantes.index') }}">Puntos de venta</a>
                                     </li>
                                 {{-- @endif --}}
-                                 {{-- @if(session()->has('accesoImpresoras')) --}}
+                                 {{-- @if(session()->has('Impresoras')) --}}
                                     <li>
                                         <a href="{{ route('impresoras.index') }}">Impresoras</a>
                                     </li>
                                 {{-- @endif --}}
-                                 {{-- @if(session()->has('accesoCentrosPreparacion')) --}}
+                                 {{-- @if(session()->has('CentrosPreparacion')) --}}
                                     <li>
                                         <a href="{{ route('centrospreparacion.index') }}">Centros de preparación</a>
                                     </li>
                                 {{-- @endif --}}
-                                 {{-- @if(session()->has('accesoTurnos')) --}}
+                                 {{-- @if(session()->has('TurnosPV')) --}}
                                     <li>
                                         <a href="{{ route('turnos.index') }}">Turnos PV</a>
                                     </li>
                                 {{-- @endif --}}
-                                 {{-- @if(session()->has('accesoZonas')) --}}
+                                 {{-- @if(session()->has('Zonas ')) --}}
                                     <li>
                                         <a href="{{ route('zonas.index') }}">Zonas</a>
                                     </li>
                                 {{-- @endif --}}
-                                {{-- @if(session()->has('accesoMesas')) --}}
+                                {{-- @if(session()->has('Mesas')) --}}
                                     <li>
                                         <a href="{{ route('mesas.index') }}">Mesas</a>
                                     </li>
                                 {{-- @endif  --}}
-                                {{-- @if(session()->has('accesoCartas')) --}}
+                                {{-- @if(session()->has('Cartas')) --}}
                                     <li>                               
                                         <a href="{{ route('cartas.index') }}">Cartas</a>
                                     </li>
                                 {{-- @endif  --}}
-                                {{-- @if(session()->has('accesoCategorias')) --}}
+                                {{-- @if(session()->has('Categorias')) --}}
                                     <li>                        
                                         <a href="{{ route('categorias.index') }}">Categorias</a>
                                     </li>
                                 {{-- @endif  --}}
-                                {{-- @if(session()->has('accesoProductos')) --}}
+                                {{-- @if(session()->has('Productos')) --}}
                                     <li>
                                         <a href="{{ route('productos.index') }}">Productos</a>
                                     </li>
                                 {{-- @endif  --}}
-                                {{-- @if(session()->has('accesoMenusCarta')) --}}
+                                {{-- @if(session()->has('MenusCarta')) --}}
                                     <li>
                                         <a href="{{ route('menuscartas.index') }}">Menús cartas</a>
                                     </li>
                                 {{-- @endif  --}}
-                                {{-- @if(session()->has('accesoMetodosPago')) --}}
+                                {{-- @if(session()->has('MetodosPago')) --}}
                                     <li>
                                         <a href="{{ route('metodospago.index') }}">Métodos de pago</a>
                                     </li>
                                 {{-- @endif  --}}
-                                {{-- @if(session()->has('accesoModos')) --}}
+                                {{-- @if(session()->has('Modos')) --}}
                                     <li>
                                         <a href="{{ route('modos.index') }}">Modos</a>
                                     </li>
                                 {{-- @endif --}}
-                                {{-- @if(session()->has('accesoAlergenos')) --}}
+                                {{-- @if(session()->has('Alergenos')) --}}
                                     <li>
                                         <a href="{{ route('alergenos.index') }}">Alergénos</a>
                                     </li>
