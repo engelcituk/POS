@@ -81,7 +81,7 @@
                     <li>
                         @php
                           $tomarOrdenPermisoLeer= Session::get('TomarOrden.leer'); 
-                          $historicoPermisoLeer= Session::get('Historico.leer');
+                          $historicoPermisoLeer= Session::get('Historico.leer');                         
                         @endphp                                                
                         @if($tomarOrdenPermisoLeer==1 || $historicoPermisoLeer==1)
                             <a data-toggle="collapse" href="#pagesExamples">
@@ -110,97 +110,115 @@
                     </li>
 
                     <!--  -->
+                     @php                         
+                          $hotelesPermisoLeer= Session::get('Hoteles.leer');
+                          $rolesPermisoLeer= Session::get('Roles.leer');
+                          $usuariosPermisoLeer= Session::get('Usuarios.leer');
+                          $pvPermisoLeer= Session::get('PuntosVenta.leer');
+                          $impresorasPermisoLeer= Session::get('Impresoras.leer');
+                          $cpPermisoLeer= Session::get('CentrosPreparacion.leer');
+                          $turnosPermisoLeer= Session::get('TurnosPV.leer');
+                          $zonasPermisoLeer= Session::get('Zonas.leer');
+                          $mesasPermisoLeer= Session::get('Mesas.leer');
+                          $cartasPermisoLeer= Session::get('Cartas.leer');
+                          $categoriasPermisoLeer= Session::get('Categorias.leer');
+                          $productosPermisoLeer= Session::get('Productos.leer');
+                          $menuscartaPermisoLeer= Session::get('MenusCarta.leer');
+                          $metodosPagoPermisoLeer= Session::get('MetodosPago.leer');
+                          $modosPermisoLeer= Session::get('Modos.leer');
+                          $alergenosPermisoLeer= Session::get('Alergenos.leer');
+                        @endphp
                     <li>
-                        {{-- @if(session()->has('Hoteles')||session()->has('Roles')||session()->has('Usuarios')||session()->has('PuntoVenta')||session()->has('Zonas')||session()->has('Mesas')||session()->has('Impresoras')||session()->has('Productos')||session()->has('MetodosPago')||session()->has('Modos')||session()->has('Alergenos')||session()->has('Cartas')||session()->has('TurnosPV')||session()->has('Categorias') ||session()->has('MenusCarta')||session()->has('CentrosPreparacion'))  --}}
+                        @if($hotelesPermisoLeer==1 || $rolesPermisoLeer==1 || $usuariosPermisoLeer==1 || $pvPermisoLeer==1 || $impresorasPermisoLeer==1 ||$cpPermisoLeer==1 || $turnosPermisoLeer==1 || $zonasPermisoLeer==1 || $mesasPermisoLeer==1 || $cartasPermisoLeer==1 || $categoriasPermisoLeer==1 || $productosPermisoLeer==1 || $menuscartaPermisoLeer==1 || $metodosPagoPermisoLeer==1 || $modosPermisoLeer==1 || $alergenosPermisoLeer==1)
                             <a data-toggle="collapse" href="#componentsExamples">
                                 <i class="fas fa-cogs"></i>
                                 <p>Configuración
                                     <b class="caret"></b>
                                 </p>
                             </a>        
-                        {{-- @endif                          --}}
+                        @endif                         
                         <div class="collapse" id="componentsExamples">
                             <ul class="nav">
-                                {{-- @if(session()->has('Hoteles')) --}}
+                                @if($hotelesPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('hoteles.index') }}">Hoteles</a>
                                     </li>
-                                {{-- @endif                                 --}}
-                                {{-- @if(session()->has('Roles')) --}}
+                                @endif                                
+                                @if( $rolesPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('rolesapi.index') }}">Roles</a>
                                     </li>
-                                {{-- @endif --}}
-                                {{-- @if(session()->has('Usuarios')) --}}
+                                @endif
+                                @if($usuariosPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('users.index') }}">Usuarios</a>
                                     </li>
-                                {{-- @endif --}}
-                                {{-- @if(session()->has('PuntoVenta')) --}}
+                                @endif
+                                @if($pvPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('restaurantes.index') }}">Puntos de venta</a>
                                     </li>
-                                {{-- @endif --}}
-                                 {{-- @if(session()->has('Impresoras')) --}}
+                                @endif
+                                 @if($impresorasPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('impresoras.index') }}">Impresoras</a>
                                     </li>
-                                {{-- @endif --}}
-                                 {{-- @if(session()->has('CentrosPreparacion')) --}}
+                                @endif
+                                 @if($cpPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('centrospreparacion.index') }}">Centros de preparación</a>
                                     </li>
-                                {{-- @endif --}}
-                                 {{-- @if(session()->has('TurnosPV')) --}}
+                                @endif
+                                 @if($turnosPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('turnos.index') }}">Turnos PV</a>
                                     </li>
-                                {{-- @endif --}}
-                                 {{-- @if(session()->has('Zonas ')) --}}
+                                @endif
+                                 @if($zonasPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('zonas.index') }}">Zonas</a>
                                     </li>
-                                {{-- @endif --}}
-                                {{-- @if(session()->has('Mesas')) --}}
+                                @endif
+                                @if($mesasPermisoLeer==1))
                                     <li>
                                         <a href="{{ route('mesas.index') }}">Mesas</a>
                                     </li>
-                                {{-- @endif  --}}
-                                {{-- @if(session()->has('Cartas')) --}}
+                                @endif 
+                                @if($cartasPermisoLeer==1)
                                     <li>                               
                                         <a href="{{ route('cartas.index') }}">Cartas</a>
                                     </li>
-                                {{-- @endif  --}}
-                                {{-- @if(session()->has('Categorias')) --}}
+                                @endif 
+                                @if($categoriasPermisoLeer==1)
                                     <li>                        
                                         <a href="{{ route('categorias.index') }}">Categorias</a>
                                     </li>
-                                {{-- @endif  --}}
-                                {{-- @if(session()->has('Productos')) --}}
+                                @endif 
+                                @if($productosPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('productos.index') }}">Productos</a>
                                     </li>
-                                {{-- @endif  --}}
-                                {{-- @if(session()->has('MenusCarta')) --}}
+                                @endif 
+                                @if(session()->has('MenusCarta'))
                                     <li>
                                         <a href="{{ route('menuscartas.index') }}">Menús cartas</a>
                                     </li>
-                                {{-- @endif  --}}
-                                {{-- @if(session()->has('MetodosPago')) --}}
+                                @endif 
+                                @if($menuscartaPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('metodospago.index') }}">Métodos de pago</a>
                                     </li>
-                                {{-- @endif  --}}
-                                {{-- @if(session()->has('Modos')) --}}
+                                @endif 
+                                @if($modosPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('modos.index') }}">Modos</a>
                                     </li>
-                                {{-- @endif --}}
-                                {{-- @if(session()->has('Alergenos')) --}}
+                                @endif
+                                @if($alergenosPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('alergenos.index') }}">Alergénos</a>
                                     </li>
-                                {{-- @endif --}}                                                               
+                                @endif                                                               
                             </ul>
                         </div>
                     </li>                    

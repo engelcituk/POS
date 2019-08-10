@@ -12,10 +12,10 @@
                 <thead>
                     <tr class="info ">
                         <th colspan="2">Permiso</th>                                                                        
-                        <th><i class="fas fa-plus-circle"></i></th>
-                        <th><i class="fab fa-readme"></i></th>
-                        <th><i class="fas fa-pen-alt"></i></th>                                        
-                        <th><i class="fas fa-trash-alt"></i></th>                                        
+                        <th>Crear</th>
+                        <th>Leer</th>
+                        <th>Actualizar</th>                                        
+                        <th>Borrar</th>                                        
                     </tr>
                 </thead>
                 <tbody>
