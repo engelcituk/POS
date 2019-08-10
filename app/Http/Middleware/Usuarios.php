@@ -14,9 +14,9 @@ class Usuarios
      * @return mixed
      */
     public function handle($request, Closure $next){
-        
-        if (!$request->session()->has('Usuarios.leer')) {
-            return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
+        $permisoLeer = $request->session()->get('Usuarios.leer');//valor booleano
+        if ($permisoLeer==false) {
+            return redirect('/sinpermisos'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);
         

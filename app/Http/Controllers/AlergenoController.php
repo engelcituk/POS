@@ -15,7 +15,7 @@ class AlergenoController extends Controller
 
     public function __construct(){
 
-        // $this->middleware('accesoAlergenosFiltro');
+        $this->middleware('accesoAlergenosFiltro');
     }     
     public function index(){
         $alergenos = $this->obtenerTodosLosAlergenos();

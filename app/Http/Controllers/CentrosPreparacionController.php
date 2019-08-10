@@ -12,7 +12,7 @@ class CentrosPreparacionController extends Controller
     
     public function __construct()    {
 
-        // $this->middleware('accesoCPFiltro');
+        $this->middleware('accesoCPFiltro');
     }
     public function index()
     {

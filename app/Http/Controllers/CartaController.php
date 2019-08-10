@@ -14,7 +14,7 @@ class CartaController extends Controller
     public function __construct()
     {
 
-        // $this->middleware('accesoCartasFiltro');
+        $this->middleware('accesoCartasFiltro');
     }
     public function index()
     {

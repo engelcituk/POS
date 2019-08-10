@@ -8,19 +8,14 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Collection;
 use Alert;
 
-
-// use Carbon\Carbon;
-
-
-class ApiRolController extends Controller
-{ 
+class ApiRolController extends Controller{ 
    
     public $urlBase = "http://localhost/TPVApi/Roles/";
     public $urlBaseRolPermisos = "http://localhost/TPVApi/PermisosRol/";
     
     public function __construct(){
 
-        // $this->middleware('accesoRolesFiltro');
+        $this->middleware('accesoRolesFiltro');
     } 
     public function index(){
 

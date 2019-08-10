@@ -11,7 +11,7 @@ class RestaurantesController extends Controller
     
     public function __construct()
     {
-        // $this->middleware('accesoPVentaFiltro');
+        $this->middleware('accesoPVentaFiltro');
     }
     
     public function index()

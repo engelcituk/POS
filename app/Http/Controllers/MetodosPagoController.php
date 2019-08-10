@@ -11,7 +11,7 @@ class MetodosPagoController extends Controller
     
     public function __construct()
     {
-        // $this->middleware('accesoMPFiltro');
+        $this->middleware('accesoMPFiltro');
     }
 
     public function index(){

@@ -15,8 +15,9 @@ class Zonas
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('accesoZonas')) {
-            return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
+        $zonasLeer = $request->session()->get('Zonas.leer'); //valor booleano
+        if ($zonasLeer == false) {
+            return redirect('/sinpermisos'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);
     }

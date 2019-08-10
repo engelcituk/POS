@@ -14,9 +14,10 @@ class PuntosVenta
      * @return mixed
      */
     public function handle($request, Closure $next){
-        
-        if (!$request->session()->has('PuntosVenta')) {
-            return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
+
+        $permisoLeer = $request->session()->get('PuntosVenta.leer'); //valor booleano
+        if ($permisoLeer == false) {
+            return redirect('/sinpermisos'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);
     }

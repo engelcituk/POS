@@ -74,7 +74,7 @@ class Kernel extends HttpKernel
         'accesoMesasFiltro' => \App\Http\Middleware\Mesas::class,
         'accesoMPFiltro' => \App\Http\Middleware\MetodosPago::class,
         'accesoModosFiltro' => \App\Http\Middleware\Modos::class,
-        'accesoProductoFiltro' => \App\Http\Middleware\Productos::class,
+        'accesoProductosFiltro' => \App\Http\Middleware\Productos::class,
         'accesoPVentaFiltro' => \App\Http\Middleware\PuntosVenta::class,
         'accesoRolesFiltro' => \App\Http\Middleware\Roles::class,
         'accesoTurnosFiltro' => \App\Http\Middleware\Turnos::class,

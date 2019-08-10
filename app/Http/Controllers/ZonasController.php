@@ -11,7 +11,7 @@ class ZonasController extends Controller
     
     public function __construct()
     {
-        // $this->middleware('accesoZonasfiltro');
+        $this->middleware('accesoZonasFiltro');
     }
     
     public function index()

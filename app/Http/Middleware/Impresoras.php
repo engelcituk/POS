@@ -14,8 +14,9 @@ class Impresoras
      * @return mixed
      */
     public function handle($request, Closure $next){
-        if (!$request->session()->has('Impresoras')) {
-            return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
+        $permisoLeer = $request->session()->get('Impresoras.leer'); //valor booleano
+        if ($permisoLeer == false) {
+            return redirect('/sinpermisos'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);
     }

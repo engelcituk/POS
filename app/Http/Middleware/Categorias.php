@@ -15,8 +15,9 @@ class Categorias
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('Categorias')) {
-            return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
+        $permisoLeer = $request->session()->get('Categorias.leer'); //valor booleano
+        if ($permisoLeer == false) {
+            return redirect('/sinpermisos'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);
     }

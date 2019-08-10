@@ -79,7 +79,11 @@
                 <ul class="nav">
                     
                     <li>
-                        @if(session()->has('TomarOrden') || session()->has('Historico'))
+                        @php
+                          $tomarOrdenPermisoLeer= Session::get('TomarOrden.leer'); 
+                          $historicoPermisoLeer= Session::get('Historico.leer');
+                        @endphp                                                
+                        @if($tomarOrdenPermisoLeer==1 || $historicoPermisoLeer==1)
                             <a data-toggle="collapse" href="#pagesExamples">
                                 <i class="fas fa-cart-plus"></i>
                                 <p>Operaciones
@@ -90,12 +94,12 @@
                         
                         <div class="collapse" id="pagesExamples">
                             <ul class="nav">
-                                 @if(session()->has('TomarOrden'))
+                                 @if($tomarOrdenPermisoLeer==1)
                                     <li class="">
                                         <a href="{{ route('ordenar.index') }}">Tomar orden</a>
                                     </li>
                                  @endif                                                                                                
-                                @if(session()->has('Historico'))
+                                @if($historicoPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('historico.index')}}">Historico</a>
                                     </li>

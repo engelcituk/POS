@@ -11,7 +11,7 @@ class ModosController extends Controller
     public $urlBase = "http://localhost/TPVApi/Modos/";
     public function __construct(){
 
-        // $this->middleware('accesoModosFiltro');
+        $this->middleware('accesoModosFiltro');
     }
 
     public function index()

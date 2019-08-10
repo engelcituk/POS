@@ -17,7 +17,7 @@ class ProductosController extends Controller
 
     public function __construct(){
 
-        // $this->middleware('accesoProductosFiltro');
+        $this->middleware('accesoProductosFiltro');
     }
 
     public function index(){

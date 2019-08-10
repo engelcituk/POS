@@ -15,8 +15,9 @@ class Productos
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('Productos')) {
-            return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
+        $permisoLeer = $request->session()->get('Productos.leer'); //valor booleano
+        if ($permisoLeer == false) {
+            return redirect('/sinpermisos'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);
     }

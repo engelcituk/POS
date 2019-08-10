@@ -15,8 +15,9 @@ class Modos
      */
     public function handle($request, Closure $next){
 
-        if (!$request->session()->has('Modos')) {
-            return redirect('/ordenar'); // si no existe, al usuario lo mando lejos XD
+        $permisoLeer = $request->session()->get('Modos.leer'); //valor booleano
+        if ($permisoLeer == false) {
+            return redirect('/sinpermisos'); // si no existe, al usuario lo mando lejos XD
         }
         return $next($request);
     }

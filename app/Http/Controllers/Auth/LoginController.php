@@ -35,26 +35,32 @@ class LoginController extends Controller
             //   $nombreCompleto = $item->name;
               $nombreDeUsuario = $item->usuario;
             }
-            if($nombreDeUsuario=="admin"){
-                $admin=1;
-                $ruta = "hoteles";
-                $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
-                $request->session()->put('idUsuarioLogueado', $idUsuario);
-                $request->session()->put('UsuarioAdmin', $admin);
-            }else{
-                
-                $request->session()->put('idHotel', $idHotel);
-                $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
-                $request->session()->put('idUsuarioLogueado', $idUsuario);
+            //variables de sesion que se ocupan tanto si es admin o usuario normal
+            $request->session()->put('UsuarioLogueado', $nombreDeUsuario);
+            $request->session()->put('idUsuarioLogueado', $idUsuario);
+            $idUsuarioSesion = $request->session()->get('idUsuarioLogueado');//obtengo el id del usuario logueado
+
+            if($nombreDeUsuario=="admin"){                
+                $ruta = "hoteles";                                                
+                /**Bloque que genera las sesiones de los permisos */
+                $permisos = $this->obtenerListaPermisosUsuario($idUsuarioSesion);
+                $count = count($permisos);                             
+                if ($count > 0) {
+                    $counter = 0;
+                    foreach ($permisos as $permiso) {
+                        $request->session()->put($permisos[$counter]["nombrePermiso"], ["idPermiso" => $permisos[$counter]["idPermiso"], "crear" => $permisos[$counter]["crear"], "leer" => $permisos[$counter]["leer"], "actualizar" => $permisos[$counter]["actualizar"], "borrar" => $permisos[$counter]["borrar"]]);
+                        $counter++;
+                    }
+                }              
+            }else{                
+                $ruta = "ordenar";
+                $request->session()->put('idHotel', $idHotel);                               
                 $request->session()->put('idPuntoVenta', $idPuntoVenta);
                 $request->session()->put('idCarta', $idCarta);
-                /**Bloque que genera las sesiones de los permisos */
-                $idUsuarioSesion = $request->session()->get('idUsuarioLogueado');
+                /**Bloque que genera las sesiones de los permisos */                
                 $permisos = $this->obtenerListaPermisosUsuario($idUsuarioSesion);
                 $count = count($permisos);
                 // $ruta = ($count>0) ? "ordenar" : "sinpermisos";
-                $ruta = "ordenar";
-
                 if ($count > 0) {
                     $counter = 0;
                     foreach ($permisos as $permiso) {
@@ -63,8 +69,7 @@ class LoginController extends Controller
                     }
                 } 
                 /**Fin de bloque que genera las sesiones de los permisos */
-            }   
-            // dd($count);                 
+            }               
             return  redirect($ruta);//lo redirijo a la ruta de acuerdo si es admin
         }         
         return back()->withErrors(['usuario'=>'Estas credenciales no coinciden con nuestros registros']);

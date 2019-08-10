@@ -9,10 +9,10 @@ class TurnosController extends Controller
 {
     
     public $urlBase = "http://localhost/TPVApi/Turnos/";
-    public function __construct()
-    {
+    
+    public function __construct(){
 
-        // $this->middleware('accesoTurnosFiltro');
+        $this->middleware('accesoTurnosFiltro');
     }
 
     public function index()

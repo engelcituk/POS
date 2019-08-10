@@ -5,6 +5,7 @@
     <div class="container-fluid">
 
         <a href="{{ route('users.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo usuario</a>
+        {{Session::get('Usuarios.leer')}} 
 
         <div class="row">
             <div class="col-md-12">

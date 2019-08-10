@@ -12,7 +12,7 @@ class MesasController extends Controller
 
     public function __construct()
     {
-        // $this->middleware('accesoMesasFiltro');
+        $this->middleware('accesoMesasFiltro');
     }
     
     public function index()

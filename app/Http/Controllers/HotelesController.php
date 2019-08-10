@@ -12,7 +12,7 @@ class HotelesController extends Controller
 
     public function __construct(){
            
-        // $this->middleware('accesoHotelesFiltro');
+        $this->middleware('accesoHotelesFiltro');
     }
         
     public function index()

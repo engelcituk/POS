@@ -10,7 +10,7 @@ class ImpresorasController extends Controller
    
     public function __construct(){
         
-        // $this->middleware('accesoImpresorasFiltro');
+        $this->middleware('accesoImpresorasFiltro');
     }
     public $urlBase = "http://localhost/TPVApi/Impresoras/";
     public function index()
