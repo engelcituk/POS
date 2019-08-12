@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
  
@@ -65,6 +66,20 @@ class HotelesController extends Controller
         $hotel = $datos->objeto;
         return $hotel;
     }
+
+    static public function obtenerHotelSesion($idHotel){//funcion que uso desde la vista
+        $metodo = "GET";
+        $urlBase = "http://localhost/TPVApi/Hoteles/GetHotel/{$idHotel}";
+
+        $cliente =  new Client();
+        $respuesta = $cliente->request($metodo, $urlBase);
+        $respuesta = $respuesta->getBody()->getContents();
+        $respuesta = json_decode($respuesta);
+        $hotel = $respuesta->objeto;
+
+        return  $hotel;        
+    }
+
     public function store(Request $request)
     {
         // $accessToken = 'Bearer ' . $this->obtenerAccessToken();

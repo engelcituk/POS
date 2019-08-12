@@ -46,7 +46,7 @@ Route::get('historico/{cuenta}', 'HistoricoController@obtenerCuenta')->name('his
 Route::get('historico/detalle/{cuenta}', 'HistoricoController@obtenerDetalleCuenta')->name('historico.detalle');
 // Route::delete('historico/{cuenta}', 'HistoricoController@destroy')->name('historico.destroy');
 // Route::get('/roles', 'RolesController@index')->name('roles.index');
-// Route::resource('usuarios', 'UsuariosController');
+// Route::resource('usuarios', 'UsuariosController'); 
 // Route::get('/usuarios', 'UsuariosController@index')->name('usuarios.index');
 Route::get('all/usuarios', 'UsuariosController@AllUser')->name('all.usuarios');
 Route::get('all/roles', 'RolesController@AllRole')->name('all.roles');

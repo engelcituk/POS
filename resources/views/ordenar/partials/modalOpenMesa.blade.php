@@ -19,8 +19,13 @@
                             <i class="fas fa-hotel"></i>
                         </span>
                         <div class="form-group label-floating">
-                            <label class="control-label">Codigo Hotel</label>
-                            <input id="codigoHotel" type="text" class="form-control" name="codigoHotel" value="CARACOL">
+                            {{-- <label class="control-label">Codigo Hotel</label> --}}
+                            @php
+                                $idHotel= Session::get('idHotel');
+                                $datosHotel=App\Http\Controllers\HotelesController::obtenerHotelSesion($idHotel);  
+                                // dd($datosHotel);           
+                            @endphp
+                            <input id="codigoHotel" type="text" class="form-control" name="codigoHotel" value="{{$datosHotel->codHotel}}">
                             <input id="idMesaModal" type="number" class="form-control" name="idMesaModal">   
                             <input id="idPVModalOrdenar" type="number" class="form-control" name="idPVModalOrdenar" value="{{Session::get('idPuntoVenta')}}">  
                             <input type="text" class="form-control" name="idCartaPVModal" id="idCartaPVModal" value="{{Session::get('idCarta')}} "> 
