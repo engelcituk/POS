@@ -16,6 +16,7 @@ class Hoteles
     public function handle($request, Closure $next){
 
         $permisoLeer = $request->session()->get('Hoteles.leer'); //valor booleano
+        //$permisoActualizar = $request->session()->get('Hoteles.actualizar'); //valor booleano
         if ($permisoLeer == false) {
             return redirect('/sinpermisos'); // si no existe, al usuario lo mando lejos XD
         }

@@ -3,10 +3,18 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
+        @php
+            $hotelPermisocrear= Session::get('Hoteles.crear');                                                         
+            $hotelPermisoLeer= Session::get('Hoteles.leer'); 
+            $hotelPermisoActualizar= Session::get('Hoteles.actualizar'); 
+            $hotelPermisoBorrar= Session::get('Hoteles.borrar');                         
+        @endphp
 
-        <a href="{{ route('hoteles.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nuevo hotel</a>
+        @if ($hotelPermisocrear==1)            
+            <a href="{{ route('hoteles.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nuevo hotel</a>
+        @endif
 
-        <div class="row">
+        <div class="row">           
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-icon" data-background-color="purple">
@@ -24,22 +32,29 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Nombre</th>
-                                        <th>Empresa</th>
+                                        <th>Empresa</th> 
                                         <th>codigo</th>
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody>                                    
                                      @foreach($hoteles as $hotel)                                            
                                         <tr>
                                             <td>{{$hotel->id}}</td>
                                             <td>{{$hotel->name}}</td>
                                             <td>{{$hotel->empresa}}</td>
                                             <td>{{$hotel->codHotel}}</td>                                           
-                                            <td>
-                                                <a href="{{ route('hoteles.show', $hotel->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('hoteles.edit', $hotel->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                        
-                                                <a onclick="deleteDataHotel({{$hotel->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                            <td>                                                
+                                                @if($hotelPermisoLeer==1)
+                                                    <a href="{{ route('hoteles.show', $hotel->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                                    
+                                                @endif
+                                                @if($hotelPermisoLeer==1 && $hotelPermisoActualizar==1)
+                                                    <a href="{{ route('hoteles.edit', $hotel->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                    
+                                                @endif
+                                                 @if($hotelPermisoLeer==1 && $hotelPermisoBorrar==1)
+                                                     <a onclick="deleteDataHotel({{$hotel->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a> 
+                                                @endif                                  
+                                               
                                             </td>
                                         </tr>
                                     @endforeach

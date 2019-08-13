@@ -4,7 +4,17 @@
 <div class="content">
     <div class="container-fluid">
 
-        <a href="{{ route('users.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo usuario</a>
+        @php
+            $usuarioPermisocrear= Session::get('Usuarios.crear');                                                         
+            $usuarioPermisoLeer= Session::get('Usuarios.leer'); 
+            $usuarioPermisoActualizar= Session::get('Usuarios.actualizar'); 
+            $usuarioPermisoBorrar= Session::get('Usuarios.borrar');                         
+        @endphp
+
+        @if ($usuarioPermisocrear==1)                    
+            <a href="{{ route('users.create') }}" class="btn btn-success"><i class="fas fa-user"></i> Nuevo usuario</a>           
+        @endif
+        
         {{-- {{Session::get('Usuarios.leer')}}  --}}
 
         <div class="row">
@@ -35,7 +45,6 @@
                                     @foreach($users as $usuario)  
                                     @php
                                         $fecha = substr($usuario->fechaAlta, 0,10);
-
                                         $color = $usuario->status==1 ? 'success' : 'warning' ;
                                         $estado = $usuario->status==1 ? 'Activo' : 'Desactivado' ;
                                     @endphp                                                     
@@ -46,10 +55,19 @@
                                             <td>{{$fecha}}</td> 
                                             <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>                      
                                             <td>
-                                                <a href="{{ route('users.show', $usuario->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('users.edit', $usuario->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
-                                                <a onclick="showPermisosModal({{$usuario->id}})" class="btn btn-xs btn-primary" ><i class="fas fa-key"></i></a>
-                                                <a onclick="deleteUsuario({{$usuario->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if($usuarioPermisoLeer==1)
+                                                    <a href="{{ route('users.show', $usuario->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                                   
+                                                @endif
+                                                @if ($usuarioPermisoLeer==1 && $usuarioPermisoActualizar==1)
+                                                    <a href="{{ route('users.edit', $usuario->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                    
+                                                @endif
+                                                @if ($usuarioPermisoLeer==1 && $usuarioPermisoActualizar==1)
+                                                    <a onclick="showPermisosModal({{$usuario->id}})" class="btn btn-xs btn-primary" ><i class="fas fa-key"></i></a>                                                   
+                                                @endif                                             
+                                                @if ($usuarioPermisoBorrar==1 )
+                                                    <a onclick="deleteUsuario({{$usuario->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>                                                   
+                                                @endif 
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

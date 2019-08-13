@@ -9,7 +9,7 @@
                     @php
                     $imgAlergeno =$alergeno->icono;
                     $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default               
-                   $resultadoImg = (($imgAlergeno == "SIN IMAGEN") || ($imgAlergeno == NULL)) ? $imgDefault : "/sandostpv/storage/alergenos/".$imgAlergeno;                     
+                   $resultadoImg = (($imgAlergeno == "SIN IMAGEN") || ($imgAlergeno == NULL)) ? $imgDefault : asset('storage/alergenos/'.$imgAlergeno);                     
                     @endphp
                     <div class="card card-profile">
                         <div class="card-avatar">

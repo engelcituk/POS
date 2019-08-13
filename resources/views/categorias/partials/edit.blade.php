@@ -11,7 +11,8 @@
                          @php
                             $imgCategoria =$categoria->imagen;
                             $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default                    
-                            $resultadoImg = (($imgCategoria == "SIN IMAGEN") || ($imgCategoria == NULL)) ? $imgDefault : "/sandostpv/storage/categorias/".$imgCategoria;    
+                            $resultadoImg = (($imgCategoria == "SIN IMAGEN") || ($imgCategoria == NULL)) ? $imgDefault : asset('storage/categorias/'.$imgCategoria);  
+                             
                         @endphp
                         <div class="card-avatar">
                                 <img class="img" src="{{$resultadoImg}}"/> 

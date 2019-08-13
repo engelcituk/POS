@@ -3,8 +3,16 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
+        @php
+            $rolPermisocrear= Session::get('Roles.crear');                                                         
+            $rolPermisoLeer= Session::get('Roles.leer'); 
+            $rolPermisoActualizar= Session::get('Roles.actualizar'); 
+            $rolPermisoBorrar= Session::get('Roles.borrar');                         
+        @endphp
 
-        <a href="{{ route('rolesapi.create') }}" class="btn btn-success"><i class="fas fa-user-tag"></i> Nuevo Rol</a>
+        @if ($rolPermisocrear==1)                    
+            <a href="{{ route('rolesapi.create') }}" class="btn btn-success"><i class="fas fa-user-tag"></i> Nuevo Rol</a>
+        @endif
         
         <div class="row">
             <div class="col-md-12">
@@ -40,9 +48,16 @@
                                             <td>{{$rol->descripcion}}</td>                                                         
                                             <td>{{$fecha}}</td> 
                                             <td>
-                                                <a href="{{ route('rolesapi.show', $rol->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('rolesapi.edit', $rol->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteRol({{$rol->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if($rolPermisoLeer==1)
+                                                    <a href="{{ route('rolesapi.show', $rol->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                                    
+                                                @endif
+                                                @if ($rolPermisoLeer==1 && $rolPermisoActualizar==1)
+                                                   <a href="{{ route('rolesapi.edit', $rol->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>  
+                                                @endif
+                                                @if($rolPermisoBorrar==1)
+                                                    <a onclick="deleteRol({{$rol->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>                                                  
+                                                @endif                                            
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

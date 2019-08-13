@@ -4,7 +4,11 @@
     <div class="container-fluid">
         <a href="{{ route('hoteles.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
         <div class="row">
-            <form method="POST" action="{{ route('hoteles.store')}}">
+            @php 
+                $hotelPermisocrear= Session::get('Hoteles.crear');                                                         
+            @endphp 
+            @if ($hotelPermisocrear==1)
+               <form method="POST" action="{{ route('hoteles.store')}}">
                 <div class="col-md-12">
                     <div class="card card-profile">
                         @csrf
@@ -63,7 +67,20 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            </form> 
+            @else
+              <div class="card">                    
+                    <div class="card-content">
+                      <div class="col-md-2 text-center">
+                            <p><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Código: 403</p>
+                      </div>
+                        <div class="col-md-10">
+                                <h3>Usted no cuenta con permisos para crear un hotel</h3>
+                                <p>Primero tiene que tener permisos para la operación que pretende realizar<br/>Por favor solicita que se le asigne este permiso a su usuario.</p>                               
+                        </div>
+                    </div>                    
+                </div> 
+            @endif            
         </div>
     </div>
 </div>

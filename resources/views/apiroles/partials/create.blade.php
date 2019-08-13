@@ -1,10 +1,16 @@
 @extends('layouts.dashboard')
 @section('content')
 <div class="content">
-    <div class="container-fluid">
-        <a href="{{ route('rolesapi.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
+    <div class="container-fluid"> 
+                          
+        <a href="{{ route('rolesapi.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>            
+        
         <div class="row">
-            <form method="POST" action="{{ route('rolesapi.store')}}">
+            @php
+                $rolPermisocrear= Session::get('Roles.crear');                
+            @endphp
+            @if ($rolPermisocrear==1)
+                <form method="POST" action="{{ route('rolesapi.store')}}">
                 <div class="col-md-12">
                     <div class="card card-profile">
                         @csrf
@@ -61,6 +67,20 @@
                     </div>
                 </div>
             </form>
+            @else
+                <div class="card">                    
+                    <div class="card-content">
+                      <div class="col-md-2 text-center">
+                            <p><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Código: 403</p>
+                      </div>
+                        <div class="col-md-10">
+                                <h3>Usted no cuenta con permisos para crear un rol</h3>
+                                <p>Primero tiene que tener permisos para la operación que pretende realizar<br/>Por favor solicita que se le asigne este permiso a su usuario.</p>                               
+                        </div>
+                    </div>                    
+                </div>
+            @endif
+            
         </div>
     </div>
 </div>
