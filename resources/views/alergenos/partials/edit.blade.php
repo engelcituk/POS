@@ -8,8 +8,8 @@
                 <div class="col-md-12">
                     @php
                     $imgAlergeno =$alergeno->icono;
-                    $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default                              
-                    $resultadoImg = (($imgAlergeno == "SIN IMAGEN") || ($imgAlergeno == NULL)) ? $imgDefault : "/storage/alergenos/".$imgAlergeno; 
+                    $imgDefault=asset('img/faces/defaultAlergeno.png'); //Esto es para la imagen por default               
+                   $resultadoImg = (($imgAlergeno == "SIN IMAGEN") || ($imgAlergeno == NULL)) ? $imgDefault : "/sandostpv/storage/alergenos/".$imgAlergeno;                     
                     @endphp
                     <div class="card card-profile">
                         <div class="card-avatar">
