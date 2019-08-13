@@ -4,9 +4,9 @@
     <div class="container-fluid">
         <a href="{{ route('impresoras.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
         @php
-            $impresoraPermisocrear= Session::get('Impresoras.crear');                         
+            $impresoraPermisoCrear= Session::get('Impresoras.crear');                         
         @endphp
-        @if ($impresoraPermisocrear==1)
+        @if ($impresoraPermisoCrear==1)
             <form method="POST" action="{{ route('impresoras.store')}}">
             <div class="row">
                 <div class="col-md-12">

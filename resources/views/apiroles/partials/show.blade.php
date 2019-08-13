@@ -35,17 +35,17 @@
                     </div>
                 </div>
                 @else
-                <div class="card">                    
-                    <div class="card-content">
-                      <div class="col-md-2 text-center">
-                            <p><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Código: 403</p>
-                      </div>
-                        <div class="col-md-10">
-                                <h3>Usted no cuenta con permisos para ver un rol</h3>
-                                <p>Primero tiene que tener permisos para la operación que pretende realizar<br/>Por favor solicita que se le asigne este permiso a su usuario.</p>                               
+                    <div class="card">                    
+                        <div class="card-content">
+                        <div class="col-md-2 text-center">
+                                <p><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Código: 403</p>
                         </div>
-                    </div>                    
-                </div>
+                            <div class="col-md-10">
+                                    <h3>Usted no cuenta con permisos para ver un rol</h3>
+                                    <p>Primero tiene que tener permisos para la operación que pretende realizar<br/>Por favor solicita que se le asigne este permiso a su usuario.</p>                               
+                            </div>
+                        </div>                    
+                    </div>
                 @endif                
             </div>
         </div>

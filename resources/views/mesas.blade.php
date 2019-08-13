@@ -3,7 +3,15 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-        <a href="{{ route('mesas.create') }}" class="btn btn-success"><i class="fas fa-table"></i> Nueva mesa</a>
+        @php
+            $mesaPermisocrear= Session::get('Mesas.crear');                                                         
+            $mesaPermisoLeer= Session::get('Mesas.leer'); 
+            $mesaPermisoActualizar= Session::get('Mesas.actualizar'); 
+            $mesaPermisoBorrar= Session::get('Mesas.borrar');                         
+        @endphp
+        @if ($mesaPermisocrear==1)            
+            <a href="{{ route('mesas.create') }}" class="btn btn-success"><i class="fas fa-table"></i> Nueva mesa</a>
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -16,19 +24,7 @@
                             <!--        Here you can write extra buttons/actions for the toolbar              -->
                         </div>
                         <div class="material-datatables">
-                            {{-- <table id="mesas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Zona</th>                                        
-                                        <th>status</th>
-                                        <th class="disabled-sorting text-right">Acciones</th>
-                                    </tr>
-                                </thead>                                
-                                <tbody>
-
-                                </tbody>
-                            </table> --}}
+                            
                             @if ($mesas!="")
                             <table id="mesas" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                 <thead>
@@ -50,11 +46,18 @@
                                             <td>{{$mesa->id}}</td>
                                             <td>{{$mesa->zona}}</td>
                                             <td>{{$mesa->name}}</td>
-                                            <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>                                                                                                                                                                          
+                                            <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>       
                                             <td>
-                                                <a href="{{ route('mesas.show', $mesa->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('mesas.edit', $mesa->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteRestaurante({{$mesa->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if ($mesaPermisoLeer==1)
+                                                    <a href="{{ route('mesas.show', $mesa->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
+                                                @endif
+                                                @if ($mesaPermisoLeer==1 && $mesaPermisoActualizar==1)
+                                                    <a href="{{ route('mesas.edit', $mesa->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a> 
+                                                @endif                                                
+                                                @if ($mesaPermisoBorrar==1)
+                                                    <a onclick="deleteRestaurante({{$mesa->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a> 
+                                                @endif                                             
+                                                
                                             </td>
                                         </tr>
                                     @endforeach

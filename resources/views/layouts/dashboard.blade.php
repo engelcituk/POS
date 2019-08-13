@@ -179,7 +179,7 @@
                                         <a href="{{ route('zonas.index') }}">Zonas</a>
                                     </li>
                                 @endif
-                                @if($mesasPermisoLeer==1))
+                                @if($mesasPermisoLeer==1)
                                     <li>
                                         <a href="{{ route('mesas.index') }}">Mesas</a>
                                     </li>

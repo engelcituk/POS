@@ -119,14 +119,7 @@ class LoginController extends Controller
         $ruta="/";
         if($usuario=="admin"){
             $ruta="admin";
-        }                      
-        $request->session()->forget('idHotel');
-        $request->session()->forget('UsuarioLogueado');
-        $request->session()->forget('idUsuarioLogueado');
-        $request->session()->forget('idPuntoVenta');
-        $request->session()->forget('idCarta');
-        $request->session()->forget('UsuarioAdmin');
-
+        }                              
         $permisos = $this->obtenerListaPermisosUsuario($idUsuarioSesion);//traigo la lista de permisos del usuario
         $count = count($permisos);//cuento los permisos
         if ($count > 0) {//si array es mayor a 0
@@ -135,6 +128,13 @@ class LoginController extends Controller
                 $request->session()->forget($permisos[$counter]["nombrePermiso"]);
                 $counter++;
             }
+            //despues de borrar todos los permisos de sesion, borro las otras variables de sesion restantes
+            $request->session()->forget('idHotel');
+            $request->session()->forget('UsuarioLogueado');
+            $request->session()->forget('idUsuarioLogueado');
+            $request->session()->forget('idPuntoVenta');
+            $request->session()->forget('idCarta');
+            $request->session()->forget('UsuarioAdmin');
         } else {            
             $request->session()->forget('sinPermisos');
         }        

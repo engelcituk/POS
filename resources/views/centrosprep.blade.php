@@ -3,7 +3,15 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-        <a href="{{ route('centrospreparacion.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nuevo Centro Prep</a>
+        @php
+            $cpPermisocrear= Session::get('CentrosPreparacion.crear');                                                         
+            $cpPermisoLeer= Session::get('CentrosPreparacion.leer'); 
+            $cpPermisoActualizar= Session::get('CentrosPreparacion.actualizar'); 
+            $cpPermisoBorrar= Session::get('CentrosPreparacion.borrar');                         
+        @endphp
+        @if ($cpPermisocrear==1)
+            <a href="{{ route('centrospreparacion.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nuevo Centro Prep</a>        
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -48,9 +56,17 @@
                                             <td><button class="btn btn-{{$colorImprime}} btn-xs">{{$imprime}}</button></td>
                                             <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>                                          
                                             <td>
-                                                <a href="{{ route('centrospreparacion.show', $cp->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('centrospreparacion.edit', $cp->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteCentroPreparacion({{$cp->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if ($cpPermisoLeer==1)
+                                                   <a href="{{ route('centrospreparacion.show', $cp->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a> 
+                                                @endif
+                                                @if ($cpPermisoLeer ==1 && $cpPermisoActualizar==1)
+                                                   <a href="{{ route('centrospreparacion.edit', $cp->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
+                                                @endif 
+                                                @if ($cpPermisoBorrar ==1 )
+                                                   <a onclick="deleteCentroPreparacion({{$cp->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @endif                                               
+                                                                                                
+                                                
                                             </td>
                                         </tr>
                                     @endforeach
