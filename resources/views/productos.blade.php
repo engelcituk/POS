@@ -3,8 +3,15 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-
-        <a href="{{ route('productos.create') }}" class="btn btn-success"><i class="fab fa-product-hunt"></i> Nuevo producto</a>
+        @php
+            $productoPermisocrear= Session::get('Productos.crear');                                                         
+            $productoPermisoLeer= Session::get('Productos.leer'); 
+            $productoPermisoActualizar= Session::get('Productos.actualizar'); 
+            $productoPermisoBorrar= Session::get('Productos.borrar');                         
+        @endphp
+        @if ($productoPermisocrear==1)
+            <a href="{{ route('productos.create') }}" class="btn btn-success"><i class="fab fa-product-hunt"></i> Nuevo producto</a>   
+        @endif
 
         <div class="row">
             <div class="col-md-12">
@@ -61,10 +68,18 @@
                                             <td><button class="btn btn-{{$colorTemporada}} btn-xs">{{$deTemporada}}</button></td>
                                             <td><button class="btn btn-{{$colorEstado}} btn-xs">{{$estado}}</button></td> 
                                             <td>
-                                                <a href="{{ route('productos.show', $producto->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('productos.edit', $producto->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
-                                                <a onclick="productoModos({{$producto->id}})" class="btn btn-xs btn-success" data-toggle="modal" data-target="#myModalModos">M</a>
-                                                <a onclick="deleteProducto({{$producto->id}},'{{$producto->imagen}}')" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if ($productoPermisoLeer==1)
+                                                    <a href="{{ route('productos.show', $producto->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                       
+                                                @endif
+                                                @if ($productoPermisoLeer==1 && $productoPermisoActualizar==1)
+                                                    <a href="{{ route('productos.edit', $producto->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a> 
+                                                @endif
+                                                @if ($productoPermisoLeer==1)
+                                                    <a onclick="productoModos({{$producto->id}})" class="btn btn-xs btn-success" data-toggle="modal" data-target="#myModalModos">M</a>                             
+                                                @endif
+                                                @if ($productoPermisoBorrar==1)
+                                                    <a onclick="deleteProducto({{$producto->id}},'{{$producto->imagen}}')" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>                     
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

@@ -3,8 +3,15 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-
-        <a href="{{ route('cartas.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nueva carta</a>
+        @php
+            $cartaPermisoCrear= Session::get('Cartas.crear');                                                         
+            $cartaPermisoLeer= Session::get('Cartas.leer'); 
+            $cartaPermisoActualizar= Session::get('Cartas.actualizar'); 
+            $cartaPermisoBorrar= Session::get('Cartas.borrar');                         
+        @endphp
+        @if ($cartaPermisoCrear==1)
+            <a href="{{ route('cartas.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nueva carta</a>            
+        @endif
 
         <div class="row">
             <div class="col-md-12">
@@ -31,7 +38,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($cartas as $carta)                                                                                   @php
+                                    @foreach($cartas as $carta)                                                                               @php
                                             $color = $carta->status==1 ? 'success' : 'warning' ;
                                             $estado = $carta->status==1 ? 'Activo' : 'Desactivado' ;
                                            @endphp               
@@ -42,9 +49,15 @@
                                             <td>{{$carta->turno}}</td>
                                             <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>
                                             <td>
-                                                <a href="{{ route('cartas.show', $carta->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('cartas.edit', $carta->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteCarta({{$carta->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if ($cartaPermisoLeer==1)
+                                                    <a href="{{ route('cartas.show', $carta->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                                    
+                                                @endif
+                                                @if ($cartaPermisoLeer==1 && $cartaPermisoActualizar==1)
+                                                    <a href="{{ route('cartas.edit', $carta->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i></a>                                                    
+                                                @endif
+                                                @if ($cartaPermisoBorrar==1)
+                                                    <a onclick="deleteCarta({{$carta->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>                                                  
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

@@ -3,8 +3,15 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-
-        <a href="{{route('menuscartas.create') }}" class="btn btn-success"><i class="fas fa-list-alt"></i> Nuevo menú carta</a>
+        @php
+            $mcPermisocrear= Session::get('MenusCarta.crear');                                                         
+            $mcPermisoLeer= Session::get('MenusCarta.leer'); 
+            $mcPermisoActualizar= Session::get('MenusCarta.actualizar'); 
+            $mcPermisoBorrar= Session::get('MenusCarta.borrar');                         
+        @endphp        
+        @if ($mcPermisocrear==1)
+            <a href="{{route('menuscartas.create') }}" class="btn btn-success"><i class="fas fa-list-alt"></i> Nuevo menú carta</a>    
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -40,9 +47,15 @@
                                             <td>{{$mc->centro}}</td> 
 
                                             <td>
-                                                <a href="{{ route('menuscartas.show', $mc->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('menuscartas.edit', $mc->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteMenuCarta({{$mc->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if ($mcPermisoLeer==1)
+                                                    <a href="{{ route('menuscartas.show', $mc->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                                    
+                                                @endif
+                                                @if ($mcPermisoLeer==1 && $mcPermisoActualizar==1)
+                                                    <a href="{{ route('menuscartas.edit', $mc->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a> 
+                                                @endif
+                                                @if ($mcPermisoBorrar==1)
+                                                    <a onclick="deleteMenuCarta({{$mc->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>                                                  
+                                                @endif                                               
                                             </td>
                                         </tr>
                                     @endforeach
@@ -63,25 +76,3 @@
     </div>
 </div>
 @endsection
-<!-- 
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
- -->

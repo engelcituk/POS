@@ -3,8 +3,15 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-
-        <a href="{{ route('modos.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nuevo modo</a>
+        @php
+            $modoPermisocrear= Session::get('Modos.crear');                                                         
+            $modoPermisoLeer= Session::get('Modos.leer'); 
+            $modoPermisoActualizar= Session::get('Modos.actualizar'); 
+            $modoPermisoBorrar= Session::get('Modos.borrar');                         
+        @endphp
+        @if ($modoPermisocrear==1)
+            <a href="{{ route('modos.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nuevo modo</a>            
+        @endif
 
         <div class="row">
             <div class="col-md-12">
@@ -41,9 +48,15 @@
                                             <td>{{$fecha}}</td>                                                                
                                             <td>{{$hora}}</td>                                                                      
                                             <td>
-                                                <a href="{{ route('modos.show', $modo->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('modos.edit', $modo->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteModo({{$modo->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if ($modoPermisoLeer==1)
+                                                    <a href="{{ route('modos.show', $modo->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                                    
+                                                @endif
+                                                @if ($modoPermisoLeer==1 && $modoPermisoActualizar==1)
+                                                    <a href="{{ route('modos.edit', $modo->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                    
+                                                @endif
+                                                @if ($modoPermisoBorrar==1)
+                                                    <a onclick="deleteModo({{$modo->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>                                                    
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

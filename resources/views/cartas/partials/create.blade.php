@@ -2,8 +2,12 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
+        @php
+            $cartaPermisoCrear= Session::get('Cartas.crear');                        
+        @endphp
         <a href="{{ route('cartas.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <form method="POST" action="{{ route('cartas.store')}}">
+        @if ($cartaPermisoCrear==1)
+            <form method="POST" action="{{ route('cartas.store')}}">
             <div class="row">
                 <div class="col-md-12"> 
                     <div class="card card-profile">
@@ -79,29 +83,7 @@
                                             <label><input type="radio" name="status" value="False">Desactivado</label>
                                         </div>
                                     </div>
-                                </div>
-                                {{-- <div class="col-md-4 hidden">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fab fa-elementor"></i>
-                                        </span>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Fecha</label>
-                                            <input id="fechaAlta" type="text" class="form-control" name="fechaAlta" value="{{$fechaAlta}}" readonly>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 hidden">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fab fa-elementor"></i>
-                                        </span>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Hora</label>
-                                            <input id="horaAlta" type="text" class="form-control" name="horaAlta" value="{{$horaAlta}}" readonly>
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                </div>                                
                                 <!-- <small>En la api se registar el <cite title="idHotel">idHotel</cite></small> -->
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                             </div>
@@ -109,7 +91,20 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </form>            
+        @else
+            <div class="card">                    
+                <div class="card-content">
+                    <div class="col-md-2 text-center">
+                        <p><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Código: 403</p>
+                    </div>
+                    <div class="col-md-10">
+                            <h3>Usted no tiene permiso para registrar una carta</h3>
+                            <p>Primero tiene que tener permisos para la operación que pretende realizar<br/>Por favor solicita que se le asigne este permiso a su usuario.</p>                               
+                    </div>
+                </div>                    
+            </div>
+        @endif        
     </div>
 </div>
 @endsection

@@ -3,7 +3,15 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-        <a href="{{ route('metodospago.create') }}" class="btn btn-success"><i class="fas fa-money-bill-alt"></i> Nuevo metodoPago</a>
+        @php
+            $mpPermisocrear= Session::get('MetodosPago.crear');                                                         
+            $mpPermisoLeer= Session::get('MetodosPago.leer'); 
+            $mpPermisoActualizar= Session::get('MetodosPago.actualizar'); 
+            $mpPermisoBorrar= Session::get('MetodosPago.borrar');                         
+        @endphp
+        @if ($mpPermisocrear==1)
+            <a href="{{ route('metodospago.create') }}" class="btn btn-success"><i class="fas fa-money-bill-alt"></i> Nuevo metodoPago</a>            
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -31,11 +39,17 @@
                                         <tr>
                                             <td>{{$metodoPago->id}}</td>
                                             <td>{{$metodoPago->name}}</td>                                           
-                                            <td>{{$metodoPago->descripcion}}</td>                                                         
+                                            <td>{{$metodoPago->descripcion}}</td>  
                                             <td>
-                                                <a href="{{ route('metodospago.show', $metodoPago->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('metodospago.edit', $metodoPago->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteMetodoPago({{$metodoPago->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if ($mpPermisoLeer==1)
+                                                    <a href="{{ route('metodospago.show', $metodoPago->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                         
+                                                @endif
+                                                @if ($mpPermisoLeer==1 && $mpPermisoActualizar==1)
+                                                    <a href="{{ route('metodospago.edit', $metodoPago->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>
+                                                @endif
+                                                @if ($mpPermisoBorrar==1)
+                                                    <a onclick="deleteMetodoPago({{$metodoPago->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>                                              
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach

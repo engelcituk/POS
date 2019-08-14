@@ -2,11 +2,14 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
+        @php 
+            $productoPermisoActualizar= Session::get('Productos.actualizar'); 
+        @endphp
         <a href="{{ route('productos.index')}}" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Volver</a>
-        <form method="POST" action="{{ route('productos.actualizar')}}" enctype="multipart/form-data">
+        @if ($productoPermisoActualizar==1)
+            <form method="POST" action="{{ route('productos.actualizar')}}" enctype="multipart/form-data">
             <div class="row">
-                <div class="col-md-12">                                     
-                    
+                <div class="col-md-12">                                                         
                     @php
                         $imgProducto =$producto->imagen;
                         $imgDefault=asset('img/faces/defaultProducto.png'); //Esto es para la imagen por default                    
@@ -234,7 +237,20 @@
                     </div>
                 </div>
             </div>
-        </form>        
+        </form> 
+        @else
+            <div class="card">                    
+                <div class="card-content">
+                    <div class="col-md-2 text-center">
+                        <p><i class="fa fa-exclamation-triangle fa-5x"></i><br/>Código: 403</p>
+                    </div>
+                    <div class="col-md-10">
+                            <h3>Usted no tiene permiso para editar un producto</h3>
+                            <p>Primero tiene que tener permisos para la operación que pretende realizar<br/>Por favor solicita que se le asigne este permiso a su usuario.</p>                               
+                    </div>
+                </div>                    
+            </div>
+        @endif               
     </div>
 </div>
 <script>

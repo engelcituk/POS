@@ -3,7 +3,16 @@
 @section('content')
 <div class="content">
     <div class="container-fluid">
-        <a href="{{ route('categorias.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nueva categoría</a>
+        @php
+            $categoriaPermisocrear= Session::get('Categorias.crear');                                                         
+            $categoriaPermisoLeer= Session::get('Categorias.leer'); 
+            $categoriaPermisoActualizar= Session::get('Categorias.actualizar'); 
+            $categoriaPermisoBorrar= Session::get('Categorias.borrar');                         
+        @endphp
+
+        @if ($categoriaPermisocrear==1)                   
+            <a href="{{ route('categorias.create') }}" class="btn btn-success"><i class="fas fa-h-square"></i> Nueva categoría</a>     
+        @endif
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -36,9 +45,15 @@
                                             <td>{{$categoria->name}}</td>
                                             <td>{{$fecha}}</td>                           
                                             <td>
-                                                <a href="{{ route('categorias.show', $categoria->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('categorias.edit', $categoria->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                                
-                                                <a onclick="deleteCategoria({{$categoria->id}},'{{$categoria->imagen}}')" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>
+                                                @if ($categoriaPermisoLeer==1)
+                                                    <a href="{{ route('categorias.show', $categoria->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                        
+                                                @endif
+                                                @if ($categoriaPermisoLeer==1 && $categoriaPermisoActualizar==1)
+                                                    <a href="{{ route('categorias.edit', $categoria->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>                                          
+                                                @endif                                                
+                                                @if ($categoriaPermisoBorrar==1)
+                                                    <a onclick="deleteCategoria({{$categoria->id}},'{{$categoria->imagen}}')" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>                               
+                                                @endif                                              
                                             </td>
                                         </tr>
                                     @endforeach
