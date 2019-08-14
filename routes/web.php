@@ -15,8 +15,10 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::middleware(['filtroAcceso'])->group(function () {
 
+//ruta y controller que se usa cuando middleware verifica que user no tiene ningun permiso
 Route::get('sinpermisos', 'SinPermisosController@index')->name('permisos.index');
-// Route::get('all/zonaspv', 'OrdenController@AllZonasPV')->name('all.zonas');
+
+//rutas a todo la parte de ordenar
 Route::get('ordenar', 'OrdenController@index')->name('ordenar.index');
 Route::get('ordenar/obtenerzonas', 'OrdenController@obtenerTodasLasZonasPV')->name('ordenar.getzonas');
 Route::get('ordenar/obtenermesaszona/{idZona}', 'OrdenController@getMesasPorZona')->name('ordenar.obtenermesaszona');
@@ -32,25 +34,15 @@ Route::get('buscar/alergenos/{idproducto}', 'OrdenController@obtenerAlergenosPro
 Route::get('obtenercuenta/{idcuenta}', 'OrdenController@obtenerCuentaApi')->name('obtenercuenta.api');
 Route::get('getcuenta/{idcuenta}', 'OrdenController@getCuenta')->name('getcuenta.api');
 Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarProductoCuenta')->name('cancelardetalle.api');
-// Route::get('/prueba','Controller@obtenerAccessToken');
 
-//Hago que mis rutas sean validados con el middleware (auth) para el login
-// Route::middleware(['auth'])->group(function () {  
-    // Route::get('/home', 'HomeController@index')->name('home.index');
-    // Route::get('/ordenar', 'OrdenController@index')->name('ordenar.index');
+//rutas historicos
 Route::get('historico', 'HistoricoController@index')->name('historico.index');
 Route::post('all/historico', 'HistoricoController@AllHistorico')->name('all.historico');
 Route::post('historico/cancelar/{cuenta}', 'HistoricoController@cancelarCuenta')->name('historico.cancelar');
 Route::post('historico/imprimir/{cuenta}', 'HistoricoController@imprimirCuenta')->name('historico.imprimir');
 Route::get('historico/{cuenta}', 'HistoricoController@obtenerCuenta')->name('historico.cuenta');
 Route::get('historico/detalle/{cuenta}', 'HistoricoController@obtenerDetalleCuenta')->name('historico.detalle');
-// Route::delete('historico/{cuenta}', 'HistoricoController@destroy')->name('historico.destroy');
-// Route::get('/roles', 'RolesController@index')->name('roles.index');
-// Route::resource('usuarios', 'UsuariosController'); 
-// Route::get('/usuarios', 'UsuariosController@index')->name('usuarios.index');
-Route::get('all/usuarios', 'UsuariosController@AllUser')->name('all.usuarios');
-Route::get('all/roles', 'RolesController@AllRole')->name('all.roles');
-    // Route::post('/usuarios', 'UsuariosController@store')->name('usuarios');
+
 
 //rutas de menu configuracion -->hoteles
 Route::get('all/hoteles', 'HotelesController@AllHoteles')->name('all.hoteles');
@@ -198,16 +190,6 @@ Route::get('categorias/{categoria}', 'CategoriaController@show')->name('categori
 Route::get('categorias/{categoria}/edit', 'CategoriaController@edit')->name('categorias.edit');
 Route::post('categorias/actualizar', 'CategoriaController@actualizar')->name('categorias.actualizar');
 Route::post('categorias/{categoria}', 'CategoriaController@destroy')->name('categorias.destroy');
-
-//rutas de menu configuracion-->subcategorias
-Route::get('all/subcategorias', 'SubCategoriaController@AllSubCategorias')->name('all.subcategorias');
-Route::get('subcategorias', 'SubCategoriaController@index')->name('subcategorias.index');
-Route::get('subcategorias/create', 'SubCategoriaController@create')->name('subcategorias.create');
-Route::post('subcategorias/store', 'SubCategoriaController@store')->name('subcategorias.store');
-Route::get('subcategorias/{carta}', 'SubCategoriaController@show')->name('subcategorias.show');
-Route::get('subcategorias/{carta}/edit', 'SubCategoriaController@edit')->name('subcategorias.edit');
-Route::put('subcategorias/actualizar', 'SubCategoriaController@actualizar')->name('subcategorias.actualizar');
-Route::delete('subcategorias/{carta}', 'SubCategoriaController@destroy')->name('subcategorias.destroy');
 
 //Productos    
 Route::get('all/productos', 'ProductosController@AllProduct')->name('all.productos');
