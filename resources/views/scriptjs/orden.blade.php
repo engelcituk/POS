@@ -1176,8 +1176,13 @@ function updateRoom() {
                 '_method': 'POST',
                 'cuentaTemporal':datosCuentaTemporal,                
                 '_token': csrf_token
+            },
+            beforeSend: function () {
+                $('#modalCargando').modal({backdrop: 'static', keyboard: false });
+                $("#animacionCargando").html('<div class="loader"></div>');
             },        
             success: function(respuesta) {
+                $("#modalCargando").modal("hide");
                 //  console.log("su respuesta desde CONtroller", respuesta);
                 var respuesta = JSON.parse(respuesta);
                 var ok = respuesta["ok"];
@@ -1239,15 +1244,19 @@ function updateRoom() {
                     'motivo':motivoCancelacion,
                     '_token': csrf_token
                 },
+                beforeSend: function () {
+                    $("#modalCancelarProducto").modal("hide");
+                    $('#modalCargando').modal({backdrop: 'static', keyboard: false });
+                    $("#animacionCargando").html('<div class="loader"></div>');
+                },
                 success: function(respuesta) {
+                    $("#modalCargando").modal("hide");//oculto el modal que muestra el cargando
                     var respuesta=JSON.parse(respuesta);                 
                     var ok = respuesta["ok"]; 
-
-                    console.log(respuesta);
+                    // console.log(respuesta);
                     if(ok){
                         console.log("la cuenta bdAPi",datosCuentaAPi);
-                        $("#modalCancelarProducto").modal("hide");
-
+                        
                         $("table tbody").find('#posi'+posicionProducto).each(function(){
                             $(this).parents("tr").remove();
                         });
@@ -1375,7 +1384,12 @@ function updateRoom() {
             'idFormaPago':idFormaPago,
             '_token': csrf_token
         },
-        success: function(respuesta) {             
+        beforeSend: function () {
+            $('#modalCargando').modal({backdrop: 'static', keyboard: false });
+            $("#animacionCargando").html('<div class="loader"></div>');
+        },
+        success: function(respuesta) {
+             $("#modalCargando").modal("hide");             
              var respuesta = JSON.parse(respuesta);
              console.log("respuesta",respuesta);
              var ok = respuesta["ok"];                
@@ -1424,10 +1438,16 @@ function updateRoom() {
                     '_method': 'POST',
                     '_token': csrf_token
                 },
+                beforeSend: function () {
+                    $('#modalCargando').modal({backdrop: 'static', keyboard: false });
+                    $("#animacionCargando").html('<div class="loader"></div>');
+                },
                 success: function(respuesta) {
+                    $("#modalCargando").modal("hide")
                     console.log("respuesta controlador",respuesta);                    
                 },
-                error: function(respuesta) { 
+                error: function(respuesta) {
+                    $("#modalCargando").modal("hide")
                     console.log("respuesta controlador",respuesta);                    
 
                 }

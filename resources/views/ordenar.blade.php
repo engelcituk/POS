@@ -160,6 +160,7 @@
     @include('ordenar.partials.modalCancelarProducto')
     @include('ordenar.partials.modalAgregarDesc')
     @include('ordenar.partials.modalMetodoPago')
+    @include('ordenar.partials.modalCargando')
 
 </div>
 

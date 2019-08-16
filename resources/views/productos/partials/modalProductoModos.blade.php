@@ -20,7 +20,7 @@
                     </thead>
                     
                     <tbody>
-                        @if ($modos!=""))
+                        @if ($modos!="")
                             @foreach($modos as $modo)                                            
                             <tr>
                                 <td>{{$modo->descripcion}}</td>                                
@@ -34,7 +34,7 @@
                                 <td>                                    
                                     <label>
                                         <input id="radioModo{{$modo->id}}" type="radio" name="principalRadio[]" onclick="seleccionarRadioModo({{$modo->id}})" value="{{$modo->id}}"> Principal     
-                                        <input type="text" id="inputPrincipalModo{{$modo->id}}" class="" name="principal[]"  readonly> 
+                                        <input type="text" class="principalCampo" id="inputPrincipalModo{{$modo->id}}" name="principal[]" readonly> 
                                     </label>
                                 </td>
                             </tr>

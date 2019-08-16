@@ -14,7 +14,6 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::middleware(['filtroAcceso'])->group(function () {
-
 //ruta y controller que se usa cuando middleware verifica que user no tiene ningun permiso
 Route::get('sinpermisos', 'SinPermisosController@index')->name('permisos.index');
 

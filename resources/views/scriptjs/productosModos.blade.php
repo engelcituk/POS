@@ -49,7 +49,6 @@ function seleccionarRadio(){
 
 
 function productoModos(idProducto){
-// console.log("click");
 $("#idProductoModo").val(idProducto);
     var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
     $.ajax({
@@ -66,16 +65,30 @@ $("#idProductoModo").val(idProducto);
             if(ok){
                 var objeto=respuesta["objeto"];                                    
                 modosId=[];
+                principal=[];
                 for(i =0;  i<objeto.length; i++){
                     modosId[i]= objeto[i].idModo;
+                    principal[i]= objeto[i].principal;
                 } 
                  
-                console.log("modosP",modosPrincipal);                          
+                // console.log("modosP",principal);                          
                 $("input[name='idModo[]']").each( function () {                   
                     if((modosId.indexOf(parseInt($(this).val()))!=-1) ) {               
                         $(this).prop('checked', true);                                                
-                    }	
-                });                
+                    }                    	
+                });
+                
+                // $("input[name='principalRadio[]']").each( function () {
+                //     for(i =0;  i<principal.length; i++){
+                //         if((modosId.indexOf(parseInt($(this).val()))!=-1) ) {               
+                //             $(this).prop('checked', true);                                                
+                //         } 
+                //     }                                                          	
+                // });
+                
+                
+                  
+                             
             }else{
                 var mensaje=respuesta["mensaje"];
                 console.log("respuesta: ",mensaje);
