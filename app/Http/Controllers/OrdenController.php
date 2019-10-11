@@ -100,7 +100,7 @@ class OrdenController extends Controller
 
         $categorias = $datos->objeto;
 
-        return $categorias;
+        return $categorias; 
 
     }
 

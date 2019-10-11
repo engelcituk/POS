@@ -15,7 +15,7 @@
                                 {{-- {{ method_field('PUT') }} --}}
                                 <input id="name" type="hidden" class="form-control" name="id" value="{{$metodoPago->id}}" required>
                                 <div class="card-content">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-money-bill"></i>
@@ -27,7 +27,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-file-signature"></i>
@@ -39,6 +39,23 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                        <strong>Cargo habitacion</strong>
+                                        <div class="radio">
+                                            @php
+                                            $conCargoHab= $metodoPago->cargoHab;//para obtener el estado de la impresora
+                                            $radios = ($conCargoHab == 1) ?
+                                            "<label><input type='radio' name='cargoHab' value='True' checked>Si</label>
+                                            <label><input type='radio' name='cargoHab' value='False'>No</label>" :
+                                            "<label><input type='radio' name='cargoHab' value='True'>Si</label>
+                                            <label><input type='radio' name='cargoHab' value='False' checked>No</label>";
+                                            echo $radios;
+                                            @endphp
+                                        </div>
+                                    </div>
+                                    </div>
+                                    
                                     <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                                 </div>
                             </form>

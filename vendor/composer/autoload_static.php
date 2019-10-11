@@ -473,7 +473,7 @@ class ComposerStaticInit7d02520802a1695c0bf69296d9b87d2b
         'App\\Http\\Controllers\\ReciboTicketController' => __DIR__ . '/../..' . '/app/Http/Controllers/ReciboTicketController.php',
         'App\\Http\\Controllers\\RestaurantesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RestaurantesController.php',
         'App\\Http\\Controllers\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolesController.php',
-        'App\\Http\\Controllers\\SubCategoriaController' => __DIR__ . '/../..' . '/app/Http/Controllers/SubCategoriaController.php',
+        'App\\Http\\Controllers\\SinPermisosController' => __DIR__ . '/../..' . '/app/Http/Controllers/SinPermisosController.php',
         'App\\Http\\Controllers\\TurnosController' => __DIR__ . '/../..' . '/app/Http/Controllers/TurnosController.php',
         'App\\Http\\Controllers\\ZonasController' => __DIR__ . '/../..' . '/app/Http/Controllers/ZonasController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

@@ -14,7 +14,7 @@
                         @csrf
                         <div class="row">
                             <div class="card-content">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-money-bill"></i>
@@ -31,7 +31,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-file-signature"></i>
@@ -44,6 +44,15 @@
                                                 <strong>{{ $errors->first('descripcion') }}</strong>
                                             </span>
                                             @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="radio">
+                                            <strong>Cargo habitación</strong>
+                                            <label><input type="radio" name="cargoHab" value="True"><span class="circle"></span><span class="check"></span>Si</label>
+                                            <label><input type="radio" name="cargoHab" value="False" checked=""><span class="circle"></span><span class="check"></span>No</label>
                                         </div>
                                     </div>
                                 </div>

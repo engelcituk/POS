@@ -33,7 +33,7 @@ return array(
     'App\\Http\\Controllers\\ReciboTicketController' => $baseDir . '/app/Http/Controllers/ReciboTicketController.php',
     'App\\Http\\Controllers\\RestaurantesController' => $baseDir . '/app/Http/Controllers/RestaurantesController.php',
     'App\\Http\\Controllers\\RolesController' => $baseDir . '/app/Http/Controllers/RolesController.php',
-    'App\\Http\\Controllers\\SubCategoriaController' => $baseDir . '/app/Http/Controllers/SubCategoriaController.php',
+    'App\\Http\\Controllers\\SinPermisosController' => $baseDir . '/app/Http/Controllers/SinPermisosController.php',
     'App\\Http\\Controllers\\TurnosController' => $baseDir . '/app/Http/Controllers/TurnosController.php',
     'App\\Http\\Controllers\\ZonasController' => $baseDir . '/app/Http/Controllers/ZonasController.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',

@@ -223,7 +223,8 @@ function getMesasPorZona(idZona) {
                 $("#mensajeRespuesta").html('<div class="loader"></div>');
             },
             success: function(respuesta) { 
-                var resultado=JSON.parse(respuesta);                
+                console.log(respuesta);              
+                var resultado=JSON.parse(respuesta);  
                 var objeto = resultado["objeto"];
                 var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
                 var reserva=objeto["reserva"];                
@@ -249,7 +250,7 @@ function getMesasPorZona(idZona) {
                     $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontro Información de Huesped</strong></div>');
                 }
             },            
-            error: function() {
+            error: function(respuesta) {
             console.log(respuesta);
             }
     });                    
@@ -1388,7 +1389,7 @@ function updateRoom() {
             $('#modalCargando').modal({backdrop: 'static', keyboard: false });
             $("#animacionCargando").html('<div class="loader"></div>');
         },
-        success: function(respuesta) {
+        success: function(respuesta) {            
              $("#modalCargando").modal("hide");             
              var respuesta = JSON.parse(respuesta);
              console.log("respuesta",respuesta);

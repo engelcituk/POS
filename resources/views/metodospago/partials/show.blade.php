@@ -9,13 +9,35 @@
         <div class="row">
             <div class="col-md-12">
                 @if ($mpPermisoLeer==1)
-                    <div class="card card-profile">
-                        <div class="card-content">                                                    
-                            <div class="well well-sm">
-                                <p>El nombre del metodoPago {{$metodoPago->name}}</p>
+                    
+                    <div class="col-md-12">
+                        <div class="card card-profile">
+                            <div class="card-avatar">
+                                <img class="img" src="{{asset('img/faces/Money.png')}}">
                             </div>
-                            <div class="well well-sm">
-                                <p>La descripcion es {{$metodoPago->descripcion}}</p>
+                            <div class="card-content">
+                                
+                                <h3 class="category text-black">Metodo de pago: <strong>{{$metodoPago->name}}</strong></h3><br>
+                                
+                                <h4 class="card-title">Descripcion: {{$metodoPago->descripcion}}</h4>
+
+                                <div class="form-group">
+                                    <strong>Cargo habitacion</strong>
+                                    <div class="radio">
+                                        @php
+                                        $conCargoHab= $metodoPago->cargoHab;//para obtener el estado de la impresora
+                                        $radios = ($conCargoHab == 1) ?
+                                        "<label><input type='radio' name='cargoHab' onclick='return false;'' value='True' checked>Si</label>
+                                        <label><input type='radio' name='cargoHab' onclick='return false;'' value='False'>No</label>" :
+                                        "<label><input type='radio' name='cargoHab' onclick='return false;'' value='True'>Si</label>
+                                        <label><input type='radio' name='cargoHab' onclick='return false;'' value='False' checked>No</label>";
+                                        echo $radios;
+                                        @endphp
+                                    </div>
+                                </div>
+
+                                <a href="{{ route('metodospago.index') }}" class="btn btn-rose btn-round"><i class="fas fa-arrow-left"></i> Volver</a>
+                                
                             </div>
                         </div>
                     </div>
