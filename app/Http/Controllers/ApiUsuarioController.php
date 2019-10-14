@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Collection;
-use Alert;
+// use Alert;
 
 class ApiUsuarioController extends Controller
 {
@@ -82,11 +82,11 @@ class ApiUsuarioController extends Controller
 
                     $this->guardarPermisosUsuario($idUsuario, $idPermiso);
                 }
-                Alert::success('Exito', 'Usuario registrado exitosamente ' . $respuestaMensaje);
+                // Alert::success('Exito', 'Usuario registrado exitosamente ' . $respuestaMensaje);
             }                        
         }else{
             $respuestaMensaje = $datos->mensaje;
-            Alert::error('Error', 'El registro del usuario falló '.$respuestaMensaje);
+            // Alert::error('Error', 'El registro del usuario falló '.$respuestaMensaje);
         }
         return redirect('/users');
     }
@@ -210,9 +210,9 @@ class ApiUsuarioController extends Controller
         $respuestaMensaje = $datos->mensaje; 
 
         if ($respuestaOk == 1) {
-            Alert::success('Exito', 'Usuario modificado exitosamente');
+            // Alert::success('Exito', 'Usuario modificado exitosamente');
         } else {
-            Alert::error('Error', 'La actualización del usuario falló '.$respuestaMensaje);
+            // Alert::error('Error', 'La actualización del usuario falló '.$respuestaMensaje);
         }
 
         return redirect('/users');

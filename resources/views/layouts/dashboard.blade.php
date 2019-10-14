@@ -278,8 +278,8 @@
             
         </div>
     </div>
-    <script src="{{asset('sweetalert/dist/sweetalert.min.js')}}" type="text/javascript"></script>
-    @include('sweet::alert')
+    {{-- <script src="{{asset('sweetalert/dist/sweetalert.min.js')}}" type="text/javascript"></script>
+    @include('sweet::alert') --}}
 </body>
 <!--   Core JS Files   -->
 

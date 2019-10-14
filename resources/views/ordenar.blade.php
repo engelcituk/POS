@@ -48,7 +48,7 @@
                         {{-- <h4 class="card-title">Tomar Orden</h4> --}}
                        
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-5">                                                              
                                 <div id="wrapper">
                                     <div id="receiptData">                                         
                                         <div id="receipt-data">
@@ -58,13 +58,13 @@
                                                 <strong>Cuenta: </strong><span id="cuentaMesaSpan"></span> 
                                                 <strong>Habitación: </strong><span id="habMesaSpan"></span>                            
                                             </div>
-                                            <div class="table-responsive" id="tablaItemProductos">                                             
-                                                <table  class="table table-striped tablaProductos">
+                                            <div class="" id="tablaItemProductos">   
+                                                <table  class="table table-striped table-condensed tablaProductos">
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center"><i class="fas fa-table"></i> <span id="idCuentaSpan"></span></th>
-                                                            <th class="text-center">Nombre</th>                                              
-                                                            <th class="text-center" >Cantidad</th>
+                                                            <th class="text-center">Nom.</th>                                              
+                                                            <th class="text-center" >Cant.</th>
                                                             <th class="text-center" >Precio</th>
                                                             <th class="text-center" >Total</th>        
                                                         </tr>
@@ -80,24 +80,28 @@
 
                                         <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
                                             <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                               <div class="btn-group" role="group" id="btnAddRoom">                                               <button type="button" class="btn btn-info" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"><i class='fas fa-bed'></i>  Habitación</button>                                                                   
-                                                </div>
-                                                <div class="btn-group" role="group">                                                              
+                                               <div class="btn-group" role="group" id="btnAddRoom">                                               <button type="button" class="btn btn-warning" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"><i class='fas fa-bed'></i>  Habitación</button>                                                                   
+                                                </div> 
+                                                <div class="btn-group" role="group">      
                                                     <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "><i class="fas fa-paper-plane"></i> Enviar</button>
                                                 </div>
                                             </div>                                          
                                         </div>
                                         <div id="buttons2" style="text-transform:uppercase;" class="no-print">
-                                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                                <div class="btn-group" role="group">
-                                                    <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar</button>
-                                                </div>
+                                            <div class="btn-group btn-group-justified" role="group" aria-label="...">                                                
                                                 <div class="btn-group" role="group">
                                                     <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"> <i class="fas fa-percentage"></i> Descuento</a>
                                                 </div>  
                                                 <div class="btn-group" role="group">
-                                                    <a class="btn btn-block btn-info" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
+                                                    <a class="btn btn-block btn-success" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
                                                 </div>                                               
+                                            </div>                                          
+                                        </div>
+                                        <div id="buttons3" style="text-transform:uppercase;" class="no-print">
+                                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                                <div class="btn-group" role="group">
+                                                    <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar cuenta</button>
+                                                </div>                                                                                    
                                             </div>                                          
                                         </div>
 
@@ -139,9 +143,13 @@
                                     @endforeach                                    
                                 </div>                                         
                               
-                                <div id="lstProductos">
+                                {{-- <div id="lstProductos">
                                     <ul class="nav nav-pills nav-pills-icons" id="UlList" role="tablist">                                                               
                                     </ul>
+                                    
+                                </div> --}}
+                                <div class="row display-flex" id="UlList2">
+                                        
                                 </div>
                             </div>
                         </div>

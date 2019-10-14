@@ -6,7 +6,7 @@ use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 use Image;
-use Alert;
+
  
 class CategoriaController extends Controller
 {

@@ -228,4 +228,12 @@ table #tablaItemProductos { border-collapse: collapse; width: 100%;
     margin-bottom: 0;
 }*/
 
+/* 
+.thumbnail p {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+} */
 
+.tablaProductos {border-collapse:collapse; table-layout:fixed; width:100%;}
+.tablaProductos td { width:20%; word-wrap:break-word;}
