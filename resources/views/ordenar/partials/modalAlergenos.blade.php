@@ -8,16 +8,20 @@
       <div class="modal-body">                              
         <div class="row">
           <form action="#" id="formAlergenos">
-            @foreach($alergenos as $alergeno)                                
-              <div class="col-md-4">
-                  <div class="checkbox checkbox-group required">                              
-                      <label class="">
-                        <input type="checkbox" id="idAlergenoCheckProducto{{$alergeno->id}}" name="idAlergenoProducto[]" value="{{$alergeno->id}}" onclick="return false;">
-                       <strong><span id="labelCheck{{$alergeno->id}}">{{$alergeno->name}}</span> </strong>                         
-                      </label>                                            
-                  </div>
-              </div>                                         
-           @endforeach
+             @if ($alergenos!="")
+                @foreach($alergenos as $alergeno)                                
+                  <div class="col-md-4">
+                      <div class="checkbox checkbox-group required">                              
+                          <label class="">
+                            <input type="checkbox" id="idAlergenoCheckProducto{{$alergeno->id}}" name="idAlergenoProducto[]" value="{{$alergeno->id}}" onclick="return false;">
+                          <strong><span id="labelCheck{{$alergeno->id}}">{{$alergeno->name}}</span> </strong>                         
+                          </label>                                            
+                      </div>
+                  </div>                                         
+                @endforeach
+             @else
+              Aún no hay alergenos dados de alta                                    
+             @endif            
           </form>         
         </div>            
       </div>

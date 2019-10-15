@@ -92,15 +92,15 @@
                             </a>
                         @endif
                         
-                        <div class="collapse" id="pagesExamples">
+                        <div class="collapse {{collapsarItemMenu(['ordenar.index','historico.index'])}}" id="pagesExamples">
                             <ul class="nav">
                                  @if($tomarOrdenPermisoLeer==1)
-                                    <li class="">
+                                    <li class="{{activarRutaMenu('ordenar.index')}}">                                    
                                         <a href="{{ route('ordenar.index') }}">Tomar orden</a>
                                     </li>
                                  @endif                                                                                                
                                 @if($historicoPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('historico.index')}}">                                    
                                         <a href="{{ route('historico.index')}}">Historico</a>
                                     </li>
                                 @endif
@@ -137,85 +137,85 @@
                                 </p>
                             </a>        
                         @endif                         
-                        <div class="collapse" id="componentsExamples">
+                        <div class="collapse {{collapsarItemMenu(['hoteles.index','rolesapi.index','users.index','restaurantes.index','impresoras.index','centrospreparacion.index','turnos.index','zonas.index','mesas.index','cartas.index', 'categorias.index', 'productos.index','menuscartas.index','metodospago.index','modos.index','alergenos.index'])}}" id="componentsExamples">
                             <ul class="nav">
                                 @if($hotelesPermisoLeer==1)
-                                    <li>
-                                        <a href="{{ route('hoteles.index') }}">Hoteles</a>
+                                    <li class="{{activarRutaMenu('hoteles.index')}}">
+                                        <a href="{{ route('hoteles.index') }}" >Hoteles</a>
                                     </li>
                                 @endif                                
                                 @if( $rolesPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('rolesapi.index')}}">
                                         <a href="{{ route('rolesapi.index') }}">Roles</a>
                                     </li>
                                 @endif
                                 @if($usuariosPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('users.index')}}">
                                         <a href="{{ route('users.index') }}">Usuarios</a>
                                     </li>
                                 @endif
                                 @if($pvPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('restaurantes.index')}}">                                    
                                         <a href="{{ route('restaurantes.index') }}">Puntos de venta</a>
                                     </li>
                                 @endif
                                  @if($impresorasPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('impresoras.index')}}">                                    
                                         <a href="{{ route('impresoras.index') }}">Impresoras</a>
                                     </li>
                                 @endif
                                  @if($cpPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('centrospreparacion.index')}}">                                    
                                         <a href="{{ route('centrospreparacion.index') }}">Centros de preparación</a>
                                     </li>
                                 @endif
                                  @if($turnosPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('turnos.index')}}">                                    
                                         <a href="{{ route('turnos.index') }}">Turnos PV</a>
                                     </li>
                                 @endif
                                  @if($zonasPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('zonas.index')}}">                                    
                                         <a href="{{ route('zonas.index') }}">Zonas</a>
                                     </li>
                                 @endif
                                 @if($mesasPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('mesas.index')}}">                                    
                                         <a href="{{ route('mesas.index') }}">Mesas</a>
                                     </li>
                                 @endif 
                                 @if($cartasPermisoLeer==1)
-                                    <li>                               
+                                    <li class="{{activarRutaMenu('cartas.index')}}">           
                                         <a href="{{ route('cartas.index') }}">Cartas</a>
                                     </li>
                                 @endif 
                                 @if($categoriasPermisoLeer==1)
-                                    <li>                        
+                                    <li class="{{activarRutaMenu('categorias.index')}}">        
                                         <a href="{{ route('categorias.index') }}">Categorias</a>
                                     </li>
                                 @endif 
                                 @if($productosPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('productos.index')}}">                                    
                                         <a href="{{ route('productos.index') }}">Productos</a>
                                     </li>
                                 @endif 
                                 @if(session()->has('MenusCarta'))
-                                    <li>
+                                    <li class="{{activarRutaMenu('menuscartas.index')}}">                                    
                                         <a href="{{ route('menuscartas.index') }}">Menús cartas</a>
                                     </li>
                                 @endif 
                                 @if($menuscartaPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('metodospago.index')}}">                                    
                                         <a href="{{ route('metodospago.index') }}">Métodos de pago</a>
                                     </li>
                                 @endif 
                                 @if($modosPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('modos.index')}}">                                    
                                         <a href="{{ route('modos.index') }}">Modos</a>
                                     </li>
                                 @endif
                                 @if($alergenosPermisoLeer==1)
-                                    <li>
+                                    <li class="{{activarRutaMenu('alergenos.index')}}">                                    
                                         <a href="{{ route('alergenos.index') }}">Alergénos</a>
                                     </li>
                                 @endif                                                               
@@ -326,7 +326,7 @@
 <script src="{{asset('js/bootstrap-notify.min.js')}}"></script>
 <script src="{{asset('js/selectize.min.js')}}"></script>
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-<!-- <script src="{{asset('js/demo.js')}}"></script> -->
+ <script src="{{asset('js/demo.js')}}"></script> 
 <!-- <script src="{{asset('js/init.js')}}"></script> -->
 @if(request()->is('hoteles') || request()->is('rolesapi') || request()->is('users') || request()->is('restaurantes') || request()->is('impresoras') || request()->is('centrospreparacion') || request()->is('turnos') || request()->is('zonas') || request()->is('mesas') || request()->is('cartas') || request()->is('categorias') || request()->is('productos') || request()->is('menuscartas') || request()->is('metodospago') || request()->is('modos') || request()->is('alergenos')) 
 <script src="{{asset('js/datatables.js')}}"></script>   
@@ -334,10 +334,6 @@
 
 <script src="{{asset('js/owl.carousel.min.js')}}"></script>
 
-
-
-
-<!-- <script src="{{asset('js/crudUsuarios.js')}}"></script> -->
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
 @include('scriptjs/ticketRecibo')
 @if(request()->is('ordenar'))

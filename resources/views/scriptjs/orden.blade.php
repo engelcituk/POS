@@ -6,6 +6,7 @@ $(document ).ready(function() {
     //     $(".slideProductos").children('p:first').addClass("bg-primary");                
     // } 
    getZonas();
+   demo.initMaterialWizard();
 
 });
 //para mostrar zonas y sus mesas respectivamente
@@ -223,7 +224,7 @@ function getMesasPorZona(idZona) {
                 $("#mensajeRespuesta").html('<div class="loader"></div>');
             },
             success: function(respuesta) { 
-                console.log(respuesta);              
+                // console.log(respuesta);              
                 var resultado=JSON.parse(respuesta);  
                 var objeto = resultado["objeto"];
                 var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               

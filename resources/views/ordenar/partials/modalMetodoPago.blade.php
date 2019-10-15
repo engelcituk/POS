@@ -9,6 +9,7 @@
             <div class="modal-body">
               <input type="text" class="form-control hidden" id="idCuentaCerrar">                                                   
                 <div class="row">
+                  @if ($metodosPago!="")
                     <div class="col-md-12">                                                        
                         <div class="form-group">
                           <select class="form-control" name="formaPagoSelect" id=formaPagoSelect>                              
@@ -18,6 +19,9 @@
                           </select>
                         </div>
                     </div>
+                  @else
+                    Aún no hay métodos de pago dados de alta                                    
+                  @endif                    
                 </div>            
             </div>
             <div class="modal-footer">                                

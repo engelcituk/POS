@@ -127,6 +127,7 @@
             <div id="alergenos" class="tab-pane fade">
               <p>Seleccione alergenos</p>
                <div class="row">
+             @if ($alergenos!="")
                 @foreach($alergenos as $alergeno)                                
                   <div class="col-md-4">
                     <div class="checkbox checkbox-group required">                              
@@ -136,6 +137,9 @@
                       </div>
                   </div>                                         
                 @endforeach
+              @else
+                Aún no hay alergenos dados de alta                                    
+              @endif 
               </div> 
             </div>
           

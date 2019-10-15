@@ -8,6 +8,10 @@
             <div class="col-md-12">
                 <div class="card">                    
                     <div class="card-content">
+                        <!-- Button trigger modal -->
+                    {{-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#wizardModal">
+                    Launch demo modal
+                    </button> --}}
                         <div class="row">
                             <div class="col-md-3 col-sm-6 col-xs-6">
                                 <nav aria-label="breadcrumb" role="navigation">
@@ -160,6 +164,7 @@
             </div>
             <!-- end col-md-12 -->
         </div>
+        
     </div>
     @include('ordenar.partials.modalOpenMesa')
     @include('ordenar.partials.modalAddRoom')
@@ -169,6 +174,9 @@
     @include('ordenar.partials.modalAgregarDesc')
     @include('ordenar.partials.modalMetodoPago')
     @include('ordenar.partials.modalCargando')
+    @include('ordenar.partials.modalTab')
+
+
 
 </div>
 
