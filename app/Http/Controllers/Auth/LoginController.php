@@ -85,6 +85,7 @@ class LoginController extends Controller
         $respuesta = json_decode($respuesta);        
         return $respuesta;
     }
+    
     public function obtenerListaPermisosUsuario($idUsuario){
 
         $respuesta = app('App\Http\Controllers\ApiUsuarioController')->obtenerDatosPermisosUsuario($idUsuario);

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')img/login.jpg
+@section('content')
 <div class="full-page login-page" filter-color="black" data-image="{{asset('img/login.jpg')}}">
     <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
     <div class="content">
@@ -9,12 +9,13 @@
                 <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <div class="card card-login card-hidden">
-                            <div class="card-header text-center" data-background-color="blue">
-                                <h4 class="card-title">Inicio de sesión</h4>                                
-                            </div>                            
-                            <div class="card-content">
-                                
+                          
+                         @if ($hoteles != "")
+                            <div class="card card-login card-hidden">
+                                <div class="card-header text-center" data-background-color="blue">
+                                    <h4 class="card-title">Inicio de sesión</h4>                                
+                                </div>                            
+                            <div class="card-content">                                
                                 <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-h-square"></i>
@@ -79,19 +80,7 @@
                                         </span>
                                         @endif
                                     </div>
-                                </div>                                
-                                <!-- <div class="input-group">
-                                    <span class="input-group-addon">
-                                        <i class="material-icons">check_circle</i>
-                                    </span>
-                                    <div class="form-group label-floating">         
-                                        @if (Route::has('password.request'))
-                                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                        @endif
-                                    </div>
-                                </div> -->
+                                </div>                                                                
                             </div>
                             <div class="footer text-center">
                                 <!-- <button type="submit" class="btn btn-primary btn-simple btn-wd btn-lg">Let's go</button> -->
@@ -100,6 +89,20 @@
                                 </button>
                             </div>
                         </div>
+                         @else
+                         <div class="card card-login card-hidden">
+                                <div class="card-header text-center" data-background-color="red">
+                                    <h4 class="card-title">Inicio de sesión</h4>                                
+                                </div>                            
+                                <div class="card-content">  
+                                    <h6 class="card-title">Falta configurar el catalogo de hoteles</h6>                                
+
+                                    <p class="category text-justify">
+                                        El login se habilitará hasta que se haya terminado de dar de alta el catalogo de hoteles, productos,cartas.. etc                               
+                                    </p>                                                                                                
+                                </div>                            
+                        </div>                            
+                         @endif                        
                     </form>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('content')img/login.jpg
+@section('content')
 <div class="full-page login-page" filter-color="black" data-image="{{asset('img/login.jpg')}}">
     <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
     <div class="content">

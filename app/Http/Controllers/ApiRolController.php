@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Collection;
-use Alert;
+// use Alert;
 
 class ApiRolController extends Controller{ 
    
@@ -126,17 +126,25 @@ class ApiRolController extends Controller{
     public function store(Request $request)
     {
         $arrayIdPermisos = $request->get('idPermiso'); //otengo el array(checkboxes) de permisos que se asignan a los roles
+        // dd($arrayIdPermisos);
         $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddRol', ['form_params' => $request->all()]);
         $datos = json_decode($respuesta);
         $respuestaObjeto = $datos->objeto; //obtengo la respuesta del la api con el rol creado
 
         $idRol = $respuestaObjeto->id;//obtengo el id del rol creado, para usar en el guardado de permisos
         // dd($arrayIdPermisos);
-        foreach ($arrayIdPermisos as $idPermiso) {
-            $this->guardarPermisosRol($idRol, $idPermiso);
-        }
-
-        Alert::success('Exito', 'El rol y sus permisos se han creado exitosamente');
+        // si array de permisos no vienen nullos
+        if($arrayIdPermisos != null){
+            if (sizeof($arrayIdPermisos) > 1) {
+                foreach ($arrayIdPermisos as $idPermiso) {
+                    $this->guardarPermisosRol($idRol, $idPermiso);
+                }
+            } else {
+                $idPermiso = $arrayIdPermisos[0];
+                $this->guardarPermisosRol($idRol, $idPermiso);
+            }
+        }                
+        // Alert::success('Exito', 'El rol y sus permisos se han creado exitosamente');
 
         return redirect('/rolesapi');
     }
