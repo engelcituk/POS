@@ -420,8 +420,18 @@ $("#ocupanteModal").change(function(){
                 'alergenos':alergenos,
                 'idMesa':idMesa,'reserva':reserva,'nombreCliente':nombreCliente,'habitacion':habitacion, 'pax':pax,
                 '_token': csrf_token
+            },
+            beforeSend: function () {
+                swal({
+                    title: 'Espere',
+                    text: 'Guardando cuenta',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
             },        
             success: function(respuesta) {
+                swal.close(); 
                 var resultado = JSON.parse(respuesta);
                 console.log("resultado", resultado);
                 var ok = resultado["ok"];
@@ -1165,7 +1175,17 @@ function updateRoom() {
                 'reserva': reserva,'nombre':nombre,'habitacion':habitacion,'pax':pax,
                 '_token': csrf_token
             },
-            success: function(respuesta) {             
+            beforeSend: function () {
+                swal({
+                    title: 'Espere',
+                    text: 'Actualizando datos',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
+            }, 
+            success: function(respuesta) {
+                swal.close();             
                 var respuesta = JSON.parse(respuesta);
                 var ok = respuesta["ok"];
                 
@@ -1218,12 +1238,20 @@ function updateRoom() {
                 '_token': csrf_token
             },
             beforeSend: function () {
-                $('#modalCargando').modal({backdrop: 'static', keyboard: false });
-                $("#animacionCargando").html('<div class="loader"></div>');
+                // $('#modalCargando').modal({backdrop: 'static', keyboard: false });
+                // $("#animacionCargando").html('<div class="loader"></div>');
+                swal({
+                    title: 'Espere',
+                    text: 'Enviando producto(s) a centros de preparación',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
             },        
             success: function(respuesta) {
-                $("#modalCargando").modal("hide");
+                // $("#modalCargando").modal("hide");
                 //  console.log("su respuesta desde CONtroller", respuesta);
+                swal.close(); 
                 var respuesta = JSON.parse(respuesta);
                 var ok = respuesta["ok"];
                 // console.log("respuesta",respuesta);
@@ -1286,11 +1314,20 @@ function updateRoom() {
                 },
                 beforeSend: function () {
                     $("#modalCancelarProducto").modal("hide");
-                    $('#modalCargando').modal({backdrop: 'static', keyboard: false });
-                    $("#animacionCargando").html('<div class="loader"></div>');
+                    // $('#modalCargando').modal({backdrop: 'static', keyboard: false });
+                    // $("#animacionCargando").html('<div class="loader"></div>');
+                    swal({
+                        title: 'Espere',
+                        text: 'Cancelando producto en la cuenta',
+                        type : 'info',
+                        allowOutsideClick: false
+                    });
+                    swal.showLoading();
+
                 },
                 success: function(respuesta) {
-                    $("#modalCargando").modal("hide");//oculto el modal que muestra el cargando
+                    // $("#modalCargando").modal("hide");//oculto el modal que muestra el cargando
+                    swal.close(); 
                     var respuesta=JSON.parse(respuesta);                 
                     var ok = respuesta["ok"]; 
                     // console.log(respuesta);
@@ -1425,11 +1462,20 @@ function updateRoom() {
             '_token': csrf_token
         },
         beforeSend: function () {
-            $('#modalCargando').modal({backdrop: 'static', keyboard: false });
-            $("#animacionCargando").html('<div class="loader"></div>');
+            // $('#modalCargando').modal({backdrop: 'static', keyboard: false });
+            // $("#animacionCargando").html('<div class="loader"></div>');
+            swal({
+                title: 'Espere',
+                text: 'Cerrando la cuenta',
+                type : 'info',
+                allowOutsideClick: false
+            });
+            swal.showLoading();
         },
         success: function(respuesta) {            
-             $("#modalCargando").modal("hide");             
+            //  $("#modalCargando").modal("hide");
+             swal.close(); 
+             
              var respuesta = JSON.parse(respuesta);
              console.log("respuesta",respuesta);
              var ok = respuesta["ok"];                
@@ -1479,11 +1525,19 @@ function updateRoom() {
                     '_token': csrf_token
                 },
                 beforeSend: function () {
-                    $('#modalCargando').modal({backdrop: 'static', keyboard: false });
-                    $("#animacionCargando").html('<div class="loader"></div>');
+                    // $('#modalCargando').modal({backdrop: 'static', keyboard: false });
+                    // $("#animacionCargando").html('<div class="loader"></div>');
+                    swal({
+                        title: 'Espere',
+                        text: 'Imprimiendo la cuenta',
+                        type : 'info',
+                        allowOutsideClick: false
+                    });
+                   swal.showLoading();
                 },
                 success: function(respuesta) {
-                    $("#modalCargando").modal("hide")
+                    // $("#modalCargando").modal("hide");
+                    swal.close();
                     console.log("respuesta controlador",respuesta);                    
                 },
                 error: function(respuesta) {
