@@ -221,9 +221,17 @@ function getMesasPorZona(idZona) {
                 '_token': csrf_token
             },
             beforeSend: function () {
-                $("#mensajeRespuesta").html('<div class="loader"></div>');
+                // $("#mensajeRespuesta").html('<div class="loader"></div>');
+                swal({
+                    title: 'Espere',
+                    text: 'Buscando información del húesped',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
             },
-            success: function(respuesta) { 
+            success: function(respuesta) {
+                swal.close(); 
                 // console.log(respuesta);              
                 var resultado=JSON.parse(respuesta);  
                 var objeto = resultado["objeto"];
@@ -282,9 +290,17 @@ function getMesasPorZona(idZona) {
                 '_token': csrf_token
             },
             beforeSend: function () {
-                $("#mensajeRespuestaModal").html('<div class="loader"></div>');
+                // $("#mensajeRespuestaModal").html('<div class="loader"></div>');
+                swal({
+                    title: 'Espere',
+                    text: 'Buscando información del húesped',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
             },
-            success: function(respuesta) { 
+            success: function(respuesta) {
+                swal.close(); 
                 var resultado=JSON.parse(respuesta);                
                 var objeto = resultado["objeto"];
                 var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
@@ -461,8 +477,20 @@ $("#ocupanteModal").change(function(){
                 '_method': 'GET',
                 'idCategoria':idCategoria,
                 '_token': csrf_token
-            },            
+            },  
+            beforeSend: function () {                
+                // swal({
+                //     title: 'Espere',
+                //     text: 'Obteniendo productos de la categoría',
+                //     type : 'info',
+                //     allowOutsideClick: false
+                // });
+                // swal.showLoading();
+                $("#spinLoader").removeClass("hidden");
+            },          
             success: function(respuesta) {
+                // swal.close();
+                $("#spinLoader").addClass("hidden");
                 var respuesta=JSON.parse(respuesta);                 
                 var ok = respuesta["ok"];                
                 if(ok){
@@ -495,21 +523,17 @@ $("#ocupanteModal").change(function(){
                             var imgFinal= '{{ URL::asset('/storage/productos') }}'+'/'+imgProducto;
 
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
-                            resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;                                                                             
-                            // console.log("sus Alergenos",alergenosPOk);
-                        //    listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
-
+                            resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;                                                                                                       
                           tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></div></div>";
 
                         }
                     // listaProductos+="";                     
                     tumbnails+="";                     
-
-                    // $("#UlList").html(listaProductos);
+                    
                     $("#UlList2").html(tumbnails);
                                         
                 }else{
-                    // $("#UlList").html('<p>Sin productos para la categoria</p>');
+                    
                     $("#UlList2").html('<p>Sin productos para la categoria</p>');
                 }
             },
@@ -584,19 +608,15 @@ $("#ocupanteModal").change(function(){
                             var imgFinal= '{{ URL::asset('/storage/productos') }}'+'/'+imgProducto;                            
 
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
-                            resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;                                                                              
-                            // console.log("sus Alergenos",alergenosPOk);
-                        //    listaProductos+="<li><div class='well well-sm productosWell'><img src='"+resultadoImg+"' class='img-responsive' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><br><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><br><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></li>";
+                            resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;                                        
 
                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta="+idMenuCarta+" idProducto="+idProducto+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></div></div>";
                         }
-                    // listaProductos+="";                     
-                    // $("#UlList").html(listaProductos);
+                                        
                     $("#UlList2").html(tumbnails);
 
                     
-                }else{
-                    // $("#UlList").html('<p>Sin productos para la categoria</p>');
+                }else{                    
                     $("#UlList2").html('<p>Sin productos para la categoria</p>');
 
                 }                
