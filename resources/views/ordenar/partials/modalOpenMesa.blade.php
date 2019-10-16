@@ -5,15 +5,15 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"> <strong>Indique habitación || Alergenos</strong></h4>
       </div>
-      <div class="modal-body">                
+      <div class="modal-body">           
           <ul class="nav nav-tabs navPersonalizado">
             <li class="active"><a data-toggle="tab" href="#buscarHabitacion">Habitación</a></li>
             <li><a data-toggle="tab" href="#alergenos">Alergenos</a></li>   
           </ul>
           <div class="tab-content">
             <div id="buscarHabitacion" class="tab-pane fade in active">
-              <div class="row">         
-                <div class="col-md-4 col-sm-6 hidden">
+              <div class="row">
+                    <div class="col-md-4 col-sm-6 hidden">
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="fas fa-hotel"></i>
@@ -33,7 +33,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6">
+                
+                <div class="col-md-12">
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="fas fa-bed"></i>
@@ -41,16 +42,11 @@
                         <div class="form-group label-floating">
                             <label class="control-label">Habitación</label>
                             <input id="numHabitacion" type="text" class="form-control" name="numHabitacion" autofocus>                     
+                            <span class="btn btn-success pull-right" onclick="buscarHuesped()"><i class="fas fa-search"></i> Buscar</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                  {{-- span de tipo button que ejecuta funcion que trae datos del huesped --}}
-                  <span class="btn btn-success pull-right" onclick="buscarHuesped()"><i class="fas fa-search"></i> Buscar</span>
-                </div>
-               </div>        
-              <div id="mensajeRespuesta"></div>                      
-              <div class="row">    
+                  
                   <div class="col-md-6">
                     <div class="input-group"> 
                         <span class="input-group-addon">
@@ -74,8 +70,7 @@
                         </div>
                     </div>
                   </div>
-              </div>
-              <div class="row">    
+                 
                   <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -98,8 +93,7 @@
                         </div>
                     </div>
                   </div>
-              </div>
-              <div class="row">    
+                 
                   <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">
@@ -125,22 +119,22 @@
               </div>
             </div>
             <div id="alergenos" class="tab-pane fade">
-              <p>Seleccione alergenos</p>
-               <div class="row">
-             @if ($alergenos!="")
-                @foreach($alergenos as $alergeno)                                
-                  <div class="col-md-4">
-                    <div class="checkbox checkbox-group required">                              
-                          <label class="">
-                          <input type="checkbox" id="idAlergenoCheck" name="idAlergeno[]" value="{{$alergeno->id}}"><strong>{{$alergeno->name}}</strong>
-                          </label>                                            
-                      </div>
-                  </div>                                         
-                @endforeach
-              @else
-                Aún no hay alergenos dados de alta                                    
-              @endif 
-              </div> 
+              
+              @if ($alergenos!="")
+                 <div class="row">
+                    @foreach($alergenos as $alergeno)                             
+                      <div class="col-md-4">
+                        <div class="checkbox checkbox-group required">                              
+                              <label class="">
+                              <input type="checkbox" id="idAlergenoCheck" name="idAlergeno[]" value="{{$alergeno->id}}"><strong>{{$alergeno->name}}</strong>
+                              </label>                                            
+                          </div>
+                      </div>                                         
+                    @endforeach
+                 </div> 
+                  @else
+                    Aún no hay alergenos dados de alta                                    
+                  @endif 
             </div>
           
           </div>

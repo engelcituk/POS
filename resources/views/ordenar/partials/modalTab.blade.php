@@ -6,114 +6,141 @@
         <h4 class="modal-title" id="myModalLabel">Modal title</h4>
       </div>
       <div class="modal-body">
-        <div class="wizard-container">
-              <div class="card wizard-card" data-color="rose" id="wizardProfile">
-                <form action="#" method="">                    
-                    <div class="wizard-navigation">
-                        <ul>                            
-                            <li>
-                                <a href="#account" data-toggle="tab">Account</a>
-                            </li>
-                            <li>
-                                <a href="#address" data-toggle="tab">Address</a>
-                            </li>
-                        </ul>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+            <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>            
+        </ul>
+
+            <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 hidden">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fas fa-hotel"></i>
+                        </span>
+                        <div class="form-group label-floating">
+                            {{-- <label class="control-label">Codigo Hotel</label> --}}
+                            @php
+                                $idHotel= Session::get('idHotel');
+                                $datosHotel=App\Http\Controllers\HotelesController::obtenerHotelSesion($idHotel);  
+                                // dd($datosHotel);           
+                            @endphp
+                            <input id="codigoHotel" type="text" class="form-control" name="codigoHotel" value="{{$datosHotel->codHotel}}">
+                            <input id="idMesaModal" type="number" class="form-control" name="idMesaModal">   
+                            <input id="idPVModalOrdenar" type="number" class="form-control" name="idPVModalOrdenar" value="{{Session::get('idPuntoVenta')}}">  
+                            <input type="text" class="form-control" name="idCartaPVModal" id="idCartaPVModal" value="{{Session::get('idCarta')}} "> 
+                            <input id="idUserModalOrdenar" type="text" class="form-control" name="idUserModalOrdenar" value="{{Session::get('idUsuarioLogueado')}}">
+                        </div>
                     </div>
-                    <div class="tab-content">
+                </div>
+                
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="fas fa-bed"></i>
+                        </span>
+                        <div class="form-group label-floating">
+                            <label class="control-label">Habitación</label>
+                            <input id="numHabitacion" type="text" class="form-control" name="numHabitacion" autofocus>                     
+                            <span class="btn btn-success pull-right" onclick="buscarHuesped()"><i class="fas fa-search"></i> Buscar</span>
+                        </div>
+                    </div>
+                </div>
+                  
+                  <div class="col-md-6">
+                    <div class="input-group"> 
+                        <span class="input-group-addon">
+                            {{-- <i class="fas fa-restroom"></i> --}}Reserva
+                        </span>
                         
-                        <div class="tab-pane" id="account">
-                            <h4 class="info-text"> What are you doing? (checkboxes) </h4>
-                            <div class="row">
-                                <div class="col-lg-10 col-lg-offset-1">
-                                    <div class="col-sm-4">
-                                        <div class="choice" data-toggle="wizard-checkbox">
-                                            <input type="checkbox" name="jobb" value="Design">
-                                            <div class="icon">
-                                                <i class="fa fa-pencil"></i>
-                                            </div>
-                                            <h6>Design</h6>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="choice" data-toggle="wizard-checkbox">
-                                            <input type="checkbox" name="jobb" value="Code">
-                                            <div class="icon">
-                                                <i class="fa fa-terminal"></i>
-                                            </div>
-                                            <h6>Code</h6>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="choice" data-toggle="wizard-checkbox">
-                                            <input type="checkbox" name="jobb" value="Develop">
-                                            <div class="icon">
-                                                <i class="fa fa-laptop"></i>
-                                            </div>
-                                            <h6>Develop</h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="address">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h4 class="info-text"> Are you living in a nice area? </h4>
-                                </div>
-                                <div class="col-sm-7 col-sm-offset-1">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Street Name</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Street No.</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-5 col-sm-offset-1">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">City</label>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-5">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Country</label>
-                                        <select name="country" class="form-control">
-                                            <option disabled="" selected=""></option>
-                                            <option value="Afghanistan"> Afghanistan </option>
-                                            <option value="Albania"> Albania </option>
-                                            <option value="Algeria"> Algeria </option>
-                                            <option value="American Samoa"> American Samoa </option>
-                                            <option value="Andorra"> Andorra </option>
-                                            <option value="Angola"> Angola </option>
-                                            <option value="Anguilla"> Anguilla </option>
-                                            <option value="Antarctica"> Antarctica </option>
-                                            <option value="...">...</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group label-floating">
+                            {{-- <label class="control-label">Reserva</label> --}}
+                            <input type="text" class="form-control" id="reserva" name="reserva" readonly>  
                         </div>
                     </div>
-                    <div class="wizard-footer">
-                        <div class="pull-right">
-                            <input type='button' class='btn btn-next btn-fill btn-rose btn-wd' name='next' value='Next' />
-                            <input type='button' class='btn btn-finish btn-fill btn-rose btn-wd' name='finish' value='Finish' />
+                  </div>
+                  <div class="col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                            {{-- <i class="fas fa-file-signature"></i> --}}Nombre
+                        </span>
+                        <div class="form-group label-floating">
+                            {{-- <label class="control-label">Nombre</label> --}}
+                            <input type="text" class="form-control" id="nombre" name="nombre">  
                         </div>
-                        <div class="pull-left">
-                            <input type='button' class='btn btn-previous btn-fill btn-default btn-wd' name='previous' value='Previous' />
-                        </div>
-                        <div class="clearfix"></div>
                     </div>
-                </form>
+                  </div>
+                 
+                  <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            {{-- <i class="fas fa-child"></i> --}}room
+                        </span>
+                        <div class="form-group label-floating">
+                            {{-- <label class="control-label">Edad</label> --}}
+                            <input type="text" class="form-control" id="room" name="room" readonly>  
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                            {{-- <i class="fas fa-users"></i> --}}Pax
+                        </span>
+                        <div class="form-group label-floating">
+                            {{-- <label class="control-label">Ocupante</label> --}}
+                            <input type="number" min="1" class="form-control" id="ocupante" name="ocupante" >  
+                        </div>
+                    </div>
+                  </div>
+                 
+                  <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            {{-- <i class="fas fa-calendar-alt"></i> --}}Fecha salida
+                        </span>
+                        <div class="form-group label-floating">
+                            {{-- <label class="control-label">Fecha salida</label> --}}
+                            <input type="text" class="form-control" id="fechaSalida" name="fechaSalida"  readonly>  
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                      <div class="input-group">
+                        <span class="input-group-addon">
+                            {{-- <i class="fas fa-ring"></i> --}}Brazalete
+                        </span>
+                        <div class="form-group label-floating">
+                            {{-- <label class="control-label">Brazalete</label> --}}
+                            <input type="text" class="form-control" id="brazalete" name="brazalete" readonly>  
+                        </div>
+                    </div>
+                  </div>
+              </div>
+                
             </div>
-        </div>
+            <div id="menu1" class="tab-pane fade">                               
+             @if ($alergenos!="")
+                @foreach($alergenos as $alergeno)                                
+                  
+                    <div class="checkbox checkbox-group required">                              
+                          <label class="">
+                          <input type="checkbox" id="idAlergenoCheck" name="idAlergeno[]" value="{{$alergeno->id}}"><strong>{{$alergeno->name}}</strong>
+                          </label>                                            
+                      </div>
+                                                         
+                @endforeach
+              @else
+                Aún no hay alergenos dados de alta                                    
+              @endif 
+              
+            </div>            
+            </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>

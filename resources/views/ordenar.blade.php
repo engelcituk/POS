@@ -52,7 +52,9 @@
                         {{-- <h4 class="card-title">Tomar Orden</h4> --}}
                        
                         <div class="row">
-                            <div class="col-md-5">                                                              
+                            
+                            <div class="col-md-5">                                                                                          <a href="{{ route('ordenar.index') }}" class="btn btn-warning pull-right volverMesas"><i class="fas fa-arrow-left"></i> Volver</a>
+                                <br><br><br>   
                                 <div id="wrapper">
                                     <div id="receiptData">                                         
                                         <div id="receipt-data">
@@ -70,7 +72,7 @@
                                                             <th class="text-center">Nom.</th>                                              
                                                             <th class="text-center" >Cant.</th>
                                                             <th class="text-center" >Precio</th>
-                                                            <th class="text-center" >Total</th>        
+                                                            <th class="text-center" >Tot.</th>        
                                                         </tr>
                                                     </thead>
                                                     <tbody>                                                        
@@ -116,11 +118,10 @@
                                 
                                 <div class="row">
                                     <div id="opcionesTiempo">
-                                        <span class="btn btn-success btn-sm pull-left" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
-                                        <span class="btn btn-sm pull-left " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
-                                        <span class="btn btn-sm pull-left" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
-                                    </div> 
-                                    <a href="{{ route('ordenar.index') }}" class="btn btn-warning btn-sm pull-right volverMesas"><i class="fas fa-undo-alt"></i></i> Volver</a>
+                                        <span class="btn btn-sm pull-right" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
+                                        <span class="btn btn-sm pull-right " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
+                                        <span class="btn btn-success btn-sm pull-right" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
+                                    </div>                                    
                                 </div>
                                 <div id="sliderProductos" class="owl-carousel">
                                     <div class="slideProductos">

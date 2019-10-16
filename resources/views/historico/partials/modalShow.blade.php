@@ -72,8 +72,9 @@
         <br>
         <div id="showLoader"></div>
         <div class="row">          
-          <div id="invoice-POS">    
-            <table id="detalleCuenta" class="table table-hover" cellspacing="0" width="100%" style="width:100%">
+          <div id="invoice-POS">
+            <div class="table-responsive">
+              <table id="detalleCuenta" class="table table-hover" cellspacing="0" width="100%" style="width:100%">
                 <thead>
                     <tr class="info">
                         <th>Cantidad</th>
@@ -86,8 +87,9 @@
                 <tbody>
                     
                 </tbody>
-            </table>
-           </div><!--End Invoice-->         
+              </table>            
+            </div>              
+          </div><!--End Invoice-->         
         </div> 
         <div class="row">
           <div class="col-md-4 pull-right">
