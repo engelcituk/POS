@@ -360,7 +360,7 @@ function getMesasPorZona(idZona) {
      }else{
         swal({
             title: 'Oops...',
-            text: '¡Tiene un campo vacio!',
+            text: '¡Tiene campo(s) vacio(s)!',
             type: 'error',
             timer: '2000'
         });
@@ -1585,27 +1585,29 @@ function tiempoOrden() {
     }else if($("#tiempo3").hasClass("btn-success")){
         var tiempoElegido=$("#tiempo3").attr("tiempo");
     }
+    console.log('tiempo ',tiempoElegido);
     return tiempoElegido;
+    
 }
 //para marcar los span a las categorias seleccionadas
 $(document).on("click", ".slideProductos", function(){
-    var textoCategoria = $(this).children('p');
-   if(textoCategoria.hasClass("bg-success")){
-       $(this).children('p').removeClass("bg-success");
-       $(this).children('p').addClass("bg-primary");      
-
-   }else {       
-       $(this).children('p').addClass("bg-success");
-       $(this).children('p').removeClass("bg-primary");
-      
-} 
-       
-
-     
-    // textoCat.addClass("bg-successs");                        
-    // textoCat.remove("bg-success");
+    
+    $(".slideProductos").children('p').removeClass("btn-success");
+    $(this).children('p').addClass("btn-success");
+    // $(".slideProductos").children('p').addClass("btn-info");
+         
 })
-
+$("#lstBtnClientes").children('button:first').addClass("btn-success");
+        
+function selectCustomer(elemento){
+   
+    var botones = document.getElementsByClassName('btnC');    
+    for (i = 0; i < botones.length; i++) {       
+        botones[i].classList.remove('btn-success')
+    }    
+    elemento.classList.add('btn-success');
+    console.log(elemento.id);
+}
     
 </script>
 

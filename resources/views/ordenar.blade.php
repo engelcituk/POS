@@ -117,12 +117,26 @@
                             <div class="col-md-7" id="idMesaAddProducts">
                                 
                                 <div class="row">
-                                    <div id="opcionesTiempo">                                        
-                                        <span class="btn btn-sm pull-right" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
-                                        <span class="btn btn-sm pull-right " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
-                                        <span class="btn btn-success btn-sm pull-right" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
-                                    </div>                                    
+                                    <div class="col-md-6" id="lstBtnClientes">
+                                        <button class="btn btn-sm btnC" id="btn1" onclick="selectCustomer(this)">1</button>
+                                        <button class="btn btn-sm btnC" id="btn2" onclick="selectCustomer(this)">2</button>
+                                        <button class="btn btn-sm btnC" id="btn3" onclick="selectCustomer(this)">3</button>
+                                        <button class="btn btn-sm btnC" id="btn4" onclick="selectCustomer(this)">4</button>
+                                        <button class="btn btn-sm btnC" id="btn5" onclick="selectCustomer(this)">5</button>
+                                        <div class="radio">
+                                            <label><input type="radio" name="conAlergia">Sin alergia</label>
+                                            <label><input type="radio" name="conAlergia">Con alergia</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div id="opcionesTiempo">                                        
+                                            <span class="btn btn-sm pull-right" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
+                                            <span class="btn btn-sm pull-right " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
+                                            <span class="btn btn-success btn-sm pull-right" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
+                                        </div>
+                                    </div>                                                                        
                                 </div>
+                                <br>
                                 <div id="sliderProductos" class="owl-carousel">
                                     <div class="slideProductos">
                                         <div class="post-img">                                            
@@ -131,7 +145,7 @@
                                                 {{-- <span class="label" categoria="masVendidos">Más vendidos</span>          --}}
                                             </div>
                                         </div>
-                                        <p class="post-title bg-primary" categoria="masVendidos">
+                                        <p class="post-title btn-success" categoria="masVendidos">
                                             Más vendidos
                                         </p>                                        
                                     </div>
@@ -143,7 +157,7 @@
                                                 </div>
                         
                                             </div>
-                                            <p class="post-title bg-success">{{$categoria->name}}</p>
+                                            <p class="post-title ">{{$categoria->name}}</p>
                                         </div>                
                                     @endforeach                                    
                                 </div>
@@ -151,7 +165,7 @@
                                 <span class="text-center"><i id="spinLoader" class="fas fa-spinner fa-spin fa-3x hidden"></i></span>
                                 {{-- <div id="lstProductos">
                                     <ul class="nav nav-pills nav-pills-icons" id="UlList" role="tablist">                                                               
-                                    </ul>
+                                    </ul> 
                                     
                                 </div> --}}
                                 <div class="row display-flex" id="UlList2">
