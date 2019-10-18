@@ -164,13 +164,22 @@ function getMesasPorZona(idZona) {
         $("#btnAddDescuento").attr("btnIdCuenta",idCuenta); 
         $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);
         
-        $("#cuentaMesaSpan").text(cuentaMesa);       
+        $("#cuentaMesaSpan").text(cuentaMesa);
+        crearCuentaTemporal(idPV,idMesa);                   
         obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
         // comprobarCuentaHabitacion(idPV,idMesa);
         getProductosMasVendidos();
         
     }
 
+ }
+ var lstProductos=[];
+ function crearCuentaTemporal(idPV,idMesa){
+     var cadena=String(idPV)+String(idMesa);
+     var cuentaTemporal="cuentaTemporal"+cadena;
+     if (!localStorage.getItem(cuentaTemporal)) {               
+        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));      
+    }
  }
  function getIdCuenta(idPV,idMesa){    
     var variable=idPV+idMesa;
@@ -191,7 +200,7 @@ function getMesasPorZona(idZona) {
                     var ok = respuesta["ok"];
                     if(ok){
                         var objeto =  respuesta["objeto"];                          
-                        localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto
+                        localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto                        
                         var cuentaGet = JSON.parse(localStorage.getItem(variable));
                         var idCuenta =cuentaGet["id"];
                     }                 
@@ -232,8 +241,8 @@ function getMesasPorZona(idZona) {
             },
             success: function(respuesta) {
                 swal.close(); 
-                // console.log(respuesta);              
                 var resultado=JSON.parse(respuesta);  
+                console.log(resultado);              
                 var objeto = resultado["objeto"];
                 var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
                 var reserva=objeto["reserva"];                
@@ -636,7 +645,7 @@ $("#ocupanteModal").change(function(){
         }
     });
 }
-function getModosProductoModal(idProducto,idMenuCarta,modosProducto){    
+function getModosProductoModal(idProducto,idMenuCarta,modosProducto){        
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     var longitudModos = modosProducto.length;
     var idPV= $("#idPVModalOrdenar").val(); 
@@ -673,8 +682,8 @@ function getModosProductoModal(idProducto,idMenuCarta,modosProducto){
         $(this).find('form')[0].reset();
     });    
  }
- 
-var lstProductos=[];
+
+
 function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) { 
       
     var idPV= $("#idPVModalOrdenar").val(); 
@@ -808,7 +817,7 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
     $("#tablaItemProductos tfoot").empty();
     var cadena=String(idPV)+String(idMesa);  
     var cuenta = JSON.parse(localStorage.getItem(cadena)); 
-     var sumaApiTotales=leerCuentaApi(idPV, idMesa); //lo que se tiene de la api
+    var sumaApiTotales=leerCuentaApi(idPV, idMesa, idCuenta); //lo que se tiene de la api
     //  console.log("sumaApiTotales",sumaApiTotales);
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
@@ -898,13 +907,15 @@ function mostrarTotales(cadena) {
     $("table tfoot").append(sdescuento);//sumaSubTotales         
     $("table tfoot").append(totalFinal);//sumaSubTotales
 }
- function leerCuentaApi(idPV, idMesa) {
+ function leerCuentaApi(idPV, idMesa, idCuenta) {
      var counter=-1;
      var cuentaAPi="cuentaBD"+idPV+idMesa;
      var sumaSubTotales=0;
      var objCuentaAPi =JSON.parse(localStorage.getItem(cuentaAPi));
+     // genero los botones 
+     generarBotonesClientes(idPV,idMesa); 
     if (typeof objCuentaAPi === 'undefined' || objCuentaAPi === null) {
-        console.log("no tienes definido la variable");
+        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
     }else{
         // console.log(objCuentaAPi);
         // console.log(objCuentaAPi[0]["idCuenta"]);              
@@ -1505,49 +1516,49 @@ function updateRoom() {
     });
  }
  //funcion con sweetalert para reimprimir cuenta
-    function imprimirCuenta() {
-        var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr"); 
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');
-        swal({
-            title: '¿Seguro de realizar la impresión de la cuenta?',
-            type: 'warning',
-            showCancelButton: true,
-            cancelButtonColor: '#d33',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: '¡Sí, imprimir!',
-            cancelButtonText: '¡No, desistir!'
-        }).then(function() {
-            $.ajax({
-                url: "{{ url('historico/imprimir') }}" + '/'+idCuenta,
-                type: "POST",
-                data: {
-                    '_method': 'POST',
-                    '_token': csrf_token
-                },
-                beforeSend: function () {
-                    // $('#modalCargando').modal({backdrop: 'static', keyboard: false });
-                    // $("#animacionCargando").html('<div class="loader"></div>');
-                    swal({
-                        title: 'Espere',
-                        text: 'Imprimiendo la cuenta',
-                        type : 'info',
-                        allowOutsideClick: false
-                    });
-                   swal.showLoading();
-                },
-                success: function(respuesta) {
-                    // $("#modalCargando").modal("hide");
-                    swal.close();
-                    console.log("respuesta controlador",respuesta);                    
-                },
-                error: function(respuesta) {
-                    $("#modalCargando").modal("hide")
-                    console.log("respuesta controlador",respuesta);                    
+function imprimirCuenta() {
+    var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr"); 
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    swal({
+        title: '¿Seguro de realizar la impresión de la cuenta?',
+        type: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: '¡Sí, imprimir!',
+        cancelButtonText: '¡No, desistir!'
+    }).then(function() {
+        $.ajax({
+            url: "{{ url('historico/imprimir') }}" + '/'+idCuenta,
+            type: "POST",
+            data: {
+                '_method': 'POST',
+                '_token': csrf_token
+            },
+            beforeSend: function () {
+                // $('#modalCargando').modal({backdrop: 'static', keyboard: false });
+                // $("#animacionCargando").html('<div class="loader"></div>');
+                swal({
+                    title: 'Espere',
+                    text: 'Imprimiendo la cuenta',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
+            },
+            success: function(respuesta) {
+                // $("#modalCargando").modal("hide");
+                swal.close();
+                console.log("respuesta controlador",respuesta);                    
+            },
+            error: function(respuesta) {
+                $("#modalCargando").modal("hide")
+                console.log("respuesta controlador",respuesta);                    
 
-                }
-            });
+            }
         });
-    }
+    });
+}
 
  function cerrarDia(idPuntoVenta) {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -1597,8 +1608,25 @@ $(document).on("click", ".slideProductos", function(){
     // $(".slideProductos").children('p').addClass("btn-info");
          
 })
-$("#lstBtnClientes").children('button:first').addClass("btn-success");
-        
+function generarBotonesClientes(idPV,idMesa) {
+    
+    var cuentaMesa=String(idPV)+String(idMesa);
+    console.log('la cuenta es ',cuentaMesa); 
+
+    if (localStorage.getItem(cuentaMesa) ){
+        cuenta = JSON.parse(localStorage.getItem(cuentaMesa));      
+        numPax =cuenta["pax"];
+        n=0;
+        botones="";
+            for (var i = 0; i < numPax; i++) {
+                n++;  
+                botones+="<button class='btn btn-sm btnC' id='btn"+n+"' onclick='selectCustomer(this)'>"+n+"</button>";                
+            }
+        botones+="<div class=''><label><input type='checkbox' name='conAlergia'><strong>Con alergia</strong></label></div>";
+        $("#lstBtnClientes").html(botones);        
+    }  
+    $("#lstBtnClientes").children('button:first').addClass("btn-success");        
+}
 function selectCustomer(elemento){
    
     var botones = document.getElementsByClassName('btnC');    
@@ -1606,7 +1634,9 @@ function selectCustomer(elemento){
         botones[i].classList.remove('btn-success')
     }    
     elemento.classList.add('btn-success');
+     
     console.log(elemento.id);
+
 }
     
 </script>

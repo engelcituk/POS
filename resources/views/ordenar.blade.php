@@ -118,15 +118,16 @@
                                 
                                 <div class="row">
                                     <div class="col-md-6" id="lstBtnClientes">
-                                        <button class="btn btn-sm btnC" id="btn1" onclick="selectCustomer(this)">1</button>
+                                        {{-- <button class="btn btn-sm btnC" id="btn1" onclick="selectCustomer(this)">1</button>
                                         <button class="btn btn-sm btnC" id="btn2" onclick="selectCustomer(this)">2</button>
                                         <button class="btn btn-sm btnC" id="btn3" onclick="selectCustomer(this)">3</button>
                                         <button class="btn btn-sm btnC" id="btn4" onclick="selectCustomer(this)">4</button>
-                                        <button class="btn btn-sm btnC" id="btn5" onclick="selectCustomer(this)">5</button>
-                                        <div class="radio">
-                                            <label><input type="radio" name="conAlergia">Sin alergia</label>
-                                            <label><input type="radio" name="conAlergia">Con alergia</label>
-                                        </div>
+                                        <button class="btn btn-sm btnC" id="btn5" onclick="selectCustomer(this)">5</button>                                        
+                                        <div class="checkbox checkbox-group"> 
+                                            <label>
+                                                <input type="checkbox" name="conAlergia"><strong>Con alergia</strong>
+                                            </label>
+                                        </div> --}}
                                     </div>
                                     <div class="col-md-6">
                                         <div id="opcionesTiempo">                                        
