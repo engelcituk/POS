@@ -26,6 +26,7 @@ Route::post('ordenar/addcuenta', 'OrdenController@guardarCuenta')->name('ordenar
 Route::post('ordenar/updatecuenta/{cuenta}', 'OrdenController@updateCuentaRoom')->name('ordenar.updatecuentaroom');
 Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name('ordenar.enviarcuenta');
 Route::post('ordenar/cerrarcuenta/{cuenta}', 'OrdenController@cerraCuenta')->name('ordenar.cerrarcuenta');
+Route::post('ordenar/addcuentaalergia', 'OrdenController@addCuentaAlergiaPax')->name('ordenar.cuentaalergia');
 Route::post('ordenar/cerrardia/{idpv}', 'OrdenController@cerrarDia')->name('ordenar.cerrardia');
 Route::get('obtener/productos', 'OrdenController@getProductosByCat')->name('obtener.productos');
 Route::get('ordenar/getfavoritos', 'OrdenController@getProductosFavoritos')->name('obtener.productosfavoritos');

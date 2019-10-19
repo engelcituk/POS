@@ -312,5 +312,14 @@ class OrdenController extends Controller
 
         
     }
+    public function addCuentaAlergiaPax(Request $request){
+
+        $idCuenta = $request->get('idCuenta');
+        $paxConAlergia = $request->get('paxConAlergia');
+       
+        $respuesta = $this->realizarPeticion('POST', $this->urlVenta."CuentaAlergia/{$idCuenta}/{$paxConAlergia}");
+
+        return $respuesta;
+    }
 }
 // 172.16.4.229 
