@@ -162,6 +162,8 @@ function getMesasPorZona(idZona) {
         $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
         var idCuenta = getIdCuenta(idPV,idMesa);            
         $("#btnAddDescuento").attr("btnIdCuenta",idCuenta); 
+        // genero los botones 
+        generarBotonesClientes(idPV,idMesa); 
         $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);
         
         $("#cuentaMesaSpan").text(cuentaMesa);
@@ -211,6 +213,26 @@ function getMesasPorZona(idZona) {
     }
    
     return idCuenta;
+ }
+ function actualizarCuenta(idPV, idMesa) {
+    idCuenta=$("#mesa"+idMesa).attr("idCuenta");     
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');    
+    $.ajax({
+        url: "{{url('getcuenta')}}"+'/'+idCuenta,
+        type: "GET",
+        data: {
+           '_method': 'GET',
+           '_token': csrf_token
+        },            
+        success: function(respuesta) {
+            var respuesta=JSON.parse(respuesta);
+            var ok = respuesta["ok"];
+            if(ok){
+                var objeto =  respuesta["objeto"];                          
+                localStorage.setItem(idPV+idMesa, JSON.stringify(objeto));                 
+            }                 
+        }
+    });
  }
  
  function buscarHuesped(){
@@ -455,6 +477,7 @@ $("#ocupanteModal").change(function(){
                     $("#btnAddDescuento").attr("btnIdCuenta",idCuenta);//creo los atributos
                     localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto
                     getProductosMasVendidos();
+                    generarBotonesClientes(idPV,idMesa); 
                 }else{
                     var mensaje=resultado["mensaje"];
                     swal({
@@ -497,14 +520,7 @@ $("#ocupanteModal").change(function(){
                 'idCategoria':idCategoria,
                 '_token': csrf_token
             },  
-            beforeSend: function () {                
-                // swal({
-                //     title: 'Espere',
-                //     text: 'Obteniendo productos de la categoría',
-                //     type : 'info',
-                //     allowOutsideClick: false
-                // });
-                // swal.showLoading();
+            beforeSend: function () {                               
                 $("#spinLoader").removeClass("hidden");
             },          
             success: function(respuesta) {
@@ -531,11 +547,12 @@ $("#ocupanteModal").change(function(){
                             // console.log("sus Alergenos",alergenosP);
                            if(alergenosP.length >0 ){
                                 //operador ternario
-                            // alergenosIdP = [];                            
+                                alergenosQueCoinciden = [];                            
                                 for (j = 0; j < alergenosP.length; j++) {
                                     if(alergenosIdHuesped.indexOf(alergenosP[j].idAlergeno)!=-1){
                                             colorAlergeno="label-warning";
                                             alergenoHaceMatch=true;
+                                            // console.log(alergenosP[j].idAlergeno);
                                     }
                                 } 
                             }
@@ -544,8 +561,10 @@ $("#ocupanteModal").change(function(){
                             var imgFinal= '{{ URL::asset('/storage/productos') }}'+'/'+imgProducto;
 
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
-                            resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;                                                                                                       
-                          tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></div></div>";
+                            resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;
+                            
+                            abrirModal=true;                                                                                             
+                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span></div></div></div>";
 
                         }
                     // listaProductos+="";                     
@@ -607,6 +626,7 @@ $("#ocupanteModal").change(function(){
 
                         for(i =0;  i<objeto.length; i++){
                             var colorAlergeno = "label-info";
+                            
                             var alergenoHaceMatch=false;                          
                             var idProducto=objeto[i]["TPV_Producto"]["id"];
                             var idMenuCarta=objeto[i]["id"];
@@ -617,13 +637,13 @@ $("#ocupanteModal").change(function(){
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
                             var modosProducto = JSON.stringify(objeto[i]["TPV_Producto"]["TPV_ProductoModos"]);                            
                             // console.log("sus modosProducto",modosProducto); 
-                           if(alergenosP.length >0 && alergenosIdHuesped.length > 0 ){
+                           if(alergenosP.length > 0 && alergenosIdHuesped.length > 0 ){
                                 //operador ternario
                             // alergenosIdP = [];                            
                                 for (j = 0; j < alergenosP.length; j++) {
                                     if(alergenosIdHuesped.indexOf(alergenosP[j].idAlergeno)!=-1){
-                                            colorAlergeno="label-warning";
-                                            alergenoHaceMatch=true;
+                                        colorAlergeno="label-warning";
+                                        alergenoHaceMatch=true;
                                     }
                                 } 
                             }
@@ -633,8 +653,8 @@ $("#ocupanteModal").change(function(){
 
                             var imgDefault ='img/faces/defaultProducto.png'; //Esto es para la imagen por default
                             resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;                                        
-
-                           tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+")'>Alergenos</span></div></div></div>";
+                           abrirModal=true;
+                           tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span></div></div></div>";
                         }
                                         
                     $("#UlList2").html(tumbnails);
@@ -748,13 +768,18 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
      $(".btnC").each( function () {                
         if($(this).hasClass("btn-success") && boolAlergenoMatch && checkAlergia){
             var comensalSeleccionado= $(this).attr("numComensal"); // btn numComensal            
-            console.log('Valor alergenoMatch',boolAlergenoMatch, 'con alergiaCheckbox',checkAlergia, 'comensal', comensalSeleccionado, 'idCuenta', idCuenta);
+            // console.log('Valor alergenoMatch',boolAlergenoMatch, 'con alergiaCheckbox',checkAlergia, 'comensal', comensalSeleccionado, 'idCuenta', idCuenta);
             guardarCuentaAlergiaPax(idCuenta,comensalSeleccionado);
         }
     });     
  }
  function guardarCuentaAlergiaPax(idCuenta,numPaxAlergico) {
-     var csrf_token = $('meta[name="csrf-token"]').attr('content');        
+    
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     var idPV= $("#idPVModalOrdenar").val(); 
+     var idMesa = localStorage.getItem("idMesaLS");
+     var cuenta =String(idPV)+String(idMesa); 
+
      $.ajax({
         url: "{{ url('ordenar/addcuentaalergia') }}",
         type: "POST",
@@ -767,7 +792,11 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
         success: function(respuesta) {            
             //  $("#modalCargando").modal("hide");                          
             var respuesta = JSON.parse(respuesta);
-            console.log("respuesta",respuesta);                                           
+            var ok = respuesta["ok"];
+            // console.log("respuesta",respuesta); 
+            if(ok) {                
+                actualizarCuenta(idPV, idMesa)                         
+            }                                       
         },
         error: function(respuesta) {                    
             console.log("respuesta",respuesta); 
@@ -953,8 +982,7 @@ function mostrarTotales(cadena) {
      var cuentaAPi="cuentaBD"+idPV+idMesa;
      var sumaSubTotales=0;
      var objCuentaAPi =JSON.parse(localStorage.getItem(cuentaAPi));
-     // genero los botones 
-     generarBotonesClientes(idPV,idMesa); 
+     
     if (typeof objCuentaAPi === 'undefined' || objCuentaAPi === null) {
         obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
     }else{
@@ -1079,9 +1107,11 @@ function addNota(indiceProducto,idPV,idMesa){
     datosCuentaTemporal[indiceProducto]["nota"]=nota;
     localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));   
 }
-function verAlergenos(idProducto) {
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');    
-    $('#myModalAlergenos').modal('show');
+function verAlergenos(idProducto, abrirModal) {
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    if(abrirModal){
+        $('#myModalAlergenos').modal('show');
+    }    
 
     $.ajax({
             url: "{{ url('buscar/alergenos') }}"+'/'+idProducto,
@@ -1124,7 +1154,7 @@ function marcarAlergenosMatch(idProducto){
     var variableLS =idPV+idMesaLS;
 
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
-    // console.log(variableLS);
+    console.log(datosCuentaObjeto);
     var idAlergenos = datosCuentaObjeto["TPV_AlergenosCuenta"];
    /* console.log(datosCuentaObjeto); console.log(idAlergenos[0].idAlergeno); alergenosIdHuesped = [8,9]; //aqui voy generando el array que recibo de los que tiene el huesped*/
     alergenosIdHuesped = [];
@@ -1133,15 +1163,43 @@ function marcarAlergenosMatch(idProducto){
     }
 //    console.log(idAlergenos);
     var contador=0;
+    // var nombreAlergeno=[];
     $("input[name='idAlergenoProducto[]']").each( function () {
         //    console.log(n)                        ;
         if((alergenosIdHuesped.indexOf(parseInt($(this).val()))!=-1) && $(this).prop("checked")){
             valorIdAlergeno= $(this).val();            
-            $("#labelCheck"+valorIdAlergeno).addClass("label label-warning");             
+            $("#labelCheck"+valorIdAlergeno).addClass("label label-warning");
+            var alergeno =$(this).attr("nombreAlergeno")
+            // nombreAlergeno.push(alergeno);             
             contador++;	
         }
     });
+    // console.log("alergenos coinciden, ",nombreAlergeno);
     //$(this).val().includes(alergenosIdHuesped[contador]) 
+}
+function getAlergenosMatchHuesped(idProducto){
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');        
+    $.ajax({
+            url: "{{ url('buscar/alergenos') }}"+'/'+idProducto,
+            type: "GET",
+            data: {
+                '_method': 'GET',
+                '_token': csrf_token
+            },            
+            success: function(respuesta) {
+                var resultado=JSON.parse(respuesta);
+                var ok = resultado["ok"];                
+                if(ok){//si ok es true obtengo los datos del objeto
+                    var objeto=resultado["objeto"];                                             
+                    console.log(objeto);
+                    // console.log(resultado.objeto[0].idAlergeno);                        
+                }
+            },
+            error: function(respuesta) {
+            resultado=JSON.parse(respuesta); 
+            console.log(resultado);
+        }
+    });    
 }
 function cargaAlergeno(idProducto){
     var idPV= $("#idPVModalOrdenar").val();
@@ -1653,33 +1711,66 @@ function generarBotonesClientes(idPV,idMesa) {
     
     var cuentaMesa=String(idPV)+String(idMesa);
     // console.log('la cuenta es ',cuentaMesa); 
-
     if (localStorage.getItem(cuentaMesa) ){
-        cuenta = JSON.parse(localStorage.getItem(cuentaMesa));      
+        cuenta = JSON.parse(localStorage.getItem(cuentaMesa));        
         numPax =cuenta["pax"];
+        idCuenta =cuenta["id"];
         n=0;
         botones="";
             for (var i = 0; i < numPax; i++) {
                 n++;  
-                botones+="<button class='btn btn-sm btnC' id='btn"+n+"' numComensal='"+n+"' onclick='selectCustomer(this)'>"+n+"</button>";                
+                botones+="<button class='btn btn-sm btnC' id='btn"+n+"' idCuenta='"+idCuenta+"' numComensal='"+n+"' onclick='selectCustomer(this,"+cuentaMesa+")'>"+n+"</button>";                
             }
         botones+="<div class=''><label><input type='checkbox' id='checkAlergia' name='conAlergia'><strong>Con alergia</strong></label></div>";
         $("#lstBtnClientes").html(botones);        
-    }  
-    $("#lstBtnClientes").children('button:first').addClass("btn-success");        
+    }      
+    marcarCheckboxDefault(cuentaMesa) ;
 }
-function selectCustomer(elemento){
+function selectCustomer(elemento, cuentaMesa){
    
-    var botones = document.getElementsByClassName('btnC');    
+    var botones = document.getElementsByClassName('btnC');
+    var numComensal= elemento.getAttribute("numComensal")    
+    
     for (i = 0; i < botones.length; i++) {       
         botones[i].classList.remove('btn-success')
     }    
-    elemento.classList.add('btn-success');
-     
-    console.log(elemento.id);
+    elemento.classList.add('btn-success'); 
+    //elemento.id; elemento.getAttribute("idCuenta");
+    if (localStorage.getItem(cuentaMesa) ){
+        cuenta = JSON.parse(localStorage.getItem(cuentaMesa));                
 
+        alergenosCuenta = cuenta["TPV_AlergenosCuenta"];
+
+        if(alergenosCuenta.length>0){
+            // console.log("con alergenos en la Cuenta", alergenosCuenta);        
+            var comensalList = alergenosCuenta.filter(function (comensalAlergia) {
+                return comensalAlergia.paxAlergia == numComensal;
+            });
+            // console.log("resultado filtro comnensal:", comensalList);
+                if(comensalList.length>0){
+                    $('#checkAlergia').prop('checked', true);
+                }else {
+                $('#checkAlergia').prop('checked', false);
+            }
+        }
+    }    
 }
-    
+function marcarCheckboxDefault(cuentaMesa) {
+    $("#lstBtnClientes").children('button:first').addClass("btn-success");
+    cuenta = JSON.parse(localStorage.getItem(cuentaMesa));
+    alergenosCuenta = cuenta["TPV_AlergenosCuenta"];
+    // console.log(alergenosCuenta);
+    if(alergenosCuenta.length>0){            
+        var comensalList = alergenosCuenta.filter(function (comensalAlergia) {
+            return comensalAlergia.paxAlergia == 1;
+        });               
+        if(comensalList.length>0){
+            $('#checkAlergia').prop('checked', true);
+        }else {
+            $('#checkAlergia').prop('checked', false);            
+        }                   
+    }
+}
 </script>
 
                         
