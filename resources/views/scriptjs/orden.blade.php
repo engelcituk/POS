@@ -706,37 +706,37 @@ $("#ocupanteModal").change(function(){
     //     selector: '[data-toggle="tooltip"]'
     // })
 }
-function getNombreAlergeno(){
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-    var idPV= $("#idPVModalOrdenar").val(); 
-    var idMesa = localStorage.getItem("idMesaLS");
-    var cuenta =String(idPV)+String(idMesa); 
+// function getNombreAlergeno(){
+//     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+//     var idPV= $("#idPVModalOrdenar").val(); 
+//     var idMesa = localStorage.getItem("idMesaLS");
+//     var cuenta =String(idPV)+String(idMesa); 
 
-    $.ajax({
-        url: "{{ url('ordenar/addcuentaalergia') }}",
-        type: "POST",
-        data: {
-            '_method': 'POST',
-            'idCuenta': idCuenta,          
-            'paxConAlergia':numPaxAlergico,                                
-            '_token': csrf_token
-        },        
-        success: function(respuesta) {            
-            //  $("#modalCargando").modal("hide");                          
-            var respuesta = JSON.parse(respuesta);
-            var ok = respuesta["ok"];
-            // console.log("respuesta",respuesta); 
-            if(ok) {                
-                actualizarCuenta(idPV, idMesa);
-                // verAlergenos(idProducto, false);                        
-            }                                       
-        },
-        error: function(respuesta) {                    
-            console.log("respuesta",respuesta); 
-        }
-    });
+//     $.ajax({
+//         url: "{{ url('ordenar/addcuentaalergia') }}",
+//         type: "POST",
+//         data: {
+//             '_method': 'POST',
+//             'idCuenta': idCuenta,          
+//             'paxConAlergia':numPaxAlergico,                                
+//             '_token': csrf_token
+//         },        
+//         success: function(respuesta) {            
+//             //  $("#modalCargando").modal("hide");                          
+//             var respuesta = JSON.parse(respuesta);
+//             var ok = respuesta["ok"];
+//             // console.log("respuesta",respuesta); 
+//             if(ok) {                
+//                 actualizarCuenta(idPV, idMesa);
+//                 // verAlergenos(idProducto, false);                        
+//             }                                       
+//         },
+//         error: function(respuesta) {                    
+//             console.log("respuesta",respuesta); 
+//         }
+//     });
  
-}
+// }
 function getModosProductoModal(idProducto,idMenuCarta,modosProducto,idCuenta){        
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     var longitudModos = modosProducto.length;
@@ -830,22 +830,21 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
      var idAttr = "#producto"+idProducto;
      var boolAlergenoMatch  = JSON.parse($(idAttr).attr('alergenoMatch'));      
      var checkAlergia=$('#checkAlergia').prop('checked');
-     var comensal = 1;
+     var numeroComensal;
      var alergias = "";     
      var nota="";
-
-    $(".btnC").each( function () {                
+     $(".btnC").each( function () {                
         if($(this).hasClass("btn-success")){
-            numeroComensal= $(this).attr("numComensal"); // btn numComensal             
+            numeroComensal= $(this).attr("numComensal"); // btn numComensal                            
         }
     });
 
-    nota = "(Comensal: "+numeroComensal+" - Alergias:"+alergias+" - Modos:"+descripcionModo+")";
+    nota = "("+numeroComensal+" , "+alergias+" , "+descripcionModo+")";
 
     $(".btnC").each( function () {                
         if($(this).hasClass("btn-success") && boolAlergenoMatch && checkAlergia){
             alergiasHuesped  = $(idAttr).attr('nombreAlergenosHuesped');      
-            nota = "(Comensal: "+numeroComensal+" - Alergias: "+alergiasHuesped+" - Modos: "+descripcionModo+")";            
+            nota = "("+numeroComensal+" , Alergias: "+alergiasHuesped+" , "+descripcionModo+")";            
         }
     });
     return nota;
@@ -934,17 +933,37 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
             var descripcionModo = "";
             for (i = 0; i < datosCuentaTemporal.length; i++) {
                 if(datosCuentaTemporal[i]["idProducto"]==idProducto ){
-                    var cantPrevia= datosCuentaTemporal[i]["cantidad"];
-                    var notaPrevia= datosCuentaTemporal[i]["nota"];
-                    var nuevaNota= addNotaDetallePax(idProducto, descripcionModo);
-                    datosCuentaTemporal[i]["cantidad"] = cantPrevia+1;
-                    datosCuentaTemporal[i]["nota"] = notaPrevia+"-"+nuevaNota;
+                    
+                    $(".btnC").each( function () {                
+                        if($(this).hasClass("btn-success")){
+                            numeroComensal= parseInt($(this).attr("numComensal")); // btn numComensal                            
+                        }
+                    });
 
+                    var nuevaNota= addNotaDetallePax(idProducto, descripcionModo);
+                    var notaPrevia= datosCuentaTemporal[i]["nota"];
+
+                    var comensalAnterior = JSON.parse(localStorage.getItem("comensalAnterior")); 
+
+                    if (numeroComensal != comensalAnterior){
+                        nota = notaPrevia+"-"+nuevaNota;
+                        console.log("entro aqi 1");
+                        
+                    }else{
+                        nota = notaPrevia;
+                        console.log("entro aqi 2");
+                    }
+                    localStorage.setItem("comensalAnterior",numeroComensal);                            
+                    var cantPrevia= datosCuentaTemporal[i]["cantidad"];
+                    datosCuentaTemporal[i]["cantidad"] = cantPrevia+1;
+                    datosCuentaTemporal[i]["nota"] = nota;
+                    localStorage.setItem("comensalAnterior",numeroComensal); 
                     localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
                     leerCuentaTemporal(idPV,idMesa);
                 }
             }
-        }else{            
+        }else{
+                      
             lstProductos.push(datosProducto);
             localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
             leerCuentaTemporal(idPV,idMesa);
@@ -953,19 +972,20 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
  }
  function seRepiteProductoCuentaTemporal(datosCuentaTemporal,datosProducto){
     var seRepiteProducto=false;
-     
-    var logintudCuentaTemp= datosCuentaTemporal.length;    
-    var datosProducto=JSON.parse(datosProducto);      
-    if(logintudCuentaTemp>0){
-        var idProductoB=datosProducto["idProducto"];
-        var resultado = datosCuentaTemporal.filter(producto => producto.idProducto == idProductoB);
-        var longResultado=resultado.length;
-        if(longResultado>0){
-             seRepiteProducto=true;
-        }else{
-            seRepiteProducto=false;                      
-        }           
-    }    
+    if(datosCuentaTemporal){
+        var logintudCuentaTemp= datosCuentaTemporal.length;    
+        var datosProducto=JSON.parse(datosProducto);      
+        if(logintudCuentaTemp>0){
+            var idProductoB=datosProducto["idProducto"];
+            var resultado = datosCuentaTemporal.filter(producto => producto.idProducto == idProductoB);
+            var longResultado=resultado.length;
+            if(longResultado>0){
+                seRepiteProducto=true;
+            }else{
+                seRepiteProducto=false;                      
+            }           
+        }
+    }        
     return seRepiteProducto;
  }
  function seleccionarModo(){
@@ -1532,7 +1552,8 @@ function updateRoom() {
     
     var cuentaAPi="cuentaBD"+idPV+idMesa;
     var datosCuentaAPi =JSON.parse(localStorage.getItem(cuentaAPi));
-
+    var idCuenta= datosCuentaAPi[posicionProducto]["idCuenta"];
+    console.log("idCuenta", idCuenta);
     if(motivoCancelacion.length >= 20) {                     
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
@@ -1572,7 +1593,7 @@ function updateRoom() {
                             $(this).parents("tr").remove();
                         }); 
                         datosCuentaAPi.splice(posicionProducto,1);
-                        localStorage.setItem(cuentaAPi,JSON.stringify(datosCuentaAPi));
+                        localStorage.setItem(cuentaAPi,JSON.stringify(datosCuentaAPi));                        
                     }                    
                 },
                 error: function(respuesta) {                    
@@ -1650,27 +1671,34 @@ function updateRoom() {
  function cerrarCuentaModal() {     
      var idPV = $("#btnEnviarCP").attr("idPVCPBtn");//obtengo el idPV que tengo en el btn enviar
      var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");//obtengo el idMesa que tengo en el btn enviar
-
      var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr");//obtengo el idMesa que tengo en el btn enviar
+     var totalCuenta = $("#totalCuenta").val();
 
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
+     var cuentaAPi="cuentaBD"+idPV+idMesa;
+
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
+     var datosCuentaApi = JSON.parse(localStorage.getItem(cuentaAPi));
+
      if(datosCuentaTemporal==null){
-        var longitud = 0;
+         longitud = 0;
      }else{
          longitud =datosCuentaTemporal.length
      }
-    //  console.log("cuentaTemporal",datosCuentaTemporal);     
-    if(longitud==0 ){
-        $('#modalMetodoPago').modal({backdrop: 'static', keyboard: false });
-        $("#idCuentaCerrar").val(idCuenta);
+     if(datosCuentaApi && datosCuentaApi.length==0){         
+        cuentaApi = false;         
+    }else{            
+        cuentaApi = true;
+    }              
+    if(longitud==0 && cuentaApi){
+        $("#idCuentaCerrar").val(idCuenta); //guardo el id de la cuenta en un campo dentro de un modal
+        if(totalCuenta!=0){
+            $('#modalMetodoPago').modal({backdrop: 'static', keyboard: false });
+        }else {
+            cerrarCuenta();
+        }
     }else{
-        swal({
-            title: 'Oopss...',
-            text: '¡Aún tienes productos sin enviar a centros de preparación!',
-            type: 'error',
-            timer: '2500'
-        });
+        swal("Oops", "¡Aún tienes productos sin enviar a centros de preparación o la cuenta no tiene informacion!" ,  "error");        
     }
  }
  function cerrarCuenta() {
@@ -1850,8 +1878,8 @@ function generarBotonesClientes(idPV,idMesa) {
 function selectCustomer(elemento, cuentaMesa){
    
     var botones = document.getElementsByClassName('btnC');
-    var numComensal= elemento.getAttribute("numComensal")    
-    
+    var numComensal= elemento.getAttribute("numComensal");
+    // localStorage.setItem("comensalAnterior",numComensal);    
     for (i = 0; i < botones.length; i++) {       
         botones[i].classList.remove('btn-success')
     }    
@@ -1878,6 +1906,14 @@ function selectCustomer(elemento, cuentaMesa){
 }
 function marcarCheckboxDefault(cuentaMesa) {
     $("#lstBtnClientes").children('button:first').addClass("btn-success");
+    var comensal = $("#btn1").attr("numComensal");
+
+    if (!localStorage.getItem("comensalAnterior")) {
+        comensalAnterior = localStorage.getItem("comensalAnterior"));                
+        localStorage.setItem("comensalAnterior",comensalAnterior);      
+    }else {
+        localStorage.setItem("comensalAnterior",comensal);                            
+    }
     if(cuentaMesa){
         cuenta = JSON.parse(localStorage.getItem(cuentaMesa));
         if(cuenta!=null){
