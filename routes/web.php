@@ -167,6 +167,7 @@ Route::get('alergenos', 'AlergenoController@index')->name('alergenos.index');
 Route::get('alergenos/create', 'AlergenoController@create')->name('alergenos.create');
 Route::post('alergenos/store', 'AlergenoController@store')->name('alergenos.store');
 Route::get('alergenos/{alergeno}', 'AlergenoController@show')->name('alergenos.show');
+Route::get('showalergeno/{alergeno}', 'AlergenoController@obtenerUnAlergeno')->name('alergenos.getalergeno');
 Route::get('alergenos/{alergeno}/edit', 'AlergenoController@edit')->name('alergenos.edit');
 Route::post('alergenos/actualizar', 'AlergenoController@actualizar')->name('alergenos.actualizar');
 Route::post('alergenos/{alergeno}', 'AlergenoController@destroy')->name('alergenos.destroy');

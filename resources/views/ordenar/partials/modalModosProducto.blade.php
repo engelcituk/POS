@@ -9,10 +9,13 @@
             <div class="modal-body">                                                   
                 <div class="row">
                     <div class="col-md-3">
-                        <input type="number" class="form-control hidden" id="idProductoModalModo">           
+                        <input type="number" class="form-control hidden" id="idProductoModalModo">       
                     </div>
                     <div class="col-md-3">                               
-                        <input type="number" class="form-control hidden" id="idMenuCartaModalModo">                                             
+                        <input type="number" class="form-control hidden" id="idMenuCartaModalModo">        
+                    </div>
+                    <div class="col-md-3">                               
+                        <input type="number" class="form-control hidden" id="idCuentaModalModal">        
                     </div>
                 </div>
                 <div class="row" id="modosProducto">
