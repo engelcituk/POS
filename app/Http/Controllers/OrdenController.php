@@ -9,13 +9,13 @@ use Illuminate\Support\Collection;
 
 class OrdenController extends Controller
 {
-    public $urlBase = "http://172.16.4.229/TPVApi/Zonas/";
-    public $urlHuesped= "http://172.16.4.229/TPVApi/Venta/"; //para obtener los datos del huesped para la venta
-    public $urlVenta= "http://172.16.4.229/TPVApi/Venta/";
-    public $urlBaseProductoAlergeno = "http://172.16.4.229/TPVApi/ProductoAlergeno/";
-    public $urlBaseProducto = "http://172.16.4.229/TPVApi/Producto/";
-    public $urlMenuCarta= "http://172.16.4.229/TPVApi/MenuCarta/";
-    public $urlMesas = "http://172.16.4.229/TPVApi/Mesas/";
+    public $urlBase = "http://localhost/TPVApi/Zonas/";
+    public $urlHuesped= "http://localhost/TPVApi/Venta/"; //para obtener los datos del huesped para la venta
+    public $urlVenta= "http://localhost/TPVApi/Venta/";
+    public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
+    public $urlBaseProducto = "http://localhost/TPVApi/Producto/";
+    public $urlMenuCarta= "http://localhost/TPVApi/MenuCarta/";
+    public $urlMesas = "http://localhost/TPVApi/Mesas/";
 //
     public function __construct(){
         // $this->middleware('auth');
@@ -92,7 +92,7 @@ class OrdenController extends Controller
     }
     public function obtenerCategoriasCarta($idCarta){
         
-        $urlBase= "http://172.16.4.229/TPVApi/Categoria/";
+        $urlBase= "http://localhost/TPVApi/Categoria/";
         
         $respuesta = $this->realizarPeticion('GET', $urlBase."GetCategoriabyCarta/{$idCarta}");        
 
@@ -113,7 +113,7 @@ class OrdenController extends Controller
     
     static public function obtenerMesasPorZona($idZona){
         $metodo="GET";        
-        $urlBase= "http://172.16.4.229/TPVApi/Mesas/GetMesaPorZona/{$idZona}";
+        $urlBase= "http://localhost/TPVApi/Mesas/GetMesaPorZona/{$idZona}";
         
         $cliente =  new Client();                
         $respuesta = $cliente->request($metodo, $urlBase);
@@ -125,7 +125,7 @@ class OrdenController extends Controller
     }
     // static public function getSCategoriasByCategoria($idCategoria){
     //     $metodo = "GET";
-    //     $urlBase = "http://172.16.4.229/TPVApi/SubCategoria/GetSubCategoriasPorCategoria/{$idCategoria}";
+    //     $urlBase = "http://localhost/TPVApi/SubCategoria/GetSubCategoriasPorCategoria/{$idCategoria}";
 
     //     $cliente =  new Client();
     //     $respuesta = $cliente->request($metodo, $urlBase);
@@ -152,8 +152,8 @@ class OrdenController extends Controller
     }
 
     public function getProductosFavoritos(Request $request){
-        $urlBase = "http://172.16.4.229/TPVApi/menucarta/";
-        // http://172.16.4.229/TPVApi/menucarta/GetProductosMenuCartaFav/1034/10
+        $urlBase = "http://localhost/TPVApi/menucarta/";
+        // http://localhost/TPVApi/menucarta/GetProductosMenuCartaFav/1034/10
         $idPV = $request->get('idPuntoVenta');
         $idCarta = $request->get('idCarta');
 
@@ -282,7 +282,7 @@ class OrdenController extends Controller
 
     }
     public function cerraCuenta(Request $request, $idCuenta){
-        // $urlVenta = "http://172.16.4.229/TPVApi/Venta/";
+        // $urlVenta = "http://localhost/TPVApi/Venta/";
         $idUsuarioSesion = $request->session()->get('idUsuarioLogueado'); 
 
         $porcentajeDescuento = $request->get('porcentajeDescuento');
@@ -301,7 +301,7 @@ class OrdenController extends Controller
     } 
     public function cerrarDia(Request $request,$idPV){
 
-        $urlCerrarDia = "http://172.16.4.229/TPVApi/Admin/";
+        $urlCerrarDia = "http://localhost/TPVApi/Admin/";
 
         $idUsuario = $request->session()->get('idUsuarioLogueado');
         $fecha = Carbon::now()->format('d-m-Y');
@@ -322,4 +322,4 @@ class OrdenController extends Controller
         return $respuesta;
     }
 }
-// 172.16.4.229 
+// localhost 

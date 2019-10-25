@@ -11,8 +11,8 @@ use Illuminate\Support\Collection;
 class ApiUsuarioController extends Controller
 {
     
-    public $urlBase = "http://172.16.4.229/TPVApi/Usuarios/";
-    public $urlBasePermisosUsuario = "http://172.16.4.229/TPVApi/PermisosUsuario/";
+    public $urlBase = "http://localhost/TPVApi/Usuarios/";
+    public $urlBasePermisosUsuario = "http://localhost/TPVApi/PermisosUsuario/";
 
     public function __construct(){
 

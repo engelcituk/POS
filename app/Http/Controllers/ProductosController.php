@@ -11,9 +11,9 @@ use Image;
  
 class ProductosController extends Controller
 {
-    public $urlBase = "http://172.16.4.229/TPVApi/Producto/";
-    public $urlBaseProductoAlergeno = "http://172.16.4.229/TPVApi/ProductoAlergeno/";
-    public $urlPModo= "http://172.16.4.229/TPVApi/ProductoModo/";
+    public $urlBase = "http://localhost/TPVApi/Producto/";
+    public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
+    public $urlPModo= "http://localhost/TPVApi/ProductoModo/";
 
     public function __construct(){
 

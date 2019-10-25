@@ -13,7 +13,7 @@ class PermisosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $urlBase = "http://172.16.4.229/TPVApi/Permisos/";
+    public $urlBase = "http://localhost/TPVApi/Permisos/";
     public function index()
     {
         //

@@ -10,9 +10,9 @@ use Carbon\Carbon;
 
 class HistoricoController extends Controller
 {
-    public $urlBase = "http://172.16.4.229/TPVApi/Historico/";
-    public $urlCuenta = "http://172.16.4.229/TPVApi/Venta/";
-    public $urlAdmin = "http://172.16.4.229/TPVApi/Admin/";
+    public $urlBase = "http://localhost/TPVApi/Historico/";
+    public $urlCuenta = "http://localhost/TPVApi/Venta/";
+    public $urlAdmin = "http://localhost/TPVApi/Admin/";
 
     public function __construct()
     {
@@ -64,7 +64,7 @@ class HistoricoController extends Controller
         return $respuesta;
     }
     public function imprimirCuenta($idCuenta){
-        $urlAdmin = "http://172.16.4.229/TPVApi/Admin/";
+        $urlAdmin = "http://localhost/TPVApi/Admin/";
        
         $respuesta = $this->realizarPeticion('POST', $urlAdmin."imprimeCuenta/{$idCuenta}"); 
         
@@ -72,7 +72,7 @@ class HistoricoController extends Controller
     }
     public function cancelarCuenta(Request $request, $idCuenta){
 
-        $urlAdmin = "http://172.16.4.229/TPVApi/Admin/";
+        $urlAdmin = "http://localhost/TPVApi/Admin/";
         $idUsuario = $request->session()->get('idUsuarioLogueado');
         $motivo = $request->get('motivo');
         
@@ -88,5 +88,5 @@ class HistoricoController extends Controller
     }
 }
 //es una funcion que esta en el controller principal
-// $urlBase= "http://172.16.4.229/TPVApi/historico/"; 
-//http://172.16.4.229/TPVApi/admin/imprimeCuenta/127
+// $urlBase= "http://localhost/TPVApi/historico/"; 
+//http://localhost/TPVApi/admin/imprimeCuenta/127

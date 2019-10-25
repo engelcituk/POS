@@ -13,10 +13,15 @@
                       <span class="input-group-addon">
                           <i class="fas fa-user-circle"></i>
                       </span>
+                      @php
+                        $idHotel= Session::get('idHotel');
+                        $datosHotel=App\Http\Controllers\HotelesController::obtenerHotelSesion($idHotel);  
+                        // dd($datosHotel);           
+                      @endphp
                       <div class="form-group label-floating">
                         Cuenta                      
                           <input id="idCuentaModal" type="text" class="form-control" name="idCuentaModal" readonly>
-                          <input id="codigoHotelModal" type="text" class="form-control hidden" name="codigoHotelModal" value="CARACOL" readonly>                     
+                          <input id="codigoHotelModal" type="text" class="form-control hidden" value="{{$datosHotel->codHotel}}" readonly>                     
                       </div>
                   </div>
               </div>
@@ -27,7 +32,7 @@
                       </span>
                       <div class="form-group label-floating">
                           Habitación
-                          <input id="habitacionModal" type="text" class="form-control" name="habitacionModal" autofocus>                     
+                          <input id="habitacionModal" type="text" class="form-control" autofocus>                     
                       </div>
                   </div>
               </div>

@@ -169,7 +169,7 @@ async function aperturaMesa(idMesa) {
         $("#cuentaMesaSpan").text(cuentaMesa);
         crearCuentaTemporal(idPV,idMesa);                   
         generarBotonesClientes(idPV,idMesa);
-       await getProductosMasVendidos();        
+        await getProductosMasVendidos();        
         obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
         // comprobarCuentaHabitacion(idPV,idMesa);
         
@@ -245,6 +245,8 @@ async function aperturaMesa(idMesa) {
      var codhotel= $("#codigoHotel").val();
      var room= $("#numHabitacion").val();
      
+    //  console.log("codhotel",codhotel," habitación ", room);
+
      if(codigoHotel && numHabitacion){        
         $.ajax({
             url: "{{ url('ordenar') }}"+'/'+codhotel+'/'+room,
@@ -313,6 +315,7 @@ async function aperturaMesa(idMesa) {
      var codhotel= $("#codigoHotelModal").val();
      var room= $("#habitacionModal").val();
      
+    //  console.log("codhotel",codhotel," habitación ", room);    
      if(codigoHotel && numHabitacion){
                
         $.ajax({
@@ -332,9 +335,10 @@ async function aperturaMesa(idMesa) {
                 });
                 swal.showLoading();
             },
-            success: function(respuesta) {
+            success: function(respuesta) {                
                 swal.close(); 
-                var resultado=JSON.parse(respuesta);                
+                var resultado=JSON.parse(respuesta);  
+                console.log("datos huesped", resultado);              
                 var objeto = resultado["objeto"];
                 var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
                 var reserva=objeto["reserva"];                

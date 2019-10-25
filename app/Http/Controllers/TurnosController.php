@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
 class TurnosController extends Controller
 {
     
-    public $urlBase = "http://172.16.4.229/TPVApi/Turnos/";
+    public $urlBase = "http://localhost/TPVApi/Turnos/";
     
     public function __construct(){
 

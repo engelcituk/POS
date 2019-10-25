@@ -10,7 +10,7 @@ use Carbon\Carbon;
 class CartaController extends Controller
 {
     
-    public $urlBase = "http://172.16.4.229/TPVApi/Cartas/";
+    public $urlBase = "http://localhost/TPVApi/Cartas/";
     public function __construct()
     {
 

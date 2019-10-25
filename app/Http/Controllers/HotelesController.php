@@ -10,7 +10,7 @@ class HotelesController extends Controller
 {
     // URL_API_TPV
     
-    public $urlBase = "http://172.16.4.229/TPVApi/Hoteles/";
+    public $urlBase = "http://localhost/TPVApi/Hoteles/";
 
     public function __construct(){
            
@@ -70,7 +70,7 @@ class HotelesController extends Controller
 
     static public function obtenerHotelSesion($idHotel){//funcion que uso desde la vista
         $metodo = "GET";
-        $urlBase = "http://172.16.4.229/TPVApi/Hoteles/GetHotel/{$idHotel}";
+        $urlBase = "http://localhost/TPVApi/Hoteles/GetHotel/{$idHotel}";
 
         $cliente =  new Client();
         $respuesta = $cliente->request($metodo, $urlBase);

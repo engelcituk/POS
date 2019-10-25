@@ -10,8 +10,8 @@ use Illuminate\Support\Collection;
 
 class ApiRolController extends Controller{ 
    
-    public $urlBase = "http://172.16.4.229/TPVApi/Roles/";
-    public $urlBaseRolPermisos = "http://172.16.4.229/TPVApi/PermisosRol/";
+    public $urlBase = "http://localhost/TPVApi/Roles/";
+    public $urlBaseRolPermisos = "http://localhost/TPVApi/PermisosRol/";
     
     public function __construct(){
 

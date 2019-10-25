@@ -7,7 +7,7 @@ use Yajra\DataTables\DataTables;
 
 class ZonasController extends Controller
 {
-    public $urlBase = "http://172.16.4.229/TPVApi/Zonas/"; 
+    public $urlBase = "http://localhost/TPVApi/Zonas/"; 
     
     public function __construct()
     {
