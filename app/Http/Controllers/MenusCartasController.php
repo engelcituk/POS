@@ -8,8 +8,8 @@ use Yajra\DataTables\DataTables;
 
 class MenusCartasController extends Controller{
 
-    public $urlBase = "http://localhost/TPVApi/MenuCarta/";
-    // public $urlBaseProductoAlergeno = "http://localhost/TPVApi/productoalergeno/";
+    public $urlBase = "http://172.16.4.229/TPVApi/MenuCarta/";
+    // public $urlBaseProductoAlergeno = "http://172.16.4.229/TPVApi/productoalergeno/";
     public function __construct(){
         $this->middleware('accesoMenusCartaFiltro');
     }

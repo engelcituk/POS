@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
 
 class ModosController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Modos/";
+    public $urlBase = "http://172.16.4.229/TPVApi/Modos/";
     public function __construct(){
 
         $this->middleware('accesoModosFiltro');

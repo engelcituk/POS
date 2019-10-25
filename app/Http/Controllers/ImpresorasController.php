@@ -12,7 +12,7 @@ class ImpresorasController extends Controller
         
         $this->middleware('accesoImpresorasFiltro');
     }
-    public $urlBase = "http://localhost/TPVApi/Impresoras/";
+    public $urlBase = "http://172.16.4.229/TPVApi/Impresoras/";
     public function index()
     {
         $impresoras = $this->obtenerTodasLasImpresoras();

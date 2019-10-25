@@ -126,7 +126,7 @@ function getMesasPorZona(idZona) {
         }
     });
 }
- function aperturaMesa(idMesa) {
+async function aperturaMesa(idMesa) {
     //muestro el modal pero no lo dejo salir al hacer click fuera de este
     var estadoMesa = $("#mesaAbrir"+idMesa).attr("estadoMesa");//obtengo el estado de la mesa
     
@@ -160,17 +160,18 @@ function getMesasPorZona(idZona) {
         $("#btnEnviarCP").attr("idPVCPBtn",idPV);
         $("#btnEnviarCP").attr("idMesaCPBtn",idMesa);
         $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
-        var idCuenta = getIdCuenta(idPV,idMesa);            
+        var idCuenta = await getIdCuenta(idPV,idMesa);            
         $("#btnAddDescuento").attr("btnIdCuenta",idCuenta); 
         // genero los botones 
-        generarBotonesClientes(idPV,idMesa); 
+        // generarBotonesClientes(idPV,idMesa); 
         $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);
         
         $("#cuentaMesaSpan").text(cuentaMesa);
         crearCuentaTemporal(idPV,idMesa);                   
+        generarBotonesClientes(idPV,idMesa);
+       await getProductosMasVendidos();        
         obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
         // comprobarCuentaHabitacion(idPV,idMesa);
-        getProductosMasVendidos();
         
     }
 
@@ -183,14 +184,14 @@ function getMesasPorZona(idZona) {
         localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));      
     }
  }
- function getIdCuenta(idPV,idMesa){    
+ async function getIdCuenta(idPV,idMesa){    
     var variable=idPV+idMesa;
     var cuenta = JSON.parse(localStorage.getItem(variable));    
     if(cuenta==null){  
         //obtengo la cuenta y creo la variable localstorage de acuerdo a la mesa     
         idCuenta=$("#mesa"+idMesa).attr("idCuenta");     
         var csrf_token = $('meta[name="csrf-token"]').attr('content');    
-        $.ajax({
+        await $.ajax({
                 url: "{{url('getcuenta')}}"+'/'+idCuenta,
                 type: "GET",
                 data: {
@@ -372,7 +373,7 @@ function getMesasPorZona(idZona) {
     }    
  }
 
-  function abrirCuenta() {
+ async function abrirCuenta() {
      var idMesa = $("#idMesaModal").val();     
 
      var reserva = $("#reserva").val().length > 0;
@@ -381,6 +382,7 @@ function getMesasPorZona(idZona) {
      var pax = $("#ocupante").val().length > 0;
      var fechaSalida = $("#fechaSalida").val().length > 0;
      var brazalete = $("#brazalete").val().length > 0;
+     var idPV= $("#idPVModalOrdenar").val();
 
      $("#idMesaAddProducts").attr("idMesaValue",idMesa); //le envio el id de la mesa a este atributo que me creo
      if(nombre && pax ){
@@ -388,7 +390,14 @@ function getMesasPorZona(idZona) {
         $("#zonaMesas").addClass("hidden");
         $("#myModal").modal("hide"); 
 
-       guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta       
+       await guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta        
+       await getProductosMasVendidos(); 
+             generarBotonesClientes(idPV,idMesa);
+       localStorage.setItem("idMesaLS", idMesa);
+       var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
+       var idCuenta = await getIdCuenta(idPV,idMesa); 
+       obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
+
      }else{
         swal({
             title: 'Oops...',
@@ -426,7 +435,8 @@ $("#ocupanteModal").change(function(){
  $(document).on("input", "#ocupanteModal", function() {
         this.value = this.value.replace(/[^0-9]/g, '');
      });
- function guardarCuenta(idMesa){
+
+ async function guardarCuenta(idMesa){
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      var reserva  = $("#reserva").val();
      var nombreCliente  = $("#nombre").val();
@@ -444,7 +454,7 @@ $("#ocupanteModal").change(function(){
             contador++;
         }	
     });               
-     $.ajax({
+    await $.ajax({
             url: "{{ url('ordenar/addcuenta') }}",
             type: "POST",
             data: {
@@ -477,8 +487,7 @@ $("#ocupanteModal").change(function(){
                     // console.log("respuesta folio "+folio);
                     $("#btnAddDescuento").attr("btnIdCuenta",idCuenta);//creo los atributos
                     localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto
-                    getProductosMasVendidos();
-                    generarBotonesClientes(idPV,idMesa); 
+                     
                 }else{
                     var mensaje=resultado["mensaje"];
                     swal({
@@ -498,12 +507,12 @@ $("#ocupanteModal").change(function(){
     }); 
  }
 
- function GetProductosByCat(idCategoria){
+ async function GetProductosByCat(idCategoria){
     var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
     var idPV= $("#idPVModalOrdenar").val();
     var idMesaLS = localStorage.getItem("idMesaLS");
     var variableLS =idPV+idMesaLS;
-    var idCuenta =getIdCuenta(idPV,idMesaLS); 
+    var idCuenta =await getIdCuenta(idPV,idMesaLS); 
     $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
 
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json    
@@ -600,17 +609,17 @@ $("#ocupanteModal").change(function(){
     //     selector: '[data-toggle="tooltip"]'
     // })
  }
- function getProductosMasVendidos(){
+async function getProductosMasVendidos(){
     var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
     var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
     var idCarta = $("#idCartaPVModal").val(); 
     
     var idMesaLS = localStorage.getItem("idMesaLS");
     
-    var idCuenta =getIdCuenta(idPV,idMesaLS); 
+    var idCuenta =await getIdCuenta(idPV,idMesaLS); 
     var variableLS =idPV+idMesaLS;
     $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
-
+    
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
     var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
 
@@ -706,37 +715,7 @@ $("#ocupanteModal").change(function(){
     //     selector: '[data-toggle="tooltip"]'
     // })
 }
-// function getNombreAlergeno(){
-//     var csrf_token = $('meta[name="csrf-token"]').attr('content');
-//     var idPV= $("#idPVModalOrdenar").val(); 
-//     var idMesa = localStorage.getItem("idMesaLS");
-//     var cuenta =String(idPV)+String(idMesa); 
 
-//     $.ajax({
-//         url: "{{ url('ordenar/addcuentaalergia') }}",
-//         type: "POST",
-//         data: {
-//             '_method': 'POST',
-//             'idCuenta': idCuenta,          
-//             'paxConAlergia':numPaxAlergico,                                
-//             '_token': csrf_token
-//         },        
-//         success: function(respuesta) {            
-//             //  $("#modalCargando").modal("hide");                          
-//             var respuesta = JSON.parse(respuesta);
-//             var ok = respuesta["ok"];
-//             // console.log("respuesta",respuesta); 
-//             if(ok) {                
-//                 actualizarCuenta(idPV, idMesa);
-//                 // verAlergenos(idProducto, false);                        
-//             }                                       
-//         },
-//         error: function(respuesta) {                    
-//             console.log("respuesta",respuesta); 
-//         }
-//     });
- 
-// }
 function getModosProductoModal(idProducto,idMenuCarta,modosProducto,idCuenta){        
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     var longitudModos = modosProducto.length;
@@ -1505,9 +1484,9 @@ function updateRoom() {
                 var ok = respuesta["ok"];
                 // console.log("respuesta",respuesta);
                 if(ok){//si ok es true
-                     localStorage.setItem(cuentaTemporal, null);
-                     
-                     crearCuentaTemporal(idPV,idMesa);
+                    var lstProductos=[];
+                     localStorage.setItem(cuentaTemporal, lstProductos);                     
+                    //  crearCuentaTemporal(idPV,idMesa);
                      swal({
                             title: 'Exito',
                             text: '¡Operacion realizada con exito!',
@@ -1907,13 +1886,9 @@ function selectCustomer(elemento, cuentaMesa){
 function marcarCheckboxDefault(cuentaMesa) {
     $("#lstBtnClientes").children('button:first').addClass("btn-success");
     var comensal = $("#btn1").attr("numComensal");
-
-    if (!localStorage.getItem("comensalAnterior")) {
-        comensalAnterior = localStorage.getItem("comensalAnterior"));                
-        localStorage.setItem("comensalAnterior",comensalAnterior);      
-    }else {
-        localStorage.setItem("comensalAnterior",comensal);                            
-    }
+        
+	localStorage.setItem("comensalAnterior",comensal);                            
+                                   
     if(cuentaMesa){
         cuenta = JSON.parse(localStorage.getItem(cuentaMesa));
         if(cuenta!=null){

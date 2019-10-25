@@ -10,9 +10,9 @@ use function GuzzleHttp\json_decode;
 
 class LoginController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Ingreso/";
-    public $urlPuntoVenta = "http://localhost/TPVApi/PuntosVenta/";
-    public $urlCartasPV= "http://localhost/TPVApi/Cartas/";
+    public $urlBase = "http://172.16.4.229/TPVApi/Ingreso/";
+    public $urlPuntoVenta = "http://172.16.4.229/TPVApi/PuntosVenta/";
+    public $urlCartasPV= "http://172.16.4.229/TPVApi/Cartas/";
 
     public function login(Request $request){
         

@@ -7,7 +7,7 @@ use Yajra\DataTables\DataTables;
 
 class MetodosPagoController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/MetodosPago/";
+    public $urlBase = "http://172.16.4.229/TPVApi/MetodosPago/";
     
     public function __construct()
     {

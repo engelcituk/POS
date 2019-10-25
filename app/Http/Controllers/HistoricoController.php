@@ -10,9 +10,9 @@ use Carbon\Carbon;
 
 class HistoricoController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Historico/";
-    public $urlCuenta = "http://localhost/TPVApi/Venta/";
-    public $urlAdmin = "http://localhost/TPVApi/Admin/";
+    public $urlBase = "http://172.16.4.229/TPVApi/Historico/";
+    public $urlCuenta = "http://172.16.4.229/TPVApi/Venta/";
+    public $urlAdmin = "http://172.16.4.229/TPVApi/Admin/";
 
     public function __construct()
     {
@@ -64,7 +64,7 @@ class HistoricoController extends Controller
         return $respuesta;
     }
     public function imprimirCuenta($idCuenta){
-        $urlAdmin = "http://localhost/TPVApi/Admin/";
+        $urlAdmin = "http://172.16.4.229/TPVApi/Admin/";
        
         $respuesta = $this->realizarPeticion('POST', $urlAdmin."imprimeCuenta/{$idCuenta}"); 
         
@@ -72,7 +72,7 @@ class HistoricoController extends Controller
     }
     public function cancelarCuenta(Request $request, $idCuenta){
 
-        $urlAdmin = "http://localhost/TPVApi/Admin/";
+        $urlAdmin = "http://172.16.4.229/TPVApi/Admin/";
         $idUsuario = $request->session()->get('idUsuarioLogueado');
         $motivo = $request->get('motivo');
         

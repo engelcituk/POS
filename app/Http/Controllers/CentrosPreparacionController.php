@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
 class CentrosPreparacionController extends Controller
 {
     
-    public $urlBase = "http://localhost/TPVApi/CentrosPreparacion/";
+    public $urlBase = "http://172.16.4.229/TPVApi/CentrosPreparacion/";
     
     public function __construct()    {
 

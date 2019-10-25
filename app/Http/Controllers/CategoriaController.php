@@ -11,7 +11,7 @@ use Image;
 class CategoriaController extends Controller
 {
     
-    public $urlBase = "http://localhost/TPVApi/Categoria/";
+    public $urlBase = "http://172.16.4.229/TPVApi/Categoria/";
 
     public function __construct(){
 
