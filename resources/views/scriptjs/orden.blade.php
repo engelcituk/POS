@@ -376,7 +376,9 @@ async function aperturaMesa(idMesa) {
         }) 
     }    
  }
-
+$('#myModal').on('hidden.bs.modal', function (e) {
+         $(this).find('form')[0].reset();
+});
  async function abrirCuenta() {
      var idMesa = $("#idMesaModal").val();     
 
@@ -564,7 +566,8 @@ $("#ocupanteModal").change(function(){
                             var precio=objeto[i]["precio"];
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
-                            var modosProducto = JSON.stringify(objeto[i]["TPV_Producto"]["TPV_ProductoModos"]); 
+                            var modosProducto = JSON.stringify(objeto[i]["TPV_Producto"]["TPV_ProductoModos"]);
+                            var nombreAlergenosMatch ="";
                             // console.log("sus Alergenos",alergenosP);
                            if(alergenosP.length >0 ){
                                 //operador ternario
@@ -669,7 +672,8 @@ async function getProductosMasVendidos(){
                             var precio=objeto[i]["precio"];
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
-                            var modosProducto = JSON.stringify(objeto[i]["TPV_Producto"]["TPV_ProductoModos"]); 
+                            var modosProducto = JSON.stringify(objeto[i]["TPV_Producto"]["TPV_ProductoModos"]);
+                            var nombreAlergenosMatch ="";
                             // console.log("sus Alergenos",alergenosP);
                            if(alergenosP.length >0 ){
                                 //operador ternario

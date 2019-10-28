@@ -5,7 +5,8 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel"> <strong>Indique habitación || Alergenos</strong></h4>
       </div>
-      <div class="modal-body">           
+      <form action="">
+        <div class="modal-body">           
           <ul class="nav nav-tabs navPersonalizado">
             <li class="active"><a data-toggle="tab" href="#buscarHabitacion">Habitación</a></li>
             <li><a data-toggle="tab" href="#alergenos">Alergenos</a></li>   
@@ -135,11 +136,10 @@
                   @else
                     Aún no hay alergenos dados de alta                                    
                   @endif 
-            </div>
-          
-          </div>
-        
+            </div>          
+          </div>        
       </div>
+      </form>      
       <div class="modal-footer">
         <button type="button" class="btn btn-warning pull-left" data-dismiss="modal"> <i class="fas fa-undo"></i> Descartar</button>
         <button type="button" class="btn btn-primary" onclick="abrirCuenta()"><i class="fas fa-sign-in-alt" ></i> Abrir mesa</button>        

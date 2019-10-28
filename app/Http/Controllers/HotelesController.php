@@ -8,7 +8,7 @@ use Yajra\DataTables\DataTables;
  
 class HotelesController extends Controller
 {
-    // URL_API_TPV
+    // URL_API_TPV 
     
     public $urlBase = "http://localhost/TPVApi/Hoteles/";
 
