@@ -1677,7 +1677,7 @@ function updateRoom() {
     }else{            
         cuentaApi = true;
     }              
-    if(longitud==0 && cuentaApi){
+    if(longitud==0){
         $("#idCuentaCerrar").val(idCuenta); //guardo el id de la cuenta en un campo dentro de un modal
         if(totalCuenta!=0){
             $('#modalMetodoPago').modal({backdrop: 'static', keyboard: false });
@@ -1830,6 +1830,8 @@ function tiempoOrden() {
         var tiempoElegido=$("#tiempo2").attr("tiempo");
     }else if($("#tiempo3").hasClass("btn-success")){
         var tiempoElegido=$("#tiempo3").attr("tiempo");
+    }else if($("#tiempo4").hasClass("btn-success")){
+        var tiempoElegido=$("#tiempo4").attr("tiempo");
     }
     // console.log('tiempo ',tiempoElegido);
     return tiempoElegido;

@@ -46,6 +46,7 @@
                             <span class="btn btn-success pull-right" onclick="buscarHuesped()"><i class="fas fa-search"></i> Buscar</span>
                         </div>
                     </div>
+                    <div id="mensajeRespuesta"></div>
                 </div>
                   
                   <div class="col-md-6">

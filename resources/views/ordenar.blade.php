@@ -130,7 +130,8 @@
                                         </div> --}}
                                     </div>
                                     <div class="col-md-6">
-                                        <div id="opcionesTiempo">                                        
+                                        <div id="opcionesTiempo">
+                                            <span class="btn btn-sm pull-right" id="tiempo4" tiempo="4"><i class="fas fa-clock"></i> 4</span>                                       
                                             <span class="btn btn-sm pull-right" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
                                             <span class="btn btn-sm pull-right " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
                                             <span class="btn btn-success btn-sm pull-right" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
