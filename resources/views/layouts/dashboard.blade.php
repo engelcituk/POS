@@ -337,9 +337,7 @@
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
 @include('scriptjs/ticketRecibo')
 @if(request()->is('ordenar'))
-    @include('scriptjs/orden')
-    {{-- <script src="{{asset('js/scriptCarousel.js')}}"></script> --}}
-    
+    @include('scriptjs/orden')        
 @endif
 @if(request()->is('historico'))
     @include('scriptjs/historico')

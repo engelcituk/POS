@@ -26,7 +26,7 @@
                             <div class="checkbox checkbox-group required">                              
                                 <label class="">
                                    {{-- <strong>{{$permiso->name}}</strong>  --}}
-                                <input type="checkbox" id="chekPermiso{{$permiso->id}}" name="permiso[]" value="{{$permiso->id}}" onclick="addQuitarPermisoUsuario({{$permiso->id}})"
+                                <input type="checkbox" id="chekPermiso{{$permiso->id}}" name="permiso[]" value="{{$permiso->id}}" onclick="addQuitarPermisoUsuario({{$permiso->id}})">
                                 </label>                                            
                             </div>
                         </td>

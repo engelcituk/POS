@@ -117,24 +117,26 @@
                             <div class="col-md-7" id="idMesaAddProducts">
                                 
                                 <div class="row">
-                                    <div class="col-md-6" id="lstBtnClientes">
-                                        {{-- <button class="btn btn-sm btnC" id="btn1" onclick="selectCustomer(this)">1</button>
-                                        <button class="btn btn-sm btnC" id="btn2" onclick="selectCustomer(this)">2</button>
-                                        <button class="btn btn-sm btnC" id="btn3" onclick="selectCustomer(this)">3</button>
-                                        <button class="btn btn-sm btnC" id="btn4" onclick="selectCustomer(this)">4</button>
-                                        <button class="btn btn-sm btnC" id="btn5" onclick="selectCustomer(this)">5</button>                                        
-                                        <div class="checkbox checkbox-group"> 
-                                            <label>
-                                                <input type="checkbox" name="conAlergia"><strong>Con alergia</strong>
-                                            </label>
-                                        </div> --}}
+                                    <div class="col-md-6" id="divBtnClientes">                                         
+                                        <div id="lstBtnClientes" style="width:100%;height:60px;overflow-y:scroll">
+
+                                        </div>
+                                        <div id="divCheckAlergia">
+                                            <div class="checkbox checkbox-group required">                              
+                                                <label class="">
+                                                <input type="checkbox" id="chekAlergia" name="alergia" value="">
+                                                <strong>Con alergia</strong>
+                                                </label>                                            
+                                            </div>
+                                        </div>                                         
                                     </div>
+                                                                        
                                     <div class="col-md-6">
                                         <div id="opcionesTiempo">
-                                            <span class="btn btn-sm pull-right" id="tiempo4" tiempo="4"><i class="fas fa-clock"></i> 4</span>                                       
-                                            <span class="btn btn-sm pull-right" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
-                                            <span class="btn btn-sm pull-right " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
-                                            <span class="btn btn-success btn-sm pull-right" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
+                                            <span class="btn btnTiempo btn-sm pull-right" id="tiempo4" tiempo="4"><i class="fas fa-clock"></i> 4</span>                                       
+                                            <span class="btn btnTiempo btn-sm pull-right" id="tiempo3" tiempo="3"><i class="fas fa-clock"></i> 3</span>
+                                            <span class="btn btnTiempo btn-sm pull-right " id="tiempo2" tiempo="2"><i class="fas fa-clock"></i> 2</span>
+                                            <span class="btn btnTiempo btn-success btn-sm pull-right" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
                                         </div>
                                     </div>                                                                        
                                 </div>

@@ -61,6 +61,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'filtroAcceso' => \App\Http\Middleware\IngresoUser::class,
+        'userLogueado' => \App\Http\Middleware\usuarioLogueado::class, //para verificar si ya existe sesion de usuario
+
         // 'accesoSinPermisosFiltro' => \App\Http\Middleware\SinPermisos::class,
         'accesoTomarOrdenFiltro' => \App\Http\Middleware\TomarOrden::class,
         'accesoHistoricoFiltro' => \App\Http\Middleware\Historico::class,

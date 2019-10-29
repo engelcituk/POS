@@ -7,6 +7,10 @@ $(document ).ready(function() {
     // } 
    getZonas();
    demo.initMaterialWizard();
+//    initControlsRetroceso();
+   window.location.hash="inicio";
+   window.location.hash="Inicio";//esta linea es necesaria para chrome
+   window.onhashchange=function(){window.location.hash="inicio";}
 
 });
 //para mostrar zonas y sus mesas respectivamente
@@ -1857,9 +1861,9 @@ function generarBotonesClientes(idPV,idMesa) {
         botones="";
             for (var i = 0; i < numPax; i++) {
                 n++;  
-                botones+="<button class='btn btn-sm btnC' id='btn"+n+"' idCuenta='"+idCuenta+"' numComensal='"+n+"' onclick='selectCustomer(this,"+cuentaMesa+")'>"+n+"</button>";                
+                botones+="<button class='btn btn-sm btnC' id='btn"+n+"' idCuenta='"+idCuenta+"' numComensal='"+n+"' onclick='selectCustomer(this,"+cuentaMesa+")'>"+n+"</button>  &nbsp;&nbsp;";                
             }
-        botones+="<div class=''><label><input type='checkbox' id='checkAlergia' name='conAlergia'><strong>Con alergia</strong></label></div>";
+        botones+="";
         $("#lstBtnClientes").html(botones);        
     }      
     marcarCheckboxDefault(cuentaMesa) ;

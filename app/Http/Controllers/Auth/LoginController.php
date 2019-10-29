@@ -14,6 +14,12 @@ class LoginController extends Controller
     public $urlPuntoVenta = "http://localhost/TPVApi/PuntosVenta/";
     public $urlCartasPV= "http://localhost/TPVApi/Cartas/";
 
+    public function __construct()
+    {
+        // $this->middleware('auth');
+        // $this->middleware('usuarioLogueado');
+    }
+
     public function login(Request $request){
         
         //variables para crear sesiones a nivel hotel,pv,carta

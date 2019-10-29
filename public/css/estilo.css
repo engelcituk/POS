@@ -237,3 +237,12 @@ table #tablaItemProductos { border-collapse: collapse; width: 100%;
 
 .tablaProductos {border-collapse:collapse; table-layout:fixed; width:100%;}
 .tablaProductos td { width:20%; word-wrap:break-word;}
+.btnC {
+    padding: 5px, 5px, 5px, 5px !important;
+    font-size: 20px !important;
+    /* border-radius: 10px; */
+}
+.btnTiempo {
+    padding: 5px, 5px, 5px, 5px !important;
+    font-size: 1em !important;
+}

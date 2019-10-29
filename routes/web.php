@@ -1,9 +1,9 @@
 <?php 
 
-Route::get('/', function () {
+Route::get('/', ['middleware'=> 'userLogueado', function () {
     $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
     return view('auth.login', compact('hoteles'));
-});
+}]);
 Route::get('/admin', function () {    
     return view('authAdmin.login');
 });
