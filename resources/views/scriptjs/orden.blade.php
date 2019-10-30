@@ -1744,6 +1744,7 @@ function updateRoom() {
                      localStorage.removeItem(cuenta);
                      localStorage.removeItem(cuentaTemporal);
                      localStorage.removeItem(cuentaAPi);
+                     localStorage.removeItem("zonaMesaSeleccionada");
 
                      swal({
                             title: 'Exito',

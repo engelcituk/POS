@@ -1,4 +1,7 @@
 <script>
+
+    borrarLocalStorageZones();
+
     function eligeHotel(){        
         var idHotel = $("#idHotel option:selected").val();
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -104,6 +107,9 @@ function verificaSiEsAdmin(){
          $("#btnIngresoAdmin").attr("disabled", true); 
     }
 }
-</script> 
 
-{{--  --}}
+function borrarLocalStorageZones(){
+    localStorage.removeItem("zonaMesaSeleccionada");
+}
+
+</script> 
