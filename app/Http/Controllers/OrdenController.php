@@ -24,27 +24,19 @@ class OrdenController extends Controller
     public function index(Request $request){
         
         $idPuntoVenta = $request->session()->get('idPuntoVenta');
+
         $idCarta = $request->session()->get('idCarta');
 
-        $respuestaZonas = $this->ZonasPV($idPuntoVenta);        
+        $respuestaZonas = $this->zonasPV($idPuntoVenta);
+
         $zonas = $respuestaZonas->objeto;
 
         $categorias=$this->obtenerCategoriasCarta($idCarta);
-
-        // $idUsuarioSesion = $request->session()->get('idUsuarioLogueado');                      
-        // $permisos= $this->obtenerListaPermisosUsuario(41);
-        // $count = count($permisos);
-        // if($count>0){
-        //     $mensjae="tiene permisos";
-        // }else{
-        //     $mensjae = "no tiene permisos";
-        // }
-        // dd($mensjae);
+       
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');//se cargan en un modal
         //$categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
         $metodosPago = \App::call('App\Http\Controllers\MetodosPagoController@obtenerTodosLosMetodosPagos'); //se carga en subtabs
-        // $modos = \App::call('App\Http\Controllers\ModosController@obtenerTodosLosModos');
-        // dd($modos);
+        
         return view('ordenar', compact('zonas','alergenos','categorias', 'metodosPago'));
     }
 
@@ -67,7 +59,7 @@ class OrdenController extends Controller
         return $arrayPermisos;
     }
    
-    public function ZonasPV($idPuntoVenta){
+    public function zonasPV($idPuntoVenta){
         
         $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetZonaPV/{$idPuntoVenta}");
         $respuesta= json_decode($respuesta);        
@@ -113,7 +105,7 @@ class OrdenController extends Controller
     
     static public function obtenerMesasPorZona($idZona){
         $metodo="GET";        
-        $urlBase= "http://localhost/TPVApi/Mesas/GetMesaPorZona/{$idZona}";
+        $urlBase= "http://localhost/TPVApi/Mesas/GetMesasPorZonaActivas/{$idZona}";
         
         $cliente =  new Client();                
         $respuesta = $cliente->request($metodo, $urlBase);

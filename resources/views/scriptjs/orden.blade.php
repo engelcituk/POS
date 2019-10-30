@@ -7,7 +7,7 @@ $(document ).ready(function() {
     // } 
    getZonas();
    demo.initMaterialWizard();
-//    initControlsRetroceso();
+//    $('.selectMesasZonas').select2();
    window.location.hash="inicio";
    window.location.hash="Inicio";//esta linea es necesaria para chrome
    window.onhashchange=function(){window.location.hash="inicio";}
@@ -18,6 +18,7 @@ $("#zonaElige").change(function() {
     var valorSelect = $("option:selected", this).val(); //obtener el value de un select
     if (valorSelect != "") {            
         $(".zonas").hide();
+        localStorage.setItem('zonaMesaSeleccionada', valorSelect);
         $("#" + valorSelect).show();
             // if (valorSelect == "todos") {
             //     $(".zonas").show();
@@ -111,16 +112,10 @@ function getMesasPorZona(idZona) {
                         listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"' nombreMesa='"+nombreMesa+"' cuentaMesa='"+idCuenta+"' clienteMesa='"+nombre+"' habMesa='"+room+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><div class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+nombreMesa+"</span><br>"+idCuenta+"<br>"+nombre+"<br> "+room+"<br>"+total+"</div></a></li>";
                     }
                     listaMesas+="";                     
-                    $("#zonaListaMesas"+idZona).html(listaMesas);
+                    $("#zonaListaMesas"+idZona).html(listaMesas);                    
                     
-                    var valDefault = $("#zonaElige").children('option:first').val();            
-                    if (valDefault != "") {                        
-                        $(".zonas").hide();
-                        $("#" + valDefault).show();
-                        //     if (valDefault == "todos") {
-                        //         $(".zonas").show();
-                        // }
-                    } 
+                    cargarMesasZonaDefault(); // mantengo la zona elegida por el usuario
+
                 }else{
                     $("#zonaListaMesas"+idZona).html('<p>Sin mesas para esta zona</p>');
                 }                
@@ -129,6 +124,18 @@ function getMesasPorZona(idZona) {
             console.log(JSON.parse(respuesta));
         }
     });
+}
+function cargarMesasZonaDefault(){
+    if (localStorage.getItem('zonaMesaSeleccionada')) {
+        valDefault = localStorage.getItem('zonaMesaSeleccionada'); 
+        $("#zonaElige select").val(valDefault);  
+        $('#zonaElige option[value='+valDefault+']').attr('selected','selected');    
+    }else {
+        valDefault = $("#zonaElige").children('option:first').val(); 
+        localStorage.setItem('zonaMesaSeleccionada', valDefault);
+    }                                                                   
+    $(".zonas").hide();
+    $("#" + valDefault).show();                                             
 }
 async function aperturaMesa(idMesa) {
     //muestro el modal pero no lo dejo salir al hacer click fuera de este
@@ -1796,7 +1803,7 @@ function imprimirCuenta() {
 
             }
         });
-    });
+    }).catch(swal.noop);
 }
 
  function cerrarDia(idPuntoVenta) {
@@ -1920,6 +1927,37 @@ function marcarCheckboxDefault(cuentaMesa) {
             }
         }        
     }    
+}
+/*============================
+ PARAE CAMBIAR DE MESA
+==============================*/
+function cambiarMesa() {
+
+    idPV = $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
+
+    mesaActual = $("#nombreMesaSpan" ).text();// la original
+    idMesaActual = localStorage.getItem("idMesaLS");
+
+    idMesaNueva = $(".selectMesasZonas option:selected" ).val();// la nueva
+    nuevaMesaNombre = $(".selectMesasZonas option:selected" ).text();
+
+    idCuenta = $("#cuentaMesaSpan" ).text();
+      
+    if (idMesaNueva !="") {
+        swal({
+            title: 'Cambio de mesa: '+mesaActual+' a '+nuevaMesaNombre,
+            type: 'warning',
+            showCancelButton: true,
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            cancelButtonText: '¡Desistir!',
+            confirmButtonText: '¡Cambiar!'
+        }).then(function() {
+            console.log("ocurre el cambio");
+        }).catch(swal.noop);        
+    }else{
+        swal("Oops", "Seleccione una mesa por favor" ,  "error");                
+    }
 }
 </script>
 

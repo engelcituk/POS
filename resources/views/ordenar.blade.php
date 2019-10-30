@@ -53,8 +53,19 @@
                        
                         <div class="row">
                             
-                            <div class="col-md-5">                                                                                          <a href="{{ route('ordenar.index') }}" class="btn btn-warning pull-right volverMesas"><i class="fas fa-arrow-left"></i> Volver</a>
-                                <br><br><br>   
+                            <div class="col-md-5">
+                                <table class="table">
+                                    <thead class="text-primary">
+                                        <tr>
+                                            <th>
+                                                @include('ordenar.partials.zonasMesas') {{--listado de zonas y sus mesas--}}
+                                            </th>
+                                            <th>
+                                                <a href="{{ route('ordenar.index') }}" class="btn btn-warning pull-right volverMesas"><i class="fas fa-arrow-left"></i> Volver</a>
+                                            </th>            
+                                        </tr>
+                                    </thead>
+                                </table>                                                                  
                                 <div id="wrapper">
                                     <div id="receiptData">                                         
                                         <div id="receipt-data">
