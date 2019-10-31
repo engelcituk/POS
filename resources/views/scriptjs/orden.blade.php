@@ -181,10 +181,11 @@ async function aperturaMesa(idMesa) {
     $('#idMesaModal').val(idMesa);
     var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
     var idMenuCarta = $("#idCartaPVModal").val();
-
+	$(".alert").remove();// si hay mensajes de alerta, estas se remueven en el modal
     $("#nombreMesaSpan").text(nombreMesa);$("#clienteMesaSpan").text(clienteMesa);$("#habMesaSpan").text(habitacionMesa); 
 
     if(estadoMesa=="disponible"){//si la mesa está disponible abro modal para obtener datos de huesped
+        
         $('#myModal').modal({backdrop: 'static', keyboard: false });
         localStorage.setItem("idMesaLS", idMesa);
         $("#btnEnviarCP").attr("idPVCPBtn",idPV);
@@ -1478,6 +1479,7 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
 function asignarHabitacionModal(){
     var idPV= $("#idPVModalOrdenar").val();
     var idMesa= $("#idMesaModal").val();
+	$(".alert").remove();// si hay mensajes de alerta, estas se remueven en el modal
     // var idCuenta =getIdCuenta(idPV,idMesa);     
     var variable=idPV+idMesa;
     var cuenta = JSON.parse(localStorage.getItem(variable)); 
