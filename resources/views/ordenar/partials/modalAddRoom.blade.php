@@ -78,6 +78,24 @@
                 </div>
               </div>
           </div>
+          <div class="row">    
+              <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fas fa-bed"></i> Fecha Salida</span>
+                    <div class="form-group label-floating">                            
+                        <input type="text" class="form-control" id="fechaSalidaModal" name="fechaSalidaModal" readonly>  
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="input-group">
+                    <span class="input-group-addon"><i class="fas fa-sort-numeric-up"></i> Brazalete</span>
+                    <div class="form-group label-floating">                            
+                        <input type="number" min="1" class="form-control" id="brazaleteModal" name="brazaleteModal" >  
+                    </div>
+                </div>
+              </div>
+          </div>
           {{-- <div class="row">    
               <div class="col-md-6">
                 <div class="input-group">

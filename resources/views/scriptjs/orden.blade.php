@@ -1,16 +1,12 @@
 <script>
 $(document ).ready(function() {
-        
-    // var catMasVendido = $(".slideProductos").children('p:first').attr("categoria");
-    // if (catMasVendido != "") {                        
-    //     $(".slideProductos").children('p:first').addClass("bg-primary");                
-    // } 
-   getZonas();
-   demo.initMaterialWizard();
+    var soloMesasActivas=false;            
+    getZonas(soloMesasActivas);
+    demo.initMaterialWizard();
 //    $('.selectMesasZonas').select2();
-   window.location.hash="inicio";
-   window.location.hash="Inicio";//esta linea es necesaria para chrome
-   window.onhashchange=function(){window.location.hash="inicio";}
+    window.location.hash="inicio";
+    window.location.hash="Inicio";//esta linea es necesaria para chrome
+    window.onhashchange=function(){window.location.hash="inicio";}
 
 });
 //para mostrar zonas y sus mesas respectivamente
@@ -32,8 +28,9 @@ $("#zonaElige").change(function() {
     //     });
     // }
 });
-function getZonas(){
+function getZonas(soloMesasActivas){
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    
     $.ajax({
             url: "{{ url('ordenar/obtenerzonas') }}",
             type: "GET",
@@ -48,18 +45,27 @@ function getZonas(){
                 if(ok){
                     var objeto=respuesta["objeto"]; 
                     // console.log("objeto",objeto);
-                    listaZonas="";
-                    for(i =0;  i<objeto.length; i++){
-                        var idZona=objeto[i]["id"];
-                        var nombre=objeto[i]["name"];
-                        var idPV=objeto[i]["idPuntoVenta"];
-                        var estado=objeto[i]["status"];
-                        // console.log("idZona",idZona);
-                        listaZonas+="<div id='zona"+idZona+"' class='zonas'><strong>"+nombre+"</strong><ul class='nav nav-pills nav-pills-icons' role='tablist' id='zonaListaMesas"+idZona+"'></ul></div>";
-                        getMesasPorZona(idZona);
+                    if(!soloMesasActivas){
+                        listaZonas="";
+                        for(i =0;  i<objeto.length; i++){
+                            var idZona=objeto[i]["id"];
+                            var nombre=objeto[i]["name"];
+                            var idPV=objeto[i]["idPuntoVenta"];
+                            var estado=objeto[i]["status"];
+                            // console.log("idZona",idZona);
+                            listaZonas+="<div id='zona"+idZona+"' class='zonas'><strong>"+nombre+"</strong><ul class='nav nav-pills nav-pills-icons' role='tablist' id='zonaListaMesas"+idZona+"'></ul></div>";
+                            getMesasPorZona(idZona);
+                        }
+                        listaZonas+="";                     
+                        $("#zonasPV").html(listaZonas);
+                    }else {
+                        for(i =0;  i<objeto.length; i++){
+                            var idZona=objeto[i]["id"];
+                            getMesasActivasPorZona(idZona);                                                        
+                        }                        
                     }
-                    listaZonas+="";                     
-                    $("#zonasPV").html(listaZonas);
+                    
+
                 }else{
                     $("#zonasPV").html('<p>Sin zonas para este punto de venta</p>');
                 }                
@@ -125,6 +131,32 @@ function getMesasPorZona(idZona) {
         }
     });
 }
+function getMesasActivasPorZona(idZona) {
+   var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+
+    $.ajax({
+            url: "{{ url('ordenar/getmesasactivas')}}"+'/'+idZona,
+            type: "GET",
+            data: {
+                '_method': 'GET',               
+                '_token': csrf_token
+            },        
+            success: function(respuesta) {
+                var respuesta = JSON.parse(respuesta);               
+                var ok = respuesta["ok"];
+                if(ok){
+                    var objeto=respuesta["objeto"];
+                    console.log("mesas", objeto);
+                }else{
+                    console.log("no hay mesas");                    
+                }                
+            },
+            error: function(respuesta) {
+                console.log(JSON.parse(respuesta));
+        }
+    });
+}
+
 function cargarMesasZonaDefault(){
     if (localStorage.getItem('zonaMesaSeleccionada')) {
         valDefault = localStorage.getItem('zonaMesaSeleccionada'); 
@@ -356,6 +388,9 @@ async function aperturaMesa(idMesa) {
                 var nombre=objeto["nombre"];
                 var room=objeto["room"];
                 var ocupante=objeto["Ocupante"];
+                var fechaSalida=objeto["FechaSalida"];
+                var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
+                
                 // var fechaSalida=objeto["FechaSalida"];                
                 // var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario                
                 if(errorCode==0){
@@ -459,6 +494,7 @@ $("#ocupanteModal").change(function(){
      var nombreCliente  = $("#nombre").val();
      var pax  = $("#ocupante").val();
      var habitacion  = $("#room").val();
+     var brazalete  = $("#brazalete").val();
 
      var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
      //var idMesa= $("#idMesaModal").val();//obtengo el id de la mesa
@@ -477,7 +513,7 @@ $("#ocupanteModal").change(function(){
             data: {
                 '_method': 'POST',
                 'alergenos':alergenos,
-                'idMesa':idMesa,'reserva':reserva,'nombreCliente':nombreCliente,'habitacion':habitacion, 'pax':pax,
+                'idMesa':idMesa,'reserva':reserva,'nombreCliente':nombreCliente,'habitacion':habitacion, 'pax':pax, 'brazalete': brazalete,
                 '_token': csrf_token
             },
             beforeSend: function () {
@@ -523,13 +559,80 @@ $("#ocupanteModal").change(function(){
         }
     }); 
  }
+function updateRoom() {
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    var idCuenta=$("#idCuentaModal").val();
 
+    var reserva=$("#reservaModal").val();
+    var nombre=$("#nombreModal").val();
+    var habitacion=$("#roomModal").val();
+    var pax=$("#ocupanteModal").val();
+    var brazalete  = $("#brazaleteModal").val();
+
+
+    var nombreD = $("#nombreModal").val().length > 0
+    var paxD = $("#ocupanteModal").val().length > 0;
+
+    var idPV= $("#idPVModalOrdenar").val();
+    var idMesa= localStorage.getItem("idMesaLS");
+    // var idCuenta =getIdCuenta(idPV,idMesa);     
+    var variableCuenta=idPV+idMesa;
+    var cuenta = JSON.parse(localStorage.getItem(variableCuenta)); 
+
+    if(nombreD && paxD ){
+        $.ajax({
+            url: "{{ url('ordenar/updatecuenta') }}"+'/'+idCuenta,
+            type: "POST",
+            data: {
+                '_method': 'POST',           
+                'reserva': reserva,'nombre':nombre,'habitacion':habitacion,'pax':pax, 'brazalete':brazalete,
+                '_token': csrf_token
+            },
+            beforeSend: function () {
+                swal({
+                    title: 'Espere',
+                    text: 'Actualizando datos',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
+            }, 
+            success: function(respuesta) {
+                swal.close();             
+                var respuesta = JSON.parse(respuesta);
+                var ok = respuesta["ok"];
+                
+                if(ok){//si ok es true
+                    var objeto =respuesta["objeto"];
+                    // console.log("Respuesta controlador",objeto); 
+                     localStorage.setItem(variableCuenta, JSON.stringify(objeto));
+                     swal({
+                            title: 'Oops...',
+                            text: '¡Operacion realizada con exito!',
+                            type: 'success',
+                            timer: '2000'
+                        });
+                        $("#myModalAddRoom").modal("hide");                    
+                    
+                }             
+                                                    
+            }
+        });           
+     }else{
+        swal({
+            title: 'Oops...',
+            text: 'Tiene campo(s) sin datos',
+            type: 'error',
+            timer: '2000'
+        });
+     }    
+}
  async function GetProductosByCat(idCategoria){
     var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
     var idPV= $("#idPVModalOrdenar").val();
     var idMesaLS = localStorage.getItem("idMesaLS");
     var variableLS =idPV+idMesaLS;
-    var idCuenta =await getIdCuenta(idPV,idMesaLS); 
+    var idCuenta = await getIdCuenta(idPV,idMesaLS); 
     $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
 
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json    
@@ -1390,85 +1493,23 @@ function asignarHabitacionModal(){
         $("#nombreModal").val(cuenta["nombreCliente"]);
         $("#roomModal").val(cuenta["habitacion"]);
         $("#ocupanteModal").val(cuenta["pax"]);
+        $("#fechaSalidaModal").val(cuenta["FechaSalida"]);
+        $("#brazaleteModal").val(cuenta["brazalete"]);
+
        
         $('#myModalAddRoom').modal({backdrop: 'static', keyboard: false });
     }   
    
 }
-function updateRoom() {
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-    var idCuenta=$("#idCuentaModal").val();
 
-    var reserva=$("#reservaModal").val();
-    var nombre=$("#nombreModal").val();
-    var habitacion=$("#roomModal").val();
-    var pax=$("#ocupanteModal").val();
-
-    var nombreD = $("#nombreModal").val().length > 0
-    var paxD = $("#ocupanteModal").val().length > 0;
-
-    var idPV= $("#idPVModalOrdenar").val();
-    var idMesa= localStorage.getItem("idMesaLS");
-    // var idCuenta =getIdCuenta(idPV,idMesa);     
-    var variableCuenta=idPV+idMesa;
-    var cuenta = JSON.parse(localStorage.getItem(variableCuenta)); 
-
-    if(nombreD && paxD ){
-        $.ajax({
-            url: "{{ url('ordenar/updatecuenta') }}"+'/'+idCuenta,
-            type: "POST",
-            data: {
-                '_method': 'POST',           
-                'reserva': reserva,'nombre':nombre,'habitacion':habitacion,'pax':pax,
-                '_token': csrf_token
-            },
-            beforeSend: function () {
-                swal({
-                    title: 'Espere',
-                    text: 'Actualizando datos',
-                    type : 'info',
-                    allowOutsideClick: false
-                });
-                swal.showLoading();
-            }, 
-            success: function(respuesta) {
-                swal.close();             
-                var respuesta = JSON.parse(respuesta);
-                var ok = respuesta["ok"];
-                
-                if(ok){//si ok es true
-                    var objeto =respuesta["objeto"];
-                    // console.log("Respuesta controlador",objeto); 
-                     localStorage.setItem(variableCuenta, JSON.stringify(objeto));
-                     swal({
-                            title: 'Oops...',
-                            text: '¡Operacion realizada con exito!',
-                            type: 'success',
-                            timer: '2000'
-                        });
-                        $("#myModalAddRoom").modal("hide");                    
-                    
-                }             
-                                                    
-            }
-        });           
-     }else{
-        swal({
-            title: 'Oops...',
-            text: 'Tiene campo(s) sin datos',
-            type: 'error',
-            timer: '2000'
-        });
-     }    
-}
  $('#myModalAddRoom').on('hidden.bs.modal', function (e) {
      $(this).find('form')[0].reset();
 });
  function enviarCentroPrep() {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
-     var idPV = $("#btnEnviarCP").attr("idPVCPBtn");
-     var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");
-     var idMenuCarta = $("#btnEnviarCP").attr("idMenuCartaCPBtn");
+     var idPV = $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion  
+     var idMesa = localStorage.getItem("idMesaLS");
+     var idMenuCarta = $("#idCartaPVModal").val();//obtengo el id de pv con el que se inició sesion       
 
      //console.log("idPV es: "+idPV+" idMesa: "+idMesa+" idMenuCarta: "+idMenuCarta);
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
@@ -1943,7 +1984,18 @@ function cambiarMesa() {
     nuevaMesaNombre = $(".selectMesasZonas option:selected" ).text();
 
     idCuenta = $("#cuentaMesaSpan" ).text();
-      
+    //cuenta actual
+    cuentaAnterior=idPV+idMesaActual;
+    cuentaMesaDatosAnterior = JSON.parse(localStorage.getItem(cuentaAnterior));
+    //cuenta temporal actaal
+    cuentaTemporalAnteriorTemp="cuentaTemporal"+idPV+idMesaActual;
+    cuentaMesaDatosAnteriorTemp = JSON.parse(localStorage.getItem(cuentaTemporalAnteriorTemp));
+    longitudCT = cuentaMesaDatosAnteriorTemp.length;
+    //cuenta temporal actual BD de API
+    cuentaAnteriorBD="cuentaBD"+idPV+idMesaActual;
+    cuentaMesaDatosAnteriorBD = JSON.parse(localStorage.getItem(cuentaAnteriorBD));
+    longitudCBD = cuentaMesaDatosAnteriorBD.length;
+
     if (idMesaNueva !="") {
         swal({
             title: 'Cambio de mesa: '+mesaActual+' a '+nuevaMesaNombre,
@@ -1954,11 +2006,77 @@ function cambiarMesa() {
             cancelButtonText: '¡Desistir!',
             confirmButtonText: '¡Cambiar!'
         }).then(function() {
-            console.log("ocurre el cambio");
+
+            //genero nueva variable localstorage cuenta-> idPV+idMesaNueva
+            cuentaNueva=idPV+idMesaNueva;
+            cuentaMesaDatosAnterior["idMesa"]=parseInt(idMesaNueva);
+            localStorage.setItem(cuentaNueva,JSON.stringify(cuentaMesaDatosAnterior)); 
+            //genero nueva variable localstorage cuentaTemporal -> idPV+idMesaNueva
+            cuentaTemporalNueva="cuentaTemporal"+idPV+idMesaNueva;            
+            if (longitudCT > 0) {
+                for (i = 0; i < cuentaMesaDatosAnteriorTemp.length; i++) {
+                    cuentaMesaDatosAnteriorTemp[i]["idMesa"]=idMesaNueva;
+                    localStorage.setItem(cuentaTemporalNueva,JSON.stringify(cuentaMesaDatosAnteriorTemp)); 
+                }                
+            } else {
+                localStorage.setItem(cuentaTemporalNueva,JSON.stringify(cuentaMesaDatosAnteriorTemp));                
+            }                                  
+            //genero nueva variable localstorage cuentaBD -> idPV+idMesaNueva
+            cuentaBDNueva="cuentaBD"+idPV+idMesaNueva;            
+            if (longitudCBD > 0) {
+                for (i = 0; i < cuentaMesaDatosAnteriorBD.length; i++) {
+                    cuentaMesaDatosAnteriorBD[i]["idMesa"]=idMesaNueva;
+                    localStorage.setItem(cuentaBDNueva,JSON.stringify(cuentaMesaDatosAnteriorBD)); 
+                }                
+            } else {
+                localStorage.setItem(cuentaBDNueva,JSON.stringify(cuentaMesaDatosAnteriorBD));                 
+            }
+            // cambio el idMesa en localstorage idMesaLS-> idMesaNueva                                   
+            localStorage.setItem("idMesaLS",idMesaNueva);
+            $("#nombreMesaSpan" ).text(nuevaMesaNombre);// Cambio nombre de mesa en div well
+            // remuevo las variables localstorage anteriores
+            localStorage.removeItem(cuentaAnterior);
+            localStorage.removeItem(cuentaTemporalAnteriorTemp);
+            localStorage.removeItem(cuentaAnteriorBD);
+            
+            guardarCambioDeMesa(idPV, idCuenta, idMesaNueva);
+
         }).catch(swal.noop);        
     }else{
         swal("Oops", "Seleccione una mesa por favor" ,  "error");                
     }
+}
+function guardarCambioDeMesa(idPV, idCuenta, idMesaNueva){
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');    
+    console.log("idPuntoVenta: "+idPV+" idCuenta: "+idCuenta+" idMesaNueva: "+idMesaNueva);    
+    $.ajax({
+        url: "{{ url('ordenar/updatemesa') }}",
+        type: "POST",
+        data: {
+            '_method': 'POST',           
+            'idPV': idPV,'idCuenta':idCuenta,'idMesaNueva':idMesaNueva,
+            '_token': csrf_token
+        },
+        beforeSend: function () {
+            swal({
+                title: 'Espere',
+                text: 'Actualizando datos',
+                type : 'info',
+                allowOutsideClick: false
+            });
+            swal.showLoading();
+        }, 
+        success: function(respuesta) {
+            swal.close();             
+            var respuesta = JSON.parse(respuesta);
+            console.log("respuesta",respuesta); 
+            var ok = respuesta["ok"];                                                                                     
+        },
+        error: function(respuesta) { 
+            console.log("respuesta",respuesta); 
+        }
+    });           
+     
 }
 </script>
 

@@ -72,13 +72,18 @@ class OrdenController extends Controller
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetZonaPV/{$idPuntoVenta}");
 
         // $respuesta= json_decode($respuesta);        
-
         return $respuesta;
     }
     
      public function getMesasPorZona($idZona){
         
         $respuesta = $this->realizarPeticion('GET', $this->urlMesas."GetMesaPorZona/{$idZona}");       
+
+        return  $respuesta;
+    }
+    public function getMesasActivas($idZona){
+
+        $respuesta = $this->realizarPeticion('GET', $this->urlMesas."GetMesasPorZonaActivas/{$idZona}");
 
         return  $respuesta;
     }
@@ -115,25 +120,7 @@ class OrdenController extends Controller
                 
         return  $mesas;
     }
-    // static public function getSCategoriasByCategoria($idCategoria){
-    //     $metodo = "GET";
-    //     $urlBase = "http://localhost/TPVApi/SubCategoria/GetSubCategoriasPorCategoria/{$idCategoria}";
-
-    //     $cliente =  new Client();
-    //     $respuesta = $cliente->request($metodo, $urlBase);
-    //     $respuesta = $respuesta->getBody()->getContents();
-    //     $respuesta = json_decode($respuesta);
-    //     $respuestaOk = $respuesta->ok;
-
-    //     if ($respuestaOk == 1) { 
-    //         $subCategorias = $respuesta->objeto;
-    //     }else{
-    //         $subCategorias = 0; 
-    //     }
-
-    //     return $subCategorias;
-    // }
-
+  
     public function getProductosByCat(Request $request){
         $idCarta = $request->session()->get('idCarta');
         $idCategoria = $request->get('idCategoria');
@@ -162,6 +149,8 @@ class OrdenController extends Controller
         $habitacion = $request->get('habitacion');
         $nombreCliente = $request->get('nombreCliente');
         $pax = $request->get('pax');
+        $brazalete = $request->get('brazalete');
+
         $idPuntoVenta = $request->session()->get('idPuntoVenta'); //obtengo el id del punto de venta
 
         $alergenos = $request->get('alergenos'); //obtengo el array de alergenos desde ajax
@@ -182,6 +171,7 @@ class OrdenController extends Controller
                 'habitacion' => $habitacion,
                 'nombreCliente' => $nombreCliente,
                 'pax' => $pax,
+                'brazalete'=> $brazalete,
                 'idPuntoVenta' => $idPuntoVenta,
                 'TPV_AlergenosCuenta' => 
                     $arrayAlergenos                                
@@ -195,16 +185,28 @@ class OrdenController extends Controller
         $habitacion = $request->get('habitacion');
         $nombreCliente = $request->get('nombre');
         $pax = $request->get('pax');
+        $brazalete = $request->get('brazalete');
 
         $respuesta = $this->realizarPeticion('POST', $this->urlVenta."UpdateCuenta/{$idCuenta}", [
             'form_params' => [
                 'reserva' => $reserva,
                 'habitacion' => $habitacion,
                 'nombreCliente' => $nombreCliente,
-                'pax' => $pax
+                'pax' => $pax,
+                'brazalete' => $brazalete,
             ]
         ]);
         
+        return $respuesta;
+    }
+    public function updateCuentaMesa(Request $request){
+
+        $idPV = $request->get('idPV');
+        $idCuenta = $request->get('idCuenta');
+        $idMesaNueva = $request->get('idMesaNueva');
+        
+        $respuesta = $this->realizarPeticion('POST', $this->urlVenta."UpdateMesa/{$idPV}/{$idCuenta}/{$idMesaNueva}");
+
         return $respuesta;
     }
     public function obtenerAlergenosProducto($idProducto){

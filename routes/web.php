@@ -21,9 +21,11 @@ Route::get('sinpermisos', 'SinPermisosController@index')->name('permisos.index')
 Route::get('ordenar', 'OrdenController@index')->name('ordenar.index');
 Route::get('ordenar/obtenerzonas', 'OrdenController@obtenerTodasLasZonasPV')->name('ordenar.getzonas');
 Route::get('ordenar/obtenermesaszona/{idZona}', 'OrdenController@getMesasPorZona')->name('ordenar.obtenermesaszona');
+Route::get('ordenar/getmesasactivas/{idZona}', 'OrdenController@getMesasActivas')->name('ordenar.obtenermesasactivas');
 Route::get('ordenar/{codhotel}/{room}', 'OrdenController@obtenerDatosHuesped')->name('ordenar.obtenerhuesped');
 Route::post('ordenar/addcuenta', 'OrdenController@guardarCuenta')->name('ordenar.addcuenta');
 Route::post('ordenar/updatecuenta/{cuenta}', 'OrdenController@updateCuentaRoom')->name('ordenar.updatecuentaroom');
+Route::post('ordenar/updatemesa', 'OrdenController@updateCuentaMesa')->name('ordenar.updatecuentamesa');
 Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name('ordenar.enviarcuenta');
 Route::post('ordenar/cerrarcuenta/{cuenta}', 'OrdenController@cerraCuenta')->name('ordenar.cerrarcuenta');
 Route::post('ordenar/addcuentaalergia', 'OrdenController@addCuentaAlergiaPax')->name('ordenar.cuentaalergia');
