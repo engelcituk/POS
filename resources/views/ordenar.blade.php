@@ -68,16 +68,16 @@
                                 </table>                                                                  
                                 <div id="wrapper">
                                     <div id="receiptData">                                         
-                                        <div id="receipt-data">
+                                        
                                             <div class="well well-sm">
                                                 <strong>Mesa: </strong><span id="nombreMesaSpan"></span> 
                                                 <strong>Cliente: </strong><span id="clienteMesaSpan"></span> 
                                                 <strong>Cuenta: </strong><span id="cuentaMesaSpan"></span> 
                                                 <strong>Habitación: </strong><span id="habMesaSpan"></span>                            
                                             </div>
-                                            <div class="" id="tablaItemProductos">   
-                                                <table  class="table table-striped table-condensed tablaProductos">
-                                                    <thead>
+                                            <div class="table-wrapper-scroll-y my-custom-scrollbar" id="tablaItemProductos">   
+                                                <table  class="table tablaItems">
+                                                    <thead class="text-primary">
                                                         <tr>
                                                             <th class="text-center"><i class="fas fa-table"></i> <span id="idCuentaSpan"></span></th>
                                                             <th class="text-center">Nom.</th>                                              
@@ -92,35 +92,33 @@
                                                     <tfoot>                                                        
                                                     </tfoot>
                                                 </table>                                                
-                                            </div>                                           
-                                        </div>                                         
+                                            </div>
+
+                                                                               
 
                                         <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
-                                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                               <div class="btn-group" role="group" id="btnAddRoom">                                               <button type="button" class="btn btn-warning" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"><i class='fas fa-bed'></i>  Habitación</button>                                                                   
-                                                </div> 
-                                                <div class="btn-group" role="group">      
-                                                    <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "><i class="fas fa-paper-plane"></i> Enviar</button>
-                                                </div>
-                                            </div>                                          
-                                        </div>
-                                        <div id="buttons2" style="text-transform:uppercase;" class="no-print">
-                                            <div class="btn-group btn-group-justified" role="group" aria-label="...">                                                
-                                                <div class="btn-group" role="group">
-                                                    <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"> <i class="fas fa-percentage"></i> Descuento</a>
-                                                </div>  
-                                                <div class="btn-group" role="group">
-                                                    <a class="btn btn-block btn-success" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
-                                                </div>                                               
-                                            </div>                                          
-                                        </div>
-                                        <div id="buttons3" style="text-transform:uppercase;" class="no-print">
-                                            <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                                <div class="btn-group" role="group">
-                                                    <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar cuenta</button>
-                                                </div>                                                                                    
-                                            </div>                                          
-                                        </div>
+                                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"> <i class="fas fa-percentage"></i> Descuento</a>
+                                            </div>
+                                           <div class="btn-group" role="group" id="btnAddRoom">
+                                            <button type="button" class="btn btn-info" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"><i class='fas fa-bed'></i>  Habitación</button>                                                                   
+                                            </div> 
+                                            <div class="btn-group" role="group">      
+                                                <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "><i class="fas fa-paper-plane"></i> Enviar</button>
+                                            </div>
+                                        </div>                                          
+                                    </div>
+                                    <div id="buttons2" style="text-transform:uppercase;" class="no-print">
+                                        <div class="btn-group btn-group-justified" role="group">   
+                                            <div class="btn-group" role="group">
+                                                <a class="btn btn-block btn-success" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
+                                            </div>                                               
+                                            <div class="btn-group" role="group">
+                                                <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar cuenta</button>
+                                            </div>
+                                        </div>                                          
+                                    </div> 
 
                                     </div>
                                 </div>
