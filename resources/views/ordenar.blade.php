@@ -66,8 +66,7 @@
                                         </tr>
                                     </thead>
                                 </table>                                                                  
-                                <div id="wrapper">
-                                    <div id="receiptData">                                         
+                                                                        
                                         
                                             <div class="well well-sm">
                                                 <strong>Mesa: </strong><span id="nombreMesaSpan"></span> 
@@ -77,13 +76,13 @@
                                             </div>
                                             <div class="table-wrapper-scroll-y my-custom-scrollbar" id="tablaItemProductos">   
                                                 <table  class="table tablaItems">
-                                                    <thead class="text-primary">
-                                                        <tr>
-                                                            <th class="text-center"><i class="fas fa-table"></i> <span id="idCuentaSpan"></span></th>
-                                                            <th class="text-center">Nom.</th>                                              
-                                                            <th class="text-center" >Cant.</th>
-                                                            <th class="text-center" >Precio</th>
-                                                            <th class="text-center" >Tot.</th>        
+                                                    <thead class="">
+                                                        <tr class="">
+                                                            <th></th>                              
+                                                            <th>Nombre</th>
+                                                            <th>Ca.</th>                                      
+                                                            <th>Pr.</th>                                      
+                                                            <th>To.</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>                                                        
@@ -120,8 +119,7 @@
                                         </div>                                          
                                     </div> 
 
-                                    </div>
-                                </div>
+                                    
                             </div>
                             <div class="col-md-7" id="idMesaAddProducts">
                                 
