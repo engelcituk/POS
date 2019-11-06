@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-md-12 card">                
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-xs-6">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="fas fa-calendar-alt"></i>
@@ -16,7 +16,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-xs-6">
                         <div class="input-group">
                             <span class="input-group-addon">
                                 <i class="fas fa-calendar-alt"></i>
@@ -27,19 +27,20 @@
                         </div>
                     </div>
                     
-                    <div class="col-md-3">
+                    <div class="col-md-3 col-xs-6">
                         <div class="input-group">
                             <button class="btn btn-success" onclick="filtrarFecha()"><i class="fas fa-search"></i> Filtrar</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="input-group">
+                            <button class="btn btn-warning" onclick="filtrarFecha()"><i class="fas fa-search"></i> Cierre</button>
                         </div>
                     </div>
                 </div>
                
                     <div class="card-content">
-                        {{-- <h4 class="card-title">Historico de ordenes</h4> --}}
-                        <div class="toolbar">
-                            
-                            {{-- Here you can write extra buttons/actions for the toolbar {{$fechaHoy}}              --}}
-                        </div>
+                       
                         <div class="material-datatables">
                             <table id="historico" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                <thead>
@@ -64,7 +65,7 @@
                         </div>
                     </div>
                     <!-- end content-->
-                {{-- </div> --}}
+                </div>
                 <!--  end card  -->
             </div>
             <!-- end col-md-12 -->

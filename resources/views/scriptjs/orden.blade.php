@@ -1,7 +1,11 @@
 <script>
 
-// const ws = new WebSocket('ws://localhost/TPVApi/Hoteles/GetHoteles');
+//  const ws = new WebSocket('ws://localhost/TPVApi/Hoteles/GetHoteles');
+// const ws =  new WebSocket("ws://10.10.99.18/TPVApi/");
 
+// ws.onopen = () => {
+//     console.log('conectado');
+// };
 
 
 $(document ).ready(function() {
@@ -1770,9 +1774,10 @@ function asignarHabitacionModal(){
  }
 
  function cerrarCuentaModal() {     
-     var idPV = $("#btnEnviarCP").attr("idPVCPBtn");//obtengo el idPV que tengo en el btn enviar
-     var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");//obtengo el idMesa que tengo en el btn enviar
-     var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr");//obtengo el idMesa que tengo en el btn enviar
+     var idPV= $("#idPVModalOrdenar").val();
+     var idMesa = localStorage.getItem("idMesaLS");
+     var idCuenta = $("#cuentaMesaSpan").text(); 
+      
      var totalCuenta = $("#totalCuenta").val();
 
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
@@ -1804,11 +1809,12 @@ function asignarHabitacionModal(){
  }
  function cerrarCuenta() {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
-     var idPV = $("#btnEnviarCP").attr("idPVCPBtn");
-     var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");
+    
+     var idPV= $("#idPVModalOrdenar").val();
+     var idMesa = localStorage.getItem("idMesaLS");          
 
      var cuenta = JSON.parse(localStorage.getItem(idPV+idMesa));        
-     var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr");  
+     var idCuenta = $("#cuentaMesaSpan").text();  
      var porcentajeDesc = cuenta["descuentoPorc"]; 
      var idFormaPago = $("#formaPagoSelect option:selected").val();
      $("#modalMetodoPago").modal("hide");     
