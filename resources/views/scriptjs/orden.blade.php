@@ -1,4 +1,12 @@
 <script>
+
+const ws = new WebSocket('ws://localhost/TPVApi/Hoteles/GetHoteles');
+
+
+ws.onopen = () => {
+    console.log('conectado');
+};
+
 $(document ).ready(function() {
     var soloMesasActivas=false;            
     getZonas(soloMesasActivas);

@@ -116,7 +116,12 @@ class OrdenController extends Controller
         $respuesta = $cliente->request($metodo, $urlBase);
         $respuesta = $respuesta->getBody()->getContents();
         $respuesta = json_decode($respuesta);
-        $mesas = $respuesta->objeto;
+        $ok = $respuesta->ok;
+        if($ok){
+            $mesas = $respuesta->objeto;
+        }else {
+            $mesas = "";
+        }
                 
         return  $mesas;
     }

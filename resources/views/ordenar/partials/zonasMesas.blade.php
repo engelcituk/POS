@@ -7,8 +7,10 @@
             $mesas=App\Http\Controllers\OrdenController::obtenerMesasPorZona($idZona);               
         @endphp        
     </optgroup>
-        @foreach($mesas as $mesa)
-            <option value="{{$mesa->id}}">{{$mesa->name}}</option>            
-        @endforeach                                
+        @if($mesas!="")
+            @foreach($mesas as $mesa)
+                <option value="{{$mesa->id}}">{{$mesa->name}}</option>            
+            @endforeach
+        @endif                                        
     @endforeach                                
 </select>
