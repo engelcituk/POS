@@ -98,13 +98,13 @@
                                         <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
                                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                             <div class="btn-group" role="group">
-                                                <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"> <i class="fas fa-percentage"></i> Descuento</a>
+                                                <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"></a>
                                             </div>
                                            <div class="btn-group" role="group" id="btnAddRoom">
-                                            <button type="button" class="btn btn-info" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"><i class='fas fa-bed'></i>  Habitación</button>                                                                   
+                                            <button type="button" class="btn btn-info" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"></button>                                                                   
                                             </div> 
                                             <div class="btn-group" role="group">      
-                                                <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "><i class="fas fa-paper-plane"></i> Enviar</button>
+                                                <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "></button>
                                             </div>
                                         </div>                                          
                                     </div>

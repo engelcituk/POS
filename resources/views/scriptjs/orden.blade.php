@@ -1,11 +1,8 @@
 <script>
 
-const ws = new WebSocket('ws://localhost/TPVApi/Hoteles/GetHoteles');
+// const ws = new WebSocket('ws://localhost/TPVApi/Hoteles/GetHoteles');
 
 
-ws.onopen = () => {
-    console.log('conectado');
-};
 
 $(document ).ready(function() {
     var soloMesasActivas=false;            
@@ -239,10 +236,15 @@ async function aperturaMesa(idMesa) {
  async function getIdCuenta(idPV,idMesa){    
     var variable=idPV+idMesa;
     var cuenta = JSON.parse(localStorage.getItem(variable));    
+
+    idCuenta=$("#mesa"+idMesa).attr("idCuenta");
+    if(idCuenta=="NO"){
+        idCuenta=$("#cuentaMesaSpan").text();
+    }     
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        
     if(cuenta==null){  
-        //obtengo la cuenta y creo la variable localstorage de acuerdo a la mesa     
-        idCuenta=$("#mesa"+idMesa).attr("idCuenta");     
-        var csrf_token = $('meta[name="csrf-token"]').attr('content');    
+        //obtengo la cuenta y creo la variable localstorage de acuerdo a la mesa                 
         await $.ajax({
                 url: "{{url('getcuenta')}}"+'/'+idCuenta,
                 type: "GET",
@@ -262,7 +264,24 @@ async function aperturaMesa(idMesa) {
                 }
         });
     }else{
-        idCuenta =cuenta["id"];
+        await $.ajax({
+                url: "{{url('getcuenta')}}"+'/'+idCuenta,
+                type: "GET",
+                data: {
+                    '_method': 'GET',
+                    '_token': csrf_token
+                },            
+                success: function(respuesta) {
+                    var respuesta=JSON.parse(respuesta);
+                    var ok = respuesta["ok"];
+                    if(ok){
+                        var objeto =  respuesta["objeto"];                          
+                        localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto                        
+                        var cuentaGet = JSON.parse(localStorage.getItem(variable));
+                        var idCuenta =cuentaGet["id"];
+                    }                 
+                }
+        });        
     }
    
     return idCuenta;
@@ -452,10 +471,12 @@ $('#myModal').on('hidden.bs.modal', function (e) {
         $("#myModal").modal("hide"); 
 
        await guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta        
+    //    var idCuenta = $("#cuentaMesaSpan").text();
        await getProductosMasVendidos(); 
              generarBotonesClientes(idPV,idMesa);
        localStorage.setItem("idMesaLS", idMesa);
        var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
+
        var idCuenta = await getIdCuenta(idPV,idMesa); 
        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
 
@@ -543,8 +564,12 @@ $("#ocupanteModal").change(function(){
                     var objeto = resultado["objeto"];
                     var idCuenta=objeto["id"];
                     var nombreCliente=objeto["nombreCliente"];
+                    var habitacion=objeto["habitacion"];
+
                     $("#cuentaMesaSpan").text(idCuenta);
                     $("#clienteMesaSpan").text(nombreCliente);
+                    $("#habMesaSpan").text(habitacion);
+
                     var folio=objeto["folio"];
                     // console.log("respuesta folio "+folio);
                     $("#btnAddDescuento").attr("btnIdCuenta",idCuenta);//creo los atributos
@@ -2114,6 +2139,22 @@ function guardarCambioDeMesa(idPV, idCuenta, idMesaNueva){
     });           
      
 }
+// Para trabajar con media queries
+    var mediaquery = window.matchMedia("(max-width: 600px)");     
+    function handleOrientationChange(mediaquery) {
+      if (mediaquery.matches) {        
+        $("#btnAddDescuento").html('<i class="fas fa-percentage"></i> Desc');
+        $("#btnAddRoomCuenta").html('<i class="fas fa-bed"></i>  Hab.');
+        $("#btnEnviarCP").html('<i class="fas fa-paper-plane"></i> Enviar');
+
+      } else {
+        $("#btnAddDescuento").html('<i class="fas fa-percentage"></i> Descuento');
+        $("#btnAddRoomCuenta").html('<i class="fas fa-bed"></i>  Habitación');
+        $("#btnEnviarCP").html('<i class="fas fa-paper-plane"></i> Enviar');
+      }
+    }
+    handleOrientationChange(mediaquery);
+    mediaquery.addListener(handleOrientationChange);
 </script>
 
                         
