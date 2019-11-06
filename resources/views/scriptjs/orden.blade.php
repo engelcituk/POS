@@ -1527,7 +1527,8 @@ $('#myModalAlergenos').on('hidden.bs.modal', function (e) {
 
 function asignarHabitacionModal(){
     var idPV= $("#idPVModalOrdenar").val();
-    var idMesa= $("#idMesaModal").val();
+    var idMesa = localStorage.getItem("idMesaLS");
+    
 	$(".alert").remove();// si hay mensajes de alerta, estas se remueven en el modal
     // var idCuenta =getIdCuenta(idPV,idMesa);     
     var variable=idPV+idMesa;
