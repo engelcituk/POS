@@ -1787,9 +1787,11 @@ function asignarHabitacionModal(){
      var datosCuentaApi = JSON.parse(localStorage.getItem(cuentaAPi));
 
      if(datosCuentaTemporal==null){
+         hayCuenta=false;
          longitud = 0;
      }else{
-         longitud =datosCuentaTemporal.length
+         longitud =datosCuentaTemporal.length;
+         hayCuenta = true;
      }
      if(datosCuentaApi && datosCuentaApi.length==0){         
         cuentaApi = false;         
@@ -1798,7 +1800,7 @@ function asignarHabitacionModal(){
     }              
     if(longitud==0){
         $("#idCuentaCerrar").val(idCuenta); //guardo el id de la cuenta en un campo dentro de un modal
-        if(totalCuenta!=0){
+        if(totalCuenta !=0 && hayCuenta){
             $('#modalMetodoPago').modal({backdrop: 'static', keyboard: false });
         }else {
             cerrarCuenta();
@@ -1927,7 +1929,7 @@ function imprimirCuenta() {
             '_token': csrf_token
         },
         success: function(respuesta) {             
-            //  var respuesta = JSON.parse(respuesta);
+             var respuesta = JSON.parse(respuesta);
              console.log("Respuesta controlador",respuesta);               
                                                 
         },

@@ -22,7 +22,7 @@
     <link href="{{asset('css/owl.carousel.min.css')}}" rel="stylesheet"/>
     {{-- <link href="{{asset('css/owl.theme.min.css')}}" rel="stylesheet"/> --}}
     <link href="{{asset('css/estilo.css')}}" rel="stylesheet"/>
-    @if(request()->is('ordenar'))
+	@if(request()->is('ordenar'))
         <link href="{{asset('css/estiloTblComanda.css')}}" rel="stylesheet"/>                
     @endif
 

@@ -40,6 +40,7 @@ Route::delete('cancelarproducto/{idDetalleCuenta}', 'OrdenController@cancelarPro
 //rutas historicos
 Route::get('historico', 'HistoricoController@index')->name('historico.index');
 Route::post('all/historico', 'HistoricoController@AllHistorico')->name('all.historico');
+Route::post('historico/cierredia', 'HistoricoController@cierreDiaDetalle')->name('historico.cierredia');
 Route::post('historico/cancelar/{cuenta}', 'HistoricoController@cancelarCuenta')->name('historico.cancelar');
 Route::post('historico/imprimir/{cuenta}', 'HistoricoController@imprimirCuenta')->name('historico.imprimir');
 Route::get('historico/{cuenta}', 'HistoricoController@obtenerCuenta')->name('historico.cuenta');

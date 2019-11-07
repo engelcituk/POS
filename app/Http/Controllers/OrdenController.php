@@ -304,8 +304,9 @@ class OrdenController extends Controller
 
         $idUsuario = $request->session()->get('idUsuarioLogueado');
         $fecha = Carbon::now()->format('d-m-Y');
+        $idCarta = $request->session()->get('idCarta');
 
-        $respuesta = $this->realizarPeticion('POST', $urlCerrarDia."cierreDia/{$idPV}/{$fecha}/{$idUsuario}");
+        $respuesta = $this->realizarPeticion('POST', $urlCerrarDia."cierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");
 
         return $respuesta;
 

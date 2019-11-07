@@ -180,10 +180,108 @@ function verCuentaDetalles(id) {
                 text: '¡EL motivo tiene que ser mayor a 20 caracteres!',
                 type: 'error',
                 timer: '2500'
-            })
+            });
         }                 
     }
     $('#modalCancelarCuenta').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
     });
+
+    function detallesFiltro(){
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        fechaInicio = $("#fechaInicioHist").val();
+        console.log(fechaInicio);
+        $.ajax({
+            url: "{{url('historico/cierredia')}}",
+            type: "POST",
+            data: {
+                '_method': 'POST',
+                'fecha':fechaInicio,
+                '_token': csrf_token
+            },
+            beforeSend: function () {
+                // $("#mensajeRespuesta").html('<div class="loader"></div>');
+                swal({
+                    title: 'Espere',
+                    text: 'Obteniendo información',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
+            },           
+            success: function(respuesta) {
+                swal.close(); 
+                var respuesta=JSON.parse(respuesta);
+                var ok = respuesta["ok"];
+                if(ok){
+                    objeto = respuesta["objeto"];
+                    mostrarDetalleFiltro(objeto);
+                }                                             
+                                    
+            },
+            error: function(respuesta) {
+            respuesta=JSON.parse(respuesta); 
+            console.log(respuesta);
+            }
+        });            
+    }
+    function mostrarDetalleFiltro(objeto) {
+        fechaInicio = $("#fechaInicioHist").val();
+                
+        console.log("objeto", objeto);
+
+        var totalCuentas= objeto["totalCuentas"];
+        if(totalCuentas>0){
+            $("#fechaDesglose").text(fechaInicio);
+            $("#fechaFiltroBtn").attr("fechaFiltroButton",fechaInicio);
+            
+            $("#detalleCuentasFiltro tbody").empty();//limpio la tabla para cargar nuevos datos
+            $("#productosFavoritosFiltro tbody").empty();//limpio la tabla para cargar nuevos datos
+            var totalCuentas= objeto["totalCuentas"];
+            var totalAdultos= objeto["totalAdultos"];
+            var totalNinos= objeto["totalNinos"];
+            var totalPax= objeto["totalPax"];
+            // obtengo la cuenta
+            var cuentasObj=  objeto["cuentas"];
+            var productosFavoritosObj=  objeto["productos"];
+
+            var longitudCuentas=cuentasObj.length;                    
+            var longitudProductos=productosFavoritosObj.length;                    
+            //Seccion de cuentas
+            $("#totalCuentas").text(totalCuentas);
+            $("#totalAdultos").text(totalAdultos);
+            $("#totalNinos").text(totalNinos);
+            $("#totalPax").text(totalPax);
+            // seccion de productos
+            $("#productosFavoritos").text(longitudProductos);
+            //para mostrar el listado de cuentas
+            for (i = 0; i < longitudCuentas; i++) {                           
+                var idCuenta = cuentasObj[i]["id"];
+                var folio = cuentasObj[i]["folio"];
+                var fechaApertura = cuentasObj[i]["fechaAlta"].substring(0,10);
+                var horaAlta = cuentasObj[i]["horaAlta"];
+                var horaCierre = cuentasObj[i]["horaCierre"];
+                var habitacion = cuentasObj[i]["habitacion"];
+                var nombreCliente = cuentasObj[i]["nombreCliente"];
+                var pax = cuentasObj[i]["pax"];
+                var totalCuenta = cuentasObj[i]["totalCuenta"];
+                                
+                itemCuentas="<tr><td>"+idCuenta+"</td><td>"+folio+"</td><td>"+fechaApertura+"</td><td>"+horaAlta+"</td><td>"+horaCierre+"</td><td>"+habitacion+"</td><td>"+nombreCliente+"</td><td>"+pax+"</td><td>"+totalCuenta+"</td></tr>";
+                $("#detalleCuentasFiltro tbody").append(itemCuentas);
+            }
+            // para mostrar el listado de productos favoritos
+            for (i = 0; i < longitudProductos; i++) {                           
+                var nombreProducto = productosFavoritosObj[i]["producto"];
+                var cantidad = productosFavoritosObj[i]["count"];
+                                                
+                itemProductos="<tr><td>"+nombreProducto+"</td><td>"+cantidad+"</td>tr>";
+                $("#productosFavoritosFiltro tbody").append(itemProductos);
+            }
+            // muestro el modal
+            $('#modalDetalleFiltro').modal({backdrop: 'static', keyboard: false });
+
+        }else{
+            swal("Oops", "Aun no hay cuentas para esta fecha" ,  "error");                
+        }
+    }
 </script> 

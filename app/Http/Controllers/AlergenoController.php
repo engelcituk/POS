@@ -11,7 +11,7 @@ use Image;
 class AlergenoController extends Controller
 {
 
-    public $urlBase = "http:/localhost/TPVApi/Alergenos/";
+    public $urlBase = "http://localhost/TPVApi/Alergenos/";
 
     public function __construct(){
 

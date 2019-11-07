@@ -52,6 +52,18 @@ class HistoricoController extends Controller
 
         return $historico;
     }
+    public function cierreDiaDetalle(Request $request){
+        //varaibles de sesión
+        $idPV = $request->session()->get('idPuntoVenta');
+        $idUsuario = $request->session()->get('idUsuarioLogueado');
+        $idCarta = $request->session()->get('idCarta');
+        //recibido desde ajax
+        $fecha = $request->get('fecha');
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin."getcierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");
+                
+        return $respuesta;
+    }
     public function obtenerCuenta($idCuenta){
 
         $respuesta = $this->realizarPeticion('GET', $this->urlCuenta."GetCuenta/{$idCuenta}");

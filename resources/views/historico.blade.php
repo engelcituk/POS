@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-3 col-xs-6">
                         <div class="input-group">
-                            <button class="btn btn-warning" onclick="filtrarFecha()"><i class="fas fa-search"></i> Cierre</button>
+                            <button class="btn btn-warning" onclick="detallesFiltro()"><i class="far fa-file-pdf"></i> Cierre</button>
                         </div>
                     </div>
                 </div>
@@ -74,6 +74,8 @@
     </div>
     @include('historico.partials.modalShow')
     @include('historico.partials.modalCancelarCuenta')
+    @include('historico.partials.modalCierreDetalle')
+
 </div>
 @endsection
 
