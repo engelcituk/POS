@@ -11,7 +11,7 @@
         <div id="showLoader"></div>
         <div class="row">
           <div id="invoice-POS">
-            <button class="btn btn-success pull-right" id="fechaFiltroBtn"> <i class="far fa-file-pdf"></i> PDF</button>          
+            <button class="btn btn-danger pull-right" id="fechaFiltroBtn" onclick="generarPdfFiltro()"> <i class="far fa-file-pdf"></i> PDF</button>          
           </div>
         </div>
         <div class="row">          

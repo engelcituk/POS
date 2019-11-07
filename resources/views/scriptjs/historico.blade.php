@@ -234,7 +234,7 @@ function verCuentaDetalles(id) {
         if(totalCuentas>0){
             $("#fechaDesglose").text(fechaInicio);
             $("#fechaFiltroBtn").attr("fechaFiltroButton",fechaInicio);
-            
+
             $("#detalleCuentasFiltro tbody").empty();//limpio la tabla para cargar nuevos datos
             $("#productosFavoritosFiltro tbody").empty();//limpio la tabla para cargar nuevos datos
             var totalCuentas= objeto["totalCuentas"];
@@ -283,5 +283,26 @@ function verCuentaDetalles(id) {
         }else{
             swal("Oops", "Aun no hay cuentas para esta fecha" ,  "error");                
         }
+    }
+    function generarPdfFiltro(){
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        fecha = $("#fechaFiltroBtn").attr("fechafiltrobutton");        
+        $.ajax({
+            url: "{{url('historico/pdf')}}",
+            type: "POST",
+            data: {
+                '_method': 'POST',
+                'fechaPDF':fecha,
+                '_token': csrf_token
+            },           
+            success: function(respuesta) {                 
+                // var respuesta=JSON.parse(respuesta);
+                // console.log(respuesta);
+            },
+            error: function(respuesta) {
+            // respuesta=JSON.parse(respuesta); 
+            // console.log(respuesta);
+            }
+        });            
     }
 </script> 

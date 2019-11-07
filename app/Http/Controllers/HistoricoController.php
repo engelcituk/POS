@@ -7,6 +7,7 @@ use function GuzzleHttp\json_decode;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class HistoricoController extends Controller
 {
@@ -63,6 +64,31 @@ class HistoricoController extends Controller
         $respuesta = $this->realizarPeticion('POST', $this->urlAdmin."getcierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");
                 
         return $respuesta;
+    }
+    public function generaPdf(Request $request){
+        //varaibles de sesión
+        $idPV = $request->session()->get('idPuntoVenta');
+        $idUsuario = $request->session()->get('idUsuarioLogueado');
+        $idCarta = $request->session()->get('idCarta');
+        //recibido desde ajax
+        $fecha = $request->get('fechaPDF');
+
+        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin . "getcierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");
+        $respuesta = json_decode($respuesta);
+
+        $objeto = $respuesta->objeto;
+
+        $totalAdultos = $objeto->totalAdultos;
+        $totalCuentas = $objeto->totalCuentas;
+        $totalNinos = $objeto->totalNinos;
+        $totalPax = $objeto->totalPax;
+
+        $cuentas = $objeto->cuentas;
+        $productos = $objeto->productos;
+    
+        $pdf = PDF::loadView('historico.pdf', compact('totalAdultos', 'totalCuentas', 'totalNinos', 'totalPax', 'cuentas', 'productos'));
+
+        return $pdf->download('lista-informe.pdf');
     }
     public function obtenerCuenta($idCuenta){
 
