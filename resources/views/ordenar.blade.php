@@ -131,7 +131,7 @@
                                         <div id="divCheckAlergia">
                                             <div class="checkbox checkbox-group required">                              
                                                 <label class="">
-                                                <input type="checkbox" id="chekAlergia" name="alergia" value="">
+                                                <input type="checkbox" id="checkAlergia" name="alergia" value="">
                                                 <strong>Con alergia</strong>
                                                 </label>                                            
                                             </div>

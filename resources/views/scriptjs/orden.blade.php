@@ -733,11 +733,10 @@ function updateRoom() {
                                             const resultado = alergenosHuesped.find( alergia => alergia.idAlergeno === alergenosP[j].idAlergeno);
                                             nombreAlergiasCoinciden.push(resultado.nombreAlergeno);
                                             nombreAlergenosMatch=nombreAlergiasCoinciden.toString();
-                                    }else{
-                                        nombreAlergenosMatch="Sin alergenos";
                                     }
-                                }                                
+                                }
                             }
+                            // console.log("alergenos: ",nombreAlergenosMatch);                                  
                             // var dataImg = 'data:image/png;base64,';                       
                             var imgProducto =imagen;                            
                             var imgFinal= '{{ URL::asset('/storage/productos') }}'+'/'+imgProducto;
@@ -839,12 +838,10 @@ async function getProductosMasVendidos(){
                                             const resultado = alergenosHuesped.find( alergia => alergia.idAlergeno === alergenosP[j].idAlergeno);
                                             nombreAlergiasCoinciden.push(resultado.nombreAlergeno);
                                             nombreAlergenosMatch=nombreAlergiasCoinciden.toString();
-                                    }else{
-                                        nombreAlergenosMatch="Sin alergenos";
                                     }
                                 }  
-                                // console.log("alergenos: ",nombreAlergenosMatch);                              
                             }
+                            // console.log("alergenos: ",nombreAlergenosMatch);                              
                             // var dataImg = 'data:image/png;base64,';                       
                             var imgProducto =imagen;                            
                             var imgFinal= '{{ URL::asset('/storage/productos') }}'+'/'+imgProducto;
@@ -881,7 +878,7 @@ function getModosProductoModal(idProducto,idMenuCarta,modosProducto,idCuenta){
     var longitudModos = modosProducto.length;
     var idPV= $("#idPVModalOrdenar").val(); 
     var idMesa = localStorage.getItem("idMesaLS");
-                     
+    // var idCuenta = $("#cuentaMesaSpan" ).text();                     
     if(longitudModos>0){        
         $('#modalModosProducto').modal({backdrop: 'static', keyboard: false });        
             
@@ -990,13 +987,14 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
  }
 
  function addAlergiaCuentaPax(idProducto,idCuenta){
+     console.log("entré aquí")
      var idAttr = "#producto"+idProducto;
      var boolAlergenoMatch  = JSON.parse($(idAttr).attr('alergenoMatch'));      
      var checkAlergia=$('#checkAlergia').prop('checked');        
     //  var alergenoMatech = document.getElementById(idAttr).hasAttribute("alergenoMatch");
-    //  console.log('id producto',idProducto);
-    //  console.log('idAttr',idAttr);
-     $(".btnC").each( function () {                
+    //  console.log('id producto',idProducto);          
+     $(".btnC").each( function () {
+         console.log("entro en el each");                
         if($(this).hasClass("btn-success") && boolAlergenoMatch && checkAlergia){
             var comensalSeleccionado= $(this).attr("numComensal"); // btn numComensal            
             // console.log('Valor alergenoMatch',boolAlergenoMatch, 'con alergiaCheckbox',checkAlergia, 'comensal', comensalSeleccionado, 'idCuenta', idCuenta);
@@ -1130,7 +1128,7 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
  function seleccionarModo(){
     var idProducto = $("#idProductoModalModo").val();
     var idMenuCarta = $("#idMenuCartaModalModo").val();
-    var idCuenta = $("#idCuentaModalModal").val();
+    var idCuenta = $("#cuentaMesaSpan").text();
     var idModo = $("#modoSelect option:selected" ).val();
     var descripcionModo =$("#modoSelect option:selected").text();//se convierte en la nota
     // var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr"); 
@@ -1140,8 +1138,7 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
      $('#modalModosProducto').on('hidden.bs.modal', function (e) {
         $(this).find('form')[0].reset();
     });  
-    // console.log("idProducto", idProducto);
-    // addAlergiaCuentaPax(idProducto,idCuenta);
+    // console.log("idProducto", idProducto);    
     addAlergiaCuentaPax(idProducto,idCuenta);
     addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo);
  }
@@ -1800,7 +1797,7 @@ function asignarHabitacionModal(){
     }              
     if(longitud==0){
         $("#idCuentaCerrar").val(idCuenta); //guardo el id de la cuenta en un campo dentro de un modal
-        if(totalCuenta !=0 && hayCuenta){
+        if(totalCuenta !=0 ){
             $('#modalMetodoPago').modal({backdrop: 'static', keyboard: false });
         }else {
             cerrarCuenta();
@@ -1875,7 +1872,7 @@ function asignarHabitacionModal(){
  }
  //funcion con sweetalert para reimprimir cuenta
 function imprimirCuenta() {
-    var idCuenta = $("#idCuentaSpan").attr("idCuentaAttr"); 
+    var idCuenta = $("#cuentaMesaSpan").text(); 
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     swal({
         title: '¿Seguro de realizar la impresión de la cuenta?',
@@ -1907,10 +1904,12 @@ function imprimirCuenta() {
             success: function(respuesta) {
                 // $("#modalCargando").modal("hide");
                 swal.close();
+                var respuesta = JSON.parse(respuesta);
                 console.log("respuesta controlador",respuesta);                    
             },
             error: function(respuesta) {
-                $("#modalCargando").modal("hide")
+                swal.close();
+                respuesta = JSON.parse(respuesta);                
                 console.log("respuesta controlador",respuesta);                    
 
             }
