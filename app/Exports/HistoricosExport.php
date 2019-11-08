@@ -7,9 +7,11 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+// use Http\Controllers\RestaurantesController;
 
 
-class HistoricosExport implements FromView
+class HistoricosExport  implements FromView, ShouldAutoSize 
 {
     use Exportable;  
     /**
@@ -22,6 +24,7 @@ class HistoricosExport implements FromView
     public $idUsuario;
     public $idCarta;
     public $fecha;
+    public $nombrePV;
 
 
     public function __construct(Request $request, $fecha)
@@ -30,7 +33,12 @@ class HistoricosExport implements FromView
         $this->idUsuario = $request->session()->get('idUsuarioLogueado');;
         $this->idCarta = $request->session()->get('idCarta');
 
-        $this->fecha = $fecha;            
+        $this->fecha = $fecha;
+               
+        $datosRestaurantePV = app('App\Http\Controllers\RestaurantesController')->obtenerUnRestaurante($this->idPV);
+
+        $this->nombrePV = $datosRestaurantePV->name;
+
     }
 
     public function view(): View {
@@ -38,6 +46,7 @@ class HistoricosExport implements FromView
         $idUsuario= $this->idUsuario;
         $idCarta = $this->idCarta;
         $fecha = $this->fecha;
+        $pv= $this->nombrePV;
         
         $objeto = $this->obtenerDatos($idPV, $idUsuario, $idCarta, $fecha);
 
@@ -48,7 +57,7 @@ class HistoricosExport implements FromView
 
         $productos = $objeto->productos;
        
-        return view('historico.excel', compact('totalAdultos', 'totalCuentas', 'totalNinos', 'totalPax', 'productos'));
+        return view('historico.excel', compact('fecha', 'pv','totalAdultos', 'totalCuentas', 'totalNinos', 'totalPax', 'productos'));
 
     }
 

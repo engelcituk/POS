@@ -1,23 +1,12 @@
-  <table>
-        <thead>
-        <tr>
-            <th>Total de cuentas</th>
-            <th>Total de adultos</th>
-            <th>Total de Niños</th>
-            <th>Total Pax</th>       
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>{{$totalAdultos}}</td>
-            <td>{{$totalCuentas}}</td>
-            <td>{{$totalNinos}}</td>
-            <td>{{$totalPax}}</td>
-        </tr>      
+    <table>        
+        <tbody>           
+            <tr>
+                <td>Cierre: {{$pv}}</td>
+                <td>Fecha: {{$fecha}}</td>              
+            </tr>                                                                                             
         </tbody>
-    </table>    
-    <br>
-    <p>Productos: </p>
+    </table>
+    <p>Popularidad: </p>
     <table>
         <thead>
         <tr>
@@ -35,3 +24,32 @@
             
         </tbody>
     </table>
+   <p>Totales:</p><br>
+   <table>
+        <thead>
+        <tr>
+            <th>Totales</th>
+            <th>Cantidad</th>                
+        </tr>
+        </thead>
+        <tbody>           
+            <tr>
+                <td>Total de cuentas</td>
+                <td>{{$totalCuentas}}</td>              
+            </tr>
+            <tr>
+                <td>Total de adultos</td>
+                <td>{{$totalAdultos}}</td>                
+            </tr>  
+            <tr>
+                <td>Total de niños</td>
+                <td>{{$totalNinos}}</td>                               
+            </tr>
+            <tr>
+                <td>Total Pax</td>
+                <td>{{$totalPax}}</td>                               
+            </tr>                                                       
+        </tbody>
+    </table>
+
+            
