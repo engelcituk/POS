@@ -305,4 +305,38 @@ function verCuentaDetalles(id) {
             }
         });            
     }
+    function generarExcelFiltro(){
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');
+        fecha = $("#fechaFiltroBtn").attr("fechafiltrobutton");        
+        $.ajax({
+            url: "{{url('historico/datosexcel')}}"+'/'+fecha,
+            type: "GET",
+            data: {
+                '_method': 'GET',
+                'fechaExcel':fecha,
+                '_token': csrf_token
+            },
+             beforeSend: function () {
+                // $("#mensajeRespuesta").html('<div class="loader"></div>');
+                swal({
+                    title: 'Espere',
+                    text: 'Obteniendo información para generar excel',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
+            },           
+            success: function(respuesta) { 
+                swal.close(); 
+                // var respuesta=JSON.parse(respuesta);
+                // console.log(respuesta);
+                var url = "{{URL::to('historico/datosexcel')}}"+'/'+fecha;
+                window.location = url;
+            },
+            error: function(respuesta) {
+            // respuesta=JSON.parse(respuesta); 
+            // console.log(respuesta);
+            }
+        });            
+    }
 </script> 

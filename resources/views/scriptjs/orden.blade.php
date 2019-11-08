@@ -685,7 +685,7 @@ function updateRoom() {
         alergenosHuesped[i]= {"idAlergeno": alergenosCuenta[i].idAlergeno,"nombreAlergeno":alergenosCuenta[i]["TPV_Alergenos"].name};
     }   
     // console.log("idAlergenosHuesped", alergenosIdHuesped);
-    // console.log("alegenosHuesped", alergenosHuesped);
+    console.log("alegenosHuesped", alergenosHuesped);
     $.ajax({
             url: "{{url('obtener/productos')}}",
             type: "GET",
@@ -791,7 +791,7 @@ async function getProductosMasVendidos(){
         alergenosHuesped[i]= {"idAlergeno": alergenosCuenta[i].idAlergeno,"nombreAlergeno":alergenosCuenta[i]["TPV_Alergenos"].name};
     }   
     // console.log("idAlergenosHuesped", alergenosIdHuesped);
-    // console.log("alegenosHuesped", alergenosHuesped);
+    console.log("alegenosHuesped", alergenosHuesped);
     $.ajax({
             url: "{{ url('ordenar/getfavoritos') }}",
             type: "GET",

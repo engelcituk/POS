@@ -8,6 +8,8 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\Exports\HistoricosExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HistoricoController extends Controller
 {
@@ -90,6 +92,13 @@ class HistoricoController extends Controller
 
         return $pdf->download('lista-informe.pdf');
     }
+    //genero un excel llamando a la clase HistoricosExport dentro de  Exports/HistoricosExport.php
+    public function generaExcel(Request $request,$fecha){
+                
+        return Excel::download(new HistoricosExport($request,$fecha), 'lista.xlsx');
+        
+    }
+
     public function obtenerCuenta($idCuenta){
 
         $respuesta = $this->realizarPeticion('GET', $this->urlCuenta."GetCuenta/{$idCuenta}");
