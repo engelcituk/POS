@@ -941,7 +941,7 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
         "nombreProducto":nombreProducto,
         "cantidad":cantidad,
         "comensal":comensal,
-        "tiempo":tiempo,
+        "tiempo": parseInt(tiempo),
         "idUsuarioAlta":idUsuario,
         "nota":nota,
         "modo":idModo,
@@ -1188,16 +1188,15 @@ function modificarPrecioProducto(posicion, idPV, idMesa) {
 
 
  function leerCuentaApi(idPV, idMesa, idCuenta) {
-     var counter=-1;
+     var counter=0;
      var cuentaAPi="cuentaBD"+idPV+idMesa;
      var sumaSubTotales=0;
-     var objCuentaAPi =JSON.parse(localStorage.getItem(cuentaAPi));
      
-    if (typeof objCuentaAPi === 'undefined' || objCuentaAPi === null) {
-        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
-    }else{
-        // console.log(objCuentaAPi);
-        // console.log(objCuentaAPi[0]["idCuenta"]);              
+     if(localStorage.getItem(cuentaAPi)){
+         var objCuentaAPi =JSON.parse(localStorage.getItem(cuentaAPi));
+         objCuentaAPi.sort( function (a, b) {// ordeno los productos en orden ascendente por tiempos
+            return(a.tiempo - b.tiempo)
+        });
         for (i = 0; i < objCuentaAPi.length; i++) {
             var idCuenta = objCuentaAPi[i]["idCuenta"];
             var idPV = objCuentaAPi[i]["idPV"];
@@ -1210,12 +1209,31 @@ function modificarPrecioProducto(posicion, idPV, idMesa) {
             var precio = objCuentaAPi[i]["precioUnitario"];
             var total = cantidad * precio;
             sumaSubTotales = sumaSubTotales + total;
-            counter++;
-           lstProductosTr="<tr class='danger celdaTexto'><td><button class='btn btn-danger btn-xs' id='posi"+counter+"' name='itemProducto' onclick='cancelarProductoModal("+idDetalleCuenta+","+counter+")'>C</button></td><td>"+nombreProducto+"</td><td>"+cantidad+"</td><td>"+precio+"</td><td class='text-primary'>"+total+"</td></tr><tr class='danger celdaTexto border_bottom'><td></td><td colspan='4'>"+nota+"</td></tr>";
-           $("table tbody").append(lstProductosTr);
+            tiempo="";
+            if(objCuentaAPi[i]["tiempo"]==1){
+               tiempo="<span class='labelTiempos label-warning'>T1</span>";
+               borde="border_bottom";
+            }else if(objCuentaAPi[i]["tiempo"]==2){
+               tiempo ="<span class='labelTiempos label-warning'>T2</span>";
+               borde="border_bottom";
+            }else if(objCuentaAPi[i]["tiempo"]==3){
+               tiempo="<span class='labelTiempos label-warning'>T3</span>"; 
+               borde="border_bottom";
+            }else if(objCuentaAPi[i]["tiempo"]==4){
+                tiempo="<span class='labelTiempos label-warning'>T4</span>"; 
+                borde="border_bottom";
+            }
+            lstProductosTr="<tr class='danger celdaTexto'><td><button class='btn btn-danger btn-xs' id='posi"+counter+"' name='itemProducto' onclick='cancelarProductoModal("+idDetalleCuenta+","+counter+")'>C </button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>"+cantidad+"</td><td>"+precio+"</td><td class='text-primary'>"+total+"</td></tr><tr class='danger celdaTexto "+borde+"'><td></td><td colspan='4' id='notaApi"+counter+"'>"+nota+"</td></tr>";
+
+            counter++;   
+            $("table tbody").append(lstProductosTr);                                 
            
         }
-    } //sumaSubTotales
+     }else{
+        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
+     }
+     
+     //sumaSubTotales
     // console.log("sumaApitotal",sumaSubTotales);
     return sumaSubTotales;               
 }
@@ -1224,19 +1242,17 @@ function leerCuentaTemporal(idPV, idMesa) {
     $("#tablaItemProductos tfoot").empty();
     var cadena=String(idPV)+String(idMesa);  
     var cuenta = JSON.parse(localStorage.getItem(cadena)); 
-    var sumaApiTotales=leerCuentaApi(idPV, idMesa, idCuenta); //lo que se tiene de la api
-    //  console.log("sumaApiTotales",sumaApiTotales);
+    var sumaApiTotales=leerCuentaApi(idPV, idMesa, idCuenta); //lo que se tiene de la api //  console.log("sumaApiTotales",sumaApiTotales);
+    // ordeno los productos de mi cuenta temporal para facilitar su eliminación
+     ordenarProductosPorTiempos(idPV, idMesa);
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
-     var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
-    if (typeof datosCuentaTemporal === 'undefined' || datosCuentaTemporal === null) {
-        console.log("no tienes definido la variable: "+cuentaTemporal);
-        mostrarTotales(cadena);
-    }else{
-        // console.log(datosCuentaTemporal);
-        // console.log(datosCuentaTemporal[0]["idCuenta"]);
+     if(localStorage.getItem(cuentaTemporal)){
+        var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
+
         var sumaSubTotales=0;
         var counter=-1;
-        var counterTem=-1;        
+        var counterTem=-1;
+                            
         for (i = 0; i < datosCuentaTemporal.length; i++) {
             var idCuenta = datosCuentaTemporal[i]["idCuenta"];
             var idPV = datosCuentaTemporal[i]["idPV"];
@@ -1253,7 +1269,23 @@ function leerCuentaTemporal(idPV, idMesa) {
             sumaSubTotales = sumaSubTotales + subTotal; //este son los totales de la cuenta temporal
             counter++;
             counterTem++;
-           lstProductosTr="<tr class='success celdaTexto'><td><button id='pos"+counterTem+"' class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'>X</button></td><td>"+nombreProducto+"</td><td>'"+cantidad+"</td><td contenteditable='"+modificarPrecio+"' id='precioProdTemp"+counterTem+"' onBlur='modificarPrecioProducto("+counterTem+","+idPV+","+idMesa+")'>"+precio+"</td><td class='text-primary'>"+subTotal+"</td></tr><tr class='success celdaTexto border_bottom'><td></td><td colspan='4' contenteditable='true' id='nota"+counterTem+"' onBlur='addNota("+counterTem+","+idPV+","+idMesa+")'>"+nota+"</td></tr>";
+           
+           tiempo="";
+            if(datosCuentaTemporal[i]["tiempo"]==1){
+               tiempo="<span class='labelTiempos label-warning'>T1</span>";
+               borde="border_bottom";
+            }else if(datosCuentaTemporal[i]["tiempo"]==2){
+               tiempo ="<span class='labelTiempos label-warning'>T2</span>";
+               borde="border_bottom";
+            }else if(datosCuentaTemporal[i]["tiempo"]==3){
+               tiempo="<span class='labelTiempos label-warning'>T3</span>"; 
+               borde="border_bottom";
+            }else if(datosCuentaTemporal[i]["tiempo"]==4){
+                tiempo="<span class='labelTiempos label-warning'>T4</span>"; 
+                borde="border_bottom";
+            }
+
+           lstProductosTr="<tr class='success celdaTexto'><td><button id='pos"+counterTem+"' class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'>X</button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>'"+cantidad+"</td><td contenteditable='"+modificarPrecio+"' id='precioProdTemp"+counterTem+"' onBlur='modificarPrecioProducto("+counterTem+","+idPV+","+idMesa+")'>"+precio+"</td><td class='text-primary'>"+subTotal+"</td></tr><tr class='success celdaTexto "+borde+"'><td></td><td colspan='4' contenteditable='true' id='nota"+counterTem+"' onBlur='addNota("+counterTem+","+idPV+","+idMesa+")'>"+nota+"</td></tr>";
            $("table tbody").append(lstProductosTr);
            
         }    
@@ -1261,18 +1293,30 @@ function leerCuentaTemporal(idPV, idMesa) {
         
         localStorage.setItem(cadena, JSON.stringify(cuenta));
         mostrarTotales(cadena);//el total que trae la api y la suma de los totales en localstorage
-    }
+
+     }    
     return sumaSubTotales;
 }
+function ordenarProductosPorTiempos(idPV, idMesa) {
+    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
+    if(localStorage.getItem(cuentaTemporal)){
+        datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
+        // ordeno los productos en orden ascendente por tiempos
+        datosCuentaTemporal.sort( function (a, b) {
+            return(a.tiempo - b.tiempo)            
+        });
+       localStorage.setItem(cuentaTemporal, JSON.stringify(datosCuentaTemporal));
+    }         
+}
 function mostrarTotales(cadena) {
-       var cuenta = JSON.parse(localStorage.getItem(cadena));  
-       var subtotal=  cuenta["subtotalCuenta"];
-       var descuento= cuenta["descuento"];
+    var cuenta = JSON.parse(localStorage.getItem(cadena));  
+    var subtotal=  cuenta["subtotalCuenta"];
+    var descuento= cuenta["descuento"];
 
-     var porcentaje = cuenta["descuentoPorc"]; 
-     var totalSinDescuento = cuenta["subtotalCuenta"];
-     var descuentCalculado=((porcentaje*totalSinDescuento)/100);
-     var TotalConDescuento=totalSinDescuento-descuentCalculado;
+    var porcentaje = cuenta["descuentoPorc"]; 
+    var totalSinDescuento = cuenta["subtotalCuenta"];
+    var descuentCalculado=((porcentaje*totalSinDescuento)/100);
+    var TotalConDescuento=totalSinDescuento-descuentCalculado;
  
      cuenta["descuento"]=descuentCalculado;
      cuenta["totalCuenta"]=TotalConDescuento;
@@ -1732,12 +1776,7 @@ function asignarHabitacionModal(){
 	        $("#cantidadDescuento").val(1);	        	        
 	    }	 
  });
- function addDescuento(){
-
-    
-    //  var idPV = $("#btnEnviarCP").attr("idPVCPBtn");
-    //  var idMesa = $("#btnEnviarCP").attr("idMesaCPBtn");
-     
+ function addDescuento(){             
      var idPV= $("#idPVModalOrdenar").val();
      var idMesa = localStorage.getItem("idMesaLS");
 

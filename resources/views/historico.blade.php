@@ -34,7 +34,7 @@
                     </div>
                     <div class="col-md-3 col-xs-6">
                         <div class="input-group">
-                            <button class="btn btn-warning" onclick="detallesFiltro()"><i class="far fa-file-pdf"></i> Cierre</button>
+                            <button class="btn btn-success" onclick="detallesFiltro()"><i class="far fa-file-excel"></i> Detalle de dia</button>
                         </div>
                     </div>
                 </div>

@@ -24,7 +24,7 @@
             
         </tbody>
     </table>
-   <p>Totales:</p><br>
+   
    <table>
         <thead>
         <tr>

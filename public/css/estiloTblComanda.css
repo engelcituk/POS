@@ -33,7 +33,19 @@
 tr.border_bottom td {
     border-bottom:2px dotted black;
 }
-                            
+ 
+tr.border_bottom_blue td {
+    border-bottom:2px dotted blue;
+}
+tr.border_bottom_yellow td {
+    border-bottom:2px dotted yellow;
+}
+tr.border_bottom_green td {
+    border-bottom:2px dotted green;
+}
+tr.border_bottom_violet td {
+    border-bottom:2px dotted violet;
+}
 #tablaItemProductos::-webkit-scrollbar-track{
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
   background-color: #F5F5F5;
@@ -50,3 +62,9 @@ tr.border_bottom td {
 }
 
 /* Fin de Estilos tabla de comanda*/
+.labelTiempos {
+    border-radius: 3px;
+    padding: 3px 4px;
+    text-transform: uppercase;
+    font-size: 10px;
+}
