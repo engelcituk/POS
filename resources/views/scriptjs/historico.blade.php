@@ -135,7 +135,7 @@ function verCuentaDetalles(id) {
 
                 }
             });
-        });
+        }).catch(swal.noop);
     }
     function cancelarCuentaModal(idCuenta) {
         $("#idCuentaCancelar").val(idCuenta);

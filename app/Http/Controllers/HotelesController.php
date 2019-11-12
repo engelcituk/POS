@@ -24,7 +24,7 @@ class HotelesController extends Controller
         
         return view('hoteles', compact('hoteles'));
     }
-
+        
     public function AllHoteles()
     {
         $hoteles = $this->obtenerTodosLosHoteles();

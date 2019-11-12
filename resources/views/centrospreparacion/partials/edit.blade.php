@@ -83,12 +83,28 @@
                                         <div class="radio">
                                             <strong>Imprime</strong>
                                             @php
-                                            $estado= $centroPreparacion->imprime;//para obtener el estado de la mesa
+                                            $estado= $centroPreparacion->imprime;//para obtener el estado CP
                                             $radios = ($estado == 1) ?
                                             "<label><input type='radio' name='imprime' value='True' checked>Sí</label>
                                             <label><input type='radio' name='imprime' value='False'>No</label>" :
                                             "<label><input type='radio' name='imprime' value='True'>Si</label>
                                             <label><input type='radio' name='imprime' value='False' checked>No</label>";
+                                            echo $radios;
+                                            @endphp
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="radio">
+                                            <strong>Comanda Completa</strong>
+                                            @php
+                                            $estado= $centroPreparacion->imprimeComanda;//para obtener el estado CP
+                                            $radios = ($estado == 1) ?
+                                            "<label><input type='radio' name='imprimeComanda' value='True' checked>Sí</label>
+                                            <label><input type='radio' name='imprimeComanda' value='False'>No</label>" :
+                                            "<label><input type='radio' name='imprimeComanda' value='True'>Si</label>
+                                            <label><input type='radio' name='imprimeComanda' value='False' checked>No</label>";
                                             echo $radios;
                                             @endphp
                                         </div>

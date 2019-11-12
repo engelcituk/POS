@@ -91,6 +91,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div class="radio">
+                                            <strong>Comanda Completa</strong>
+                                            <label><input type="radio" name="imprimeComanda" value="True">Si</label>
+                                            <label><input type="radio" name="imprimeComanda" value="False" checked>No</label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="comment">Descripcion:</label>

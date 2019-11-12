@@ -33,8 +33,8 @@
                                         <th>Impresora</th>
                                         <th>Impresora B</th>
                                         <th>Descripción</th> 
-                                        <th>Imprime</th>                                        
                                         <th>Estado</th>                                        
+                                        <th>Imprime</th>                                                                               {{-- <th>Com. completa</th>                                         --}}
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
@@ -46,6 +46,9 @@
                                         
                                             $colorImprime = $cp->imprime==1 ? 'success' : 'warning' ;
                                             $imprime = $cp->imprime==1 ? 'SI' : 'NO';
+
+                                            $colorImprimeCom = $cp->imprimeComanda==1 ? 'success' : 'warning' ;
+                                            $imprimeComand = $cp->imprimeComanda==1 ? 'SI' : 'NO';
                                         @endphp                                                                
                                         <tr>
                                             <td>{{$cp->id}}</td>
@@ -53,8 +56,9 @@
                                             <td>{{$cp->impresora}}</td>
                                             <td>{{$cp->impresoraB}}</td>
                                             <td>{{$cp->descripcion}}</td>
+                                            <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>  
                                             <td><button class="btn btn-{{$colorImprime}} btn-xs">{{$imprime}}</button></td>
-                                            <td><button class="btn btn-{{$color}} btn-xs">{{$estado}}</button></td>                                          
+                                            {{-- <td><button class="btn btn-{{$colorImprimeCom}} btn-xs">{{$imprimeComand}}</button></td>                     --}}
                                             <td>
                                                 @if ($cpPermisoLeer==1)
                                                    <a href="{{ route('centrospreparacion.show', $cp->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a> 

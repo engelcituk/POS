@@ -14,10 +14,14 @@ class PermisosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public $urlBase = "";
-    
+
+    public function __construct(){
+
+        $this->urlBase = $this->urlApiTPV() . "Permisos/";
+    }
     public function index()
     {
-        $this->urlBase = $this->urlApiTPV()."Permisos/";
+        //
         
     }
     public function AllPermisos()

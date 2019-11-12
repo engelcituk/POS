@@ -89,7 +89,7 @@ class CentrosPreparacionController extends Controller
     {
         $idCentroPreparacion = $id;
         $centroPreparacion = $this->obtenerUnCentroDePreparación($idCentroPreparacion);
-
+// dd($centroPreparacion);
         $idImpresora = $centroPreparacion->idImpresora;
         $idImpresoraB = $centroPreparacion->idImpresoraB;
 
@@ -120,7 +120,9 @@ class CentrosPreparacionController extends Controller
                 'idImpresora' => $request->get('idImpresora'),
                 'idImpresoraB' => $request->get('idImpresoraB'),
                 'descripcion' => $request->get('descripcion'),
-                'imprime' => $request->get('imprime')
+                'imprime' => $request->get('imprime'),
+                'imprimeComanda' => $request->get('imprimeComanda')
+
             ]            
         ]);
 
