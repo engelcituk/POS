@@ -7,11 +7,13 @@ use Yajra\DataTables\DataTables;
 
 class RestaurantesController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/PuntosVenta/";    
+    public $urlBase = "";    
     
     public function __construct()
     {
         $this->middleware('accesoPVentaFiltro');
+        $this->urlBase = $this->urlApiTPV()."PuntosVenta/";
+
     }
     
     public function index()

@@ -10,14 +10,17 @@ use function GuzzleHttp\json_decode;
 
 class LoginController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Ingreso/";
-    public $urlPuntoVenta = "http://localhost/TPVApi/PuntosVenta/";
-    public $urlCartasPV= "http://localhost/TPVApi/Cartas/";
+    public $urlBase = "";
+    public $urlPuntoVenta = "";
+    public $urlCartasPV= "";
 
     public function __construct()
     {
-        // $this->middleware('auth');
-        // $this->middleware('usuarioLogueado');
+        
+        $this->urlBase = $this->urlApiTPV()."Ingreso/";
+        $this->urlPuntoVenta = $this->urlApiTPV()."PuntosVenta/";        
+        $this->urlCartasPV = $this->urlApiTPV()."Cartas/";        
+
     }
 
     public function login(Request $request){
@@ -131,7 +134,7 @@ class LoginController extends Controller
         $count = count($permisos);//cuento los permisos
         if ($count > 0) {//si array es mayor a 0
             $counter = 0;
-            foreach ($permisos as $permiso) { //ejecuto el foreach que borra todos los permisos               
+            foreach ($permisos as $permiso) { //ejecuto el foreach que borra todos los permisos  sesion             
                 $request->session()->forget($permisos[$counter]["nombrePermiso"]);
                 $counter++;
             }

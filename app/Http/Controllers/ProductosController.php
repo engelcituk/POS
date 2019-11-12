@@ -11,13 +11,17 @@ use Image;
  
 class ProductosController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Producto/";
-    public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
-    public $urlPModo= "http://localhost/TPVApi/ProductoModo/";
+    public $urlBase = "";
+    public $urlBaseProductoAlergeno = "";
+    public $urlPModo= "";
 
     public function __construct(){
 
         $this->middleware('accesoProductosFiltro');
+        $this->urlBase = $this->urlApiTPV()."Producto/";
+        $this->urlBaseProductoAlergeno = $this->urlApiTPV()."ProductoAlergeno/";
+        $this->urlPModo = $this->urlApiTPV()."ProductoModo/";
+
     }
 
     public function index(){

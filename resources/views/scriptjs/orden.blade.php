@@ -1285,7 +1285,7 @@ function leerCuentaTemporal(idPV, idMesa) {
                 borde="border_bottom";
             }
 
-           lstProductosTr="<tr class='success celdaTexto'><td><button id='pos"+counterTem+"' class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'>X</button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>'"+cantidad+"</td><td contenteditable='"+modificarPrecio+"' id='precioProdTemp"+counterTem+"' onBlur='modificarPrecioProducto("+counterTem+","+idPV+","+idMesa+")'>"+precio+"</td><td class='text-primary'>"+subTotal+"</td></tr><tr class='success celdaTexto "+borde+"'><td></td><td colspan='4' contenteditable='true' id='nota"+counterTem+"' onBlur='addNota("+counterTem+","+idPV+","+idMesa+")'>"+nota+"</td></tr>";
+           lstProductosTr="<tr class='success celdaTexto'><td><button id='pos"+counterTem+"' class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'>X</button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>"+cantidad+"</td><td contenteditable='"+modificarPrecio+"' id='precioProdTemp"+counterTem+"' onBlur='modificarPrecioProducto("+counterTem+","+idPV+","+idMesa+")'>"+precio+"</td><td class='text-primary'>"+subTotal+"</td></tr><tr class='success celdaTexto "+borde+"'><td></td><td colspan='4' contenteditable='true' id='nota"+counterTem+"' onBlur='addNota("+counterTem+","+idPV+","+idMesa+")'>"+nota+"</td></tr>";
            $("table tbody").append(lstProductosTr);
            
         }    

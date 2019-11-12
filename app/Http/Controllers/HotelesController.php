@@ -9,18 +9,19 @@ use Yajra\DataTables\DataTables;
 class HotelesController extends Controller
 {
     // URL_API_TPV 
-    
-    public $urlBase = "http://localhost/TPVApi/Hoteles/";
+
+    public $urlApi = "";
 
     public function __construct(){
            
         $this->middleware('accesoHotelesFiltro');
+        $this->urlApi = $this->urlApiTPV()."Hoteles/";        
     }
         
     public function index()
     {
         $hoteles = $this->obtenerTodosLosHoteles();
-        // dd($hoteles);
+        
         return view('hoteles', compact('hoteles'));
     }
 
@@ -36,7 +37,7 @@ class HotelesController extends Controller
     public function obtenerTodosLosHoteles()//siel metodo es protected no lo puedo usar en otro lado, como en restaurantes
     {
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetHoteles');
+        $respuesta = $this->realizarPeticion('GET', $this->urlApi.'GetHoteles');
 
         $datos = json_decode($respuesta);
 
@@ -62,7 +63,7 @@ class HotelesController extends Controller
     }    
     //metodo que se ocupara para obtener el dato de un hotel, se ocupa para show y edit
     public function obtenerUnHotel($idHotel){
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetHotel/{$idHotel}");
+        $respuesta = $this->realizarPeticion('GET', $this->urlApi."GetHotel/{$idHotel}");
         $datos = json_decode($respuesta);
         $hotel = $datos->objeto;
         return $hotel;
@@ -84,7 +85,7 @@ class HotelesController extends Controller
     public function store(Request $request)
     {
         // $accessToken = 'Bearer ' . $this->obtenerAccessToken();
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase .'AddHotel', ['form_params' => $request->all()]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlApi.'AddHotel', ['form_params' => $request->all()]);
 
         return redirect('/hoteles');
     }
@@ -93,13 +94,13 @@ class HotelesController extends Controller
     {
         $idHotel= $request->get('id');
 
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateHotel/{$idHotel}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlApi."UpdateHotel/{$idHotel}", ['form_params' => $request->except('id')]);
         return redirect('/hoteles');
     }
     public function destroy($id)
     {
         $idHotel = $id;
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase."DeleteHotel/{$idHotel}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlApi."DeleteHotel/{$idHotel}");
         return redirect('/hoteles');
     }
 }

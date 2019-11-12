@@ -10,11 +10,13 @@ use Carbon\Carbon;
 class CartaController extends Controller
 {
     
-    public $urlBase = "http://localhost/TPVApi/Cartas/";
+    public $urlBase = "";
     public function __construct()
     {
 
         $this->middleware('accesoCartasFiltro');
+        $this->urlBase = $this->urlApiTPV()."Cartas/";
+
     }
     public function index()
     {

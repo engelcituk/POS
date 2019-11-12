@@ -8,11 +8,13 @@ use Yajra\DataTables\DataTables;
 class CentrosPreparacionController extends Controller
 {
     
-    public $urlBase = "http://localhost/TPVApi/CentrosPreparacion/";
+    public $urlBase = "";
     
     public function __construct()    {
 
         $this->middleware('accesoCPFiltro');
+        $this->urlBase = $this->urlApiTPV()."CentrosPreparacion/";
+
     }
     public function index()
     {
@@ -123,9 +125,7 @@ class CentrosPreparacionController extends Controller
         ]);
 
         return redirect('/centrospreparacion');
-    }
-
-    
+    }    
     
     public function destroy( $idCentroPreparacion){        
         

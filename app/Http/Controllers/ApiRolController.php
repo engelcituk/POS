@@ -10,12 +10,16 @@ use Illuminate\Support\Collection;
 
 class ApiRolController extends Controller{ 
    
-    public $urlBase = "http://localhost/TPVApi/Roles/";
-    public $urlBaseRolPermisos = "http://localhost/TPVApi/PermisosRol/";
+    public $urlBase = "";
+    public $urlBaseRolPermisos = "";
     
     public function __construct(){
 
         $this->middleware('accesoRolesFiltro');
+
+        $this->urlBase = $this->urlApiTPV()."Roles/";        
+        $this->urlBaseRolPermisos = $this->urlApiTPV()."PermisosRol/";        
+
     } 
     public function index(){
 

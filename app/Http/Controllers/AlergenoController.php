@@ -11,11 +11,13 @@ use Image;
 class AlergenoController extends Controller
 {
 
-    public $urlBase = "http://localhost/TPVApi/Alergenos/";
+    public $urlBase = "";
 
     public function __construct(){
 
         $this->middleware('accesoAlergenosFiltro');
+        $this->urlBase = $this->urlApiTPV()."Alergenos/";        
+
     }     
     public function index(){
         $alergenos = $this->obtenerTodosLosAlergenos();
@@ -99,7 +101,7 @@ class AlergenoController extends Controller
     }
     public function obtenerUnAlergeno($idAlergeno){
 
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase . "GetAlergeno/{$idAlergeno}");
+        $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetAlergeno/{$idAlergeno}");
         $datos = json_decode($respuesta);
         $alergeno = $datos->objeto;
         return $alergeno;
@@ -128,7 +130,7 @@ class AlergenoController extends Controller
     public function guardarAlergeno($nombre, $icono){
 
         
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddAlergeno', [
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddAlergeno', [
             'form_params' => [
                 'name' => $nombre,
                 'icono' => $icono
@@ -139,7 +141,7 @@ class AlergenoController extends Controller
     }
     public function actualizarAlergeno($idAlergeno,$nombre, $nombreImg){
         
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase. "UpdateAlergeno/{$idAlergeno}", [
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateAlergeno/{$idAlergeno}", [
             'form_params' => [
                 'name' => $nombre,
                 'icono' => $nombreImg

@@ -8,11 +8,13 @@ use Yajra\DataTables\DataTables;
 class MesasController extends Controller
 {
     
-    public $urlBase = "http://localhost/TPVApi/Mesas/"; 
+    public $urlBase = ""; 
 
     public function __construct()
     {
         $this->middleware('accesoMesasFiltro');
+        $this->urlBase = $this->urlApiTPV()."Mesas/";
+
     }
     
     public function index()

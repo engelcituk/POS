@@ -9,17 +9,27 @@ use Illuminate\Support\Collection;
 
 class OrdenController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Zonas/";
-    public $urlHuesped= "http://localhost/TPVApi/Venta/"; //para obtener los datos del huesped para la venta
-    public $urlVenta= "http://localhost/TPVApi/Venta/";
-    public $urlBaseProductoAlergeno = "http://localhost/TPVApi/ProductoAlergeno/";
-    public $urlBaseProducto = "http://localhost/TPVApi/Producto/";
-    public $urlMenuCarta= "http://localhost/TPVApi/MenuCarta/";
-    public $urlMesas = "http://localhost/TPVApi/Mesas/";
+    public $urlBase = "";
+    public $urlHuesped= ""; //para obtener los datos del huesped para la venta
+    public $urlVenta= "";
+    public $urlBaseProductoAlergeno = "";
+    public $urlBaseProducto = "";
+    public $urlMenuCarta= "";
+    public $urlMesas = "";
 //
     public function __construct(){
         // $this->middleware('auth');
         $this->middleware('accesoTomarOrdenFiltro');
+
+        $this->urlBase = $this->urlApiTPV()."Zonas/";
+        $this->urlHuesped = $this->urlApiTPV()."Venta/";
+        $this->urlVenta = $this->urlApiTPV()."Venta/";
+        $this->urlBaseProductoAlergeno = $this->urlApiTPV()."ProductoAlergeno/";
+        $this->urlBaseProducto = $this->urlApiTPV()."Producto/";
+        $this->urlMenuCarta = $this->urlApiTPV()."MenuCarta/";
+        $this->urlMesas = $this->urlApiTPV()."Mesas/";
+
+
     }
     public function index(Request $request){
         

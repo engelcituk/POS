@@ -7,12 +7,14 @@ use Yajra\DataTables\DataTables;
 
 class ImpresorasController extends Controller
 {
-   
+    public $urlBase = "";
+       
     public function __construct(){
         
         $this->middleware('accesoImpresorasFiltro');
+        $this->urlBase = $this->urlApiTPV()."Impresoras/";
+
     }
-    public $urlBase = "http://localhost/TPVApi/Impresoras/";
     public function index()
     {
         $impresoras = $this->obtenerTodasLasImpresoras();

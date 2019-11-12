@@ -11,11 +11,13 @@ use Image;
 class CategoriaController extends Controller
 {
     
-    public $urlBase = "http://localhost/TPVApi/Categoria/";
+    public $urlBase = "";
 
     public function __construct(){
 
         $this->middleware('accesoCategoriasFiltro');
+        $this->urlBase = $this->urlApiTPV()."Categoria/";
+
     }
     public function index(){
 
@@ -84,7 +86,7 @@ class CategoriaController extends Controller
     }
     public function guardarCategoria($nombreCategoria, $idUsuario, $orden, $nombreImg){
 
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddCategoria', [
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase.'AddCategoria', [
             'form_params' => [
                 'name' => $nombreCategoria,
                 "idUsuarioAlta" => $idUsuario,
@@ -162,7 +164,7 @@ class CategoriaController extends Controller
     }
     public function actualizarCategoria($idCategoria,$nombreCategoria,$idUsuario,$orden, $nombreImg){
 
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase . "UpdateCategoria/{$idCategoria}", [
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateCategoria/{$idCategoria}", [
             'form_params' => [
                 'name' => $nombreCategoria,
                 "idUsuarioAlta"=> $idUsuario,

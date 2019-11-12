@@ -13,10 +13,12 @@ class PermisosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $urlBase = "http://localhost/TPVApi/Permisos/";
+    public $urlBase = "";
+    
     public function index()
     {
-        //
+        $this->urlBase = $this->urlApiTPV()."Permisos/";
+        
     }
     public function AllPermisos()
     {

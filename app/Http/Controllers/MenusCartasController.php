@@ -8,10 +8,12 @@ use Yajra\DataTables\DataTables;
 
 class MenusCartasController extends Controller{
 
-    public $urlBase = "http://localhost/TPVApi/MenuCarta/";
+    public $urlBase = "";
     // public $urlBaseProductoAlergeno = "http://localhost/TPVApi/productoalergeno/";
     public function __construct(){
         $this->middleware('accesoMenusCartaFiltro');
+        $this->urlBase = $this->urlApiTPV()."MenuCarta/";
+
     }
     public function index(){
         $menucartas = $this->obtenerTodosLosMenusCartas();

@@ -13,13 +13,19 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class HistoricoController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Historico/";
-    public $urlCuenta = "http://localhost/TPVApi/Venta/";
-    public $urlAdmin = "http://localhost/TPVApi/Admin/";
+    public $urlBase = "";
+    public $urlCuenta = "";
+    public $urlAdmin = "";
 
     public function __construct()
     {
         $this->middleware('accesoHistoricoFiltro');
+        // inicializo endpoints api requeridos
+        $this->urlBase = $this->urlApiTPV()."Historico/";
+        $this->urlCuenta = $this->urlApiTPV() ."Venta/";        
+        $this->urlAdmin = $this->urlApiTPV()."Admin/";        
+
+
     }     
     public function index(){ 
         
@@ -75,7 +81,7 @@ class HistoricoController extends Controller
         //recibido desde ajax
         $fecha = $request->get('fechaPDF');
 
-        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin . "getcierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");
+        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin."getcierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");
         $respuesta = json_decode($respuesta);
 
         $objeto = $respuesta->objeto;
@@ -111,19 +117,17 @@ class HistoricoController extends Controller
         return $respuesta;
     }
     public function imprimirCuenta($idCuenta){
-        $urlAdmin = "http://localhost/TPVApi/Admin/";
-       
-        $respuesta = $this->realizarPeticion('POST', $urlAdmin."imprimeCuenta/{$idCuenta}"); 
+               
+        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin."imprimeCuenta/{$idCuenta}"); 
         
         return $respuesta;        
     }
     public function cancelarCuenta(Request $request, $idCuenta){
-
-        $urlAdmin = "http://localhost/TPVApi/Admin/";
+        
         $idUsuario = $request->session()->get('idUsuarioLogueado');
         $motivo = $request->get('motivo');
         
-        $respuesta = $this->realizarPeticion('POST', $urlAdmin.'cancelaCuenta', [
+        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin .'cancelaCuenta', [
             'form_params' => [
                 'idc' => $idCuenta,
                 'idu' => $idUsuario,

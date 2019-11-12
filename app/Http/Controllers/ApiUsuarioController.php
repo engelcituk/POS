@@ -11,12 +11,15 @@ use Illuminate\Support\Collection;
 class ApiUsuarioController extends Controller
 {
     
-    public $urlBase = "http://localhost/TPVApi/Usuarios/";
-    public $urlBasePermisosUsuario = "http://localhost/TPVApi/PermisosUsuario/";
+    public $urlBase = "";
+    public $urlBasePermisosUsuario = "";
 
     public function __construct(){
 
         $this->middleware('accesoUsuariosFiltro');
+
+        $this->urlBase = $this->urlApiTPV()."Usuarios/";
+        $this->urlBasePermisosUsuario = $this->urlApiTPV()."PermisosUsuario/";
     }
 
     public function index(){

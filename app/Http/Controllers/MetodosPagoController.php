@@ -7,11 +7,13 @@ use Yajra\DataTables\DataTables;
 
 class MetodosPagoController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/MetodosPago/";
-    
+    public $urlBase = "";
+        
     public function __construct()
     {
         $this->middleware('accesoMPFiltro');
+        $this->urlBase = $this->urlApiTPV()."MetodosPago/";
+
     }
 
     public function index(){

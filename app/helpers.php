@@ -9,7 +9,7 @@ function collapsarItemMenu($nombreRuta){
     return request()->routeIs($nombreRuta) ? 'in' : '';
 }
 function rutaApi(){
-    $ruta = "http://10.10.99.18/TPVApi";
+    $ruta = 'http://localhost/TPVApi/';
 
-    return  ['ruta' => $ruta];    
+    return  $ruta;    
 }

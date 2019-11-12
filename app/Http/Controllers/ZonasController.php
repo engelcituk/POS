@@ -7,11 +7,13 @@ use Yajra\DataTables\DataTables;
 
 class ZonasController extends Controller
 {
-    public $urlBase = "http://localhost/TPVApi/Zonas/"; 
+    public $urlBase = ""; 
     
     public function __construct()
     {
         $this->middleware('accesoZonasFiltro');
+        $this->urlBase = $this->urlApiTPV()."Zonas/";
+
     }
     
     public function index()

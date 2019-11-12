@@ -8,11 +8,13 @@ use Yajra\DataTables\DataTables;
 class TurnosController extends Controller
 {
     
-    public $urlBase = "http://localhost/TPVApi/Turnos/";
+    public $urlBase = "";
     
     public function __construct(){
 
         $this->middleware('accesoTurnosFiltro');
+        $this->urlBase = $this->urlApiTPV()."Turnos/";
+        
     }
 
     public function index()
@@ -78,7 +80,7 @@ class TurnosController extends Controller
     {
         $idTurno = $request->get('id');        
 
-        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateTurno/{$idTurno}", ['form_params' => $request->except('id')]);
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateTurno/{$idTurno}",['form_params' => $request->except('id')]);
 
         return redirect('/turnos');
     }
