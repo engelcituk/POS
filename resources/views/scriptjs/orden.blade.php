@@ -1,12 +1,48 @@
 <script>
 
-//  const ws = new WebSocket('ws://localhost/TPVApi/Hoteles/GetHoteles');
-// const ws =  new WebSocket("ws://10.10.99.18/TPVApi/");
+// const ws = new WebSocket('ws://demos.kaazing.com/echo')
 
-// ws.onopen = () => {
-//     console.log('conectado');
-// };
+// ws.onopen = () => setText('Conectado');
+// ws.onerror = e => setText(e);
+// ws.onmessage = e => setText(e.data);
+// ws.onclose = () => setText('Desconectado')
 
+// const setText = data => {
+//     const msg = `<div>${data}</div>`;
+//     areaSocket.insertAdjacentHTML('beforeend', msg)
+// }
+
+// btnDisconnect.addEventListener('click', e => {
+//     ws.onclose()
+    
+// });
+
+// btnSend.addEventListener('click', e=> {
+//     ws.send(txtMsg.value)
+// })
+// let ws = null;
+// const conectarWS = () => {
+//     const ws = new WebSocket('ws://demos.kaazing.com/echo')
+//     ws.onopen = e => {
+//         console.log('conectado al websocket correctamente');
+//     }
+//     ws.onerror = e => {
+//         console.log(e);
+//     }
+//     ws.onmessage = e => {
+//         console.log(e.data)
+//     }
+    
+// }
+// btnSend.addEventListener('click', e => {
+//     // const data = {
+//     //     type : 'message',
+//     //     message: txtMsg.value
+//     // }
+//      ws.send(txtMsg.value)
+//     // ws.send(JSON.stringify(data))
+// })
+// conectarWS();
 
 $(document ).ready(function() {
     var soloMesasActivas=false;            
@@ -16,6 +52,14 @@ $(document ).ready(function() {
     window.location.hash="inicio";
     window.location.hash="Inicio";//esta linea es necesaria para chrome
     window.onhashchange=function(){window.location.hash="inicio";}
+
+    var chat = $.connection.notificationHub; 
+    $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
+    $.connection.hub.start({ withCredentials: false }).done(function () {         
+    });  
+    chat.client.postToClient = function (data) {  
+         getZonas(false);
+    };  
 
 });
 //para mostrar zonas y sus mesas respectivamente
@@ -522,6 +566,7 @@ $("#ocupanteModal").change(function(){
         this.value = this.value.replace(/[^0-9]/g, '');
      });
 
+
  async function guardarCuenta(idMesa){
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      var reserva  = $("#reserva").val();
@@ -597,6 +642,8 @@ $("#ocupanteModal").change(function(){
         }
     }); 
  }
+ 
+
 function updateRoom() {
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     var idCuenta=$("#idCuentaModal").val();

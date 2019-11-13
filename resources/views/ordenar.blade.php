@@ -8,11 +8,17 @@
             <div class="col-md-12">
                 <div class="card">                    
                     <div class="card-content">
-                        <!-- Button trigger modal -->
-                    {{-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#wizardModal">
-                    Launch demo modal
-                    </button> --}}
+
+                       {{-- <button class="btn btn-info btn-sm" id="btnConnect">Conectar</button> --}}
+                       {{-- <label for="txtMsg">Mensaje</label>
+                       <input type="text" id="txtMsg">
+                       <button class="btn btn-success btn-sm" id="btnSend">Enviar</button>
+                       <button class="btn btn-danger btn-sm" id="btnDisconnect">Desconectar</button>
+                       <label for="areaSocket"></label>
+                       <div id="areaSocket"></div> --}}
+
                         <div class="row">
+
                             <div class="col-md-3 col-sm-6 col-xs-6">
                                 <nav aria-label="breadcrumb" role="navigation">
                                     <div class="input-group">
