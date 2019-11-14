@@ -13,19 +13,75 @@ $(document ).ready(function() {
     }else {
         idZonaDefault = $("#zonaElige").children('option:first').val().replace( /^\D+/g, '');//obtengo el id; 
     }        
-    getMesasZona(idZonaDefault,soloMesasActivas);// obtengo las mesas de la zona
-
+    getMesasZona(idZonaDefault,soloMesasActivas);// funcion que obtiene las mesas de la zona
+    ocurreCambiosMesa();
+});
+function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
     $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
-    chat.client.postToClient = (data) => {  
-        //  getZonas(false);
-         console.log(data);
-    };  
+    chat.client.postToClient =  (data) => {          
+        actualizarDatosMesa(data);                         
+    };
+}
+function actualizarDatosMesa(data) {
+    console.log("datos ",data); 
 
-});
+    var tipoMovimiento = data["tipoMov"];
+    var idMesa = data["idMesa"];
+    var nombreMesa = $("#mesaAbrir"+idMesa).attr("nombreMesa");
+    
+    // obtengo los datos para pintar sobre las mesa ocupada
+    var idCuenta = data["id"]; // la cuenta
+    var nombreCliente = data["nombreCliente"];
+    var room = (data["habitacion"] == null) ? "Sin Hab" : data["habitacion"];
+    var totalCuenta = data["totalCuenta"];
+
+    if(tipoMovimiento=="add"){
+
+        estadoMesa="ocupado";        
+        wellmesa="#mesaAbrir"+idMesa;        
+        $("#mesaAbrir"+idMesa).attr("estadoMesa",estadoMesa);
+        $("#wellMesa"+idMesa).removeClass("mesaOrdenLibre");
+        $("#wellMesa"+idMesa).addClass("mesaOrdenOcupada");
+        // seteo nuevos valores en los span de cada mesa
+        $("#idCuentaMesaSpan"+idMesa).text(idCuenta);
+        $("#nomClienteMesaSpan"+idMesa).text(nombreCliente);
+        $("#roomMesaSpan"+idMesa).text(room);
+        $("#totCuentaMesaSpan"+idMesa).text(totalCuenta);
+        //pongo valores en atributos en tag a  
+        $("#mesaAbrir"+idMesa).attr("cuentaMesa",idCuenta);
+        $("#mesaAbrir"+idMesa).attr("nombreMesa",);
+        $("#mesaAbrir"+idMesa).attr("clienteMesa",nombreCliente);
+        $("#mesaAbrir"+idMesa).attr("habMesa",room);
+        // poner cuenta a elemento li
+        $("#mesa"+idMesa).attr("idCuenta",idMesa);
+
+
+    }else if(tipoMovimiento=="close"){
+
+        estadoMesa="disponible"; 
+        wellmesa="#mesaAbrir"+idMesa;        
+        $("#mesaAbrir"+idMesa).attr("estadoMesa",estadoMesa);
+        $("#wellMesa"+idMesa).removeClass("mesaOrdenOcupada");
+        $("#wellMesa"+idMesa).addClass("mesaOrdenLibre");
+        // seteo nuevos valores en los span de cada mesa
+        $("#idCuentaMesaSpan"+idMesa).text("NO");
+        $("#nomClienteMesaSpan"+idMesa).text("SN");
+        $("#roomMesaSpan"+idMesa).text("SIN HAB");
+        $("#totCuentaMesaSpan"+idMesa).text("0");
+        //pongo valores en atributos en tag a
+        $("#mesaAbrir"+idMesa).attr("cuentaMesa",idCuenta);
+        $("#mesaAbrir"+idMesa).attr("nombreMesa",);
+        $("#mesaAbrir"+idMesa).attr("clienteMesa",nombreCliente);
+        $("#mesaAbrir"+idMesa).attr("habMesa",room);
+        // poner cuenta a elemento li
+        $("#mesa"+idMesa).attr("idCuenta","NO");
+
+    }
+}
 function getMesasZona(idZonaDefault, soloMesasActivas){    
     listaZonas="<div id='zona"+idZonaDefault+"' class='zonas'><ul class='nav nav-pills nav-pills-icons' role='tablist' id='zonaListaMesas"+idZonaDefault+"'></ul></div>";
     $("#zonasPV").html(listaZonas);
@@ -46,7 +102,6 @@ $("#zonaElige").change(function() {
 
 function getMesasPorZona(idZona) {
    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
-
     $.ajax({
             url: "{{ url('ordenar/obtenermesaszona')}}"+'/'+idZona,
             type: "GET",
@@ -84,7 +139,7 @@ function getMesasPorZona(idZona) {
                             room= "Sin Hab";
                             total= "0";
                         }                       
-                        listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"' nombreMesa='"+nombreMesa+"' cuentaMesa='"+idCuenta+"' clienteMesa='"+nombre+"' habMesa='"+room+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><div class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+nombreMesa+"</span><br>"+idCuenta+"<br>"+nombre+"<br> "+room+"<br>"+total+"</div></a></li>";
+                        listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"' nombreMesa='"+nombreMesa+"' cuentaMesa='"+idCuenta+"' clienteMesa='"+nombre+"' habMesa='"+room+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><div id='wellMesa"+idMesa+"' class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+nombreMesa+"</span><br><span id='idCuentaMesaSpan"+idMesa+"'>"+idCuenta+"</span><br><span id='nomClienteMesaSpan"+idMesa+"'>"+nombre+"</span><br> <span id='roomMesaSpan"+idMesa+"'>"+room+"</span><br><span id='totCuentaMesaSpan"+idMesa+"'>"+total+"</span></div></a></li>";
                     }
                     listaMesas+="";                     
                     $("#zonaListaMesas"+idZona).html(listaMesas);                    
@@ -181,9 +236,7 @@ async function aperturaMesa(idMesa) {
         crearCuentaTemporal(idPV,idMesa);                   
         generarBotonesClientes(idPV,idMesa);
         await getProductosMasVendidos();        
-        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
-        // comprobarCuentaHabitacion(idPV,idMesa);
-        
+        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);                
     }
 
  }
@@ -523,7 +576,7 @@ $("#ocupanteModal").change(function(){
                 var resultado = JSON.parse(respuesta);
                 console.log("resultado", resultado);
                 var ok = resultado["ok"];
-                if(ok){
+                if(ok){                    
                     var objeto = resultado["objeto"];
                     var idCuenta=objeto["id"];
                     var nombreCliente=objeto["nombreCliente"];
