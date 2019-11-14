@@ -1,133 +1,49 @@
 <script>
 
-// const ws = new WebSocket('ws://demos.kaazing.com/echo')
-
-// ws.onopen = () => setText('Conectado');
-// ws.onerror = e => setText(e);
-// ws.onmessage = e => setText(e.data);
-// ws.onclose = () => setText('Desconectado')
-
-// const setText = data => {
-//     const msg = `<div>${data}</div>`;
-//     areaSocket.insertAdjacentHTML('beforeend', msg)
-// }
-
-// btnDisconnect.addEventListener('click', e => {
-//     ws.onclose()
-    
-// });
-
-// btnSend.addEventListener('click', e=> {
-//     ws.send(txtMsg.value)
-// })
-// let ws = null;
-// const conectarWS = () => {
-//     const ws = new WebSocket('ws://demos.kaazing.com/echo')
-//     ws.onopen = e => {
-//         console.log('conectado al websocket correctamente');
-//     }
-//     ws.onerror = e => {
-//         console.log(e);
-//     }
-//     ws.onmessage = e => {
-//         console.log(e.data)
-//     }
-    
-// }
-// btnSend.addEventListener('click', e => {
-//     // const data = {
-//     //     type : 'message',
-//     //     message: txtMsg.value
-//     // }
-//      ws.send(txtMsg.value)
-//     // ws.send(JSON.stringify(data))
-// })
-// conectarWS();
-
 $(document ).ready(function() {
     var soloMesasActivas=false;            
-    getZonas(soloMesasActivas);
     demo.initMaterialWizard();
-//    $('.selectMesasZonas').select2();
+    // para deshabilitar boton de atras del navegador
     window.location.hash="inicio";
     window.location.hash="Inicio";//esta linea es necesaria para chrome
     window.onhashchange=function(){window.location.hash="inicio";}
+    // para cargar las mesas de una zona en especifica
+    if(localStorage.getItem('zonaMesaSeleccionada')){
+        idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); //obtengo el id
+    }else {
+        idZonaDefault = $("#zonaElige").children('option:first').val().replace( /^\D+/g, '');//obtengo el id; 
+    }        
+    getMesasZona(idZonaDefault,soloMesasActivas);// obtengo las mesas de la zona
 
+    // para el realtime
     var chat = $.connection.notificationHub; 
     $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
-    chat.client.postToClient = function (data) {  
-         getZonas(false);
+    chat.client.postToClient = (data) => {  
+        //  getZonas(false);
+         console.log(data);
     };  
 
 });
-//para mostrar zonas y sus mesas respectivamente
+function getMesasZona(idZonaDefault, soloMesasActivas){    
+    listaZonas="<div id='zona"+idZonaDefault+"' class='zonas'><ul class='nav nav-pills nav-pills-icons' role='tablist' id='zonaListaMesas"+idZonaDefault+"'></ul></div>";
+    $("#zonasPV").html(listaZonas);
+    getMesasPorZona(idZonaDefault);    
+}
+//para mostrar zonas y sus mesas respectivamente al seleccionar algo de la lista
 $("#zonaElige").change(function() {
     var valorSelect = $("option:selected", this).val(); //obtener el value de un select
     if (valorSelect != "") {            
         $(".zonas").hide();
         localStorage.setItem('zonaMesaSeleccionada', valorSelect);
         $("#" + valorSelect).show();
-            // if (valorSelect == "todos") {
-            //     $(".zonas").show();
-            // }
-    }// else {
-    //     swal({
-    //         title: 'Oopss...',
-    //         text: '¡Por favor elija una zona!',
-    //         type: 'error',
-    //         timer: '1500'
-    //     });
-    // }
+        idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
+        soloMesasActivas =false;
+        getMesasZona(idZonaDefault, soloMesasActivas);            
+    }
 });
-function getZonas(soloMesasActivas){
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');
-    
-    $.ajax({
-            url: "{{ url('ordenar/obtenerzonas') }}",
-            type: "GET",
-            data: {
-                '_method': 'GET',               
-                '_token': csrf_token
-            },        
-            success: function(respuesta) {
-                var respuesta = JSON.parse(respuesta);
-                // console.log("respuesta", respuesta);
-                var ok = respuesta["ok"];
-                if(ok){
-                    var objeto=respuesta["objeto"]; 
-                    // console.log("objeto",objeto);
-                    if(!soloMesasActivas){
-                        listaZonas="";
-                        for(i =0;  i<objeto.length; i++){
-                            var idZona=objeto[i]["id"];
-                            var nombre=objeto[i]["name"];
-                            var idPV=objeto[i]["idPuntoVenta"];
-                            var estado=objeto[i]["status"];
-                            // console.log("idZona",idZona);
-                            listaZonas+="<div id='zona"+idZona+"' class='zonas'><strong>"+nombre+"</strong><ul class='nav nav-pills nav-pills-icons' role='tablist' id='zonaListaMesas"+idZona+"'></ul></div>";
-                            getMesasPorZona(idZona);
-                        }
-                        listaZonas+="";                     
-                        $("#zonasPV").html(listaZonas);
-                    }else {
-                        for(i =0;  i<objeto.length; i++){
-                            var idZona=objeto[i]["id"];
-                            getMesasActivasPorZona(idZona);                                                        
-                        }                        
-                    }
-                    
 
-                }else{
-                    $("#zonasPV").html('<p>Sin zonas para este punto de venta</p>');
-                }                
-            },
-            error: function(respuesta) {
-            console.log(JSON.parse(respuesta));
-        }
-    }); 
-}
 function getMesasPorZona(idZona) {
    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
 
@@ -172,9 +88,7 @@ function getMesasPorZona(idZona) {
                     }
                     listaMesas+="";                     
                     $("#zonaListaMesas"+idZona).html(listaMesas);                    
-                    
-                    cargarMesasZonaDefault(); // mantengo la zona elegida por el usuario
-
+                    crearVariableZonaDefault(); // mantengo la zona elegida por el usuario con localstorage
                 }else{
                     $("#zonaListaMesas"+idZona).html('<p>Sin mesas para esta zona</p>');
                 }                
@@ -210,7 +124,7 @@ function getMesasActivasPorZona(idZona) {
     });
 }
 
-function cargarMesasZonaDefault(){
+function crearVariableZonaDefault(){
     if (localStorage.getItem('zonaMesaSeleccionada')) {
         valDefault = localStorage.getItem('zonaMesaSeleccionada'); 
         $("#zonaElige select").val(valDefault);  
