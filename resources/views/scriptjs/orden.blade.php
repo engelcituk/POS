@@ -1,21 +1,26 @@
 <script>
 
 $(document ).ready(function() {
-    var soloMesasActivas=false;            
     demo.initMaterialWizard();
     // para deshabilitar boton de atras del navegador
     window.location.hash="inicio";
     window.location.hash="Inicio";//esta linea es necesaria para chrome
     window.onhashchange=function(){window.location.hash="inicio";}
+    
+    initZonas();
+    ocurreCambiosMesa();
+});
+function initZonas(){
+              
     // para cargar las mesas de una zona en especifica
     if(localStorage.getItem('zonaMesaSeleccionada')){
         idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); //obtengo el id
     }else {
         idZonaDefault = $("#zonaElige").children('option:first').val().replace( /^\D+/g, '');//obtengo el id; 
-    }        
-    getMesasZona(idZonaDefault,soloMesasActivas);// funcion que obtiene las mesas de la zona
-    ocurreCambiosMesa();
-});
+    }
+    getMesasZona(idZonaDefault,false);// funcion que obtiene las mesas de la zona
+
+}
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
@@ -23,12 +28,12 @@ function ocurreCambiosMesa(){
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {          
-        actualizarDatosMesa(data);                         
+        // actualizarDatosMesa(data);
+        initZonas();
+
     };
 }
-function actualizarDatosMesa(data) {
-    console.log("datos ",data); 
-
+function actualizarDatosMesa(data) {    
     var tipoMovimiento = data["tipoMov"];
     var idMesa = data["idMesa"];
     var nombreMesa = $("#mesaAbrir"+idMesa).attr("nombreMesa");
@@ -58,6 +63,13 @@ function actualizarDatosMesa(data) {
         $("#mesaAbrir"+idMesa).attr("habMesa",room);
         // poner cuenta a elemento li
         $("#mesa"+idMesa).attr("idCuenta",idMesa);
+        //muestro mensaje de alerta de que fue abierto una mesa
+        $.notify({							
+            message: 'La mesa <strong>'+nombreMesa+'</strong> fue abierta'
+        },{								
+            type: 'info',
+            delay: 2000
+        });
 
 
     }else if(tipoMovimiento=="close"){
@@ -79,6 +91,13 @@ function actualizarDatosMesa(data) {
         $("#mesaAbrir"+idMesa).attr("habMesa",room);
         // poner cuenta a elemento li
         $("#mesa"+idMesa).attr("idCuenta","NO");
+        //muestro mensaje de alerta de que fue cerrado una mesa
+        $.notify({							
+            message: 'La mesa <strong>'+nombreMesa+'</strong> con la cuenta: <strong>'+idCuenta+'</strong> fue cerrada'
+        },{								
+            type: 'warning',
+            delay: 2000
+        });
 
     }
 }
@@ -226,7 +245,8 @@ async function aperturaMesa(idMesa) {
         $("#btnEnviarCP").attr("idPVCPBtn",idPV);
         $("#btnEnviarCP").attr("idMesaCPBtn",idMesa);
         $("#btnEnviarCP").attr("idMenuCartaCPBtn",idMenuCarta);
-        var idCuenta = await getIdCuenta(idPV,idMesa);            
+        var idCuenta =await getIdCuenta(idPV,idMesa); 
+        
         $("#btnAddDescuento").attr("btnIdCuenta",idCuenta); 
         // genero los botones 
         // generarBotonesClientes(idPV,idMesa); 
@@ -250,12 +270,17 @@ async function aperturaMesa(idMesa) {
  }
  async function getIdCuenta(idPV,idMesa){    
     var variable=idPV+idMesa;
+    console.log("variable",variable);
     var cuenta = JSON.parse(localStorage.getItem(variable));    
+    // console.log("cuenta",cuenta["id"]);
 
     idCuenta=$("#mesa"+idMesa).attr("idCuenta");
     if(idCuenta=="NO"){
         idCuenta=$("#cuentaMesaSpan").text();
+    }else if(typeof idCuenta === 'undefined'){
+        idCuenta=cuenta["id"];
     }     
+    
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
         
     if(cuenta==null){  
@@ -297,13 +322,12 @@ async function aperturaMesa(idMesa) {
                     }                 
                 }
         });        
-    }
-   
+    }   
     return idCuenta;
- }
- function actualizarCuenta(idPV, idMesa) {
+ }  
+ async function actualizarCuenta(idPV, idMesa) {
     idCuenta=$("#mesa"+idMesa).attr("idCuenta");     
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');    
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');        
     $.ajax({
         url: "{{url('getcuenta')}}"+'/'+idCuenta,
         type: "GET",
@@ -313,12 +337,12 @@ async function aperturaMesa(idMesa) {
         },            
         success: function(respuesta) {
             var respuesta=JSON.parse(respuesta);
-            // console.log(respuesta["objeto"]);
+            console.log("respuesta ajax", respuesta);
             var ok = respuesta["ok"];
-            if(ok){
-                var objeto =  respuesta["objeto"];                          
-                localStorage.setItem(idPV+idMesa, JSON.stringify(objeto));                 
-            }                 
+            // if(ok){
+            //     var objeto =  respuesta["objeto"];                          
+            //     localStorage.setItem(idPV+idMesa, JSON.stringify(objeto));                 
+            // }                 
         }
     });
  }
@@ -787,14 +811,21 @@ async function getProductosMasVendidos(){
     var idCarta = $("#idCartaPVModal").val(); 
     
     var idMesaLS = localStorage.getItem("idMesaLS");
-    
+    console.log("idMesaLS",idMesaLS);
+    console.log("idPV",idPV);
     var idCuenta =await getIdCuenta(idPV,idMesaLS); 
+    
     var variableLS =idPV+idMesaLS;
     $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
     
+    console.log("idCuenta",idCuenta);
+    
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
     var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
-
+    
+    
+    console.log("datosCuentaObjeto",datosCuentaObjeto);
+    
     alergenosIdHuesped = [];
     nombreAlergenosHuesped= [];
     alergenosHuesped= [];
@@ -1016,14 +1047,14 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
         }
     });     
  }
- function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
+async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
     
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      var idPV= $("#idPVModalOrdenar").val(); 
      var idMesa = localStorage.getItem("idMesaLS");
      var cuenta =String(idPV)+String(idMesa); 
 
-     $.ajax({
+    await $.ajax({
         url: "{{ url('ordenar/addcuentaalergia') }}",
         type: "POST",
         data: {
@@ -1038,7 +1069,7 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
             var ok = respuesta["ok"];
             // console.log("respuesta",respuesta); 
             if(ok) {                
-                actualizarCuenta(idPV, idMesa);
+                 actualizarCuenta(idPV, idMesa);
                 // verAlergenos(idProducto, false);                        
             }                                       
         },
@@ -1413,7 +1444,7 @@ function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
           return;
       }else{
           $.notify({							
-            message: '<i class="fas fa-sun"></i><strong>Producto eliminado de la lista</strong>'
+                message: '<i class="fas fa-sun"></i><strong>Producto eliminado de la lista</strong>'
             },{								
                 type: 'warning',
                 delay: 2000
@@ -2036,6 +2067,8 @@ function generarBotonesClientes(idPV,idMesa) {
             }
         botones+="";
         $("#lstBtnClientes").html(botones);        
+    }else{
+        console.log("entro aquí, si botones de client");
     }      
     marcarCheckboxDefault(cuentaMesa) ;
 }
