@@ -27,80 +27,11 @@ function ocurreCambiosMesa(){
     $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
-    chat.client.postToClient =  (data) => {          
-        // actualizarDatosMesa(data);
+    chat.client.postToClient =  (data) => {                  
         initZonas();
-
     };
 }
-function actualizarDatosMesa(data) {    
-    var tipoMovimiento = data["tipoMov"];
-    var idMesa = data["idMesa"];
-    var nombreMesa = $("#mesaAbrir"+idMesa).attr("nombreMesa");
-    
-    // obtengo los datos para pintar sobre las mesa ocupada
-    var idCuenta = data["id"]; // la cuenta
-    var nombreCliente = data["nombreCliente"];
-    var room = (data["habitacion"] == null) ? "Sin Hab" : data["habitacion"];
-    var totalCuenta = data["totalCuenta"];
 
-    if(tipoMovimiento=="add"){
-
-        estadoMesa="ocupado";        
-        wellmesa="#mesaAbrir"+idMesa;        
-        $("#mesaAbrir"+idMesa).attr("estadoMesa",estadoMesa);
-        $("#wellMesa"+idMesa).removeClass("mesaOrdenLibre");
-        $("#wellMesa"+idMesa).addClass("mesaOrdenOcupada");
-        // seteo nuevos valores en los span de cada mesa
-        $("#idCuentaMesaSpan"+idMesa).text(idCuenta);
-        $("#nomClienteMesaSpan"+idMesa).text(nombreCliente);
-        $("#roomMesaSpan"+idMesa).text(room);
-        $("#totCuentaMesaSpan"+idMesa).text(totalCuenta);
-        //pongo valores en atributos en tag a  
-        $("#mesaAbrir"+idMesa).attr("cuentaMesa",idCuenta);
-        $("#mesaAbrir"+idMesa).attr("nombreMesa",);
-        $("#mesaAbrir"+idMesa).attr("clienteMesa",nombreCliente);
-        $("#mesaAbrir"+idMesa).attr("habMesa",room);
-        // poner cuenta a elemento li
-        $("#mesa"+idMesa).attr("idCuenta",idMesa);
-        //muestro mensaje de alerta de que fue abierto una mesa
-        $.notify({							
-            message: 'La mesa <strong>'+nombreMesa+'</strong> fue abierta'
-        },{								
-            type: 'info',
-            delay: 2000
-        });
-
-
-    }else if(tipoMovimiento=="close"){
-
-        estadoMesa="disponible"; 
-        wellmesa="#mesaAbrir"+idMesa;        
-        $("#mesaAbrir"+idMesa).attr("estadoMesa",estadoMesa);
-        $("#wellMesa"+idMesa).removeClass("mesaOrdenOcupada");
-        $("#wellMesa"+idMesa).addClass("mesaOrdenLibre");
-        // seteo nuevos valores en los span de cada mesa
-        $("#idCuentaMesaSpan"+idMesa).text("NO");
-        $("#nomClienteMesaSpan"+idMesa).text("SN");
-        $("#roomMesaSpan"+idMesa).text("SIN HAB");
-        $("#totCuentaMesaSpan"+idMesa).text("0");
-        //pongo valores en atributos en tag a
-        $("#mesaAbrir"+idMesa).attr("cuentaMesa",idCuenta);
-        $("#mesaAbrir"+idMesa).attr("nombreMesa",);
-        $("#mesaAbrir"+idMesa).attr("clienteMesa",nombreCliente);
-        $("#mesaAbrir"+idMesa).attr("habMesa",room);
-        // poner cuenta a elemento li
-        $("#mesa"+idMesa).attr("idCuenta","NO");
-        //muestro mensaje de alerta de que fue cerrado una mesa
-        $.notify({							
-            message: 'La mesa <strong>'+nombreMesa+'</strong> con la cuenta: <strong>'+idCuenta+'</strong> fue cerrada'
-        },{								
-            type: 'warning',
-            delay: 2000
-        });
-
-    }
-}
 function getMesasZona(idZonaDefault, soloMesasActivas){    
     listaZonas="<div id='zona"+idZonaDefault+"' class='zonas'><ul class='nav nav-pills nav-pills-icons' role='tablist' id='zonaListaMesas"+idZonaDefault+"'></ul></div>";
     $("#zonasPV").html(listaZonas);
@@ -248,11 +179,10 @@ async function aperturaMesa(idMesa) {
         var idCuenta =await getIdCuenta(idPV,idMesa); 
         
         $("#btnAddDescuento").attr("btnIdCuenta",idCuenta); 
-        // genero los botones 
-        // generarBotonesClientes(idPV,idMesa); 
         $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);
         
         $("#cuentaMesaSpan").text(cuentaMesa);
+        // genero los botones 
         crearCuentaTemporal(idPV,idMesa);                   
         generarBotonesClientes(idPV,idMesa);
         await getProductosMasVendidos();        

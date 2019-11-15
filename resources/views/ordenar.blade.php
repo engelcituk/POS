@@ -36,9 +36,15 @@
                                 </nav>
                                 {{-- {{Session::get('Usuarios.crear')}} --}} 
                             </div>
-                            <div class="col-md-9 col-sm-6 col-xs-6">
-                                <button class="btn btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})"><i class="far fa-window-close"></i> Cerrar día</button>
-                            </div>
+                            @php
+                                $cierreDiaPermisoLeer= Session::get('CierreDia.leer');                             
+                            @endphp
+                            @if($cierreDiaPermisoLeer==1)
+                                <div class="col-md-9 col-sm-6 col-xs-6">
+                                    <button class="btn btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})"><i class="far fa-window-close"></i> Cerrar día</button>
+                                </div>
+                            @endif                                                                                                
+
                         </div>
                          <div id="zonasPV">
                             
