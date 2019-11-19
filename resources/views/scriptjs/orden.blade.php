@@ -103,7 +103,39 @@ function getMesasPorZona(idZona) {
         }
     });
 }
-function getMesasActivasPorZona(idZona) {
+//Para trabajar con las zonas que ocupan para cambiar mesas
+function getZonas(){
+    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
+
+    $.ajax({
+            url: "{{ url('ordenar/obtenerzonas')}}",
+            type: "GET",
+            data: {
+                '_method': 'GET',               
+                '_token': csrf_token
+            },        
+            success: function(respuesta) {
+                var respuesta = JSON.parse(respuesta);               
+                var ok = respuesta["ok"];
+                if(ok){
+                    var objeto=respuesta["objeto"];                     
+                    objLenght= objeto.length;                    
+                    if(objLenght>0){                        
+                         for (i = 0; i < objLenght; i++) {
+                            var idZona = objeto[i]["id"];
+                            var nombre = objeto[i]["name"];
+                            getMesasActivasPorZona(nombre,idZona);
+                        }
+                    }                    
+
+                }               
+            },
+            error: function(respuesta) {
+                console.log(JSON.parse(respuesta));
+        }
+    });
+}
+function getMesasActivasPorZona(nombre,idZona) {
    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
 
     $.ajax({
@@ -117,8 +149,19 @@ function getMesasActivasPorZona(idZona) {
                 var respuesta = JSON.parse(respuesta);               
                 var ok = respuesta["ok"];
                 if(ok){
-                    var objeto=respuesta["objeto"];
-                    console.log("mesas", objeto);
+                    var objeto=respuesta["objeto"];                    
+                    var objLenght= objeto.length;
+                    if(objLenght>0){                        
+                        var optgroup = "<optgroup label='"+nombre+"'>"
+                         for (i = 0; i < objLenght; i++) {
+                            var idZona = objeto[i]["id"];
+                            var nombreMesa=objeto[i]["name"];                             
+                            optgroup +="<option value='"+idZona+"'>"+nombreMesa+"</option>"
+                        }
+                        optgroup += "</optgroup>"
+                        $('.selectMesasZonas').append(optgroup);
+                    }
+
                 }else{
                     console.log("no hay mesas");                    
                 }                
@@ -154,8 +197,8 @@ async function aperturaMesa(idMesa) {
     var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
     var idMenuCarta = $("#idCartaPVModal").val();
 	$(".alert").remove();// si hay mensajes de alerta, estas se remueven en el modal
-    $("#nombreMesaSpan").text(nombreMesa);$("#clienteMesaSpan").text(clienteMesa);$("#habMesaSpan").text(habitacionMesa); 
-
+    $("#nombreMesaSpan").text(nombreMesa);$("#clienteMesaSpan").text(clienteMesa);$("#habMesaSpan").text(habitacionMesa);
+    
     if(estadoMesa=="disponible"){//si la mesa está disponible abro modal para obtener datos de huesped
         
         $('#myModal').modal({backdrop: 'static', keyboard: false });
@@ -182,6 +225,8 @@ async function aperturaMesa(idMesa) {
         $("#idCuentaSpan").attr("idCuentaAttr",idCuenta);
         
         $("#cuentaMesaSpan").text(cuentaMesa);
+        // obtengo el listado de zonas y las mesas activas
+        getZonas();
         // genero los botones 
         crearCuentaTemporal(idPV,idMesa);                   
         generarBotonesClientes(idPV,idMesa);
@@ -445,7 +490,8 @@ $('#myModal').on('hidden.bs.modal', function (e) {
              generarBotonesClientes(idPV,idMesa);
        localStorage.setItem("idMesaLS", idMesa);
        var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
-
+        // obtengo el listado de zonas y las mesas activas
+        getZonas();
        var idCuenta = await getIdCuenta(idPV,idMesa); 
        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
 
@@ -544,6 +590,7 @@ $("#ocupanteModal").change(function(){
                     // console.log("respuesta folio "+folio);
                     $("#btnAddDescuento").attr("btnIdCuenta",idCuenta);//creo los atributos
                     localStorage.setItem(idPV+idMesa, JSON.stringify(objeto)); //genero la variable LST con el objeto
+
                      
                 }else{
                     var mensaje=resultado["mensaje"];
@@ -2125,6 +2172,7 @@ function cambiarMesa() {
             localStorage.removeItem(cuentaAnteriorBD);
             
             guardarCambioDeMesa(idPV, idCuenta, idMesaNueva);
+            // getZonas();
 
         }).catch(swal.noop);        
     }else{
