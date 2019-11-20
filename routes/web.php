@@ -225,5 +225,8 @@ Route::post('menuscartas/{menuscarta}', 'MenusCartasController@destroy')->name('
 
 
 Route::post('printrecibo', 'ReciboTicketController@createRecibo')->name('imprimir.createrecibo');
+
+
+
     //roles
 });
