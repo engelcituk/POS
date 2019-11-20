@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="LogViewer">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- <meta name="csrf-token" content="{{ csrf_token() }}"> --}}
 
-    <meta name="author" content="ARCANEDEV">
-    <title>LogViewer - Created by ARCANEDEV</title>
+    <meta name="author" content="cituk">
+    <title>Logs TPV Sandos</title>
     {{-- Styles --}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -216,14 +216,18 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark p-0">
+        <a href="{{ route('ordenar.index') }}" class="navbar-brand mr-0">
+            <i class="fa fa-home"></i> TPV
+        </a>
         <a href="{{ route('log-viewer::dashboard') }}" class="navbar-brand mr-0">
-            <i class="fa fa-fw fa-book"></i> LogViewer
+            <i class="fa fa-fw fa-book"></i> Logs tpv
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
+               
                 <li class="nav-item {{ Route::is('log-viewer::dashboard') ? 'active' : '' }}">
                     <a href="{{ route('log-viewer::dashboard') }}" class="nav-link">
                         <i class="fa fa-dashboard"></i> Dashboard
@@ -234,6 +238,17 @@
                         <i class="fa fa-archive"></i> Logs
                     </a>
                 </li>
+                <li class="nav-item {{ Route::is('log-viewer::logs.list') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                     document.getElementById('logout-form').submit();"> <i class="fas fa-sign-out-alt"></i>
+                        Salir
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                        {{-- <button class="btn btn-danger btn-xs"> Cerrar sesion</button>  --}}
+                    </form>
+                </li>
+                
             </ul>
         </div>
     </nav>

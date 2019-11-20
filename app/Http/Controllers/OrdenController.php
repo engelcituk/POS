@@ -316,7 +316,7 @@ class OrdenController extends Controller
         $urlCerrarDia =$this->urlAdmin;
 
         $idUsuario = $request->session()->get('idUsuarioLogueado');
-        $fecha = Carbon::now()->format('d-m-Y');
+        $fecha = Carbon::now()->format('Y-m-d');
         $idCarta = $request->session()->get('idCarta');
 
         $respuesta = $this->realizarPeticion('POST', $urlCerrarDia."cierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");

@@ -142,8 +142,8 @@ function imprimirDesglose(idPuntoVenta) {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      // otengo la fecha y lo transformo a formato D-M-Y
      var fechaInicio = $("#fechaInicioHist").val().replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1');
+     // var fechaInicio = $("#fechaInicioHist").val(); descomentar si el servidor admite Y-M-D
      
-
      $.ajax({
         url: "{{ url('historico/imprimircerrardia') }}",
         type: "POST",
