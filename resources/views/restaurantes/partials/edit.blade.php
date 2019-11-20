@@ -16,7 +16,7 @@
                         <input id="name" type="hidden" class="form-control" name="id" value="{{$restaurante->id}}" required>
                         <div class="row">
                             <div class="card-content">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-file-signature"></i>
@@ -29,10 +29,10 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="input-group">
                                         <span class="input-group-addon">
-                                            <i class="fas fa-h-square"></i>
+                                            <i class="fas fa-utensils"></i>
                                         </span>
                                         <div class="form-group">
                                             <!-- <label for="sel1">Select list:</label> -->
@@ -40,6 +40,22 @@
                                                 <option value="{{$hotelRestaurante->id}}" selected>{{$hotelRestaurante->name}}</option>
                                                 @foreach($hoteles as $hotel)
                                                 <option value="{{ $hotel->id }}">{{ $hotel->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-print"></i>
+                                        </span>
+                                        <div class="form-group">
+                                            <!-- <label for="sel1">Select list:</label> -->
+                                            <select class="form-control" name="idHotel" required>
+                                                <option value="{{$impresora->id}}" selected>{{$impresora->name}}</option>
+                                                @foreach($impresoras as $impresora)
+                                                <option value="{{ $impresora->id }}">{{ $impresora->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

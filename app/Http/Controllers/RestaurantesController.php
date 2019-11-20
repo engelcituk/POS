@@ -72,15 +72,21 @@ class RestaurantesController extends Controller
     }
     public function edit($id)
     {
-        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles'); 
+        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras'); 
+
         $idRestaurante = $id;
         $restaurante = $this->obtenerUnRestaurante($idRestaurante);
         //obtengo los datos del hotel para cargarlo en un select
         $idHotel = $restaurante->idHotel;
         $datosHotel = new HotelesController();
         $hotelRestaurante = $datosHotel->obtenerUnHotel($idHotel);
-
-        return view('restaurantes.partials.edit', ['restaurante' => $restaurante, 'hoteles' => $hoteles, 'hotelRestaurante'=> $hotelRestaurante]);
+        //obtengo los datos de la impresora
+        $idImpresora = $restaurante->idImpresora;
+        $datosImpresora = new ImpresorasController();
+        $impresora = $datosImpresora->obtenerUnaImpresora($idImpresora);
+                
+        return view('restaurantes.partials.edit', ['restaurante' => $restaurante, 'hoteles' => $hoteles, 'hotelRestaurante'=> $hotelRestaurante,'impresora' => $impresora, 'impresoras'=> $impresoras]);
     }
     //metodo que se ocupara para obtener el dato de un hotel, se ocupa para show y edit
     public function obtenerUnRestaurante($idRestaurante)

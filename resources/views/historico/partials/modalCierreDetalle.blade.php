@@ -12,7 +12,9 @@
         <div class="row">
           <div id="invoice-POS">
             {{-- <button class="btn btn-danger pull-right" id="fechaFiltroBtn" onclick="generarPdfFiltro()"> <i class="far fa-file-pdf"></i> PDF</button> --}}
-            <button class="btn btn-success pull-right" id="fechaFiltroBtn" onclick="generarExcelFiltro()"> <i class="far fa-file-excel"></i> Excel</button>          
+            
+            <button class="btn btn-success pull-right" id="fechaFiltroBtn" onclick="generarExcelFiltro()"> <i class="far fa-file-excel"></i> Excel</button>  
+            <button class="btn btn-info pull-right" id="fechaFiltroBtn" onclick="imprimirDesglose()"> <i class="far fa-file-excel"></i> Imprimir</button>        
           </div>
         </div>
         <div class="row">          

@@ -137,6 +137,31 @@ function verCuentaDetalles(id) {
             });
         }).catch(swal.noop);
     }
+// para impirmir desglose de cierre de fecha seleccionada
+function imprimirDesglose(idPuntoVenta) {
+     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+     // otengo la fecha y lo transformo a formato D-M-Y
+     var fechaInicio = $("#fechaInicioHist").val().replace(/^(\d{4})-(\d{2})-(\d{2})$/g,'$3-$2-$1');
+     
+
+     $.ajax({
+        url: "{{ url('historico/imprimircerrardia') }}",
+        type: "POST",
+        data: {
+            '_method': 'POST',           
+            'fecha': fechaInicio,
+            '_token': csrf_token
+        },
+        success: function(respuesta) {             
+             var respuesta = JSON.parse(respuesta);
+             console.log("Respuesta controlador",respuesta);               
+                                                
+        },
+        error: function(respuesta) { 
+            console.log("respuesta",respuesta); 
+        }
+    });
+ } 
     function cancelarCuentaModal(idCuenta) {
         $("#idCuentaCancelar").val(idCuenta);
         $('#modalCancelarCuenta').modal({backdrop: 'static', keyboard: false });
@@ -190,7 +215,7 @@ function verCuentaDetalles(id) {
     function detallesFiltro(){
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
         fechaInicio = $("#fechaInicioHist").val();
-        console.log(fechaInicio);
+        
         $.ajax({
             url: "{{url('historico/cierredia')}}",
             type: "POST",

@@ -137,6 +137,19 @@ class HistoricoController extends Controller
         return $respuesta;
         
     }
+    public function imprimirDesgloseHistorico(Request $request){
+
+        $urlCerrarDia = $this->urlAdmin;
+
+        $idPV = $request->session()->get('idPuntoVenta');
+        $fecha = $request->get('fecha');        
+        $idUsuario = $request->session()->get('idUsuarioLogueado');
+        $idCarta = $request->session()->get('idCarta');
+
+        $respuesta = $this->realizarPeticion('POST', $urlCerrarDia."cierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");
+
+        return $respuesta;
+    }
 }
 //es una funcion que esta en el controller principal
 // $urlBase= "http://localhost/TPVApi/historico/"; 
