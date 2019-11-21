@@ -24,7 +24,7 @@ function initZonas(){
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
-    $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
+    $.connection.hub.url = 'http://172.17.8.181/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {                  
@@ -120,13 +120,15 @@ function getZonas(){
                 if(ok){
                     var objeto=respuesta["objeto"];                     
                     objLenght= objeto.length;                    
-                    if(objLenght>0){                        
+                    if(objLenght>0){
+                        var option = "<option>Elija una mesa</option>"
                          for (i = 0; i < objLenght; i++) {
                             var idZona = objeto[i]["id"];
                             var nombre = objeto[i]["name"];
                             getMesasActivasPorZona(nombre,idZona);
                         }
-                    }                    
+                    } 
+                     $('.selectMesasZonas').append(option);                   
 
                 }               
             },
