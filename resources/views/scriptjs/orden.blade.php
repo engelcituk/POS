@@ -7,13 +7,14 @@ $(document ).ready(function() {
     window.location.hash="Inicio";//esta linea es necesaria para chrome
     window.onhashchange=function(){window.location.hash="inicio";}
     
-    initZonas();
-    ocurreCambiosMesa();
 });
+initZonas();
+ocurreCambiosMesa();
+
 function initZonas(){
     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
     if ((/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream)) {                    
-        localStorage.removeItem('zonaMesaSeleccionada');
+        localStorage.removeItem('zon aMesaSeleccionada');
     }
     // para cargar las mesas de una zona en especifica
     if(localStorage.getItem('zonaMesaSeleccionada')){
@@ -2187,7 +2188,7 @@ function cambiarMesa() {
 }
 function guardarCambioDeMesa(idPV, idCuenta, idMesaNueva){
      var csrf_token = $('meta[name="csrf-token"]').attr('content');    
-    console.log("idPuntoVenta: "+idPV+" idCuenta: "+idCuenta+" idMesaNueva: "+idMesaNueva);    
+    // console.log("idPuntoVenta: "+idPV+" idCuenta: "+idCuenta+" idMesaNueva: "+idMesaNueva);    
     $.ajax({
         url: "{{ url('ordenar/updatemesa') }}",
         type: "POST",

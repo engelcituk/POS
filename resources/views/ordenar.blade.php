@@ -5,38 +5,33 @@
 <div class="content">
     
     <div class="container-fluid">        
-        <div class="row" id="zonaMesas">                        
+        <div class="row" id="zonaMesas"> 
+                                            
             <div class="col-md-12">
                 <div class="card">                    
                     <div class="card-content">                       
                         <div class="row">
-
-                            <div class="col-md-3 col-sm-6 col-xs-6">
-                                <nav aria-label="breadcrumb" role="navigation">
+                            {{-- <nav aria-label="breadcrumb" role="navigation">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-map-marker-alt"></i>
                                         </span>
-                                        <div class="form-group">
-                                            <select class="form-control" id="zonaElige">                                                                       
-                                                @foreach($zonas as $zona)
-                                                <option value="zona{{$zona->id}}">{{$zona->name}}</option>
-                                                @endforeach                                
+                                        <div class="form-group">                               
+                                            <select class="form-control" id="zonaElige">                             
+                                            @foreach($zonas as $zona)
+                                            <option value="zona{{$zona->id}}">{{$zona->name}}</option>
+                                            @endforeach                                
                                             </select>
                                         </div>
                                     </div>
-                                </nav>
-                                {{-- {{Session::get('Usuarios.crear')}} --}} 
-                            </div>
-                            @php
-                                $cierreDiaPermisoLeer= Session::get('CierreDia.leer');                             
-                            @endphp
-                            @if($cierreDiaPermisoLeer==1)
-                                <div class="col-md-9 col-sm-6 col-xs-6">
-                                    <button class="btn btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})"><i class="far fa-window-close"></i> Cerrar día</button>
-                                </div>
-                            @endif                                                                                                
-
+                            </nav>                                                        --}}
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <div id="sliderZonas" class="owl-carousel">
+                                    @foreach($zonas as $zona)                                        
+                                        <button class="btn btn-success">{{$zona->name}}</button>                                              
+                                    @endforeach
+                                </div>                                                                
+                            </div>                                                                           
                         </div>
                          <div id="zonasPV">
                             
@@ -99,7 +94,7 @@
 
                                                                                
 
-                                        <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
+                                    <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
                                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
                                             <div class="btn-group" role="group">
                                                 <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"></a>
