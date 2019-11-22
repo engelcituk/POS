@@ -17,11 +17,11 @@
                                         <span class="input-group-addon">
                                             <i class="fas fa-map-marker-alt"></i>
                                         </span>
-                                        <div class="form-group">                               
-                                            <select class="form-control" id="zonaElige">                             
-                                            @foreach($zonas as $zona)
-                                            <option value="zona{{$zona->id}}">{{$zona->name}}</option>
-                                            @endforeach                                
+                                        <div class="form-group">
+                                            <select class="form-control" id="zonaElige">                                                                       
+                                                @foreach($zonas as $zona)
+                                                <option value="zona{{$zona->id}}">{{$zona->name}}</option>
+                                                @endforeach                                
                                             </select>
                                         </div>
                                     </div>

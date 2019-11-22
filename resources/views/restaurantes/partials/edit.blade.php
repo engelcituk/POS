@@ -52,7 +52,7 @@
                                         </span>
                                         <div class="form-group">
                                             <!-- <label for="sel1">Select list:</label> -->
-                                            <select class="form-control" name="idHotel" required>
+                                            <select class="form-control" name="idImpresora" required>
                                                 <option value="{{$impresora->id}}" selected>{{$impresora->name}}</option>
                                                 @foreach($impresoras as $impresora)
                                                 <option value="{{ $impresora->id }}">{{ $impresora->name }}</option>

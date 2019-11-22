@@ -1,6 +1,6 @@
 <select class="form-control selectMesasZonas" onchange="cambiarMesa()">
-    {{-- <option value="">Cambiar mesa de la cuenta</option>                --}}
-    {{-- @foreach($zonas as $zona)
+    {{-- <option value="">Cambiar mesa de la cuenta</option>               
+    @foreach($zonas as $zona)
     <optgroup label="{{$zona->name}}">
         @php                                
             $idZona=$zona->id;                          

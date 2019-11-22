@@ -11,7 +11,10 @@ $(document ).ready(function() {
     ocurreCambiosMesa();
 });
 function initZonas(){
-              
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    if ((/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream)) {                    
+        localStorage.removeItem('zonaMesaSeleccionada');
+    }
     // para cargar las mesas de una zona en especifica
     if(localStorage.getItem('zonaMesaSeleccionada')){
         idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); //obtengo el id
@@ -24,7 +27,7 @@ function initZonas(){
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
-    $.connection.hub.url = 'http://172.17.8.181/TPVApi/signalr/hubs';
+    $.connection.hub.url = 'http://172.16.1.45/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {                  
@@ -40,10 +43,11 @@ function getMesasZona(idZonaDefault, soloMesasActivas){
 //para mostrar zonas y sus mesas respectivamente al seleccionar algo de la lista
 $("#zonaElige").change(function() {
     var valorSelect = $("option:selected", this).val(); //obtener el value de un select
+
     if (valorSelect != "") {            
-        $(".zonas").hide();
-        localStorage.setItem('zonaMesaSeleccionada', valorSelect);
-        $("#" + valorSelect).show();
+        $(".zonas").hide();    
+        localStorage.setItem('zonaMesaSeleccionada', valorSelect);    
+        $("#" + valorSelect).show(); 
         idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
         soloMesasActivas =false;
         getMesasZona(idZonaDefault, soloMesasActivas);            
@@ -174,15 +178,16 @@ function getMesasActivasPorZona(nombre,idZona) {
     });
 }
 
-function crearVariableZonaDefault(){
-    if (localStorage.getItem('zonaMesaSeleccionada')) {
-        valDefault = localStorage.getItem('zonaMesaSeleccionada'); 
-        $("#zonaElige select").val(valDefault);  
+function crearVariableZonaDefault(){  
+    
+    if (localStorage.getItem('zonaMesaSeleccionada')) {            
+        valDefault = localStorage.getItem('zonaMesaSeleccionada');             
         $('#zonaElige option[value='+valDefault+']').attr('selected','selected');    
-    }else {
+    }else {            
         valDefault = $("#zonaElige").children('option:first').val(); 
         localStorage.setItem('zonaMesaSeleccionada', valDefault);
-    }                                                                   
+    }
+                                                                               
     $(".zonas").hide();
     $("#" + valDefault).show();                                             
 }
@@ -2173,8 +2178,7 @@ function cambiarMesa() {
             localStorage.removeItem(cuentaTemporalAnteriorTemp);
             localStorage.removeItem(cuentaAnteriorBD);
             
-            guardarCambioDeMesa(idPV, idCuenta, idMesaNueva);
-            // getZonas();
+            guardarCambioDeMesa(idPV, idCuenta, idMesaNueva);            
 
         }).catch(swal.noop);        
     }else{

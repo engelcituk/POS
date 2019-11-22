@@ -42,7 +42,7 @@ class Controller extends BaseController
 
     protected function urlApiTPV(){
 
-        $urlBase= "http://172.17.8.181/TPVApi/";
+        $urlBase= "http://172.16.1.45/TPVApi/";
         
         return $urlBase;
     }
