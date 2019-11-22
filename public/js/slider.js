@@ -14,7 +14,7 @@ $(document).ready(function() {
         items: 6,
         itemsDesktop: [1199, 3],
         itemsDesktopSmall: [980, 4],
-        itemsMobile: [600, 3],
+        itemsMobile: [600, 2],
         pagination: true,
         autoPlay: true
     });

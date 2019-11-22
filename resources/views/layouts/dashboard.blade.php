@@ -261,7 +261,7 @@
                                         $cierreDiaPermisoLeer= Session::get('CierreDia.leer');                             
                                         @endphp
                                         @if($cierreDiaPermisoLeer==1)                
-                                            <button class="btn btn-sm  btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})">Cerrar dia</button> 
+                                            <button class="btn btn-sm  btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})">Cerrar dia</button>
                                                 
                                         @endif
                                     </a>

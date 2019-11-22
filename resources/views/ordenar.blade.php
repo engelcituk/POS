@@ -11,7 +11,7 @@
                 <div class="card">                    
                     <div class="card-content">                       
                         <div class="row">
-                            {{-- <nav aria-label="breadcrumb" role="navigation">
+                            <nav aria-label="breadcrumb" role="navigation">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="fas fa-map-marker-alt"></i>
@@ -24,12 +24,12 @@
                                             </select>
                                         </div>
                                     </div>
-                            </nav>                                                        --}}
+                            </nav>                                                       
                             <div class="col-md-12 col-sm-12 col-xs-12">
-                                <div id="sliderZonas" class="owl-carousel">
+                                <div id="sliderZonas" class="owl-carousel btnZonas">                                    
                                     @foreach($zonas as $zona)                                        
-                                        <button class="btn btn-success">{{$zona->name}}</button>                                              
-                                    @endforeach
+                                        <button class="btn" id="zonaBtn{{$zona->id}}" idZonaBtn="{{$zona->id}}">{{$zona->name}}</button>                                             
+                                    @endforeach                                    
                                 </div>                                                                
                             </div>                                                                           
                         </div>
@@ -67,56 +67,56 @@
                                 </table>                                                                  
                                                                         
                                         
-                                            <div class="well well-sm">
-                                                <strong>Mesa: </strong><span id="nombreMesaSpan"></span> 
-                                                <strong>Cliente: </strong><span id="clienteMesaSpan"></span> 
-                                                <strong>Cuenta: </strong><span id="cuentaMesaSpan"></span> 
-                                                <strong>Habitación: </strong><span id="habMesaSpan"></span>                            
-                                            </div>
-                                            <div class="table-wrapper-scroll-y my-custom-scrollbar" id="tablaItemProductos">   
-                                                <table  class="table tablaItems">
-                                                    <thead class="">
-                                                        <tr class="">
-                                                            <th></th>                              
-                                                            <th>Nombre</th>
-                                                            <th>Ca.</th>                                      
-                                                            <th>Pr.</th>                                      
-                                                            <th>To.</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>                                                        
-                                                                                                              
-                                                    </tbody>
-                                                    <tfoot>                                                        
-                                                    </tfoot>
-                                                </table>                                                
-                                            </div>
-
-                                                                               
-
-                                    <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
-                                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                            <div class="btn-group" role="group">
-                                                <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"></a>
-                                            </div>
-                                           <div class="btn-group" role="group" id="btnAddRoom">
-                                            <button type="button" class="btn btn-info" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"></button>                                                                   
-                                            </div> 
-                                            <div class="btn-group" role="group">      
-                                                <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "></button>
-                                            </div>
-                                        </div>                                          
+                                    <div class="well well-sm">
+                                        <strong>Mesa: </strong><span id="nombreMesaSpan"></span> 
+                                        <strong>Cliente: </strong><span id="clienteMesaSpan"></span> 
+                                        <strong>Cuenta: </strong><span id="cuentaMesaSpan"></span> 
+                                        <strong>Habitación: </strong><span id="habMesaSpan"></span>                            
                                     </div>
-                                    <div id="buttons2" style="text-transform:uppercase;" class="no-print">
-                                        <div class="btn-group btn-group-justified" role="group">   
-                                            <div class="btn-group" role="group">
-                                                <a class="btn btn-block btn-success" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
-                                            </div>                                               
-                                            <div class="btn-group" role="group">
-                                                <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar cuenta</button>
-                                            </div>
-                                        </div>                                          
+                                    <div class="table-wrapper-scroll-y my-custom-scrollbar" id="tablaItemProductos">   
+                                        <table  class="table tablaItems">
+                                            <thead class="">
+                                                <tr class="">
+                                                    <th></th>                              
+                                                    <th>Nombre</th>
+                                                    <th>Ca.</th>                                      
+                                                    <th>Pr.</th>                                      
+                                                    <th>To.</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>                                                        
+                                                                                                        
+                                            </tbody>
+                                            <tfoot>                                                        
+                                            </tfoot>
+                                        </table>                                                
+                                    </div>
+
+                                                                        
+
+                            <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
+                                <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"></a>
+                                    </div>
+                                    <div class="btn-group" role="group" id="btnAddRoom">
+                                    <button type="button" class="btn btn-info" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"></button>                                                                   
                                     </div> 
+                                    <div class="btn-group" role="group">      
+                                        <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "></button>
+                                    </div>
+                                </div>                                          
+                            </div>
+                            <div id="buttons2" style="text-transform:uppercase;" class="no-print">
+                                <div class="btn-group btn-group-justified" role="group">   
+                                    <div class="btn-group" role="group">
+                                        <a class="btn btn-block btn-success" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
+                                    </div>                                               
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar cuenta</button>
+                                    </div>
+                                </div>                                          
+                            </div> 
 
                                     
                             </div>

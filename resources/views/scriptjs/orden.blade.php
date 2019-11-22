@@ -19,6 +19,8 @@ function initZonas(){
     // para cargar las mesas de una zona en especifica
     if(localStorage.getItem('zonaMesaSeleccionada')){
         idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); //obtengo el id
+        $("#zonaBtn"+idZonaDefault).addClass("btn-success");
+
     }else {
         idZonaDefault = $("#zonaElige").children('option:first').val().replace( /^\D+/g, '');//obtengo el id; 
     }
@@ -2035,7 +2037,15 @@ $(document).on("click", ".slideProductos", function(){
     $(this).children('p').addClass("btn-success");
     // $(".slideProductos").children('p').addClass("btn-info");
          
-})
+});
+//para marcar el boton seleccionado a la zona seleccionada
+$(document).on("click", "#sliderZonas button", function(){    
+    $("button.btn-success").removeClass("btn-success");
+    $(this).addClass("btn-success");
+    idZona=$(this).attr("idZonaBtn");    
+    localStorage.setItem('zonaMesaSeleccionada', "zona"+idZona);    
+
+});
 function generarBotonesClientes(idPV,idMesa) {
     
     var cuentaMesa=String(idPV)+String(idMesa);
