@@ -17,12 +17,20 @@ function initZonas(){
         localStorage.removeItem('zon aMesaSeleccionada');
     }
     // para cargar las mesas de una zona en especifica
+    btn = $(".buttonZonas");     
     if(localStorage.getItem('zonaMesaSeleccionada')){
         idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); //obtengo el id
+        nombreZona= btn.eq(idZonaDefault-1).text();
+        $("#nombreZona").text(nombreZona);
         $("#zonaBtn"+idZonaDefault).addClass("btn-success");
 
     }else {
-        idZonaDefault = $("#zonaElige").children('option:first').val().replace( /^\D+/g, '');//obtengo el id; 
+        valor = btn.eq(0).attr("idZonaBtn");
+        nombreZona= btn.eq(0).text();
+        $("#nombreZona").text(nombreZona);
+        idZonaDefault = valor; // $("#zonaElige").children('option:first').val().replace( /^\D+/g, '');//obtengo el id; 
+        localStorage.setItem('zonaMesaSeleccionada', "zona"+idZonaDefault);    
+
     }
     getMesasZona(idZonaDefault,false);// funcion que obtiene las mesas de la zona
 
@@ -44,18 +52,30 @@ function getMesasZona(idZonaDefault, soloMesasActivas){
     getMesasPorZona(idZonaDefault);    
 }
 //para mostrar zonas y sus mesas respectivamente al seleccionar algo de la lista
-$("#zonaElige").change(function() {
-    var valorSelect = $("option:selected", this).val(); //obtener el value de un select
+// $("#zonaElige").change(function() {
+//     var valorSelect = $("option:selected", this).val(); //obtener el value de un select
 
-    if (valorSelect != "") {            
-        $(".zonas").hide();    
-        localStorage.setItem('zonaMesaSeleccionada', valorSelect);    
-        $("#" + valorSelect).show(); 
-        idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
-        soloMesasActivas =false;
-        getMesasZona(idZonaDefault, soloMesasActivas);            
-    }
-});
+//     if (valorSelect != "") {            
+//         $(".zonas").hide();    
+//         localStorage.setItem('zonaMesaSeleccionada', valorSelect);    
+//         $("#" + valorSelect).show(); 
+//         idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
+//         soloMesasActivas =false;
+//         getMesasZona(idZonaDefault, soloMesasActivas);            
+//     }
+// });
+//nueva funcion 
+function cambiarZona(idZona) {    
+    valorSelect = "zona"+idZona;
+    $(".zonas").hide();    
+    localStorage.setItem('zonaMesaSeleccionada', valorSelect);    
+    $("#" + valorSelect).show(); 
+    idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
+    soloMesasActivas =false;
+    nombreZona= btn.eq(idZonaDefault-1).text();
+    $("#nombreZona").text(nombreZona);
+    getMesasZona(idZonaDefault, soloMesasActivas);
+}
 
 function getMesasPorZona(idZona) {
    var csrf_token = $('meta[name="csrf-token"]').attr('content'); 
@@ -182,12 +202,23 @@ function getMesasActivasPorZona(nombre,idZona) {
 }
 
 function crearVariableZonaDefault(){  
-    
+    //button.btn-success
+    btn = $(".buttonZonas");     
     if (localStorage.getItem('zonaMesaSeleccionada')) {            
-        valDefault = localStorage.getItem('zonaMesaSeleccionada');             
-        $('#zonaElige option[value='+valDefault+']').attr('selected','selected');    
+        valDefault = localStorage.getItem('zonaMesaSeleccionada'); 
+        idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
+
+        $('#zonaElige option[value='+valDefault+']').attr('selected','selected');  
+        //pinto el boton de acuerdo a lo que recibo de localstorage
+        $("button.btn-success").removeClass("btn-success");
+        $("#zonaBtn"+idZonaDefault).addClass("btn-success");  
     }else {            
         valDefault = $("#zonaElige").children('option:first').val(); 
+        //obtengo el botton con el primer valor y lo pinto en verde
+        valor = btn.eq(0).attr("idZonaBtn"); 
+        $("button.btn-success").removeClass("btn-success");
+        $("#zonaBtn"+valor).addClass("btn-success");
+        //guardo la zona seleccionada en localstorage
         localStorage.setItem('zonaMesaSeleccionada', valDefault);
     }
                                                                                
@@ -1990,23 +2021,24 @@ function imprimirCuenta() {
 
  function cerrarDia(idPuntoVenta) {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
-     $.ajax({
-        url: "{{ url('ordenar/cerrardia') }}"+'/'+idPuntoVenta,
-        type: "POST",
-        data: {
-            '_method': 'POST',           
+     console.log("metodo para cerrar dia");
+    //  $.ajax({
+    //     url: "{{ url('ordenar/cerrardia') }}"+'/'+idPuntoVenta,
+    //     type: "POST",
+    //     data: {
+    //         '_method': 'POST',           
             
-            '_token': csrf_token
-        },
-        success: function(respuesta) {             
-             var respuesta = JSON.parse(respuesta);
-             console.log("Respuesta controlador",respuesta);               
+    //         '_token': csrf_token
+    //     },
+    //     success: function(respuesta) {             
+    //          var respuesta = JSON.parse(respuesta);
+    //          console.log("Respuesta controlador",respuesta);               
                                                 
-        },
-        error: function(respuesta) { 
-            console.log("respuesta",respuesta); 
-        }
-    });
+    //     },
+    //     error: function(respuesta) { 
+    //         console.log("respuesta",respuesta); 
+    //     }
+    // });
  } 
 
 //para cambiar color del botón de tiempo seleccionado 
@@ -2031,8 +2063,7 @@ function tiempoOrden() {
     
 }
 //para marcar los span a las categorias seleccionadas
-$(document).on("click", ".slideProductos", function(){
-    
+$(document).on("click", ".slideProductos", function(){    
     $(".slideProductos").children('p').removeClass("btn-success");
     $(this).children('p').addClass("btn-success");
     // $(".slideProductos").children('p').addClass("btn-info");
@@ -2040,11 +2071,10 @@ $(document).on("click", ".slideProductos", function(){
 });
 //para marcar el boton seleccionado a la zona seleccionada
 $(document).on("click", "#sliderZonas button", function(){    
-    $("button.btn-success").removeClass("btn-success");
+    $("button.buttonZonas").removeClass("btn-success");
     $(this).addClass("btn-success");
     idZona=$(this).attr("idZonaBtn");    
     localStorage.setItem('zonaMesaSeleccionada', "zona"+idZona);    
-
 });
 function generarBotonesClientes(idPV,idMesa) {
     

@@ -38,7 +38,8 @@ class OrdenController extends Controller
     public function index(Request $request){
         
         $idPuntoVenta = $request->session()->get('idPuntoVenta');
-
+        $datosRestaurantePV = app('App\Http\Controllers\RestaurantesController')->obtenerUnRestaurante($idPuntoVenta);
+        
         $idCarta = $request->session()->get('idCarta');
 
         $respuestaZonas = $this->zonasPV($idPuntoVenta);
@@ -51,7 +52,7 @@ class OrdenController extends Controller
         //$categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
         $metodosPago = \App::call('App\Http\Controllers\MetodosPagoController@obtenerTodosLosMetodosPagos'); //se carga en subtabs
         
-        return view('ordenar', compact('zonas','alergenos','categorias', 'metodosPago'));
+        return view('ordenar', compact('zonas','alergenos','categorias', 'metodosPago', 'datosRestaurantePV'));
     }
 
     public function obtenerListaPermisosUsuario($idUsuario){

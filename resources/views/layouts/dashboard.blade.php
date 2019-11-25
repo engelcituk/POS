@@ -253,19 +253,19 @@
                         {{-- <a class="navbar-brand" href="#"> PanelControl </a> --}}                        
                     </div>                                        
                     <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav navbar-right">
-                            @if(request()->is('ordenar'))
-                                <li class="">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                        @php
-                                        $cierreDiaPermisoLeer= Session::get('CierreDia.leer');                             
-                                        @endphp
-                                        @if($cierreDiaPermisoLeer==1)                
-                                            <button class="btn btn-sm  btn-success pull-right" onclick="cerrarDia({{Session::get('idPuntoVenta')}})">Cerrar dia</button>
-                                                
-                                        @endif
+                        <ul class="nav navbar-nav navbar-right">                            
+                            @if(request()->is('ordenar'))                                                                
+                                @php
+                                    $cierreDiaPermisoLeer= Session::get('CierreDia.leer');                             
+                                @endphp
+                                @if($cierreDiaPermisoLeer==1)
+                                <li>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" onclick="cerrarDia({{Session::get('idPuntoVenta')}})">
+                                        <span class="hidden-xs btn btn-sm btn-danger"><i class="fas fa-window-close"></i> Cerrar Día</span> 
+                                        <p class="hidden-lg hidden-md btn btn-sm btn-danger"><i class="fas fa-window-close"></i>Cerrar Día</p>
                                     </a>
-                                </li>
+                                </li>                                                                           
+                                @endif                                   
                             @endif
                                                                                
                             <li class="dropdown">

@@ -10,25 +10,12 @@
             <div class="col-md-12">
                 <div class="card">                    
                     <div class="card-content">                       
-                        <div class="row">
-                            <nav aria-label="breadcrumb" role="navigation">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                        </span>
-                                        <div class="form-group">                               
-                                            <select class="form-control" id="zonaElige">                             
-                                            @foreach($zonas as $zona)
-                                            <option value="zona{{$zona->id}}">{{$zona->name}}</option>
-                                            @endforeach                                
-                                            </select>
-                                        </div>
-                                    </div>
-                            </nav>                                                       
-                            <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">                            
+                            <div class="col-md-12 col-sm-12 col-xs-12">                                
+                               <strong><span id="nombrePVSpan">{{$datosRestaurantePV->name}}</span> / <span id="nombreZona"></span></strong>
                                 <div id="sliderZonas" class="owl-carousel btnZonas">                                    
                                     @foreach($zonas as $zona)                                        
-                                        <button class="btn" id="zonaBtn{{$zona->id}}" idZonaBtn="{{$zona->id}}">{{$zona->name}}</button>                                             
+                                        <button class="btn buttonZonas" id="zonaBtn{{$zona->id}}" idZonaBtn="{{$zona->id}}" onclick="cambiarZona({{$zona->id}})">{{$zona->name}}</button>                                             
                                     @endforeach                                    
                                 </div>                                                                
                             </div>                                                                           
