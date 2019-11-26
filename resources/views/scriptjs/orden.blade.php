@@ -52,18 +52,18 @@ function getMesasZona(idZonaDefault, soloMesasActivas){
     getMesasPorZona(idZonaDefault);    
 }
 //para mostrar zonas y sus mesas respectivamente al seleccionar algo de la lista
-// $("#zonaElige").change(function() {
-//     var valorSelect = $("option:selected", this).val(); //obtener el value de un select
+$("#zonaElige").change(function() {
+    var valorSelect = $("option:selected", this).val(); //obtener el value de un select
 
-//     if (valorSelect != "") {            
-//         $(".zonas").hide();    
-//         localStorage.setItem('zonaMesaSeleccionada', valorSelect);    
-//         $("#" + valorSelect).show(); 
-//         idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
-//         soloMesasActivas =false;
-//         getMesasZona(idZonaDefault, soloMesasActivas);            
-//     }
-// });
+    if (valorSelect != "") {            
+        $(".zonas").hide();    
+        localStorage.setItem('zonaMesaSeleccionada', valorSelect);    
+        $("#" + valorSelect).show(); 
+        idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
+        soloMesasActivas =false;
+        getMesasZona(idZonaDefault, soloMesasActivas);            
+    }
+});
 //nueva funcion 
 function cambiarZona(idZona) {    
     valorSelect = "zona"+idZona;
@@ -2021,24 +2021,24 @@ function imprimirCuenta() {
 
  function cerrarDia(idPuntoVenta) {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
-     console.log("metodo para cerrar dia");
-    //  $.ajax({
-    //     url: "{{ url('ordenar/cerrardia') }}"+'/'+idPuntoVenta,
-    //     type: "POST",
-    //     data: {
-    //         '_method': 'POST',           
+     
+     $.ajax({
+        url: "{{ url('ordenar/cerrardia') }}"+'/'+idPuntoVenta,
+        type: "POST",
+        data: {
+            '_method': 'POST',           
             
-    //         '_token': csrf_token
-    //     },
-    //     success: function(respuesta) {             
-    //          var respuesta = JSON.parse(respuesta);
-    //          console.log("Respuesta controlador",respuesta);               
+            '_token': csrf_token
+        },
+        success: function(respuesta) {             
+             var respuesta = JSON.parse(respuesta);
+             console.log("Respuesta controlador",respuesta);               
                                                 
-    //     },
-    //     error: function(respuesta) { 
-    //         console.log("respuesta",respuesta); 
-    //     }
-    // });
+        },
+        error: function(respuesta) { 
+            console.log("respuesta",respuesta); 
+        }
+    });
  } 
 
 //para cambiar color del botón de tiempo seleccionado 
