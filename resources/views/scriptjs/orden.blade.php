@@ -115,8 +115,11 @@ function getMesasPorZona(idZona) {
                             nombre= "SN";
                             room= "Sin Hab";
                             total= "0";
-                        }                       
-                        listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"' nombreMesa='"+nombreMesa+"' cuentaMesa='"+idCuenta+"' clienteMesa='"+nombre+"' habMesa='"+room+"'><span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br><div id='wellMesa"+idMesa+"' class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-default'>"+nombreMesa+"</span><br><span id='idCuentaMesaSpan"+idMesa+"'>"+idCuenta+"</span><br><span id='nomClienteMesaSpan"+idMesa+"'>"+nombre+"</span><br> <span id='roomMesaSpan"+idMesa+"'>"+room+"</span><br><span id='totCuentaMesaSpan"+idMesa+"'>"+total+"</span></div></a></li>";
+                        }
+                        /*
+                        <span class='label label-success'>1</span><span class='label label-warning'>2</span><span class='label label-default'>3</span><br>
+                        */          
+                        listaMesas+="<li class='abrirMesa' id='mesa"+idMesa+"' idCuenta='"+idCuenta+"' style='cursor:pointer;' idMesa='"+idMesa+"' onclick='aperturaMesa("+idMesa+")'><a id='mesaAbrir"+idMesa+"' role='tab' data-toggle='tab' aria-expanded='true' estadoMesa='"+mesaStatus+"' nombreMesa='"+nombreMesa+"' cuentaMesa='"+idCuenta+"' clienteMesa='"+nombre+"' habMesa='"+room+"'><div id='wellMesa"+idMesa+"' class='well well-sm mesaOrden "+mesaCss+"'><span class='label label-info'>"+nombreMesa+"</span><br><span id='idCuentaMesaSpan"+idMesa+"'>"+idCuenta+"</span><br><span id='nomClienteMesaSpan"+idMesa+"'>"+nombre+"</span><br> <span id='roomMesaSpan"+idMesa+"'>"+room+"</span><br><span id='totCuentaMesaSpan"+idMesa+"'>"+total+"</span></div></a></li>";
                     }
                     listaMesas+="";                     
                     $("#zonaListaMesas"+idZona).html(listaMesas);                    
@@ -210,12 +213,12 @@ function crearVariableZonaDefault(){
 
         $('#zonaElige option[value='+valDefault+']').attr('selected','selected');  
         //pinto el boton de acuerdo a lo que recibo de localstorage
-        $("button.btn-success").removeClass("btn-success");
+        $(".buttonZonas.btn-success").removeClass("btn-success");
         $("#zonaBtn"+idZonaDefault).addClass("btn-success");  
     }else {            
         //obtengo el botton con el primer valor y lo pinto en verde
         valor = btn.eq(0).attr("idZonaBtn"); 
-        $("button.btn-success").removeClass("btn-success");
+        $(".buttonZonas.btn-success").removeClass("btn-success");
         $("#zonaBtn"+valor).addClass("btn-success");
         //guardo la zona seleccionada en localstorage
         localStorage.setItem('zonaMesaSeleccionada', "zona"+valor);
@@ -533,6 +536,9 @@ $('#myModal').on('hidden.bs.modal', function (e) {
         // obtengo el listado de zonas y las mesas activas
         getZonas();
        var idCuenta = await getIdCuenta(idPV,idMesa); 
+       if(idCuenta=="NO"){
+			idCuenta=$("#cuentaMesaSpan").text();
+		}
        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
 
      }else{
@@ -994,6 +1000,12 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
     var precio = $("#producto"+idProducto).attr("precio");
     var subTotal = precio*cantidad;
 
+    $(".btnC").each( function () {                
+        if($(this).hasClass("btn-success")){
+            numeroComensal= $(this).attr("numComensal"); // btn numComensal                            
+        }
+    });
+
     var datosProducto=JSON.stringify({
         "idPV":idPV,
         "idMesa":idMesa,
@@ -1002,7 +1014,7 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
         "idProducto":idProducto,
         "nombreProducto":nombreProducto,
         "cantidad":cantidad,
-        "comensal":comensal,
+        "comensal":parseInt(numeroComensal),
         "tiempo": parseInt(tiempo),
         "idUsuarioAlta":idUsuario,
         "nota":nota,
@@ -1102,13 +1114,23 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
     var idProducto=datosProducto["idProducto"];    
     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;    
     
+    $(".btnC").each( function () {                
+        if($(this).hasClass("btn-success")){
+            numeroComensal= parseInt($(this).attr("numComensal")); // btn numComensal                            
+        }
+    });
+
     if(tieneModos){        
         lstProductos.push(datosProducto);
-        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos)); 
+        suma=true;
+        sumarRestarConteoComensal(numeroComensal,suma);                
         leerCuentaTemporal(idPV,idMesa);                 
     }else{                          
         lstProductos.push(datosProducto);
-        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+        localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
+        suma=true;
+        sumarRestarConteoComensal(numeroComensal,suma);                 
         leerCuentaTemporal(idPV,idMesa);
     }
  }
@@ -1116,15 +1138,26 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
     var seRepiteProducto=seRepiteProductoCuentaTemporal(datosCuentaTemporal,datosProducto); 
     var datosProducto=JSON.parse(datosProducto);
     var idProducto=datosProducto["idProducto"];    
-    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;    
+    var cuentaTemporal="cuentaTemporal"+idPV+idMesa;  
+    
+    $(".btnC").each( function () {                
+        if($(this).hasClass("btn-success")){
+            numeroComensal= parseInt($(this).attr("numComensal")); // btn numComensal                            
+        }
+    });
+
     if(tieneModos){
         if(seRepiteProducto){            
             lstProductos.push(datosProducto);
-            localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+            localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
+            suma=true;
+            sumarRestarConteoComensal(numeroComensal,suma);                
             leerCuentaTemporal(idPV,idMesa);
         }else{            
             lstProductos.push(datosProducto);
-            localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
+            localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
+            suma=true;
+            sumarRestarConteoComensal(numeroComensal,suma);                
             leerCuentaTemporal(idPV,idMesa);
         }                 
     }else{
@@ -1132,13 +1165,7 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
             var descripcionModo = "";
             for (i = 0; i < datosCuentaTemporal.length; i++) {
                 if(datosCuentaTemporal[i]["idProducto"]==idProducto ){
-                    
-                    $(".btnC").each( function () {                
-                        if($(this).hasClass("btn-success")){
-                            numeroComensal= parseInt($(this).attr("numComensal")); // btn numComensal                            
-                        }
-                    });
-
+                                        
                     var nuevaNota= addNotaDetallePax(idProducto, descripcionModo);
                     var notaPrevia= datosCuentaTemporal[i]["nota"];
 
@@ -1155,6 +1182,8 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
                     localStorage.setItem("comensalAnterior",numeroComensal);                            
                     var cantPrevia= datosCuentaTemporal[i]["cantidad"];
                     datosCuentaTemporal[i]["cantidad"] = cantPrevia+1;
+                    suma=true;
+                    sumarRestarConteoComensal(numeroComensal,suma);
                     datosCuentaTemporal[i]["nota"] = nota;
                     localStorage.setItem("comensalAnterior",numeroComensal); 
                     localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
@@ -1186,6 +1215,15 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
         }
     }        
     return seRepiteProducto;
+ }
+ function sumarRestarConteoComensal(numComensal,suma) {
+     valorSpan = parseInt($("#btnBadge"+numComensal).text());
+     if(suma){
+         valor = valorSpan + 1;
+     }else {
+         valor = valorSpan - 1;
+     }
+     $("#btnBadge"+numComensal).text(valor);
  }
  function seleccionarModo(){
     var idProducto = $("#idProductoModalModo").val();
@@ -1306,6 +1344,7 @@ function modificarPrecioProducto(posicion, idPV, idMesa) {
                 var trWhite ="<tr><td colspan='5'><img src='img/imgBlancoTr.png'></td></tr>";
                 var espacioTr = (objCuentaAPi[i]==res4) ? trWhite : "";
             }
+
             lstProductosTr="<tr class='danger celdaTexto'><td><button class='btn btn-danger btn-xs' id='posi"+counter+"' name='itemProducto' onclick='cancelarProductoModal("+idDetalleCuenta+","+counter+")'>C </button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>"+cantidad+"</td><td>"+precio+"</td><td class='text-primary'>"+total+"</td></tr><tr class='danger celdaTexto "+borde+"'><td></td><td colspan='4' id='notaApi"+counter+"'>"+nota+"</td></tr>"+espacioTr;
 
             counter++;   
@@ -1390,6 +1429,7 @@ function leerCuentaTemporal(idPV, idMesa) {
             }
 
            lstProductosTr="<tr class='success celdaTexto'><td><button id='pos"+counterTem+"' class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'>X</button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>"+cantidad+"</td><td contenteditable='"+modificarPrecio+"' id='precioProdTemp"+counterTem+"' onBlur='modificarPrecioProducto("+counterTem+","+idPV+","+idMesa+")'>"+precio+"</td><td class='text-primary'>"+subTotal+"</td></tr><tr class='success celdaTexto "+borde+"'><td></td><td colspan='4' contenteditable='true' id='nota"+counterTem+"' onBlur='addNota("+counterTem+","+idPV+","+idMesa+")'>"+nota+"</td></tr>"+ultimo;
+
            $("table tbody").append(lstProductosTr);
            
         }
@@ -1496,11 +1536,16 @@ function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
  function deleteProductoItem(pos,idPV,idMesa) {
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
-     
+     console.log(datosCuentaTemporal);
       var cantidadProducto= datosCuentaTemporal[pos]["cantidad"];
+      
       if(cantidadProducto>1){
           datosCuentaTemporal[pos]["cantidad"] = cantidadProducto-1;
-          localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));                
+          localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
+          comensal = datosCuentaTemporal[pos]["comensal"];
+          console.log("comensal btn",comensal);          
+          suma=false;
+          sumarRestarConteoComensal(comensal,suma);                
           leerCuentaTemporal(idPV,idMesa);
           return;
       }else{
@@ -1520,6 +1565,8 @@ function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
             // delete splice[productoNum];
             datosCuentaTemporal.splice(pos,1);
             localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
+            $("#btnBadge"+numeroComensal).text(0);
+             
       }      	        
     leerCuentaTemporal(idPV, idMesa);
 }
@@ -2131,10 +2178,11 @@ function generarBotonesClientes(idPV,idMesa) {
         botones="";
             for (var i = 0; i < numPax; i++) {
                 n++;  
-                botones+="<button class='btn btn-sm btnC' id='btn"+n+"' idCuenta='"+idCuenta+"' numComensal='"+n+"' onclick='selectCustomer(this,"+cuentaMesa+")'>"+n+"</button>  &nbsp;&nbsp;";                
+                botones+="<button class='btn btn-sm btnC' id='btn"+n+"' idCuenta='"+idCuenta+"' numComensal='"+n+"' onclick='selectCustomer(this,"+cuentaMesa+")'>"+n+" <span id='btnBadge"+n+"' class='badgeCliente'>0</span></button>  &nbsp;&nbsp;";                
             }
         botones+="";
-        $("#lstBtnClientes").html(botones);        
+        $("#lstBtnClientes").html(botones); 
+        // contadoresProductos(idPV,idMesa);
     }else{
         console.log("entro aquí, si botones de client");
     }      
@@ -2193,6 +2241,7 @@ function marcarCheckboxDefault(cuentaMesa) {
         }        
     }    
 }
+
 /*============================
  PARAE CAMBIAR DE MESA
 ==============================*/
