@@ -52,18 +52,18 @@ function getMesasZona(idZonaDefault, soloMesasActivas){
     getMesasPorZona(idZonaDefault);    
 }
 //para mostrar zonas y sus mesas respectivamente al seleccionar algo de la lista
-$("#zonaElige").change(function() {
-    var valorSelect = $("option:selected", this).val(); //obtener el value de un select
+// $("#zonaElige").change(function() {
+//     var valorSelect = $("option:selected", this).val(); //obtener el value de un select
 
-    if (valorSelect != "") {            
-        $(".zonas").hide();    
-        localStorage.setItem('zonaMesaSeleccionada', valorSelect);    
-        $("#" + valorSelect).show(); 
-        idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
-        soloMesasActivas =false;
-        getMesasZona(idZonaDefault, soloMesasActivas);            
-    }
-});
+//     if (valorSelect != "") {            
+//         $(".zonas").hide();    
+//         localStorage.setItem('zonaMesaSeleccionada', valorSelect);    
+//         $("#" + valorSelect).show(); 
+//         idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
+//         soloMesasActivas =false;
+//         getMesasZona(idZonaDefault, soloMesasActivas);            
+//     }
+// });
 //nueva funcion 
 function cambiarZona(idZona) {    
     valorSelect = "zona"+idZona;
@@ -213,13 +213,12 @@ function crearVariableZonaDefault(){
         $("button.btn-success").removeClass("btn-success");
         $("#zonaBtn"+idZonaDefault).addClass("btn-success");  
     }else {            
-        valDefault = $("#zonaElige").children('option:first').val(); 
         //obtengo el botton con el primer valor y lo pinto en verde
         valor = btn.eq(0).attr("idZonaBtn"); 
         $("button.btn-success").removeClass("btn-success");
         $("#zonaBtn"+valor).addClass("btn-success");
         //guardo la zona seleccionada en localstorage
-        localStorage.setItem('zonaMesaSeleccionada', valDefault);
+        localStorage.setItem('zonaMesaSeleccionada', "zona"+valor);
     }
                                                                                
     $(".zonas").hide();
@@ -286,7 +285,7 @@ async function aperturaMesa(idMesa) {
  }
  async function getIdCuenta(idPV,idMesa){    
     var variable=idPV+idMesa;
-    console.log("variable",variable);
+    // console.log("variable",variable);
     var cuenta = JSON.parse(localStorage.getItem(variable));    
     // console.log("cuenta",cuenta["id"]);
 
@@ -829,20 +828,20 @@ async function getProductosMasVendidos(){
     var idCarta = $("#idCartaPVModal").val(); 
     
     var idMesaLS = localStorage.getItem("idMesaLS");
-    console.log("idMesaLS",idMesaLS);
-    console.log("idPV",idPV);
+    // console.log("idMesaLS",idMesaLS);
+    // console.log("idPV",idPV);
     var idCuenta =await getIdCuenta(idPV,idMesaLS); 
     
     var variableLS =idPV+idMesaLS;
     $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
     
-    console.log("idCuenta",idCuenta);
+    // console.log("idCuenta",idCuenta);
     
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
     var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
     
     
-    console.log("datosCuentaObjeto",datosCuentaObjeto);
+    // console.log("datosCuentaObjeto",datosCuentaObjeto);
     
     alergenosIdHuesped = [];
     nombreAlergenosHuesped= [];
@@ -853,7 +852,7 @@ async function getProductosMasVendidos(){
         alergenosHuesped[i]= {"idAlergeno": alergenosCuenta[i].idAlergeno,"nombreAlergeno":alergenosCuenta[i]["TPV_Alergenos"].name};
     }   
     // console.log("idAlergenosHuesped", alergenosIdHuesped);
-    console.log("alegenosHuesped", alergenosHuesped);
+    // console.log("alegenosHuesped", alergenosHuesped);
     $.ajax({
             url: "{{ url('ordenar/getfavoritos') }}",
             type: "GET",
@@ -1050,14 +1049,14 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
  }
 
  function addAlergiaCuentaPax(idProducto,idCuenta){
-     console.log("entré aquí")
+    //  console.log("entré aquí")
      var idAttr = "#producto"+idProducto;
      var boolAlergenoMatch  = JSON.parse($(idAttr).attr('alergenoMatch'));      
      var checkAlergia=$('#checkAlergia').prop('checked');        
     //  var alergenoMatech = document.getElementById(idAttr).hasAttribute("alergenoMatch");
     //  console.log('id producto',idProducto);          
      $(".btnC").each( function () {
-         console.log("entro en el each");                
+        //  console.log("entro en el each");                
         if($(this).hasClass("btn-success") && boolAlergenoMatch && checkAlergia){
             var comensalSeleccionado= $(this).attr("numComensal"); // btn numComensal            
             // console.log('Valor alergenoMatch',boolAlergenoMatch, 'con alergiaCheckbox',checkAlergia, 'comensal', comensalSeleccionado, 'idCuenta', idCuenta);
@@ -1151,7 +1150,7 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
                         
                     }else{
                         nota = notaPrevia;
-                        console.log("entro aqi 2");
+                        // console.log("entro aqi 2");
                     }
                     localStorage.setItem("comensalAnterior",numeroComensal);                            
                     var cantPrevia= datosCuentaTemporal[i]["cantidad"];
@@ -1273,20 +1272,41 @@ function modificarPrecioProducto(posicion, idPV, idMesa) {
             var total = cantidad * precio;
             sumaSubTotales = sumaSubTotales + total;
             tiempo="";
+            //filtro los datos para obtener el ultimo valor
+            let res1 = objCuentaAPi.reverse().find(x =>  x.tiempo === 1);            
+            objCuentaAPi.reverse();
+            let res2 = objCuentaAPi.reverse().find(x =>  x.tiempo === 2);            
+            objCuentaAPi.reverse();
+            let res3 = objCuentaAPi.reverse().find(x =>  x.tiempo === 3);            
+            objCuentaAPi.reverse();
+            let res4 = objCuentaAPi.reverse().find(x =>  x.tiempo === 4);
+            objCuentaAPi.reverse();
+
             if(objCuentaAPi[i]["tiempo"]==1){
                tiempo="<span class='labelTiempos label-warning'>T1</span>";
                borde="border_bottom";
+               var trWhite ="<tr><td colspan='5'><img src='img/imgBlancoTr.png'></td></tr>";
+               var espacioTr = (objCuentaAPi[i]==res1) ? trWhite : "";// ternario
+
             }else if(objCuentaAPi[i]["tiempo"]==2){
                tiempo ="<span class='labelTiempos label-warning'>T2</span>";
                borde="border_bottom";
+               var trWhite ="<tr><td colspan='5'><img src='img/imgBlancoTr.png'></td></tr>";
+               var espacioTr = (objCuentaAPi[i]==res2) ? trWhite : "";
+
             }else if(objCuentaAPi[i]["tiempo"]==3){
                tiempo="<span class='labelTiempos label-warning'>T3</span>"; 
                borde="border_bottom";
+               var trWhite ="<tr><td colspan='5'><img src='img/imgBlancoTr.png'></td></tr>";
+               var espacioTr = (objCuentaAPi[i]==res3) ? trWhite : "";
+
             }else if(objCuentaAPi[i]["tiempo"]==4){
                 tiempo="<span class='labelTiempos label-warning'>T4</span>"; 
                 borde="border_bottom";
+                var trWhite ="<tr><td colspan='5'><img src='img/imgBlancoTr.png'></td></tr>";
+                var espacioTr = (objCuentaAPi[i]==res4) ? trWhite : "";
             }
-            lstProductosTr="<tr class='danger celdaTexto'><td><button class='btn btn-danger btn-xs' id='posi"+counter+"' name='itemProducto' onclick='cancelarProductoModal("+idDetalleCuenta+","+counter+")'>C </button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>"+cantidad+"</td><td>"+precio+"</td><td class='text-primary'>"+total+"</td></tr><tr class='danger celdaTexto "+borde+"'><td></td><td colspan='4' id='notaApi"+counter+"'>"+nota+"</td></tr>";
+            lstProductosTr="<tr class='danger celdaTexto'><td><button class='btn btn-danger btn-xs' id='posi"+counter+"' name='itemProducto' onclick='cancelarProductoModal("+idDetalleCuenta+","+counter+")'>C </button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>"+cantidad+"</td><td>"+precio+"</td><td class='text-primary'>"+total+"</td></tr><tr class='danger celdaTexto "+borde+"'><td></td><td colspan='4' id='notaApi"+counter+"'>"+nota+"</td></tr>"+espacioTr;
 
             counter++;   
             $("table tbody").append(lstProductosTr);                                 
@@ -1315,7 +1335,7 @@ function leerCuentaTemporal(idPV, idMesa) {
         var sumaSubTotales=0;
         var counter=-1;
         var counterTem=-1;
-                            
+                                
         for (i = 0; i < datosCuentaTemporal.length; i++) {
             var idCuenta = datosCuentaTemporal[i]["idCuenta"];
             var idPV = datosCuentaTemporal[i]["idPV"];
@@ -1333,25 +1353,47 @@ function leerCuentaTemporal(idPV, idMesa) {
             counter++;
             counterTem++;
            
-           tiempo="";
-            if(datosCuentaTemporal[i]["tiempo"]==1){
+            tiempo="";
+            //filtro los datos para obtener el ultimo valor
+            let res1 = datosCuentaTemporal.reverse().find(x =>  x.tiempo === 1);            
+            datosCuentaTemporal.reverse();
+            let res2 = datosCuentaTemporal.reverse().find(x =>  x.tiempo === 2);            
+            datosCuentaTemporal.reverse();
+            let res3 = datosCuentaTemporal.reverse().find(x =>  x.tiempo === 3);            
+            datosCuentaTemporal.reverse();
+            let res4 = datosCuentaTemporal.reverse().find(x =>  x.tiempo === 4);
+            datosCuentaTemporal.reverse();
+            
+            if(datosCuentaTemporal[i]["tiempo"]==1){                
                tiempo="<span class='labelTiempos label-warning'>T1</span>";
                borde="border_bottom";
+               var trWhite ="<tr><td colspan='5'><img src='img/imgBlancoTr.png'></td></tr>";
+               var ultimo = (datosCuentaTemporal[i]==res1) ? trWhite : "";// ternario  
+
             }else if(datosCuentaTemporal[i]["tiempo"]==2){
                tiempo ="<span class='labelTiempos label-warning'>T2</span>";
                borde="border_bottom";
+               var trWhite ="<tr><td colspan='5'><img src='img/imgBlancoTr.png'></td></tr>";
+               var ultimo = (datosCuentaTemporal[i]==res2) ? trWhite : "";
+
             }else if(datosCuentaTemporal[i]["tiempo"]==3){
                tiempo="<span class='labelTiempos label-warning'>T3</span>"; 
                borde="border_bottom";
+               var trWhite ="<tr><td colspan='5'><img src='img/imgBlancoTr.png'></td></tr>";
+               var ultimo = (datosCuentaTemporal[i]==res3) ? trWhite : "";
+
             }else if(datosCuentaTemporal[i]["tiempo"]==4){
                 tiempo="<span class='labelTiempos label-warning'>T4</span>"; 
                 borde="border_bottom";
+                var trWhite ="<tr><td colspan='5'><img src='img/imgBlancoTr.png'></td></tr>";
+                var ultimo = (datosCuentaTemporal[i]==res4) ? trWhite : "";
             }
 
-           lstProductosTr="<tr class='success celdaTexto'><td><button id='pos"+counterTem+"' class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'>X</button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>"+cantidad+"</td><td contenteditable='"+modificarPrecio+"' id='precioProdTemp"+counterTem+"' onBlur='modificarPrecioProducto("+counterTem+","+idPV+","+idMesa+")'>"+precio+"</td><td class='text-primary'>"+subTotal+"</td></tr><tr class='success celdaTexto "+borde+"'><td></td><td colspan='4' contenteditable='true' id='nota"+counterTem+"' onBlur='addNota("+counterTem+","+idPV+","+idMesa+")'>"+nota+"</td></tr>";
+           lstProductosTr="<tr class='success celdaTexto'><td><button id='pos"+counterTem+"' class='btn btn-danger btn-xs' name='itemProducto' onclick='deleteProductoItem("+counterTem+","+idPV+","+idMesa+")'>X</button></td><td>"+tiempo+" - "+nombreProducto+"</td><td>"+cantidad+"</td><td contenteditable='"+modificarPrecio+"' id='precioProdTemp"+counterTem+"' onBlur='modificarPrecioProducto("+counterTem+","+idPV+","+idMesa+")'>"+precio+"</td><td class='text-primary'>"+subTotal+"</td></tr><tr class='success celdaTexto "+borde+"'><td></td><td colspan='4' contenteditable='true' id='nota"+counterTem+"' onBlur='addNota("+counterTem+","+idPV+","+idMesa+")'>"+nota+"</td></tr>"+ultimo;
            $("table tbody").append(lstProductosTr);
            
-        }    
+        }
+        
         cuenta["subtotalCuenta"] = sumaApiTotales +sumaSubTotales;
         
         localStorage.setItem(cadena, JSON.stringify(cuenta));
@@ -1360,6 +1402,7 @@ function leerCuentaTemporal(idPV, idMesa) {
      }    
     return sumaSubTotales;
 }
+
 function ordenarProductosPorTiempos(idPV, idMesa) {
     var cuentaTemporal="cuentaTemporal"+idPV+idMesa;
     if(localStorage.getItem(cuentaTemporal)){
@@ -1385,7 +1428,7 @@ function mostrarTotales(cadena) {
      cuenta["totalCuenta"]=TotalConDescuento;
 
     localStorage.setItem(cadena, JSON.stringify(cuenta));
-    var totalesDesglose="<tr><td colspan='5'><img src='img/imgBlanco.png'></td></tr><tr><td colspan='2'>Subtotal</td><td class='text-right' colspan='3'>"+subtotal+"</td></tr><tr class='danger'><td colspan='2'>Descuento</td><td colspan='3' class='text-right' id='descuentoCuenta'>"+descuentCalculado+"</td></tr><tr class='success'><td colspan='2'>Total</td><td colspan='3' class='text-right' id='totalCuenta'>"+TotalConDescuento+"</td></tr>";
+    var totalesDesglose="<tr><td colspan='2'>Subtotal</td><td class='text-right' colspan='3'>"+subtotal+"</td></tr><tr class='danger'><td colspan='2'>Descuento</td><td colspan='3' class='text-right' id='descuentoCuenta'>"+descuentCalculado+"</td></tr><tr class='success'><td colspan='2'>Total</td><td colspan='3' class='text-right' id='totalCuenta'>"+TotalConDescuento+"</td></tr>";
 
     $("table tfoot").append(totalesDesglose);//sumaSubTotales         
     
