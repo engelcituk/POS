@@ -830,19 +830,19 @@ async function getProductosMasVendidos(){
     var idMesaLS = localStorage.getItem("idMesaLS");
     // console.log("idMesaLS",idMesaLS);
     // console.log("idPV",idPV);
-    var idCuenta =await getIdCuenta(idPV,idMesaLS); 
+    var idCuenta = await getIdCuenta(idPV,idMesaLS); 
     
     var variableLS =idPV+idMesaLS;
     $("#idCuentaSpan").attr("idCuentaAttr",idCuenta); 
     
-    // console.log("idCuenta",idCuenta);
     
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
-    var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
-    
-    
+    var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];        
     // console.log("datosCuentaObjeto",datosCuentaObjeto);
-    
+    if(idCuenta=="NO"){
+        idCuenta = datosCuentaObjeto["id"];
+    }
+        
     alergenosIdHuesped = [];
     nombreAlergenosHuesped= [];
     alergenosHuesped= [];
