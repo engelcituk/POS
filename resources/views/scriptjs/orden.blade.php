@@ -274,7 +274,8 @@ async function aperturaMesa(idMesa) {
         crearCuentaTemporal(idPV,idMesa);                   
         generarBotonesClientes(idPV,idMesa);
         await getProductosMasVendidos();        
-        obtenerDatosCuentaApi(idPV,idMesa,idCuenta);                
+        await obtenerDatosCuentaApi(idPV,idMesa,idCuenta);  
+        await contadoresProductos(idPV,idMesa);           
     }
 
  }
@@ -940,7 +941,89 @@ async function getProductosMasVendidos(){
     //     selector: '[data-toggle="tooltip"]'
     // })
 }
+async function contadoresProductos(idPV,idMesa) {
+    var cuentaMesa=String(idPV)+String(idMesa);
+    var cuentaMesaTemporal="cuentaTemporal"+String(idPV)+String(idMesa);
+    var cuentaMesaBDApi="cuentaBD"+String(idPV)+String(idMesa);
 
+    cuenta =[]; cuentaTemp=[]; cuentaBDAPi=[]; idCuenta=""; pax = 1; lstProductosApi=[]; lstProductosTemp=[];
+    //obtengo la cuenta por si es necesario
+    if (localStorage.getItem(cuentaMesa) ){
+        cuenta = JSON.parse(localStorage.getItem(cuentaMesa));        
+        pax = cuenta["pax"];
+        idCuenta = cuenta["id"];        
+    }
+    //obtengo la cuenta temporal con productos y genero un nuevo array 
+    if (localStorage.getItem(cuentaMesaTemporal) ){
+        cuentaTemp = JSON.parse(localStorage.getItem(cuentaMesaTemporal));                        
+        lengthCuentaTemp = cuentaTemp.length; //otengo la longitud del array
+        if(lengthCuentaTemp>0){
+
+            for(i =0;  i < lengthCuentaTemp; i++){                           
+                var idCuenta = cuentaTemp[i]["idCuenta"];
+                var idPV = cuentaTemp[i]["idPV"];
+                var idMesa = cuentaTemp[i]["idMesa"];
+                var comensal = cuentaTemp[i]["comensal"];
+                var cantidad = cuentaTemp[i]["cantidad"];
+            
+                lstProductosTemp.push({
+                    "idCuenta":parseInt(idCuenta),                    
+                    "tipo": "temporal",                    
+                    "comensal":parseInt(comensal),
+                    "cantidad":parseInt(cantidad), 
+                });            
+            }
+        }
+    }    
+    //obtengo la cuenta con productos de la api y genero un nuevo array 
+    if (localStorage.getItem(cuentaMesaBDApi) ){
+        cuentaBDAPi = JSON.parse(localStorage.getItem(cuentaMesaBDApi)); 
+        lengthCuentaApi= cuentaBDAPi.length; //otengo la longitud del array
+        if(lengthCuentaApi>0){
+
+            for(i =0;  i < lengthCuentaApi; i++){                           
+                var idCuenta = cuentaBDAPi[i]["idCuenta"];
+                var idPV = cuentaBDAPi[i]["idPV"];
+                var idMesa = cuentaBDAPi[i]["idMesa"];
+                var comensal = cuentaBDAPi[i]["comensal"];
+                var cantidad = cuentaBDAPi[i]["cantidad"];
+            
+                lstProductosApi.push({
+                    "idCuenta":parseInt(idCuenta),                    
+                    "tipo": "api",                    
+                    "comensal":parseInt(comensal),
+                    "cantidad":parseInt(cantidad), 
+                });            
+            }
+        }              
+    }
+    var nuevoArrayProductos = lstProductosApi.concat(lstProductosTemp);
+    var longNewArrayProductos = nuevoArrayProductos.length;
+    if(longNewArrayProductos>0){        
+        n=1;
+        for (var i = 0; i < numPax; i++) {
+            valorBadge = parseInt($("#btnBadge"+n).text());
+            
+            //filtro el comensal
+            var pax =  nuevoArrayProductos.filter( (comensal) => {
+                return comensal.comensal == n;
+            });
+            // sumo la cantidad de productos que tiene el pax filtraado
+            var total = pax.reduce( (acumulador, comensal) => {             
+                return acumulador + comensal.cantidad;  
+            }, 0);
+            // pinto en el badge correpondiente del pax
+            $("#btnBadge"+n).text(total);
+            n++;                
+        }                
+    }else {
+        n=0;
+        for (var i = 0; i < numPax; i++) { 
+            n++;                
+           $("#btnBadge"+n).text(0);
+        }
+    }        
+}
 function getModosProductoModal(idProducto,idMenuCarta,modosProducto,idCuenta){        
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
     var longitudModos = modosProducto.length;
@@ -1191,7 +1274,8 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
                 }
             }
         }else{
-                      
+            suma=true;
+            sumarRestarConteoComensal(numeroComensal,suma);         
             lstProductos.push(datosProducto);
             localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
             leerCuentaTemporal(idPV,idMesa);
@@ -1353,8 +1437,7 @@ function modificarPrecioProducto(posicion, idPV, idMesa) {
         }
      }else{
         obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
-     }
-     
+     }     
      //sumaSubTotales
     // console.log("sumaApitotal",sumaSubTotales);
     return sumaSubTotales;               
@@ -1438,8 +1521,9 @@ function leerCuentaTemporal(idPV, idMesa) {
         
         localStorage.setItem(cadena, JSON.stringify(cuenta));
         mostrarTotales(cadena);//el total que trae la api y la suma de los totales en localstorage
-
-     }    
+        
+    }    
+    
     return sumaSubTotales;
 }
 
@@ -1474,10 +1558,10 @@ function mostrarTotales(cadena) {
     
 }
 
-function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
-     var csrf_token = $('meta[name="csrf-token"]').attr('content');
+async function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
     
-    $.ajax({
+    await $.ajax({
             url: "{{url('obtenercuenta')}}"+'/'+idCuenta,
             type: "GET",
             data: {
@@ -1536,8 +1620,8 @@ function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
  function deleteProductoItem(pos,idPV,idMesa) {
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
      var datosCuentaTemporal = JSON.parse(localStorage.getItem(cuentaTemporal));
-     console.log(datosCuentaTemporal);
-      var cantidadProducto= datosCuentaTemporal[pos]["cantidad"];
+     
+     var cantidadProducto= datosCuentaTemporal[pos]["cantidad"];
       
       if(cantidadProducto>1){
           datosCuentaTemporal[pos]["cantidad"] = cantidadProducto-1;
@@ -1563,9 +1647,13 @@ function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
                 $(this).parents("tr").remove();
             });
             // delete splice[productoNum];
+            comensal = datosCuentaTemporal[pos]["comensal"];
+            suma=false;
+            sumarRestarConteoComensal(comensal,suma);
+
             datosCuentaTemporal.splice(pos,1);
+            
             localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
-            $("#btnBadge"+numeroComensal).text(0);
              
       }      	        
     leerCuentaTemporal(idPV, idMesa);
