@@ -6,7 +6,7 @@ $(document ).ready(function() {
     window.location.hash="inicio";
     window.location.hash="Inicio";//esta linea es necesaria para chrome
     window.onhashchange=function(){window.location.hash="inicio";}
-    
+        
 });
 initZonas();
 ocurreCambiosMesa();
@@ -124,6 +124,8 @@ function getMesasPorZona(idZona) {
                     listaMesas+="";                     
                     $("#zonaListaMesas"+idZona).html(listaMesas);                    
                     crearVariableZonaDefault(); // mantengo la zona elegida por el usuario con localstorage
+                    const element =  document.querySelector('#moduloOrdenar')
+                    element.classList.add('animated', 'bounce');
                 }else{
                     $("#zonaListaMesas"+idZona).html('<p>Sin mesas para esta zona</p>');
                 }                
@@ -1116,8 +1118,24 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
             cuentaTemporalVacia(idPV,idMesa,datosCuentaTemporal,datosProducto,tieneModos);
         }          
     }
-    leerCuentaTemporal(idPV,idMesa);         
+    animarAgregadoProductos('#moduloOrdenar', 'flash');
+    leerCuentaTemporal(idPV,idMesa);
+            
  }
+
+function animarAgregadoProductos(element, animationName, callback) {
+    const node = document.querySelector(element)
+    node.classList.add('animated', animationName)
+    function handleAnimationEnd() {
+        node.classList.remove('animated', animationName)
+        node.removeEventListener('animationend', handleAnimationEnd)
+
+        if (typeof callback === 'function') callback()
+    }
+
+    node.addEventListener('animationend', handleAnimationEnd)
+}
+
  function addNotaDetallePax(idProducto, descripcionModo) {
 
      var idAttr = "#producto"+idProducto;
@@ -1280,7 +1298,8 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
             localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
             leerCuentaTemporal(idPV,idMesa);
         }        
-    }  
+    }
+    
  }
  function seRepiteProductoCuentaTemporal(datosCuentaTemporal,datosProducto){
     var seRepiteProducto=false;
@@ -1297,7 +1316,7 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
                 seRepiteProducto=false;                      
             }           
         }
-    }        
+    }            
     return seRepiteProducto;
  }
  function sumarRestarConteoComensal(numComensal,suma) {
@@ -1650,7 +1669,6 @@ async function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
             comensal = datosCuentaTemporal[pos]["comensal"];
             suma=false;
             sumarRestarConteoComensal(comensal,suma);
-
             datosCuentaTemporal.splice(pos,1);
             
             localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
@@ -2445,12 +2463,16 @@ function guardarCambioDeMesa(idPV, idCuenta, idMesaNueva){
         $("#btnAddDescuento").html('<i class="fas fa-percentage"></i> Desc');
         $("#btnAddRoomCuenta").html('<i class="fas fa-bed"></i>  Hab.');
         $("#btnEnviarCP").html('<i class="fas fa-paper-plane"></i> Enviar');
+        $("#sliderZonas > button").addClass("buttonZonasSmallDev");        
 
       } else {
         $("#btnAddDescuento").html('<i class="fas fa-percentage"></i> Descuento');
         $("#btnAddRoomCuenta").html('<i class="fas fa-bed"></i>  Habitación');
         $("#btnEnviarCP").html('<i class="fas fa-paper-plane"></i> Enviar');
+        // $("#sliderZonas > button").addClass("buttonZonasSmallDev");        
+
       }
+ 
     }
     handleOrientationChange(mediaquery);
     mediaquery.addListener(handleOrientationChange);

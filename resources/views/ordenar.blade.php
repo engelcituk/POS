@@ -4,7 +4,7 @@
 
 <div class="content">
     
-    <div class="container-fluid">        
+    <div class="container-fluid" id="moduloOrdenar">        
         <div class="row" id="zonaMesas"> 
                                             
             <div class="col-md-12">
