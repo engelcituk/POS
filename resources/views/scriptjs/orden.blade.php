@@ -8,6 +8,9 @@ $(document ).ready(function() {
     window.onhashchange=function(){window.location.hash="inicio";}
         
 });
+// obtengo el valor permiso del usuario para abrir mesa 1 o 0
+var permisoUserOnlyOpenTable=parseInt($("#userOpenMesaSpanPermission").text());
+
 initZonas();
 ocurreCambiosMesa();
 
@@ -51,20 +54,7 @@ function getMesasZona(idZonaDefault, soloMesasActivas){
     $("#zonasPV").html(listaZonas);
     getMesasPorZona(idZonaDefault);    
 }
-//para mostrar zonas y sus mesas respectivamente al seleccionar algo de la lista
-// $("#zonaElige").change(function() {
-//     var valorSelect = $("option:selected", this).val(); //obtener el value de un select
 
-//     if (valorSelect != "") {            
-//         $(".zonas").hide();    
-//         localStorage.setItem('zonaMesaSeleccionada', valorSelect);    
-//         $("#" + valorSelect).show(); 
-//         idZonaDefault = localStorage.getItem('zonaMesaSeleccionada').replace( /^\D+/g, ''); // obtengo el idZona
-//         soloMesasActivas =false;
-//         getMesasZona(idZonaDefault, soloMesasActivas);            
-//     }
-// });
-//nueva funcion 
 function cambiarZona(idZona) {    
     valorSelect = "zona"+idZona;
     $(".zonas").hide();    
@@ -526,24 +516,30 @@ $('#myModal').on('hidden.bs.modal', function (e) {
 
      $("#idMesaAddProducts").attr("idMesaValue",idMesa); //le envio el id de la mesa a este atributo que me creo
      if(nombre && pax ){
-        $("#zonaTomarOrden").removeClass("hidden");
-        $("#zonaMesas").addClass("hidden");
+        //oculto el modal
         $("#myModal").modal("hide"); 
 
        await guardarCuenta(idMesa); //ejecuto esta funcion para guardar cuenta        
-    //    var idCuenta = $("#cuentaMesaSpan").text();
-       await getProductosMasVendidos(); 
-             generarBotonesClientes(idPV,idMesa);
-       localStorage.setItem("idMesaLS", idMesa);
-       var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
-        // obtengo el listado de zonas y las mesas activas
+        //    var idCuenta = $("#cuentaMesaSpan").text();
+        if(permisoUserOnlyOpenTable === 0){
+            // si usuario toma ordenes, muestro la zona de tomar ordenes de productos
+            $("#zonaTomarOrden").removeClass("hidden");
+            $("#zonaMesas").addClass("hidden"); // oculto las mesas            
+            await getProductosMasVendidos(); 
+                  generarBotonesClientes(idPV,idMesa);
+            localStorage.setItem("idMesaLS", idMesa);
+            var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
+                
+            var idCuenta = await getIdCuenta(idPV,idMesa); 
+            if(idCuenta=="NO"){
+                    idCuenta=$("#cuentaMesaSpan").text();
+                }
+            
+            obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
+        }
+        // obtengo el listado de zonas y las mesas, aqui se actualizan las zonas en tiempo real
         getZonas();
-       var idCuenta = await getIdCuenta(idPV,idMesa); 
-       if(idCuenta=="NO"){
-			idCuenta=$("#cuentaMesaSpan").text();
-		}
-       obtenerDatosCuentaApi(idPV,idMesa,idCuenta);
-
+             
      }else{
         swal({
             title: 'Oops...',
@@ -809,7 +805,7 @@ function updateRoom() {
                             resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;
                             
                             abrirModal=true;                                                                                             
-                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span></div></div></div>";
+                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span></div></div></div>";
 
                         }
                     // listaProductos+="";                     
@@ -921,7 +917,7 @@ async function getProductosMasVendidos(){
                             resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;
                             
                             abrirModal=true;                                                                                             
-                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span></div></div></div>";
+                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span></div></div></div>";
 
                         }
                     // listaProductos+="";                     
@@ -1118,7 +1114,8 @@ function addProducto(idProducto, idMenuCarta,idModo,tieneModos,descripcionModo) 
             cuentaTemporalVacia(idPV,idMesa,datosCuentaTemporal,datosProducto,tieneModos);
         }          
     }
-    animarAgregadoProductos('#moduloOrdenar', 'flash');
+    element="#tumbImg"+idProducto;
+    animarAgregadoProductos(element, 'shake');
     leerCuentaTemporal(idPV,idMesa);
             
  }
@@ -2459,6 +2456,8 @@ function guardarCambioDeMesa(idPV, idCuenta, idMesaNueva){
 // Para trabajar con media queries
     var mediaquery = window.matchMedia("(max-width: 600px)");     
     function handleOrientationChange(mediaquery) {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
       if (mediaquery.matches) {        
         $("#btnAddDescuento").html('<i class="fas fa-percentage"></i> Desc');
         $("#btnAddRoomCuenta").html('<i class="fas fa-bed"></i>  Hab.');
@@ -2471,6 +2470,10 @@ function guardarCambioDeMesa(idPV, idCuenta, idMesaNueva){
         $("#btnEnviarCP").html('<i class="fas fa-paper-plane"></i> Enviar');
         // $("#sliderZonas > button").addClass("buttonZonasSmallDev");        
 
+      }
+      
+      if ((/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream)) {
+          $("#sliderZonas > button").addClass("buttonZonasSmallDev");                    
       }
  
     }

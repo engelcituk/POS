@@ -10,25 +10,18 @@
             <div class="col-md-12">
                 <div class="card">                    
                     <div class="card-content">                       
-                        <div class="row">
-                            {{-- <div class="col-md-4">
-                                <nav aria-label="breadcrumb" role="navigation">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                        </span>
-                                        <div class="form-group">
-                                            <select class="form-control" id="zonaElige">
-                                                @foreach($zonas as $zona)
-                                                    <option value="zona{{$zona->id}}">{{$zona->name}}</option>
-                                                @endforeach
-                                            </select>        
-                                        </div>
-                                </nav>
-                            </div>                           --}}
-                            <div class="col-md-12 col-sm-12 col-xs-12"> 
-                                                              
+                        <div class="row">                           
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                @php
+                                    $abrirMesa = Session::get('AbrirMesa.leer');                                                         
+                                @endphp                                                                                                  
                                <strong><span id="nombrePVSpan">{{$datosRestaurantePV->name}}</span> / <span id="nombreZona"></span></strong>
+                               {{-- condiciono el valor del span si usuario tiene permiso para solo abrir mesa --}}
+                                @if ($abrirMesa==1 )
+                                    <span class="hidden" id="userOpenMesaSpanPermission">1</span>
+                                @else
+                                    <span class="hidden"  id="userOpenMesaSpanPermission">0</span>
+                                @endif
                                 <div id="sliderZonas" class="owl-carousel btnZonas">                                    
                                     @foreach($zonas as $zona)                                        
                                         <button class="btn buttonZonas" id="zonaBtn{{$zona->id}}" idZonaBtn="{{$zona->id}}" onclick="cambiarZona({{$zona->id}})">{{$zona->name}}</button>                                             
