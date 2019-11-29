@@ -29,6 +29,9 @@
     @if(request()->is('historico'))
         <link href="{{asset('css/estiloModalHistorico.css')}}" rel="stylesheet"/>                
     @endif
+    @if(request()->is('users'))
+        <link href="{{asset('css/estiloModalHistorico.css')}}" rel="stylesheet"/>                
+    @endif
 
     <!--     Fonts and icons     -->
     <link href="{{asset('css/font-awesome.css')}}" rel="stylesheet" />

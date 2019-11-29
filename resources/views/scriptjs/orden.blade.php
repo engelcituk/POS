@@ -503,7 +503,7 @@ async function aperturaMesa(idMesa) {
 $('#myModal').on('hidden.bs.modal', function (e) {
          $(this).find('form')[0].reset();
 });
- async function abrirCuenta() {
+async function abrirCuenta() {
      var idMesa = $("#idMesaModal").val();     
 
      var reserva = $("#reserva").val().length > 0;

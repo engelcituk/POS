@@ -324,3 +324,26 @@
     padding: 15px 15px;
     margin: 20px 1px;
 }
+/*Estilos para modficar el css del scrollbar horizontal para los estilos de los botones para los comensales*/
+.btnComensalScroll {
+    overflow-y:hidden;
+    overflow-x: auto;
+    width: auto;
+    height: 70px;
+    padding: 10px;
+    white-space: nowrap;
+}
+.btnComensalScroll::-webkit-scrollbar-track{
+  -webkit-box-shadow: inset 0 0 2px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+}
+.btnComensalScroll::-webkit-scrollbar{
+  height: 7px;
+  background-color: #F5F5F5;
+}
+.btnComensalScroll::-webkit-scrollbar-thumb{
+    background-color: #0ae;                             
+    background-image: -webkit-gradient(linear, 0 0, 0 100%,
+    color-stop(.5, rgba(255, 255, 255, .2)),
+    color-stop(.5, transparent), to(transparent));
+}

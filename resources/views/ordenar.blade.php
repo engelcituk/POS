@@ -5,8 +5,7 @@
 <div class="content">
     
     <div class="container-fluid" id="moduloOrdenar">        
-        <div class="row" id="zonaMesas"> 
-                                            
+        <div class="row" id="zonaMesas">                                             
             <div class="col-md-12">
                 <div class="card">                    
                     <div class="card-content">                       
@@ -120,7 +119,7 @@
                                 
                                 <div class="row">
                                     <div class="col-md-6" id="divBtnClientes">                                         
-                                        <div id="lstBtnClientes" style="width:100%;height:60px;overflow-y:scroll">
+                                        <div id="lstBtnClientes" class="btnComensalScroll">
 
                                         </div>
                                         <div id="divCheckAlergia">
