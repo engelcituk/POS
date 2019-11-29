@@ -73,7 +73,7 @@
                   <div class="input-group">
                     <span class="input-group-addon"><i class="fas fa-sort-numeric-up"></i> Pax</span>
                     <div class="form-group label-floating">                            
-                        <input type="number" min="1" class="form-control" id="ocupanteModal" name="ocupanteModal" >  
+                        <input type="number" min="1" pattern="\d*" class="form-control" id="ocupanteModal" name="ocupanteModal" >  
                     </div>
                 </div>
               </div>

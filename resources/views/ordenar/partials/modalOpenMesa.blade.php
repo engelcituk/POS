@@ -91,7 +91,7 @@
                         </span>
                         <div class="form-group label-floating">
                             {{-- <label class="control-label">Ocupante</label> --}}
-                            <input type="number" min="1" class="form-control" id="ocupante" name="ocupante" >  
+                            <input type="number" min="1" pattern="\d*" class="form-control" id="ocupante" name="ocupante" >  
                         </div>
                     </div>
                   </div>
