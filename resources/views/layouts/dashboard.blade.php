@@ -24,7 +24,9 @@
     <link href="{{asset('css/estilo.css')}}" rel="stylesheet"/>
 	@if(request()->is('ordenar'))
         <link href="{{asset('css/estiloTblComanda.css')}}" rel="stylesheet"/>                
-        <link href="{{asset('css/animate.css')}}" rel="stylesheet"/>                
+        <link href="{{asset('css/animate.css')}}" rel="stylesheet"/>
+        <link href="{{asset('css/estiloModalHistorico.css')}}" rel="stylesheet"/>                
+
     @endif
     @if(request()->is('historico'))
         <link href="{{asset('css/estiloModalHistorico.css')}}" rel="stylesheet"/>                
