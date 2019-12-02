@@ -267,7 +267,8 @@ async function aperturaMesa(idMesa) {
         generarBotonesClientes(idPV,idMesa);
         await getProductosMasVendidos();        
         await obtenerDatosCuentaApi(idPV,idMesa,idCuenta);  
-        await contadoresProductos(idPV,idMesa);           
+        await contadoresProductos(idPV,idMesa);   
+        await countProductosCuentaCategoria(idPV,idMesa);
     }
 
  }
@@ -805,13 +806,15 @@ function updateRoom() {
                             resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;
                             
                             abrirModal=true;                                                                                             
-                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span></div></div></div>";
+                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span><span style='cursor: pointer;' class='label "+colorAlergeno+"' id='cantCuentaClienteSpan"+idProducto+"'>0</span></div></div></div>";
 
                         }
                     // listaProductos+="";                     
                     tumbnails+="";                     
                     
                     $("#UlList2").html(tumbnails);
+                    countProductosCuentaCategoria(idPV,idMesaLS);
+
                                         
                 }else{
                     
@@ -917,13 +920,14 @@ async function getProductosMasVendidos(){
                             resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;
                             
                             abrirModal=true;                                                                                             
-                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span></div></div></div>";
+                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='invisible-scrollbar' style='height:60px; overflow-x: auto; overflow-y: hidden; width: 110px; word-wrap: normal; cursor: pointer;'><div style='width: 150px;'><strong>"+nombreProducto+"</strong></div></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span><span style='cursor: pointer;' class='label "+colorAlergeno+"' id='cantCuentaClienteSpan"+idProducto+"'>0</span></div></div></div>";
 
                         }
                     // listaProductos+="";                     
                     tumbnails+="";                     
                     
                     $("#UlList2").html(tumbnails);
+                    countProductosCuentaCategoria(idPV,idMesaLS);// ejecuto esta funcion por si no se ejecutó antes
                                         
                 }else{
                     
@@ -1021,6 +1025,85 @@ async function contadoresProductos(idPV,idMesa) {
            $("#btnBadge"+n).text(0);
         }
     }        
+}
+/*Esta funcion es para pintar en badges la cantidad que ha sido pedidos en una cuenta cada platillo*/
+async function countProductosCuentaCategoria(idPV,idMesa) {
+    
+    var cuentaMesa=String(idPV)+String(idMesa);
+    var cuentaMesaTemporal="cuentaTemporal"+String(idPV)+String(idMesa);
+    var cuentaMesaBDApi="cuentaBD"+String(idPV)+String(idMesa);
+
+    cuenta =[]; cuentaTemp=[]; cuentaBDAPi=[]; idCuenta=""; pax = 1; lstProductosApi=[]; lstProductosTemp=[];
+    //obtengo la cuenta por si es necesario
+    if (localStorage.getItem(cuentaMesa) ){
+        cuenta = JSON.parse(localStorage.getItem(cuentaMesa));        
+        pax = cuenta["pax"];
+        idCuenta = cuenta["id"];        
+    }
+    
+    //obtengo la cuenta temporal con productos y genero un nuevo array 
+    if (localStorage.getItem(cuentaMesaTemporal) ){
+        cuentaTemp = JSON.parse(localStorage.getItem(cuentaMesaTemporal));                        
+        lengthCuentaTemp = cuentaTemp.length; //otengo la longitud del array
+        if(lengthCuentaTemp>0){
+
+            for(i =0;  i < lengthCuentaTemp; i++){                           
+                var idCuenta = cuentaTemp[i]["idCuenta"];
+                var idPV = cuentaTemp[i]["idPV"];
+                var idMesa = cuentaTemp[i]["idMesa"];
+                var idProducto = cuentaTemp[i]["idProducto"];
+                var cantidad = cuentaTemp[i]["cantidad"];
+            
+                lstProductosTemp.push({
+                    "idCuenta":parseInt(idCuenta),                    
+                    "tipo": "temporal",                    
+                    "idProducto":parseInt(idProducto),
+                    "cantidad":parseInt(cantidad), 
+                });            
+            }
+        }
+    }    
+    //obtengo la cuenta con productos de la api y genero un nuevo array 
+    if (localStorage.getItem(cuentaMesaBDApi) ){
+        cuentaBDAPi = JSON.parse(localStorage.getItem(cuentaMesaBDApi)); 
+        lengthCuentaApi= cuentaBDAPi.length; //otengo la longitud del array
+        if(lengthCuentaApi>0){
+
+            for(i =0;  i < lengthCuentaApi; i++){                           
+                var idCuenta = cuentaBDAPi[i]["idCuenta"];
+                var idPV = cuentaBDAPi[i]["idPV"];
+                var idMesa = cuentaBDAPi[i]["idMesa"];
+                var idProducto = cuentaBDAPi[i]["idProducto"];
+                var cantidad = cuentaBDAPi[i]["cantidad"];
+            
+                lstProductosApi.push({
+                    "idCuenta":parseInt(idCuenta),                    
+                    "tipo": "api",                    
+                    "idProducto":parseInt(idProducto),
+                    "cantidad":parseInt(cantidad), 
+                });            
+            }
+        }              
+    }
+    var nuevoArrayProductos = lstProductosApi.concat(lstProductosTemp);
+    var longNewArrayProductos = nuevoArrayProductos.length;
+    
+    if(longNewArrayProductos>0){                
+        for (var i = 0; i < longNewArrayProductos; i++) {
+            var idProducto = nuevoArrayProductos[i]["idProducto"];
+            //filtro el producto
+            var producto =  nuevoArrayProductos.filter( (producto) => {
+                return producto.idProducto == idProducto;
+            });            
+            // sumo la cantidad de productos que tiene el pax filtraado
+            var total = producto.reduce( (acumulador, producto) => {             
+                return acumulador + producto.cantidad;  
+            }, 0);            
+            // pinto en el badge correpondiente el total
+            $("#cantCuentaClienteSpan"+idProducto).text(total);                 
+
+        }                
+    }
 }
 function getModosProductoModal(idProducto,idMenuCarta,modosProducto,idCuenta){        
     var csrf_token = $('meta[name="csrf-token"]').attr('content');
@@ -1222,13 +1305,13 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
         lstProductos.push(datosProducto);
         localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos)); 
         suma=true;
-        sumarRestarConteoComensal(numeroComensal,suma);                
+        sumarRestarConteoComensal(numeroComensal,suma,idProducto);                
         leerCuentaTemporal(idPV,idMesa);                 
     }else{                          
         lstProductos.push(datosProducto);
         localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
         suma=true;
-        sumarRestarConteoComensal(numeroComensal,suma);                 
+        sumarRestarConteoComensal(numeroComensal,suma,idProducto);                 
         leerCuentaTemporal(idPV,idMesa);
     }
  }
@@ -1249,13 +1332,13 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
             lstProductos.push(datosProducto);
             localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
             suma=true;
-            sumarRestarConteoComensal(numeroComensal,suma);                
+            sumarRestarConteoComensal(numeroComensal,suma,idProducto);                
             leerCuentaTemporal(idPV,idMesa);
         }else{            
             lstProductos.push(datosProducto);
             localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));
             suma=true;
-            sumarRestarConteoComensal(numeroComensal,suma);                
+            sumarRestarConteoComensal(numeroComensal,suma,idProducto);                
             leerCuentaTemporal(idPV,idMesa);
         }                 
     }else{
@@ -1281,7 +1364,7 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
                     var cantPrevia= datosCuentaTemporal[i]["cantidad"];
                     datosCuentaTemporal[i]["cantidad"] = cantPrevia+1;
                     suma=true;
-                    sumarRestarConteoComensal(numeroComensal,suma);
+                    sumarRestarConteoComensal(numeroComensal,suma,idProducto);
                     datosCuentaTemporal[i]["nota"] = nota;
                     localStorage.setItem("comensalAnterior",numeroComensal); 
                     localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
@@ -1290,7 +1373,7 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
             }
         }else{
             suma=true;
-            sumarRestarConteoComensal(numeroComensal,suma);         
+            sumarRestarConteoComensal(numeroComensal,suma,idProducto);         
             lstProductos.push(datosProducto);
             localStorage.setItem(cuentaTemporal,JSON.stringify(lstProductos));                
             leerCuentaTemporal(idPV,idMesa);
@@ -1316,14 +1399,22 @@ async function guardarCuentaAlergiaPax(idProducto,idCuenta,numPaxAlergico) {
     }            
     return seRepiteProducto;
  }
- function sumarRestarConteoComensal(numComensal,suma) {
+ function sumarRestarConteoComensal(numComensal,suma, idProducto) {
      valorSpan = parseInt($("#btnBadge"+numComensal).text());
+     valorSpanEnProducto = parseInt($("#cantCuentaClienteSpan"+idProducto).text());
+          
      if(suma){
          valor = valorSpan + 1;
+         valorSpanPlatillo= valorSpanEnProducto + 1;// suma para mostrar en los span de cantidades de los platillos
      }else {
          valor = valorSpan - 1;
+         valorSpanPlatillo= valorSpanEnProducto - 1;
+
      }
+     
      $("#btnBadge"+numComensal).text(valor);
+     $("#cantCuentaClienteSpan"+idProducto).text(valorSpanPlatillo);// en span de productos mas vendidos
+
  }
  function seleccionarModo(){
     var idProducto = $("#idProductoModalModo").val();
@@ -1643,9 +1734,10 @@ async function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
           datosCuentaTemporal[pos]["cantidad"] = cantidadProducto-1;
           localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
           comensal = datosCuentaTemporal[pos]["comensal"];
-          console.log("comensal btn",comensal);          
+          idProducto = datosCuentaTemporal[pos]["idProducto"];
+                    
           suma=false;
-          sumarRestarConteoComensal(comensal,suma);                
+          sumarRestarConteoComensal(comensal,suma,idProducto);                
           leerCuentaTemporal(idPV,idMesa);
           return;
       }else{
@@ -1664,8 +1756,10 @@ async function obtenerDatosCuentaApi(idPV,idMesa,idCuenta){
             });
             // delete splice[productoNum];
             comensal = datosCuentaTemporal[pos]["comensal"];
+            idProducto = datosCuentaTemporal[pos]["idProducto"];
+            
             suma=false;
-            sumarRestarConteoComensal(comensal,suma);
+            sumarRestarConteoComensal(comensal,suma,idProducto);
             datosCuentaTemporal.splice(pos,1);
             
             localStorage.setItem(cuentaTemporal,JSON.stringify(datosCuentaTemporal));
