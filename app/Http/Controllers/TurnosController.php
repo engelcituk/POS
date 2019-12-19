@@ -97,7 +97,7 @@ class TurnosController extends Controller
         $idTurno = $id;
         $respuesta = $this->realizarPeticion('POST', $this->urlBase . "DeleteTurno/{$idTurno}");
         
-        return redirect('/turnos');
+        return $respuesta;
     }
 }
  

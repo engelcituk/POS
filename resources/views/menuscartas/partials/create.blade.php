@@ -56,10 +56,10 @@
                                                     @if ($productos!="")
                                                     <div class="lista ">
                                                         <select class="form-control listaProductos combobox" id="lstProductos1" name="idProducto[]" required>
-                                                            <option value="">Elija producto</option>
-                                                                    @foreach($productos as $producto)
-                                                                        <option precio="{{$producto->precio}}" value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
-                                                                    @endforeach
+                                                        <option value="">Elija producto</option>
+                                                            @foreach($productos as $producto)
+                                                                <option precio="{{$producto->precio}}" value="{{$producto->id}}">{{$producto->nombreProducto}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                       
@@ -70,7 +70,7 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <input id="precio1" type="number" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="precio[]"  required>                                                    
+                                                    <input id="precio1" type="number" step="0.01" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="precio[]"  required>                                                    
                                                 </td>
                                                 <td>
                                                     @if ($centrosPreparacion!="")
@@ -80,11 +80,11 @@
                                                                     <option value="{{$cp->id}}">{{$cp->name}}</option>
                                                                 @endforeach
                                                         </select>  
-                                                        @else
-                                                            <select class="form-control" id="lstCP1" name="idCentroPrep[]" required>
-                                                                <option value="">No hay centros de preparacion</option>                           
-                                                            </select> 
-                                                        @endif                                                               
+                                                    @else
+                                                        <select class="form-control" id="lstCP1" name="idCentroPrep[]" required>
+                                                            <option value="">No hay centros de preparacion</option>                           
+                                                        </select> 
+                                                    @endif                                                               
                                                 </td>                                                     
                                                 <td>
                                                     <a class='btn btn-primary btn-sm addCloneTr'> <i class="fas fa-plus"></i></a> 

@@ -39,8 +39,7 @@
                                             <th>Producto</th>
                                             <th>Precio</th>
                                             <th>Centro Preparación</th>
-                                            <th></th>
-                
+                                            <th></th>                
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,7 +53,7 @@
                                             </select>
                                             </td>
                                             <td data-name="precio">
-                                            <input id="precio" type="number" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="precio" value="{{$menucarta->precio}}" required>
+                                            <input id="precio" type="number" step="0.01" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="precio" value="{{$menucarta->precio}}" required>
                                             </td>
                                             <td data-name="idCentroPrep">
                                             <select class="form-control" name="idCentroPrep" required>

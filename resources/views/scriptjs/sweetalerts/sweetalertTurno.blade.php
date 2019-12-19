@@ -20,14 +20,15 @@
                     '_token': csrf_token
                 },
                 success: function(data) {
-                    // tablaTurnos.ajax.reload();
+                                    
                     swal({
-                        title: '¡Exito!',
-                        text: '¡Su dato ha sido borrado!',
-                        type: 'success',
-                        timer: '1500'
-                    })
-                    location.reload();
+                        title: 'Info!',
+                        text: data,
+                        type: 'info'                        
+                    });
+                    setTimeout(() => {
+                        location.reload();                        
+                    }, 4000);
                 },
                 error: function() {
                     swal({
@@ -38,6 +39,6 @@
                     })
                 }
             });
-        });
+        }).catch(swal.noop);
     }    
 </script>
