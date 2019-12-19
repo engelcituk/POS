@@ -400,7 +400,7 @@ async function aperturaMesa(idMesa) {
                 var fechaSalida=objeto["FechaSalida"];                
                 var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
                 
-                if(errorCode==0){
+                if(errorCode==0 && reserva!=null){
                     // console.log("datos",objeto);
                     $("#mensajeRespuesta").html('<div class="alert alert-success"><strong>Datos encontrados</strong></div>');
                     $("#reserva").val(reserva);
@@ -414,6 +414,8 @@ async function aperturaMesa(idMesa) {
                     $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontró el hotel</strong></div>');
                 }else if(errorCode==404){
                     $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontro Información de Huesped</strong></div>');
+                }else {
+                    $("#mensajeRespuesta").html('<div class="alert alert-success"><strong>Fallo en la búsqueda de datos</strong></div>');
                 }
             },            
             error: function(respuesta) {
@@ -472,7 +474,7 @@ async function aperturaMesa(idMesa) {
                 
                 // var fechaSalida=objeto["FechaSalida"];                
                 // var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario                
-                if(errorCode==0){
+                if(errorCode==0 && reserva!=null ){
                     
                     $("#mensajeRespuestaModal").html('<div class="alert alert-success"><strong>Datos encontrados</strong></div>');
                     $("#reservaModal").val(reserva);
@@ -486,6 +488,8 @@ async function aperturaMesa(idMesa) {
                     $("#mensajeRespuestaModal").html('<div class="alert alert-warning"><strong>No se encontró el hotel</strong></div>');
                 }else if(errorCode==404){
                     $("#mensajeRespuestaModal").html('<div class="alert alert-warning"><strong>No se encontro Información de Huesped</strong></div>');
+                }else {
+                    $("#mensajeRespuestaModal").html('<div class="alert alert-success"><strong>Fallo en la búsqueda de datos</strong></div>');
                 }
             },            
             error: function() {
