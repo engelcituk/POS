@@ -391,32 +391,38 @@ async function aperturaMesa(idMesa) {
                 swal.close(); 
                 var resultado=JSON.parse(respuesta);  
                 console.log(resultado);              
-                var objeto = resultado["objeto"];
-                var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
-                var reserva=objeto["reserva"];                
-                var nombre=objeto["nombre"];
-                var room=objeto["room"];
-                var ocupante=objeto["Ocupante"];
-                var fechaSalida=objeto["FechaSalida"];                
-                var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
-                
-                if(errorCode==0 && reserva!=null){
-                    // console.log("datos",objeto);
-                    $("#mensajeRespuesta").html('<div class="alert alert-success"><strong>Datos encontrados</strong></div>');
-                    $("#reserva").val(reserva);
-                    $("#nombre").val(nombre);
-                    $("#room").val(room);
-                    $("#ocupante").val(ocupante);
-                    $("#fechaSalida").val(fechaSalida);
-                    $("#brazalete").val(brazalete);
-                     // creo el objeto lST para la cuenta
-                }else if(errorCode==401){
-                    $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontró el hotel</strong></div>');
-                }else if(errorCode==404){
-                    $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontro Información de Huesped</strong></div>');
+                var ok = resultado["ok"];                            
+                if(ok){
+                    var objeto = resultado["objeto"];
+                    var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
+                    var reserva=objeto["reserva"];                
+                    var nombre=objeto["nombre"];
+                    var room=objeto["room"];
+                    var ocupante=objeto["Ocupante"];
+                    var fechaSalida=objeto["FechaSalida"];                
+                    var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
+                    
+                    if(errorCode==0 && reserva!=null){
+                        // console.log("datos",objeto);
+                        $("#mensajeRespuesta").html('<div class="alert alert-success"><strong>Datos encontrados</strong></div>');
+                        $("#reserva").val(reserva);
+                        $("#nombre").val(nombre);
+                        $("#room").val(room);
+                        $("#ocupante").val(ocupante);
+                        $("#fechaSalida").val(fechaSalida);
+                        $("#brazalete").val(brazalete);
+                        // creo el objeto lST para la cuenta
+                    }else if(errorCode==401){
+                        $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontró el hotel</strong></div>');
+                    }else if(errorCode==404){
+                        $("#mensajeRespuesta").html('<div class="alert alert-warning"><strong>No se encontro Información de Huesped</strong></div>');
+                    }else {
+                        $("#mensajeRespuesta").html('<div class="alert alert-success"><strong>Fallo en la búsqueda de datos</strong></div>');
+                    }
                 }else {
-                    $("#mensajeRespuesta").html('<div class="alert alert-success"><strong>Fallo en la búsqueda de datos</strong></div>');
-                }
+                        $("#mensajeRespuesta").html('<div class="alert alert-success"><strong>Fallo en la búsqueda de datos</strong></div>');
+
+                }                
             },            
             error: function(respuesta) {
             console.log(respuesta);
@@ -462,35 +468,40 @@ async function aperturaMesa(idMesa) {
             success: function(respuesta) {                
                 swal.close(); 
                 var resultado=JSON.parse(respuesta);  
-                console.log("datos huesped", resultado);              
-                var objeto = resultado["objeto"];
-                var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
-                var reserva=objeto["reserva"];                
-                var nombre=objeto["nombre"];
-                var room=objeto["room"];
-                var ocupante=objeto["Ocupante"];
-                var fechaSalida=objeto["FechaSalida"];
-                var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
-                
-                // var fechaSalida=objeto["FechaSalida"];                
-                // var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario                
-                if(errorCode==0 && reserva!=null ){
+                console.log("datos huesped", resultado); 
+                var ok = resultado["ok"];                            
+                if(ok){
+                    var objeto = resultado["objeto"];
+                    var errorCode=objeto["errCode"]; //0 si se encontró el huesped, 404 si no se encontró               
+                    var reserva=objeto["reserva"];                
+                    var nombre=objeto["nombre"];
+                    var room=objeto["room"];
+                    var ocupante=objeto["Ocupante"];
+                    var fechaSalida=objeto["FechaSalida"];
+                    var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
                     
-                    $("#mensajeRespuestaModal").html('<div class="alert alert-success"><strong>Datos encontrados</strong></div>');
-                    $("#reservaModal").val(reserva);
-                    $("#nombreModal").val(nombre);
-                    $("#roomModal").val(room);
-                    $("#ocupanteModal").val(ocupante);
-                    $("#fechaSalidaModal").val(fechaSalida);
-                    $("#brazaleteModal").val(brazalete);
-                     // creo el objeto lST para la cuenta
-                }else if(errorCode==401){
-                    $("#mensajeRespuestaModal").html('<div class="alert alert-warning"><strong>No se encontró el hotel</strong></div>');
-                }else if(errorCode==404){
-                    $("#mensajeRespuestaModal").html('<div class="alert alert-warning"><strong>No se encontro Información de Huesped</strong></div>');
+                    // var fechaSalida=objeto["FechaSalida"];                
+                    // var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario                
+                    if(errorCode==0 && reserva!=null ){
+                        
+                        $("#mensajeRespuestaModal").html('<div class="alert alert-success"><strong>Datos encontrados</strong></div>');
+                        $("#reservaModal").val(reserva);
+                        $("#nombreModal").val(nombre);
+                        $("#roomModal").val(room);
+                        $("#ocupanteModal").val(ocupante);
+                        $("#fechaSalidaModal").val(fechaSalida);
+                        $("#brazaleteModal").val(brazalete);
+                        // creo el objeto lST para la cuenta
+                    }else if(errorCode==401){
+                        $("#mensajeRespuestaModal").html('<div class="alert alert-warning"><strong>No se encontró el hotel</strong></div>');
+                    }else if(errorCode==404){
+                        $("#mensajeRespuestaModal").html('<div class="alert alert-warning"><strong>No se encontro Información de Huesped</strong></div>');
+                    }else {
+                        $("#mensajeRespuestaModal").html('<div class="alert alert-success"><strong>Fallo en la búsqueda de datos</strong></div>');
+                    }
                 }else {
                     $("#mensajeRespuestaModal").html('<div class="alert alert-success"><strong>Fallo en la búsqueda de datos</strong></div>');
-                }
+                }                
             },            
             error: function() {
             console.log(respuesta);
