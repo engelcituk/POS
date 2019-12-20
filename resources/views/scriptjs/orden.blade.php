@@ -2178,9 +2178,9 @@ function asignarHabitacionModal(){
      var idPV= $("#idPVModalOrdenar").val();
      var idMesa = localStorage.getItem("idMesaLS");
      var idCuenta = $("#cuentaMesaSpan").text(); 
-      
-     var totalCuenta = $("#totalCuenta").val();
-
+    
+     var totalCuenta= $("#totalCuenta").html();
+     
      var cuentaTemporal="cuentaTemporal"+idPV+idMesa;//creo la variable
      var cuentaAPi="cuentaBD"+idPV+idMesa;
 
