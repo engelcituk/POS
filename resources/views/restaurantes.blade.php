@@ -59,7 +59,7 @@
                                                 @endif
                                                 @if ($pvPermisoLeer==1 && $pvPermisoActualizar==1)
                                                    <a href="{{ route('restaurantes.edit', $restaurante->id)}}" class="btn btn-xs btn-info"><i class="fas fa-edit"></i> </a>     
-                                                @endif
+                                                @endif                                                
                                                 @if ($pvPermisoBorrar==1)
                                                    <a onclick="deleteRestaurante({{$restaurante->id}})" class="btn btn-xs btn-danger" ><i class="fas fa-trash-alt"></i></a>     
                                                 @endif                                                                                 

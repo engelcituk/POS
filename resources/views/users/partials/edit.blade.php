@@ -96,61 +96,7 @@
                                             @endphp
                                         </div>
                                     </div>
-                                </div>
-                                    {{-- <h4><strong>Permisos del rol del usuario: </strong>{{$rolUsuario->name}}</h4> 
-                                   
-                                    @foreach($permisos as $permisoItem)
-                                        @php                                             
-                                            $idUsuario=$usuario->id;
-                                            $idPermiso=$permisoItem->id;
-                                            $result = $idPermisosRolColeccion->contains($permisoItem->id);
-
-                                            $checked = ($result == 1) ? "checked" : "";
-                                           
-                                            $clickReturn= ($result == 1) ? "return false;" : "addQuitarPermisoUsuario($idUsuario,$idPermiso)";
-                                            $estadoPermisoPadre = ($result == 1) ? "estado=activo" : "estado=desactivado";
-                                            
-                                            // dd($checkCrear);
-                                        @endphp                              
-                                        <div class="row">                                                                                   
-                                            <div class="col-md-offset-1 col-md-3">
-                                                <div class="checkbox checkbox-group required">                              
-                                                    <label class="labelCheckbox">
-                                                    <input type="checkbox" id="chekPermiso{{$idPermiso}}" idUsuario="{{$idUsuario}}"  idPermiso="{{$idPermiso}}" name="idPermiso[]" value="{{$permisoItem->id}}" {{$checked}}  onclick="{{$clickReturn}}"><strong>{{$permisoItem->name}}</strong>
-                                                    </label>                                            
-                                                </div>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <div class="checkbox checkbox-group required">
-                                                    <label>
-                                                    <input type="checkbox" id="crear{{$idPermiso}}" idUsuario="{{$idUsuario}}" idPermiso="{{$idPermiso}}" name="crear" value="" {{$estadoPermisoPadre}} onclick="addAccionesPermiso({{$idUsuario}},{{$idPermiso}},'crear')"><strong>Crear</strong>
-                                                    </label>                                            
-                                                </div>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <div class="checkbox checkbox-group required">
-                                                    <label>
-                                                    <input type="checkbox" id="leer{{$idPermiso}}" idUsuario="{{$idUsuario}}" idPermiso="{{$idPermiso}}" name="leer" value="" {{$estadoPermisoPadre}} onclick="addAccionesPermiso({{$idUsuario}},{{$idPermiso}},'leer')"><strong><br>Leer</strong>
-                                                    </label>                                            
-                                                </div>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <div class="checkbox checkbox-group required">
-                                                    <label>
-                                                    <input type="checkbox" id="actualizar{{$idPermiso}}" idUsuario="{{$idUsuario}}" idPermiso="{{$idPermiso}}" name="actualizar" value="" {{$estadoPermisoPadre}} onclick="addAccionesPermiso({{$idUsuario}},{{$idPermiso}},'actualizar')"><strong>Actualizar</strong>
-                                                    </label>                                            
-                                                </div>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <div class="checkbox checkbox-group required">                                           
-                                                    <label>
-                                                    <input type="checkbox" id="borrar{{$idPermiso}}" idUsuario="{{$idUsuario}}" idPermiso="{{$idPermiso}}" name="borrar" value="" {{$estadoPermisoPadre}} onclick="addAccionesPermiso({{$idUsuario}},{{$idPermiso}},'borrar')"><strong>Borrar</strong>
-                                                    </label>                                            
-                                                </div>
-                                            </div>                                            
-                                        </div>                                       
-                                    @endforeach                                   --}}
-                                       
+                                </div>                                                                          
                                                                       
                                     <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
                                 </div>

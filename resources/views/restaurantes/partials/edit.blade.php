@@ -67,7 +67,44 @@
                                         <textarea class="form-control" rows="2" name="descripcion" required>{{$restaurante->descripcion}}</textarea>
                                     </div>
                                 </div>
-                                <!-- <small>En la api se registar el <cite title="idHotel">idHotel</cite></small> -->
+                                <div class="row">
+                                    <h4>Seleccione si se muestra importe de cierre y el regimen</h4>                                                                  
+                                    <div class="col-md-4 col-md-offset-4">
+                                        <div class="checkbox checkbox-group">                              
+                                                <label class="labelCheckbox ">
+                                                <input type="checkbox" id="checkImporte" name="importeCierre" value="{{$restaurante->id}}" onclick="activarImporteCierre()" ><strong>Importe en cierre</strong>
+                                                </label>                                            
+                                        </div> 
+                                    </div>                                    
+                                </div>
+                                <div class="row">
+                                    <h5>Seleccione regimen</h5>                                                                  
+
+                                        <div class="col-md-4">
+                                            <div class="checkbox checkbox-group">                              
+                                                <label class="labelCheckbox ">
+                                                <input type="checkbox" id="checkImporte1" class="checkRegimen" name="regimen" value="1" onclick="selectRegimen(1)"><strong>Regimen 1</strong>
+                                                </label>                                            
+                                            </div> 
+                                        </div> 
+                                        <div class="col-md-4">
+                                            <div class="checkbox checkbox-group">                              
+                                                <label class="labelCheckbox ">
+                                                <input type="checkbox" id="checkImporte2" class="checkRegimen" name="regimen" value="2" onclick="selectRegimen(2)"><strong>Regimen 2</strong>
+                                                </label>                                            
+                                            </div> 
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="checkbox checkbox-group">                              
+                                                <label class="labelCheckbox ">
+                                                <input type="checkbox" id="checkImporte3" class="checkRegimen" name="regimen" value="3" onclick="selectRegimen(3)" checked><strong>Regimen 2</strong>
+                                                </label>                                            
+                                            </div> 
+                                        </div>
+
+                                </div>
+                                   
+                                
                                 <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
                             </div>
                         </div>
@@ -91,4 +128,29 @@
         
     </div>
 </div>
+<script>
+
+
+function activarImporteCierre() {  
+    valorCheck = $("#checkImporte").prop("checked");//obtengo true o false 
+    selected = () => Array.from(document.getElementsByName("regimen")).filter(cur => cur.type === 'checkbox' && cur.checked).length > 0;
+    
+
+    // if(selected() && valorCheck ) { // Si NO hay ningun checkbox chequeado.
+    //     console.log("al menos un chequeado..");    
+    //     $("#checkImporte").prop("checked", false);
+    // }else if ( !selected() && !valorCheck) {
+    //     console.log("Ningún chequeado..");
+    //     $("#checkImporte").prop("checked", true);
+    // }
+}
+function selectRegimen(idRegimen) {  
+    valorCheck = $("#checkImporte").prop("checked");//obtengo true o false 
+
+    console.log(valorCheck);
+    if (valorCheck) {               
+        $("#checkImporte"+idRegimen).prop("checked", true);        
+    }
+}     
+</script>
 @endsection
