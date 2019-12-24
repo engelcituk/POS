@@ -20,12 +20,12 @@
                                             <i class="fas fa-file-signature"></i>
                                         </span>
                                         <div class="form-group label-floating">
-                                            <label class="control-label">Nombre Impresora</label>
+                                            <label class="control-label">Nombre de la impresora</label>
                                             <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" required autofocus>
                                             @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
-                                            </span>|
+                                            </span>
                                             @endif
                                         </div>
                                     </div>
@@ -38,8 +38,8 @@
                                             <i class="fas fa-sort-numeric-up"></i>
                                         </span>
                                         <div class="form-group label-floating">
-                                            <label class="control-label">Ip Impresora</label>
-                                            <input id="ipImpresora" type="text" class="form-control{{ $errors->has('ipImpresora') ? ' is-invalid' : '' }}" name="ipImpresora" required autofocus>
+                                            <label class="control-label">Ip o nombre local impresora</label>
+                                            <input id="ipImpresorax" type="text" class="form-control{{ $errors->has('ipImpresora') ? ' is-invalid' : '' }}" name="ipImpresora" required autofocus>
                                             <div id="mensajeIpValido"></div>
                                             @if ($errors->has('ipImpresora'))
                                             <span class="invalid-feedback" role="alert">
@@ -55,6 +55,15 @@
                                         <div class="radio">
                                             <label><input type="radio" name="status" value="True" checked>Activado</label>
                                             <label><input type="radio" name="status" value="False">Desactivado</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <strong>Local</strong>
+                                        <div class="radio">
+                                            <label><input type="radio" name="local" value="True" checked>Sí</label>
+                                            <label><input type="radio" name="local" value="False">No</label>
                                         </div>
                                     </div>
                                 </div>

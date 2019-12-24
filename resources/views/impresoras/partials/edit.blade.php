@@ -34,8 +34,8 @@
                                             <i class="fas fa-sort-numeric-up"></i>
                                         </span>
                                         <div class="form-group label-floating">
-                                            <label class="control-label">Ip Impresora</label>
-                                            <input id="ipImpresora" type="text" class="form-control" name="ipImpresora" value="{{$impresora->ipImpresora}}" required autofocus>
+                                            <label class="control-label">Ip o nombre local impresora</label>                             
+                                            <input id="ipImpresorax" type="text" class="form-control" name="ipImpresora" value="{{$impresora->ipImpresora}}" required autofocus>
                                             <div id="mensajeIpValido"></div>
 
                                         </div>
@@ -52,6 +52,22 @@
                                             <label><input type='radio' name='status' value='False'>Desactivado</label>" :
                                             "<label><input type='radio' name='status' value='True'>Activado</label>
                                             <label><input type='radio' name='status' value='False' checked>Desactivado</label>";
+                                            echo $radios;
+                                            @endphp
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <strong>Local</strong>
+                                        <div class="radio">
+                                            @php
+                                            $ImpresoraLocal= $impresora->local;//para obtener el local de la impresora
+                                            $radios = ($ImpresoraLocal == 1) ?
+                                            "<label><input type='radio' name='local' value='True' checked>Activado</label>
+                                            <label><input type='radio' name='local' value='False'>Desactivado</label>" :
+                                            "<label><input type='radio' name='local' value='True'>Activado</label>
+                                            <label><input type='radio' name='local' value='False' checked>Desactivado</label>";
                                             echo $radios;
                                             @endphp
                                         </div>
