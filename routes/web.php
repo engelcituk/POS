@@ -45,6 +45,8 @@ Route::post('historico/pdf', 'HistoricoController@generaPdf')->name('historico.p
 Route::get('historico/datosexcel/{fecha}', 'HistoricoController@generaExcel')->name('historico.excel');
 Route::post('historico/cancelar/{cuenta}', 'HistoricoController@cancelarCuenta')->name('historico.cancelar');
 Route::post('historico/imprimir/{cuenta}', 'HistoricoController@imprimirCuenta')->name('historico.imprimir');
+Route::post('historico/imprimirCuentaHist/{cuenta}', 'HistoricoController@imprimirCuentaHistorico')->name('historico.imprimirCuentaHistorico');
+
 Route::post('historico/imprimircerrardia', 'HistoricoController@imprimirDesgloseHistorico')->name('historico.imprimircerrardia');
 Route::get('historico/{cuenta}', 'HistoricoController@obtenerCuenta')->name('historico.cuenta');
 Route::get('historico/detalle/{cuenta}', 'HistoricoController@obtenerDetalleCuenta')->name('historico.detalle');

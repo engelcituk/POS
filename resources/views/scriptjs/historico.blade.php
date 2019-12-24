@@ -121,7 +121,7 @@ function verCuentaDetalles(id) {
             cancelButtonText: '¡No, desistir!'
         }).then(function() {
             $.ajax({
-                url: "{{ url('historico/imprimir') }}" + '/'+idCuenta,
+                url: "{{ url('historico/imprimirCuentaHist') }}" + '/'+idCuenta,
                 type: "POST",
                 data: {
                     '_method': 'POST',

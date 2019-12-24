@@ -122,6 +122,13 @@ class HistoricoController extends Controller
         
         return $respuesta;        
     }
+    // esta funcinon imprime una cuenta pero en este se muestra el listado de costo de esta cuenta
+    public function imprimirCuentaHistorico($idCuenta){
+               
+        $respuesta = $this->realizarPeticion('POST', $this->urlAdmin."imprimeCuentaHistorico/{$idCuenta}"); 
+        
+        return $respuesta;        
+    }
     public function cancelarCuenta(Request $request, $idCuenta){
         
         $idUsuario = $request->session()->get('idUsuarioLogueado');
