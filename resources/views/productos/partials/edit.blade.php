@@ -114,7 +114,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Monto propina</label>
-                                                <input id="montoPropina" type="number" class="form-control{{ $errors->has('montoPropina') ? ' is-invalid' : '' }}" name="montoPropina" value="{{$producto->montoPropina}}">
+                                                <input id="montoPropina" type="number" step="0.01" class="form-control{{ $errors->has('montoPropina') ? ' is-invalid' : '' }}" name="montoPropina" value="{{$producto->montoPropina}}">
                                                 @if ($errors->has('montoPropina'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('montoPropina') }}</strong>
@@ -130,7 +130,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Precio</label>
-                                                <input id="precio" type="number" class="form-control{{ $errors->has('precio') ? ' is-invalid' : '' }}" name="precio" required  value="{{$producto->precio}}">
+                                                <input id="precio" type="number" step="0.01" class="form-control{{ $errors->has('precio') ? ' is-invalid' : '' }}" name="precio" required  value="{{$producto->precio}}">
                                                 @if ($errors->has('precio'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('precio') }}</strong>
