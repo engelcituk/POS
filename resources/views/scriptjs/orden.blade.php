@@ -41,7 +41,7 @@ function initZonas(){
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
-    $.connection.hub.url = 'http://172.16.1.45/TPVApi/signalr/hubs';
+    $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {                  
@@ -2309,7 +2309,16 @@ function imprimirCuenta() {
                 // $("#modalCargando").modal("hide");
                 swal.close();
                 var respuesta = JSON.parse(respuesta);
+                var ok = respuesta["ok"];                
+                
                 console.log("respuesta controlador",respuesta);                    
+
+                if(ok){
+                    var contenidoTicket = respuesta["ticket"];                
+                    var maquinaImpresora = respuesta["printer"]
+                    imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                }
+
             },
             error: function(respuesta) {
                 swal.close();
@@ -2588,6 +2597,29 @@ function guardarCambioDeMesa(idPV, idCuenta, idMesaNueva){
     }
     handleOrientationChange(mediaquery);
     mediaquery.addListener(handleOrientationChange);
+
+function imprimirTicketCuenta(contenidoTicket,maquinaImpresora) {              
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');    
+        // console.log("idPuntoVenta: "+idPV+" idCuenta: "+idCuenta+" idMesaNueva: "+idMesaNueva);              
+        $.ajax({
+            url: "{{ url('printrecibo/imprimir') }}",
+            type: "POST",
+            data: {
+                '_method': 'POST',                           
+                '_token': csrf_token,
+                'contenidoTicket': contenidoTicket,
+                'maquinaImpresora': maquinaImpresora
+            },
+            success: function(respuesta) {             
+                               
+                console.log(respuesta); 
+                                                    
+            },
+            error: function(respuesta) { 
+                console.log(respuesta); 
+            }
+        });
+    }    
 </script>
 
                         

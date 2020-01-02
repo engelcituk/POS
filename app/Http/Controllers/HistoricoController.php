@@ -11,6 +11,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use App\Exports\HistoricosExport;
 use Maatwebsite\Excel\Facades\Excel;
 
+
 class HistoricoController extends Controller
 {
     public $urlBase = "";
@@ -119,8 +120,9 @@ class HistoricoController extends Controller
     public function imprimirCuenta($idCuenta){
                
         $respuesta = $this->realizarPeticion('POST', $this->urlAdmin."imprimeCuenta/{$idCuenta}"); 
+                      
+        return $respuesta;                
         
-        return $respuesta;        
     }
     // esta funcinon imprime una cuenta pero en este se muestra el listado de costo de esta cuenta
     public function imprimirCuentaHistorico($idCuenta){

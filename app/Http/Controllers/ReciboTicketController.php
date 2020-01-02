@@ -5,6 +5,13 @@ namespace App\Http\Controllers;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\CapabilityProfile;
+use Illuminate\Http\Request;
+
+
+
 class ReciboTicketController extends Controller
 {
  
@@ -18,11 +25,51 @@ class ReciboTicketController extends Controller
             $impresora->text("titulo\n");
             $impresora->text("-----------------------\n");
             $impresora->text("cuerpo del ticket\n");
-            $impresora->cut();
+            $impresora->cut();            
         } finally {
             $impresora->close();
         }
         
     }
-       
+    //
+    public function imprimirRecibo(Request $request){
+        $contenidoTicket = $request->get('contenidoTicket');
+        
+        $smb='smb://';
+        $maquinaImpresora = $request->get('maquinaImpresora');
+
+        $profile = CapabilityProfile::load("simple");
+
+        $connector = new WindowsPrintConnector($smb.$maquinaImpresora);
+        $impresora = new Printer($connector, $profile);
+
+        try {
+            $impresora->text($contenidoTicket);
+            // $impresora->text("titulo\n");
+            // $impresora->text("-----------------------\n");
+            $impresora->text("\n");
+            $impresora->cut();            
+        } finally {
+            $impresora->close();
+        }
+        
+    }
+    public function imprimirReciboTest(Request $request){
+                        
+        $profile = CapabilityProfile::load("simple");
+
+        $connector = new WindowsPrintConnector("smb://SC-GTE-FUNDACIO/Impresora-Tickets");
+        $impresora = new Printer($connector, $profile);
+
+        try {            
+            $impresora->text("titulo\n");
+            $impresora->text("-----------------------\n");
+            $impresora->text("cuerpo del ticket\n");
+            $impresora->cut();            
+        } finally {
+            $impresora->close();
+        }
+        
+    }
+    // 172.16.4.229
 }
