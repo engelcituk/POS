@@ -154,7 +154,7 @@ class HistoricoController extends Controller
         $fecha = $request->get('fecha');        
         $idUsuario = $request->session()->get('idUsuarioLogueado');
         $idCarta = $request->session()->get('idCarta');
-
+                                                    //Admin/cierreDia
         $respuesta = $this->realizarPeticion('POST', $urlCerrarDia."cierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");
 
         return $respuesta;

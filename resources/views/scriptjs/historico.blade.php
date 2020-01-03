@@ -128,7 +128,18 @@ function verCuentaDetalles(id) {
                     '_token': csrf_token
                 },
                 success: function(respuesta) {
-                    console.log("respuesta controlador",respuesta);                    
+                    console.log("respuesta controlador",respuesta);
+                    var respuesta = JSON.parse(respuesta);
+
+                    var ok = respuesta["ok"];               
+
+                    if(ok){
+                        var contenidoTicket = respuesta["ticket"];                
+                        var maquinaImpresora = respuesta["printer"]
+                        if(contenidoTicket != "" ){
+                            imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                        }
+                    }                   
                 },
                 error: function(respuesta) { 
                     console.log("respuesta controlador",respuesta);                    
@@ -154,7 +165,16 @@ function imprimirDesglose(idPuntoVenta) {
         },
         success: function(respuesta) {             
              var respuesta = JSON.parse(respuesta);
-             console.log("Respuesta controlador",respuesta);               
+             console.log("Respuesta controlador",respuesta); 
+             var ok = respuesta["ok"];                
+            
+            if(ok){
+                var contenidoTicket = respuesta["ticket"];                
+                var maquinaImpresora = respuesta["printer"]
+                if(contenidoTicket != "" ){
+                    imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                }
+            }              
                                                 
         },
         error: function(respuesta) { 
@@ -190,7 +210,17 @@ function imprimirDesglose(idPuntoVenta) {
                     '_token': csrf_token
                 },
                 success: function(respuesta) {
-                    console.log("respuesta controlador cancelar",respuesta);                    
+                    console.log("respuesta controlador cancelar",respuesta);
+
+                    var respuesta = JSON.parse(respuesta);
+                    var ok = respuesta["ok"];                                                   
+                    if(ok){
+                        var contenidoTicket = respuesta["ticket"];                
+                        var maquinaImpresora = respuesta["printer"]
+                        if(contenidoTicket != "" ){
+                            imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                        }
+                    }                  
                 },
                 error: function() { 
                     console.log("respuesta controlador",respuesta);                    
@@ -363,5 +393,28 @@ function imprimirDesglose(idPuntoVenta) {
             // console.log(respuesta);
             }
         });            
+    }
+    // para hacer una impresion te ticket desde mi propio backend
+    function imprimirTicketCuenta(contenidoTicket,maquinaImpresora) {              
+        var csrf_token = $('meta[name="csrf-token"]').attr('content');    
+        // console.log("idPuntoVenta: "+idPV+" idCuenta: "+idCuenta+" idMesaNueva: "+idMesaNueva);              
+        $.ajax({
+            url: "{{ url('printrecibo/imprimir') }}",
+            type: "POST",
+            data: {
+                '_method': 'POST',                           
+                '_token': csrf_token,
+                'contenidoTicket': contenidoTicket,
+                'maquinaImpresora': maquinaImpresora
+            },
+            success: function(respuesta) {             
+                               
+                console.log(respuesta); 
+                                                    
+            },
+            error: function(respuesta) { 
+                console.log(respuesta); 
+            }
+        });
     }
 </script> 

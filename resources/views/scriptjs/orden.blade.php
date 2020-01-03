@@ -2018,6 +2018,12 @@ function asignarHabitacionModal(){
                             location.reload();
                         }
                     );
+                    // imprimo ticket desde php con laravel
+                    var contenidoTicket = respuesta["ticket"];                
+                    var maquinaImpresora = respuesta["printer"]
+                    if(contenidoTicket != "" ){
+                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                    }
                 }
             },
             error: function(respuesta) {
@@ -2094,7 +2100,13 @@ function asignarHabitacionModal(){
                             $(this).parents("tr").remove();
                         }); 
                         datosCuentaAPi.splice(posicionProducto,1);
-                        localStorage.setItem(cuentaAPi,JSON.stringify(datosCuentaAPi));                        
+                        localStorage.setItem(cuentaAPi,JSON.stringify(datosCuentaAPi));
+                        // imprimo ticket desde laravel
+                        var contenidoTicket = respuesta["ticket"];                
+                        var maquinaImpresora = respuesta["printer"]
+                        if(contenidoTicket != "" ){
+                            imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                        }                      
                     }                    
                 },
                 error: function(respuesta) {                    
@@ -2267,6 +2279,12 @@ function asignarHabitacionModal(){
                             location.reload();
                         }
                     );
+                    //Imprimo ticket desde php con laravel
+                    var contenidoTicket = respuesta["ticket"];                
+                    var maquinaImpresora = respuesta["printer"]
+                    if(contenidoTicket != "" ){
+                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                    }
                 }                                
         },
         error: function(respuesta) {                    
@@ -2316,9 +2334,10 @@ function imprimirCuenta() {
                 if(ok){
                     var contenidoTicket = respuesta["ticket"];                
                     var maquinaImpresora = respuesta["printer"]
-                    imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                    if(contenidoTicket != "" ){
+                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                    }
                 }
-
             },
             error: function(respuesta) {
                 swal.close();
@@ -2341,9 +2360,17 @@ function imprimirCuenta() {
             
             '_token': csrf_token
         },
-        success: function(respuesta) {             
-             var respuesta = JSON.parse(respuesta);
-             console.log("Respuesta controlador",respuesta);               
+        success: function(respuesta) {
+            var respuesta = JSON.parse(respuesta);
+            var ok = respuesta["ok"];                
+            console.log("respuesta controlador",respuesta);                    
+            if(ok){
+                var contenidoTicket = respuesta["ticket"];                
+                var maquinaImpresora = respuesta["printer"]
+                if(contenidoTicket != "" ){
+                    imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                }
+            }                           
                                                 
         },
         error: function(respuesta) { 
