@@ -516,6 +516,16 @@ async function aperturaMesa(idMesa) {
         }) 
     }    
  }
+/* escuchador que valida si al buscar habitacion se ingresa caracteres especiales*/
+document.getElementById("numHabitacion").addEventListener("keypress",validarCampoHabitacion);
+document.getElementById("habitacionModal").addEventListener("keypress",validarCampoHabitacion);
+function validarCampoHabitacion(e) {
+    /*comprobamos con una expresion regular que el caracter pulsado seauna letra, numero o un espacio */
+    if(e.key.match(/[a-z0-9ñçáéíóú\s]/i)===null) {
+        // Si la tecla pulsada no es la correcta, eliminado la pulsación
+        e.preventDefault();
+    }
+}
 $('#myModal').on('hidden.bs.modal', function (e) {
          $(this).find('form')[0].reset();
 });
