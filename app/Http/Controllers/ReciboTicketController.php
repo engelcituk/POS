@@ -43,12 +43,17 @@ class ReciboTicketController extends Controller
         $connector = new WindowsPrintConnector($smb.$maquinaImpresora);
         $impresora = new Printer($connector, $profile);
 
+        $bytes = array(0x1d, 0x56, 0x00);// array de bits para en teoria cortar cadena
+        $string = implode(array_map("chr", $bytes));
+        
         try {
             $impresora->text($contenidoTicket);
             // $impresora->text("titulo\n");
             // $impresora->text("-----------------------\n");
             $impresora->text("\n");
-            $impresora->cut();            
+            $impresora->text($string);
+            $impresora->cut(); 
+
         } finally {
             $impresora->close();
         }

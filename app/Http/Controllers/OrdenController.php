@@ -51,7 +51,7 @@ class OrdenController extends Controller
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');//se cargan en un modal
         //$categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');//se carga en tabs
         $metodosPago = \App::call('App\Http\Controllers\MetodosPagoController@obtenerTodosLosMetodosPagos'); //se carga en subtabs
-        
+                
         return view('ordenar', compact('zonas','alergenos','categorias', 'metodosPago', 'datosRestaurantePV'));
     }
 
