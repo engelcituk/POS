@@ -14,8 +14,8 @@
                                 @php
                                     $abrirMesa = Session::get('AbrirMesa.leer');                                                         
                                 @endphp
-                                                                                                                                 
-                               <strong><span id="nombrePVSpan">{{$datosRestaurantePV->name}}</span> / <span id="nombreZona"></span></strong>                               
+                               <strong><span id="nombrePVSpan">{{$datosRestaurantePV->name}}</span> / <span id="nombreZona"></span></strong> 
+                               <button class="btn btn-primary btn-xs" onclick="testPrint()">imprimir</button>
                                {{-- condiciono el valor del span si usuario tiene permiso para solo abrir mesa --}}
                                 @if ($abrirMesa==1 )
                                     <span class="hidden" id="userOpenMesaSpanPermission">1</span>

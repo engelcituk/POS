@@ -59,6 +59,14 @@ class ReciboTicketController extends Controller
         }
         
     }
+    public function imprimirRecibo2(Request $request){
+        $contenidoTicket = $request->get('contenidoTicket');
+                
+        $maquinaImpresora = $request->get('maquinaImpresora');
+              
+        return $contenidoTicket." ". $maquinaImpresora;
+
+    }
     public function imprimirReciboTest(Request $request){
                         
         $profile = CapabilityProfile::load("simple");

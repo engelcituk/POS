@@ -2656,7 +2656,64 @@ function imprimirTicketCuenta(contenidoTicket,maquinaImpresora) {
                 console.log(respuesta); 
             }
         });
-    }    
+    } 
+function testPrint() {
+    objeto = [
+        {
+            string : 'este es el texto a imprimir 1',
+            impresora: 'impresora 1'
+
+        },
+        {
+            string : 'este es el texto a imprimir 2',
+            impresora: 'impresora 2'
+
+        },
+        {
+            string : 'este es el texto a imprimir 3',
+            impresora: 'impresora 3'
+
+        },
+        {
+            string : 'este es el texto a imprimir 4',
+            impresora: 'impresora 4'
+
+        },
+        {
+            string : 'este es el texto a imprimir 5',
+            impresora: 'impresora 5'
+
+        },
+    ]
+    sendToPrint(objeto); 
+}
+function sendToPrint(objeto){
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');    
+
+    for(i =0;  i<objeto.length; i++){
+        var contenidoTicket=objeto[i]["string"];
+        var maquinaImpresora=objeto[i]["impresora"]; 
+                     
+        $.ajax({
+            url: "{{ url('printrecibo/imprimir2') }}",
+            type: "POST",
+            data: {
+                '_method': 'POST',                           
+                '_token': csrf_token,
+                'contenidoTicket': contenidoTicket,
+                'maquinaImpresora': maquinaImpresora
+            },
+            success: function(respuesta) {             
+                               
+                console.log(respuesta); 
+                                                    
+            },
+            error: function(respuesta) { 
+                console.log(respuesta); 
+            }
+        })
+    }
+}
 </script>
 
                         
