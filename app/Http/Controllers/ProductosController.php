@@ -133,12 +133,15 @@ class ProductosController extends Controller
         $tipoPropina = $request->get('tipoPropina');
         $montoPropina = $request->get('montoPropina');
         $precio = $request->get('precio');
+        $precioTI = $request->get('precioTI');
         $complemento = $request->get('complemento');
         $temporada = $request->get('temporada');
         $status = $request->get('status');
         
         // dd( $imagen);
        $mntPropina = ($montoPropina == NULL) ? 0 : $montoPropina;    
+       $precioTI = ($precioTI == NULL) ? 0 : $precioTI;    
+
 
         if ($imagen == null) {
             $nombreImg = "SIN IMAGEN";
@@ -160,6 +163,7 @@ class ProductosController extends Controller
                 'tipoPropina' => $tipoPropina,
                 'montoPropina' => $mntPropina,
                 'precio' => $precio,
+                'precioTI' => $precioTI,
                 'complemento' => $complemento,
                 'imagen' => $nombreImg,
                 'status' => $status,
@@ -247,6 +251,8 @@ class ProductosController extends Controller
         $tipoPropina = $request->get('tipoPropina');
         $montoPropina = $request->get('montoPropina');
         $precio = $request->get('precio');
+        $precioTI = $request->get('precioTI');
+
         $complemento = $request->get('complemento');
         $status = $request->get('status');
         $temporada = $request->get('temporada');
@@ -254,6 +260,8 @@ class ProductosController extends Controller
         $nombreImgApi = $request->get('nombreImg');
         // dd(request()->all());
         $mntPropina = ($montoPropina == NULL) ? 0 : $montoPropina;    
+        $precioTI = ($precioTI == NULL) ? 0 : $precioTI;    
+
 
         if ($imagen == null) {
             $nombreImg = $nombreImgApi;
@@ -283,6 +291,7 @@ class ProductosController extends Controller
                 'tipoPropina' => $tipoPropina,
                 'montoPropina' => $mntPropina,
                 'precio' => $precio,
+                'precioTI' => $precioTI,
                 'complemento' => $complemento,
                 'imagen' => $nombreImg,
                 'status' => $status,

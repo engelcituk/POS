@@ -124,7 +124,23 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    </div>                                                                                            
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-money-bill-alt"></i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Precio todo incluido</label>
+                                                <input id="precioTI" type="number" step="0.01" class="form-control{{ $errors->has('precioTI') ? ' is-invalid' : '' }}" name="precioTI" required>
+                                                @if ($errors->has('precioTI'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('precioTI') }}</strong>
+                                                </span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>                                                                                          
                                     <div class="col-md-12 centerImg">                                   
                                         <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                             <div class="fileinput-preview fileinput-exists thumbnail"></div>
