@@ -4,7 +4,31 @@
 
 <div class="content">
     
-    <div class="container-fluid" id="moduloOrdenar">        
+    <div class="container-fluid" id="moduloOrdenar">  
+        <div class="row">
+            <div class="col-md-7">
+                {{-- <div class="col-carousel">
+                    <div class="owl-carousel carousel-main">
+                        <div class="slideProductos">
+                            <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
+                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}">                    
+                            </div>
+                            <p class="post-title btn-success" categoria="masVendidos">Más vendidos</p>
+                        </div>
+                        @foreach ($categorias as $categoria)
+                            <div class="slideProductos">
+                                @php                                               
+                                    $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;
+                                @endphp
+                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="{{asset($img)}}">                    
+                                </div>
+                                <p class="post-title btn-success" categoria="masVendidos">{{$categoria->name}}</p>
+                            </div>                            
+                        @endforeach
+                    </div>
+                </div> --}}
+            </div>                                    
+        </div>
         <div class="row" id="zonaMesas">                                             
             <div class="col-md-12">
                 <div class="card">                    
@@ -39,6 +63,7 @@
             </div>
             <!-- end col-md-12 -->
         </div>
+
         <!-- end row -->
         <div class="row hidden" id="zonaTomarOrden">
             <div class="col-md-12">
@@ -116,8 +141,7 @@
 
                                     
                             </div>
-                            <div class="col-md-7" id="idMesaAddProducts">
-                                
+                            <div class="col-md-7" id="idMesaAddProducts">                                                                
                                 <div class="row">
                                     <div class="col-md-6" id="divBtnClientes">                                         
                                         <div id="lstBtnClientes" class="btnComensalScroll">
@@ -142,13 +166,13 @@
                                         </div>
                                     </div>                                                                        
                                 </div>
+                                
                                 <br>
                                 <div id="sliderProductos" class="owl-carousel">
                                     <div class="slideProductos">
                                         <div class="post-img">                                            
                                             <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
-                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}"/>       
-                                                {{-- <span class="label" categoria="masVendidos">Más vendidos</span>          --}}
+                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}"/>                                                 
                                             </div>
                                         </div>
                                         <p class="post-title btn-success" categoria="masVendidos">
@@ -157,9 +181,11 @@
                                     </div>
                                     @foreach($categorias as $categoria)
                                         <div class="slideProductos">
-                                            <div class="post-img">                                                
-                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="{{asset('storage/categorias/'.$categoria->imagen)}}" />
-                                                    {{-- <span class="label label-default" categoria="{{$categoria->name}}">{{$categoria->name}}</span>          --}}
+                                            <div class="post-img">  
+                                                @php                                               
+                                                $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
+                                                @endphp                                              
+                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="{{asset($img)}}" />
                                                 </div>
                         
                                             </div>
@@ -167,6 +193,26 @@
                                         </div>                
                                     @endforeach                                    
                                 </div>
+                                {{-- <div class="col-carousel">
+                                    <div class="owl-carousel carousel-main">
+                                        <div class="slideProductos">
+                                            <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
+                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}">                    
+                                            </div>
+                                            <p class="post-title btn-success" categoria="masVendidos">Más vendidos</p>
+                                        </div>
+                                        @foreach ($categorias as $categoria)
+                                            <div class="slideProductos">
+                                                @php                                               
+                                                    $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;
+                                                @endphp
+                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="{{asset($img)}}">                    
+                                                </div>
+                                                <p class="post-title btn-success" categoria="masVendidos">{{$categoria->name}}</p>
+                                            </div>                            
+                                        @endforeach
+                                    </div>
+                                </div> --}}
                                 <br>
                                 <span class="text-center"><i id="spinLoader" class="fas fa-spinner fa-spin fa-3x hidden"></i></span>
                                 {{-- <div id="lstProductos">

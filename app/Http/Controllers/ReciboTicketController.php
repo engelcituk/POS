@@ -10,14 +10,13 @@ use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Mike42\Escpos\CapabilityProfile;
 use Illuminate\Http\Request;
 
-
-
 class ReciboTicketController extends Controller
 {
  
-    public function createRecibo(){
+    public function createRecibo(Request $request){
         $impresoraIp = '172.16.0.207';
         $impresoraPuerto = 9100;
+        $contenidoTicket = $request->get('contenidoTicket');
 
         $conector = new NetworkPrintConnector($impresoraIp, $impresoraPuerto);
         $impresora = new Printer($conector);
@@ -25,7 +24,9 @@ class ReciboTicketController extends Controller
             $impresora->text("titulo\n");
             $impresora->text("-----------------------\n");
             $impresora->text("cuerpo del ticket\n");
-            $impresora->cut();            
+            $impresora->cut(); 
+            $impresora->text("\n");
+
         } finally {
             $impresora->close();
         }
@@ -37,21 +38,24 @@ class ReciboTicketController extends Controller
         
         $smb='smb://';
         $maquinaImpresora = $request->get('maquinaImpresora');
+        $initialCode = $request->get('initialCode');
+
 
         $profile = CapabilityProfile::load("simple");
 
         $connector = new WindowsPrintConnector($smb.$maquinaImpresora);
         $impresora = new Printer($connector, $profile);
 
-        $bytes = array(0x1d, 0x56, 0x00);// array de bits para en teoria cortar cadena
-        $string = implode(array_map("chr", $bytes));
+        // $bytes = array(0x1d, 0x56, 0x00);// array de bits para en teoria cortar cadena
+        // $string = implode(array_map("chr", $bytes));
         
         try {
+            $impresora->text($initialCode);
             $impresora->text($contenidoTicket);
             // $impresora->text("titulo\n");
             // $impresora->text("-----------------------\n");
             $impresora->text("\n");
-            $impresora->text($string);
+            // $impresora->text($string);
             $impresora->cut(); 
 
         } finally {

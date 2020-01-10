@@ -2030,9 +2030,11 @@ function asignarHabitacionModal(){
                     );
                     // imprimo ticket desde php con laravel
                     var contenidoTicket = respuesta["ticket"];                
-                    var maquinaImpresora = respuesta["printer"]
+                    var maquinaImpresora = respuesta["printer"];
+                    var initialCode = respuesta["initialCode"];
+
                     if(contenidoTicket != "" ){
-                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora,initialCode);
                     }
                 }
             },
@@ -2113,9 +2115,11 @@ function asignarHabitacionModal(){
                         localStorage.setItem(cuentaAPi,JSON.stringify(datosCuentaAPi));
                         // imprimo ticket desde laravel
                         var contenidoTicket = respuesta["ticket"];                
-                        var maquinaImpresora = respuesta["printer"]
+                        var maquinaImpresora = respuesta["printer"];
+                        var initialCode = respuesta["initialCode"];
+
                         if(contenidoTicket != "" ){
-                            imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                            imprimirTicketCuenta(contenidoTicket, maquinaImpresora,initialCode);
                         }                      
                     }                    
                 },
@@ -2291,9 +2295,11 @@ function asignarHabitacionModal(){
                     );
                     //Imprimo ticket desde php con laravel
                     var contenidoTicket = respuesta["ticket"];                
-                    var maquinaImpresora = respuesta["printer"]
+                    var maquinaImpresora = respuesta["printer"];
+                    var initialCode = respuesta["initialCode"];
+
                     if(contenidoTicket != "" ){
-                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora,initialCode);
                     }
                 }                                
         },
@@ -2343,9 +2349,11 @@ function imprimirCuenta() {
 
                 if(ok){
                     var contenidoTicket = respuesta["ticket"];                
-                    var maquinaImpresora = respuesta["printer"]
+                    var maquinaImpresora = respuesta["printer"];
+                    var initialCode = respuesta["initialCode"];
+
                     if(contenidoTicket != "" ){
-                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora,initialCode);
                     }
                 }
             },
@@ -2376,9 +2384,11 @@ function imprimirCuenta() {
             console.log("respuesta controlador",respuesta);                    
             if(ok){
                 var contenidoTicket = respuesta["ticket"];                
-                var maquinaImpresora = respuesta["printer"]
+                var maquinaImpresora = respuesta["printer"];
+                var initialCode = respuesta["initialCode"];
+
                 if(contenidoTicket != "" ){
-                    imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
+                    imprimirTicketCuenta(contenidoTicket, maquinaImpresora,initialCode);
                 }
             }                           
                                                 
@@ -2635,7 +2645,7 @@ function guardarCambioDeMesa(idPV, idCuenta, idMesaNueva){
     handleOrientationChange(mediaquery);
     mediaquery.addListener(handleOrientationChange);
 
-function imprimirTicketCuenta(contenidoTicket,maquinaImpresora) {              
+function imprimirTicketCuenta(contenidoTicket,maquinaImpresora,initialCode) {              
         var csrf_token = $('meta[name="csrf-token"]').attr('content');    
         // console.log("idPuntoVenta: "+idPV+" idCuenta: "+idCuenta+" idMesaNueva: "+idMesaNueva);              
         $.ajax({
@@ -2645,7 +2655,9 @@ function imprimirTicketCuenta(contenidoTicket,maquinaImpresora) {
                 '_method': 'POST',                           
                 '_token': csrf_token,
                 'contenidoTicket': contenidoTicket,
-                'maquinaImpresora': maquinaImpresora
+                'maquinaImpresora': maquinaImpresora,
+                'initialCode': initialCode,
+
             },
             success: function(respuesta) {             
                                
