@@ -5,30 +5,7 @@
 <div class="content">
     
     <div class="container-fluid" id="moduloOrdenar">  
-        <div class="row">
-            <div class="col-md-7">
-                {{-- <div class="col-carousel">
-                    <div class="owl-carousel carousel-main">
-                        <div class="slideProductos">
-                            <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
-                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}">                    
-                            </div>
-                            <p class="post-title btn-success" categoria="masVendidos">Más vendidos</p>
-                        </div>
-                        @foreach ($categorias as $categoria)
-                            <div class="slideProductos">
-                                @php                                               
-                                    $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;
-                                @endphp
-                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="{{asset($img)}}">                    
-                                </div>
-                                <p class="post-title btn-success" categoria="masVendidos">{{$categoria->name}}</p>
-                            </div>                            
-                        @endforeach
-                    </div>
-                </div> --}}
-            </div>                                    
-        </div>
+        
         <div class="row" id="zonaMesas">                                             
             <div class="col-md-12">
                 <div class="card">                    
@@ -38,8 +15,7 @@
                                 @php
                                     $abrirMesa = Session::get('AbrirMesa.leer');                                                         
                                 @endphp
-                               <strong><span id="nombrePVSpan">{{$datosRestaurantePV->name}}</span> / <span id="nombreZona"></span></strong> 
-                               <button class="btn btn-primary btn-xs" onclick="testPrint()">imprimir</button>
+                               <strong><span id="nombrePVSpan">{{$datosRestaurantePV->name}}</span> / <span id="nombreZona"></span></strong>                              
                                {{-- condiciono el valor del span si usuario tiene permiso para solo abrir mesa --}}
                                 @if ($abrirMesa==1 )
                                     <span class="hidden" id="userOpenMesaSpanPermission">1</span>
@@ -62,6 +38,7 @@
                 <!--  end card  -->
             </div>
             <!-- end col-md-12 -->
+            
         </div>
 
         <!-- end row -->
@@ -167,52 +144,36 @@
                                     </div>                                                                        
                                 </div>
                                 
-                                <br>
-                                <div id="sliderProductos" class="owl-carousel">
-                                    <div class="slideProductos">
-                                        <div class="post-img">                                            
-                                            <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
-                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}"/>                                                 
+                                <br>                                                                
+                                <div class="carousel slide" id="myCarousel">
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <div class="col-xs-3 productSlide" id="categoria_0" onclick="getProductosMasVendidos()">
+                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}" class="img-responsive">
+                                                
+                                                <p class="post-title btn-success" categoria="masVendidos">
+                                                            Más vendidos
+                                                </p>
                                             </div>
                                         </div>
-                                        <p class="post-title btn-success" categoria="masVendidos">
-                                            Más vendidos
-                                        </p>                                        
-                                    </div>
-                                    @foreach($categorias as $categoria)
-                                        <div class="slideProductos">
-                                            <div class="post-img">  
-                                                @php                                               
-                                                $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
-                                                @endphp                                              
-                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="{{asset($img)}}" />
-                                                </div>
-                        
+                                        @foreach($categorias as $categoria)
+                                        @php                                               
+                                            $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
+                                        @endphp
+                                        <div class="item">
+                                            <div class="col-xs-3 productSlide" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})">
+                                                
+                                                    <img style="cursor: pointer;"  src="{{asset($img)}}" class="img-responsive">
+                                                    <p class="post-title">
+                                                        {{$categoria->name}}
+                                                    </p>
                                             </div>
-                                            <p class="post-title ">{{$categoria->name}}</p>
-                                        </div>                
-                                    @endforeach                                    
-                                </div>
-                                {{-- <div class="col-carousel">
-                                    <div class="owl-carousel carousel-main">
-                                        <div class="slideProductos">
-                                            <div class="product" id="categoria_0" onclick="getProductosMasVendidos()">
-                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}">                    
-                                            </div>
-                                            <p class="post-title btn-success" categoria="masVendidos">Más vendidos</p>
                                         </div>
-                                        @foreach ($categorias as $categoria)
-                                            <div class="slideProductos">
-                                                @php                                               
-                                                    $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;
-                                                @endphp
-                                                <div class="product" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})"><img style="cursor: pointer;" src="{{asset($img)}}">                    
-                                                </div>
-                                                <p class="post-title btn-success" categoria="masVendidos">{{$categoria->name}}</p>
-                                            </div>                            
                                         @endforeach
                                     </div>
-                                </div> --}}
+                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="fas fa-arrow-left flecha"></i></a>
+                                    <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="fas fa-arrow-right flecha"></i></a>
+                                </div>
                                 <br>
                                 <span class="text-center"><i id="spinLoader" class="fas fa-spinner fa-spin fa-3x hidden"></i></span>
                                 {{-- <div id="lstProductos">
@@ -220,7 +181,10 @@
                                     </ul> 
                                     
                                 </div> --}}
-                                <div class="row display-flex" id="UlList2">
+                                <div class="row display-flex" >
+                                    <div class="scrollProductosCat" id="UlList2">
+
+                                    </div>
                                         
                                 </div>
                             </div>

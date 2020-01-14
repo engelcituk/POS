@@ -20,9 +20,7 @@
     {{-- estilos swtiches --}}
     <link href="{{asset('css/carousel.css')}}" rel="stylesheet"/>
     <link href="{{asset('css/owl.carousel.min.css')}}" rel="stylesheet"/>
-    {{-- <link href="{{asset('css/owl.carousel.css')}}" rel="stylesheet"/> --}}
-
-    {{-- <link href="{{asset('css/owl.theme.min.css')}}" rel="stylesheet"/> --}}
+    
     <link href="{{asset('css/estilo.css')}}" rel="stylesheet"/>
 	@if(request()->is('ordenar'))
         <link href="{{asset('css/estiloTblComanda.css')}}" rel="stylesheet"/>                
@@ -364,8 +362,6 @@
 @endif
 
 <script src="{{asset('js/owl.carousel.min.js')}}"></script>
-{{-- <script src="{{asset('js/oowl.carousel.min.js')}}"></script> --}}
-
 
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
 @include('scriptjs/ticketRecibo')

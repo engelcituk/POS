@@ -41,7 +41,7 @@ function initZonas(){
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
-    $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
+    $.connection.hub.url = 'http://172.16.1.45/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {                  
@@ -2421,10 +2421,10 @@ function tiempoOrden() {
     
 }
 //para marcar los span a las categorias seleccionadas
-$(document).on("click", ".slideProductos", function(){    
-    $(".slideProductos").children('p').removeClass("btn-success");
+$(document).on("click", ".productSlide", function(){    
+    $(".productSlide").children('p').removeClass("btn-success");
     $(this).children('p').addClass("btn-success");
-    // $(".slideProductos").children('p').addClass("btn-info");
+    // $(".productSlide").children('p').addClass("btn-info");
          
 });
 //para marcar el boton seleccionado a la zona seleccionada

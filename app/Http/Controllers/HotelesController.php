@@ -71,7 +71,7 @@ class HotelesController extends Controller
 
     static public function obtenerHotelSesion($idHotel){//funcion que uso desde la vista
         $metodo = "GET";
-        $urlBase = "http://172.16.4.229/TPVApi/Hoteles/GetHotel/{$idHotel}";
+        $urlBase = "http://172.16.1.45/TPVApi/Hoteles/GetHotel/{$idHotel}";
 
         $cliente =  new Client();
         $respuesta = $cliente->request($metodo, $urlBase);
