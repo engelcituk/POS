@@ -14,6 +14,7 @@ class ProductosController extends Controller
     public $urlBase = "";
     public $urlBaseProductoAlergeno = "";
     public $urlPModo= "";
+    public $idHotel;
 
     public function __construct(){
 
@@ -21,12 +22,16 @@ class ProductosController extends Controller
         $this->urlBase = $this->urlApiTPV()."Producto/";
         $this->urlBaseProductoAlergeno = $this->urlApiTPV()."ProductoAlergeno/";
         $this->urlPModo = $this->urlApiTPV()."ProductoModo/";
+        $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
+            $this->idHotel = session()->get('idHotel');
+            return $next($request);
+        });
 
     }
 
     public function index(){
         // $productos = $this->obtenerTodosLosProductos();
-        $productos = $this->obtenerTodosLosProductos();
+        $productos = $this->obtenerTodosLosProductos($this->idHotel);
         // dd($productos);
         $modos = new ModosController();
         $modos = $modos->obtenerTodosLosModos(); 
@@ -44,17 +49,20 @@ class ProductosController extends Controller
     }
     public function AllProduct()
     {
-        $productos = $this->obtenerTodosLosProductos();
+        $productos = $this->obtenerTodosLosProductos($this->idHotel);
 
         $acciones = 'productos.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($productos)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }   
-    public function obtenerTodosLosProductos(){
-       //es una funcion que esta en el controller principal
-       $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetProducto'); 
-
+    public function obtenerTodosLosProductos($idHotel){
+        if($idHotel == null){
+            //es una funcion que esta en el controller principal        
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetProducto');                       
+        } else {
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProductosByHotel/{$idHotel}");
+        }       
        $datos = json_decode($respuesta);
 
        $productos = $datos->objeto;

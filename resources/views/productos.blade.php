@@ -44,7 +44,7 @@
                                 <tbody>
                                     @foreach($productos as $producto)  
                                     @php
-                                        $fecha = substr($producto->fechaAlta, 0,10); 
+                                        // $fecha = substr($producto->fechaAlta, 0,10); 
 
                                         $colorPropina = $producto->propina==1 ? 'success' : 'warning' ;
                                         $conPropina = $producto->propina==1 ? 'Si' : 'No';
