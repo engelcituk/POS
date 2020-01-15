@@ -164,6 +164,7 @@ class ProductosController extends Controller
                        
         $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'AddProducto', [
             'form_params' => [
+                'idHotel' => $this->idHotel,
                 'codigoProducto' => $codigoProducto,
                 'idCategoria' => $idCategoria,
                 'nombreProducto' => $nombreProducto,
@@ -292,6 +293,7 @@ class ProductosController extends Controller
         // dd( $array);
         $respuesta = $this->realizarPeticion('POST', $this->urlBase."UpdateProducto/{$idProducto}", [
             'form_params' => [
+                'idHotel' => $this->idHotel,
                 'codigoProducto' => $codigoProducto,
                 'idCategoria' => $idCategoria,
                 'nombreProducto' => $nombreProducto,
