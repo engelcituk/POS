@@ -7,25 +7,31 @@ use Yajra\DataTables\DataTables;
 
 class RestaurantesController extends Controller
 {
-    public $urlBase = "";    
+    public $urlBase = "";  
+    public $idHotel; 
     
-    public function __construct()
+    public function __construct(Request $request)
     {
         $this->middleware('accesoPVentaFiltro');
-        $this->urlBase = $this->urlApiTPV()."PuntosVenta/";
+        $this->urlBase = $this->urlApiTPV()."PuntosVenta/";        
+        
+        $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
+            $this->idHotel = session()->get('idHotel');
+            return $next($request);
+        });
 
     }
     
     public function index()
     {
-        $restaurantes = $this->obtenerTodosLosRestaurantes();
-        // dd($restaurantes);      
+             
+        $restaurantes = $this->obtenerTodosLosRestaurantes($this->idHotel);
         return view('restaurantes', compact('restaurantes'));
     }
  
     public function AllRestaurantes()
     {
-        $restaurantes = $this->obtenerTodosLosRestaurantes();
+        $restaurantes = $this->obtenerTodosLosRestaurantes($this->idHotel);
 
         
         $acciones = 'restaurantes.datatables.botones'; /*creo los botones de acciones en una vista*/
@@ -33,10 +39,14 @@ class RestaurantesController extends Controller
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    public function obtenerTodosLosRestaurantes()/*metodo no protected porque lo ocuparé en otros metodos de otros controladores */
+    public function obtenerTodosLosRestaurantes($idHotel)/*metodo no protected porque lo ocuparé en otros metodos de otros controladores */
     {
-        //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetPuntosVenta');
+        if($idHotel == null){
+            //realizarPeticiones una funcion que esta en el controller principal
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetPuntosVenta');
+        } else {
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetPuntosVentaPorHotel/{$idHotel}");
+        }
         
         $datos = json_decode($respuesta);
         $restaurantes = $datos->objeto;

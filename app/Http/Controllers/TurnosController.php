@@ -9,34 +9,42 @@ class TurnosController extends Controller
 {
     
     public $urlBase = "";
-    
+    public $idHotel; 
+
     public function __construct(){
 
         $this->middleware('accesoTurnosFiltro');
         $this->urlBase = $this->urlApiTPV()."Turnos/";
+        $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
+            $this->idHotel = session()->get('idHotel');
+            return $next($request);
+        });
         
     }
 
     public function index()
     {
-        $turnos = $this->obtenerTodosLosTurnos();
+        $turnos = $this->obtenerTodosLosTurnos($this->idHotel);
 
         return view('turnospv', compact('turnos'));
     }
     public function AllTurnos()
     {
-        $turnos = $this->obtenerTodosLosTurnos();
+        $turnos = $this->obtenerTodosLosTurnos($this->idHotel);
 
         $acciones = 'turnospv.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($turnos)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    public function obtenerTodosLosTurnos()
+    public function obtenerTodosLosTurnos($idHotel)
     {
-        //es una funcion que esta en el controller principal        
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetTurnos');
-
+        if($idHotel == null){               
+            //es una funcion que esta en el controller principal        
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetTurnos');         
+        } else {
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetTurnosByHotel/{$idHotel}");
+        }                
         $datos = json_decode($respuesta);
 
         $turnos = $datos->objeto;

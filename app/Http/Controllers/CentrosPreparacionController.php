@@ -9,23 +9,28 @@ class CentrosPreparacionController extends Controller
 {
     
     public $urlBase = "";
+    public $idHotel; 
     
     public function __construct()    {
 
         $this->middleware('accesoCPFiltro');
         $this->urlBase = $this->urlApiTPV()."CentrosPreparacion/";
+        $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
+            $this->idHotel = session()->get('idHotel');
+            return $next($request);
+        });
 
     }
     public function index()
     {
-        $centrosP = $this->obtenerTodosLosCentrosDePreparacion();
+        $centrosP = $this->obtenerTodosLosCentrosDePreparacion($this->idHotel);
         // dd($centrosP);
         return view('centrosprep',compact('centrosP'));
     }
 
     public function AllCentrosPreparacion()
     {
-        $centrosP = $this-> obtenerTodosLosCentrosDePreparacion();
+        $centrosP = $this-> obtenerTodosLosCentrosDePreparacion($this->idHotel);
 
         $acciones = 'centrospreparacion.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($centrosP)
@@ -33,11 +38,14 @@ class CentrosPreparacionController extends Controller
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
 
-    public function obtenerTodosLosCentrosDePreparacion()
+    public function obtenerTodosLosCentrosDePreparacion($idHotel)
     {
-        //es una funcion que esta en el controller principal        
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetCentrosPreparacion');
-
+        if($idHotel == null){               
+             //es una funcion que esta en el controller principal        
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetCentrosPreparacion');         
+        } else {
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetCentrosPreparacionByHotel/{$idHotel}");
+        }
         $datos = json_decode($respuesta);
 
         $centrosP = $datos->objeto;

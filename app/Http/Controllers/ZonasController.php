@@ -8,34 +8,45 @@ use Yajra\DataTables\DataTables;
 class ZonasController extends Controller
 {
     public $urlBase = ""; 
-    
+    public $idHotel; 
+   
     public function __construct()
     {
         $this->middleware('accesoZonasFiltro');
         $this->urlBase = $this->urlApiTPV()."Zonas/";
+        $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
+            $this->idHotel = session()->get('idHotel');
+            return $next($request);
+        });
+
 
     }
     
     public function index()
     {
-        $zonas = $this->obtenerTodasLasZonas();
+        $zonas = $this->obtenerTodasLasZonas($this->idHotel);
+        
         return view('zonas',compact('zonas'));
     }
 
     public function AllZonas()
     {
-        $zonas = $this->obtenerTodasLasZonas();
+        $zonas = $this->obtenerTodasLasZonas($this->idHotel);
 
         $acciones = 'zonas.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($zonas)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    public function obtenerTodasLasZonas()
+    public function obtenerTodasLasZonas($idHotel)
     {
-        //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetZonas');
-
+        if($idHotel == null){
+            //realizarPeticiones una funcion que esta en el controller principal
+             $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetZonas');            
+        } else {
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetZonasByHotel/{$idHotel}");
+        }
+        
         $datos = json_decode($respuesta);
 
         $zonas = $datos->objeto;

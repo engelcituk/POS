@@ -11,32 +11,42 @@ class CartaController extends Controller
 {
     
     public $urlBase = "";
+    public $idHotel;
+
     public function __construct()
     {
 
         $this->middleware('accesoCartasFiltro');
         $this->urlBase = $this->urlApiTPV()."Cartas/";
+        $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
+            $this->idHotel = session()->get('idHotel');
+            return $next($request);
+        });
 
     }
     public function index()
     {
-        $cartas = $this->obtenerTodosLasCartas();
+        $cartas = $this->obtenerTodosLasCartas($this->idHotel);
         // dd($cartas);
         return view('cartas',compact('cartas'));
     }
     public function AllCartas()
     {
-        $cartas = $this->obtenerTodosLasCartas();
+        $cartas = $this->obtenerTodosLasCartas($this->idHotel);
 
         $acciones = 'cartas.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($cartas)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    public function obtenerTodosLasCartas(){
-        //es una funcion que esta en el controller principal        
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetCartas');
-
+    public function obtenerTodosLasCartas($idHotel){
+        if($idHotel == null){
+            //es una funcion que esta en el controller principal        
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetCartas');                                    
+        } else {
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetCartasByHotel/{$idHotel}");
+        }
+        
         $datos = json_decode($respuesta);
 
         $cartas = $datos->objeto;

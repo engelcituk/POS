@@ -9,34 +9,44 @@ class MesasController extends Controller
 {
     
     public $urlBase = ""; 
+    public $idHotel;
 
     public function __construct()
     {
         $this->middleware('accesoMesasFiltro');
         $this->urlBase = $this->urlApiTPV()."Mesas/";
+        $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
+            $this->idHotel = session()->get('idHotel');
+            return $next($request);
+        });
 
     }
     
     public function index()
     {
-        $mesas = $this->obtenerTodosLasMesas();
+        $mesas = $this->obtenerTodosLasMesas($this->idHotel);
 
         return view('mesas',compact('mesas'));
     }
 
     public function AllMesas()
     {
-        $mesas = $this->obtenerTodosLasMesas();
+        $mesas = $this->obtenerTodosLasMesas($this->idHotel);
 
         $acciones = 'mesas.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($mesas)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    protected function obtenerTodosLasMesas()
+    protected function obtenerTodosLasMesas($idHotel)
     {
+        if($idHotel == null){
+            //realizarPeticiones una funcion que esta en el controller principal
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetMesas');                        
+        } else {
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetMesasByHotel/{$idHotel}");
+        }
         //es una funcion que esta en el controller principal
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetMesas');
        
         $datos = json_decode($respuesta);
 

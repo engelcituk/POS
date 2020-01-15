@@ -9,29 +9,39 @@ use Yajra\DataTables\DataTables;
 class MenusCartasController extends Controller{
 
     public $urlBase = "";
+    public $idHotel;
     // public $urlBaseProductoAlergeno = "http://localhost/TPVApi/productoalergeno/";
     public function __construct(){
         $this->middleware('accesoMenusCartaFiltro');
         $this->urlBase = $this->urlApiTPV()."MenuCarta/";
+        $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
+            $this->idHotel = session()->get('idHotel');
+            return $next($request);
+        });
 
     }
     public function index(){
-        $menucartas = $this->obtenerTodosLosMenusCartas();
+        $menucartas = $this->obtenerTodosLosMenusCartas($this->idHotel);
 
         return view('menuscartas', compact('menucartas'));
     }
 
     public function AllMenuCartas(){
-        $menucartas = $this->obtenerTodosLosMenusCartas();
+        $menucartas = $this->obtenerTodosLosMenusCartas($this->idHotel);
 
         $acciones = 'menuscartas.datatables.botones'; /*creo los botones de acciones en una vista*/
         return Datatables::of($menucartas)
             ->addColumn('acciones', $acciones)
             ->rawColumns(['acciones'])->make(true); /*Retorno los datos en un datatables y pinto los botones que obtengo de la vista*/
     }
-    public function obtenerTodosLosMenusCartas(){
+    public function obtenerTodosLosMenusCartas($idHotel){
+        if($idHotel == null){
+            //es una funcion que esta en el controller principal        
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase. 'GetMenuCarta');             
+        } else {
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetMenuCartaByHotel/{$idHotel}");
+        }
         
-        $respuesta = $this->realizarPeticion('GET', $this->urlBase. 'GetMenuCarta'); 
         $datos = json_decode($respuesta);
 
         $menuCartas = $datos->objeto;
