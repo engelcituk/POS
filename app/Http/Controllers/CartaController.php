@@ -59,8 +59,16 @@ class CartaController extends Controller
         $fechaAlta= Carbon::now();//ocupo carbon para obtener fecha actual
         $horaAlta = $fechaAlta->toTimeString(); //obtengo la hora de la fecha
 
-        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
-        $turnos = \App::call( 'App\Http\Controllers\TurnosController@obtenerTodosLosTurnos');
+        $idHotel = $this->idHotel;
+        $restaurantes = new RestaurantesController();
+        $restaurantes = $restaurantes->obtenerTodosLosRestaurantes($idHotel);
+
+        
+        $turnos = new TurnosController();
+        $turnos = $turnos->obtenerTodosLosTurnos($idHotel);
+
+        // $restaurantes = \App::call("App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes({$this->idHotel})");
+        //$turnos = \App::call( 'App\Http\Controllers\TurnosController@obtenerTodosLosTurnos');
 
 
         return view('cartas.partials.create',compact('fechaAlta', 'horaAlta','restaurantes','turnos'));
@@ -95,8 +103,15 @@ class CartaController extends Controller
         $datosPV = new RestaurantesController();
         $datosPV = $datosPV->obtenerUnRestaurante($idPuntoVenta);
 
-        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
-        $turnos = \App::call('App\Http\Controllers\TurnosController@obtenerTodosLosTurnos');
+        // $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+        // $turnos = \App::call('App\Http\Controllers\TurnosController@obtenerTodosLosTurnos');
+        $idHotel = $this->idHotel;
+        $restaurantes = new RestaurantesController();
+        $restaurantes = $restaurantes->obtenerTodosLosRestaurantes($idHotel);
+
+        
+        $turnos = new TurnosController();
+        $turnos = $turnos->obtenerTodosLosTurnos($idHotel);
 
 
         return view('cartas.partials.edit', compact('carta', 'datosPV','datosTurno', 'restaurantes', 'turnos'));       

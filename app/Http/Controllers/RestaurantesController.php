@@ -10,7 +10,7 @@ class RestaurantesController extends Controller
     public $urlBase = "";  
     public $idHotel; 
     
-    public function __construct(Request $request)
+    public function __construct()
     {
         $this->middleware('accesoPVentaFiltro');
         $this->urlBase = $this->urlApiTPV()."PuntosVenta/";        

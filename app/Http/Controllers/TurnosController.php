@@ -54,8 +54,16 @@ class TurnosController extends Controller
 
     public function create()
     {
-        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
-        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+        $idHotel = $this->idHotel;
+
+        $hoteles = new HotelesController();
+        $hoteles = $hoteles->obtenerTodosLosHoteles($idHotel);
+        
+        $restaurantes = new RestaurantesController();
+        $restaurantes = $restaurantes->obtenerTodosLosRestaurantes($idHotel);
+
+        // $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+        // $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
 
         return view('turnospv.partials.create', ['hoteles' => $hoteles, 'restaurantes' => $restaurantes]);        
     }

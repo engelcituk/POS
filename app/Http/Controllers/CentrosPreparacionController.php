@@ -55,8 +55,11 @@ class CentrosPreparacionController extends Controller
 
     public function create()
     {
-              
-        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
+        $idHotel = $this->idHotel;
+        $impresoras = new ImpresorasController();
+        $impresoras = $impresoras->obtenerTodasLasImpresoras($idHotel);  
+
+        //$impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
         // dd($impresoras);  
         return view('centrospreparacion.partials.create', compact('impresoras'));   
     }
@@ -81,6 +84,8 @@ class CentrosPreparacionController extends Controller
 
     public function show($id)
     {
+        $idHotel = $this->idHotel;
+
         $idCentroPreparacion = $id;
         $centroPreparacion = $this->obtenerUnCentroDePreparación($idCentroPreparacion);
 
@@ -88,13 +93,18 @@ class CentrosPreparacionController extends Controller
         $datosImpresora= new ImpresorasController(); //para obtener los datos de la zona
         $datosImpresoraCP= $datosImpresora->obtenerUnaImpresora($idImpresora); //los datos de la zona lo envio a la vista
 
-        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
+        $impresoras = new ImpresorasController();
+        $impresoras = $impresoras->obtenerTodasLasImpresoras($idHotel);
+
+       // $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
 
         return view('centrospreparacion.partials.show', compact('impresoras', 'centroPreparacion', 'datosImpresoraCP')); 
     }
 
     public function edit($id)
     {
+        $idHotel = $this->idHotel;
+        
         $idCentroPreparacion = $id;
         $centroPreparacion = $this->obtenerUnCentroDePreparación($idCentroPreparacion);
 // dd($centroPreparacion);
@@ -105,7 +115,10 @@ class CentrosPreparacionController extends Controller
         $datosImpresoraCP = $datosImpresora->obtenerUnaImpresora($idImpresora); //los datos de la zona lo envio a la vista
         $datosImpresoraCPB = $datosImpresora->obtenerUnaImpresora($idImpresoraB);
        
-        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
+        $impresoras = new ImpresorasController();
+        $impresoras = $impresoras->obtenerTodasLasImpresoras($idHotel);
+
+        //$impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
         
         return view('centrospreparacion.partials.edit', compact('impresoras', 'centroPreparacion', 'datosImpresoraCP', 'datosImpresoraCPB')); 
     }

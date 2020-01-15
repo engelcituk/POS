@@ -52,9 +52,19 @@ class MenusCartasController extends Controller{
     
     public function create() { 
 
-        $cartas = \App::call( 'App\Http\Controllers\CartaController@obtenerTodosLasCartas');
-        $productos = \App::call( 'App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
-        $centrosPreparacion = \App::call('App\Http\Controllers\CentrosPreparacionController@obtenerTodosLosCentrosDePreparacion');
+        $idHotel = $this->idHotel;
+        $cartas = new CartaController();
+        $cartas = $cartas->obtenerTodosLasCartas($idHotel);
+        
+        $productos = new ProductosController();
+        $productos = $productos->obtenerTodosLosProductos($idHotel);
+
+        $centrosPreparacion = new CentrosPreparacionController();
+        $centrosPreparacion = $centrosPreparacion->obtenerTodosLosCentrosDePreparacion($idHotel);
+
+        // $cartas = \App::call( 'App\Http\Controllers\CartaController@obtenerTodosLasCartas');
+        // $productos = \App::call( 'App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
+        // $centrosPreparacion = \App::call('App\Http\Controllers\CentrosPreparacionController@obtenerTodosLosCentrosDePreparacion');
 
         return view('menuscartas.partials.create', compact('cartas', 'productos', 'centrosPreparacion')); 
     }
@@ -102,6 +112,7 @@ class MenusCartasController extends Controller{
 
 
     public function edit($idMenuCarta){
+        $idHotel = $this->idHotel;
         
         $menucarta = $this->obtenerUnMenuCarta($idMenuCarta);
         $idCarta=$menucarta->idCarta;
@@ -120,9 +131,18 @@ class MenusCartasController extends Controller{
         $datosCP = new CentrosPreparacionController();
         $datosCP = $datosCP->obtenerUnCentroDePreparación($idCentroPreparacion);
 
-        $cartas = \App::call('App\Http\Controllers\CartaController@obtenerTodosLasCartas');
-        $productos = \App::call('App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
-        $centrosPreparacion = \App::call('App\Http\Controllers\CentrosPreparacionController@obtenerTodosLosCentrosDePreparacion');
+        $cartas = new CartaController();
+        $cartas = $cartas->obtenerTodosLasCartas($idHotel);
+        
+        $productos = new ProductosController();
+        $productos = $productos->obtenerTodosLosProductos($idHotel);
+
+        $centrosPreparacion = new CentrosPreparacionController();
+        $centrosPreparacion = $centrosPreparacion->obtenerTodosLosCentrosDePreparacion($idHotel);
+
+        // $cartas = \App::call('App\Http\Controllers\CartaController@obtenerTodosLasCartas');
+        // $productos = \App::call('App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
+        // $centrosPreparacion = \App::call('App\Http\Controllers\CentrosPreparacionController@obtenerTodosLosCentrosDePreparacion');
 
         return view('menuscartas.partials.edit', compact('cartas', 'productos', 'centrosPreparacion', 'menucarta','datosCarta', 'datosProducto', 'datosCP'));
     }
