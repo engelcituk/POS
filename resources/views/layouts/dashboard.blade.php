@@ -65,8 +65,8 @@
     <div class="wrapper">
         <div class="sidebar" data-active-color="rose" data-background-color="black" data-image="{{asset('img/sidebar-1.jpg')}}">
               <div class="logo">
-                <a href="#" class="simple-text">
-                    SANDOS TPV
+                <a href="#" class="simple-text" id="nombrePuntoVenta">
+                    
                 </a>
             </div>
             <div class="logo logo-mini">
@@ -469,6 +469,17 @@
 @if(request()->is('alergenos/create'))
     @include('scriptjs/validacionImgAlergeno')   
 @endif
+<script>
+    leerNombrePuntoDeVenta();
 
+    function leerNombrePuntoDeVenta(){
+        if (localStorage.getItem('nombrePuntoVentaTPV')) {
+            puntoDeVenta = localStorage.getItem("nombrePuntoVentaTPV");
+            $("#nombrePuntoVenta").text(puntoDeVenta);
+        } else {
+            $("#nombrePuntoVenta").text("PV-01");            
+        }
+    }
+</script>
 </html>
 

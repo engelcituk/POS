@@ -1,6 +1,8 @@
 <script>
 
     borrarLocalStorageZones();
+    limpiarNombrePuntoVenta();
+
 
     function eligeHotel(){        
         var idHotel = $("#idHotel option:selected").val();
@@ -51,9 +53,11 @@
     }
     function obtenerCartasPV() {
         var idPuntoVenta = $("#listaPuntosVenta option:selected").val();
+        var nombrePuntoVenta = $("#listaPuntosVenta option:selected").text();        
         var csrf_token = $('meta[name="csrf-token"]').attr('content');
 
-        if(idPuntoVenta !=''){          
+        if(idPuntoVenta !=''){
+        setearNombrePuntoVenta(nombrePuntoVenta);          
          $.ajax({
                 url: "{{ url('login/getcartas') }}"+'/'+idPuntoVenta,
                 type: "GET",
@@ -92,7 +96,7 @@
                 type: 'error',
                 timer: '2500'
             }); 
-
+            limpiarNombrePuntoVenta();            
             listaCartas="<select class='form-control' name='listaCartas' id='listaCartas' required><option value=''>Sin cartas</option></select>";
             $("#listaCartas").html(listaCartas);          
         }
@@ -112,4 +116,10 @@ function borrarLocalStorageZones(){
     localStorage.removeItem("zonaMesaSeleccionada");
 }
 
+function setearNombrePuntoVenta(nombre){
+    localStorage.setItem("nombrePuntoVentaTPV",nombre);    
+}
+function limpiarNombrePuntoVenta(){
+    localStorage.removeItem("nombrePuntoVentaTPV");    
+}
 </script> 

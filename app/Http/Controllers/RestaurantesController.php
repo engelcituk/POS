@@ -63,9 +63,14 @@ class RestaurantesController extends Controller
     } 
     protected function create(){
         /*Obtendo todos los hoteles que me trae mi controlador HOTELESCONTROLLER con su metodo OBTENERTODOSLOSHOTELES*/
+        $idHotel = $this->idHotel;
 
         $hoteles =\App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
-        $impresoras = \App::call( 'App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
+
+        $impresoras = new ImpresorasController();
+        $impresoras = $impresoras->obtenerTodasLasImpresoras($idHotel);
+
+        //$impresoras = \App::call( 'App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras');
         $monedas = $this->obtenerMonedas();
         // dd($monedas);
         return view('restaurantes.partials.create', compact('hoteles', 'impresoras', 'monedas'));
@@ -82,8 +87,16 @@ class RestaurantesController extends Controller
     }
     public function edit($id)
     {
-        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
-        $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras'); 
+        $idHotel = $this->idHotel;
+                
+        $hoteles = new HotelesController();
+        $hoteles = $hoteles->obtenerTodosLosHoteles($idHotel);
+        
+        $impresoras = new ImpresorasController();
+        $impresoras = $impresoras->obtenerTodasLasImpresoras($idHotel);
+        
+        // $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+        // $impresoras = \App::call('App\Http\Controllers\ImpresorasController@obtenerTodasLasImpresoras'); 
 
         $idRestaurante = $id;
         $restaurante = $this->obtenerUnRestaurante($idRestaurante);

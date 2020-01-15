@@ -55,8 +55,14 @@ class ZonasController extends Controller
     }
     protected function create()
     {
+        $idHotel = $this->idHotel;
+
         $hoteles =\App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
-        $restaurantes = \App::call( 'App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+
+        $restaurantes = new RestaurantesController();
+        $restaurantes = $restaurantes->obtenerTodosLosRestaurantes($idHotel);
+
+        //$restaurantes = \App::call( 'App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
         // $idHotel = $hotel->id;  
         return view('zonas.partials.create',['hoteles' => $hoteles, 'restaurantes'=>$restaurantes]);
         
@@ -79,6 +85,8 @@ class ZonasController extends Controller
     }
     public function edit($id)
     {
+        $idHotel = $this->idHotel;
+
         $idZona = $id;
         $zona = $this->obtenerUnaZona($idZona);
         //para obtener el nombre del restaurante al que corresponde la zona        
@@ -87,8 +95,14 @@ class ZonasController extends Controller
         $datosPuntoVenta = new RestaurantesController(); //para obtener los datos del restaurante
         $datosRestaurantePV = $datosPuntoVenta->obtenerUnRestaurante($idPuntoVenta); //los datos lo envio a la vista
 
-        $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
-        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
+        $hoteles = new HotelesController();
+        $hoteles = $hoteles->obtenerTodosLosHoteles($idHotel);
+        
+        $restaurantes = new RestaurantesController();
+        $restaurantes = $restaurantes->obtenerTodosLosRestaurantes($idHotel);
+
+        // $hoteles = \App::call('App\Http\Controllers\HotelesController@obtenerTodosLosHoteles');
+        // $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
 
         return view('zonas.partials.edit', ['zona' => $zona, 'datosRestaurantePV' => $datosRestaurantePV, 'hoteles' => $hoteles, 'restaurantes' => $restaurantes]);
     }
