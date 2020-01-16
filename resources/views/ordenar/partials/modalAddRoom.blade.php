@@ -81,9 +81,9 @@
           <div class="row">    
               <div class="col-md-6">
                 <div class="input-group">
-                    <span class="input-group-addon"><i class="fas fa-bed"></i> Fecha Salida</span>
+                    <span class="input-group-addon"><i class="fas fa-bed"></i> Régimen</span>
                     <div class="form-group label-floating">                            
-                        <input type="text" class="form-control" id="fechaSalidaModal" name="fechaSalidaModal" readonly>  
+                        <input type="text" class="form-control" id="regimenModal" name="regimenModal" readonly>  
                     </div>
                 </div>
               </div>

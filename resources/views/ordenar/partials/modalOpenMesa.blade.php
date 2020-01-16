@@ -99,11 +99,11 @@
                   <div class="col-md-6">
                     <div class="input-group">
                         <span class="input-group-addon">
-                            {{-- <i class="fas fa-calendar-alt"></i> --}}Fecha salida
+                            {{-- <i class="fas fa-calendar-alt"></i> --}}Régimen
                         </span>
                         <div class="form-group label-floating">
                             {{-- <label class="control-label">Fecha salida</label> --}}
-                            <input type="text" class="form-control" id="fechaSalida" name="fechaSalida"  readonly>  
+                            <input type="text" class="form-control" id="regimen" name="regimen"  readonly>  
                         </div>
                     </div>
                   </div>

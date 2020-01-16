@@ -399,7 +399,7 @@ async function aperturaMesa(idMesa) {
                     var nombre=objeto["nombre"];
                     var room=objeto["room"];
                     var ocupante=objeto["Ocupante"];
-                    var fechaSalida=objeto["FechaSalida"];                
+                    var regimen=objeto["regimen"];                
                     var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
                     
                     if(errorCode==0 && reserva!=null){
@@ -409,7 +409,7 @@ async function aperturaMesa(idMesa) {
                         $("#nombre").val(nombre);
                         $("#room").val(room);
                         $("#ocupante").val(ocupante);
-                        $("#fechaSalida").val(fechaSalida);
+                        $("#regimen").val(regimen);
                         $("#brazalete").val(brazalete);
                         // creo el objeto lST para la cuenta
                     }else if(errorCode==401){
@@ -477,7 +477,7 @@ async function aperturaMesa(idMesa) {
                     var nombre=objeto["nombre"];
                     var room=objeto["room"];
                     var ocupante=objeto["Ocupante"];
-                    var fechaSalida=objeto["FechaSalida"];
+                    var regimen=objeto["regimen"];
                     var brazalete = (objeto["brazalete"] == null) ? "Sin brazalete" : objeto["brazalete"];// ternario
                     
                     // var fechaSalida=objeto["FechaSalida"];                
@@ -489,7 +489,7 @@ async function aperturaMesa(idMesa) {
                         $("#nombreModal").val(nombre);
                         $("#roomModal").val(room);
                         $("#ocupanteModal").val(ocupante);
-                        $("#fechaSalidaModal").val(fechaSalida);
+                        $("#regimenModal").val(regimen);
                         $("#brazaleteModal").val(brazalete);
                         // creo el objeto lST para la cuenta
                     }else if(errorCode==401){
@@ -612,6 +612,8 @@ $("#ocupanteModal").change(function(){
      var pax  = $("#ocupante").val();
      var habitacion  = $("#room").val();
      var brazalete  = $("#brazalete").val();
+     var regimen  = $("#regimen").val();
+
 
      var idPV= $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion
      //var idMesa= $("#idMesaModal").val();//obtengo el id de la mesa
@@ -630,7 +632,7 @@ $("#ocupanteModal").change(function(){
             data: {
                 '_method': 'POST',
                 'alergenos':alergenos,
-                'idMesa':idMesa,'reserva':reserva,'nombreCliente':nombreCliente,'habitacion':habitacion, 'pax':pax, 'brazalete': brazalete,
+                'idMesa':idMesa,'reserva':reserva,'nombreCliente':nombreCliente,'habitacion':habitacion, 'pax':pax, 'brazalete': brazalete, 'regimen':regimen,
                 '_token': csrf_token
             },
             beforeSend: function () {
@@ -691,6 +693,7 @@ function updateRoom() {
     var nombre=$("#nombreModal").val();
     var habitacion=$("#roomModal").val();
     var pax=$("#ocupanteModal").val();
+    var regimen=$("#regimenModal").val();
     var brazalete  = $("#brazaleteModal").val();
 
 
@@ -709,7 +712,7 @@ function updateRoom() {
             type: "POST",
             data: {
                 '_method': 'POST',           
-                'reserva': reserva,'nombre':nombre,'habitacion':habitacion,'pax':pax, 'brazalete':brazalete,
+                'reserva': reserva,'nombre':nombre,'habitacion':habitacion,'pax':pax, 'brazalete':brazalete,'regimen':regimen,
                 '_token': csrf_token
             },
             beforeSend: function () {
@@ -1965,7 +1968,7 @@ function asignarHabitacionModal(){
         $("#nombreModal").val(cuenta["nombreCliente"]);
         $("#roomModal").val(cuenta["habitacion"]);
         $("#ocupanteModal").val(cuenta["pax"]);
-        $("#fechaSalidaModal").val(cuenta["FechaSalida"]);
+        $("#regimenModal").val(cuenta["regimen"]);
         $("#brazaleteModal").val(cuenta["brazalete"]);
 
        

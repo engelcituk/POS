@@ -169,6 +169,8 @@ class OrdenController extends Controller
         $nombreCliente = $request->get('nombreCliente');
         $pax = $request->get('pax');
         $brazalete = $request->get('brazalete');
+        $regimen = $request->get('regimen');
+
 
         $idPuntoVenta = $request->session()->get('idPuntoVenta'); //obtengo el id del punto de venta
 
@@ -189,6 +191,7 @@ class OrdenController extends Controller
                 'reserva' => $reserva,
                 'habitacion' => $habitacion,
                 'nombreCliente' => $nombreCliente,
+                'regimen'=> $regimen,
                 'pax' => $pax,
                 'brazalete'=> $brazalete,
                 'idPuntoVenta' => $idPuntoVenta,
@@ -205,12 +208,15 @@ class OrdenController extends Controller
         $nombreCliente = $request->get('nombre');
         $pax = $request->get('pax');
         $brazalete = $request->get('brazalete');
+        $regimen = $request->get('regimen');
+
 
         $respuesta = $this->realizarPeticion('POST', $this->urlVenta."UpdateCuenta/{$idCuenta}", [
             'form_params' => [
                 'reserva' => $reserva,
                 'habitacion' => $habitacion,
                 'nombreCliente' => $nombreCliente,
+                'regimen'=> $regimen,
                 'pax' => $pax,
                 'brazalete' => $brazalete,
             ]
