@@ -6,6 +6,9 @@ $(document ).ready(function() {
     window.location.hash="inicio";
     window.location.hash="Inicio";//esta linea es necesaria para chrome
     window.onhashchange=function(){window.location.hash="inicio";}
+
+    // var height = $(window).height();
+    // $('#zonaTomarOrden').height(height);
         
 });
 // obtengo el valor permiso del usuario para abrir mesa 1 o 0
@@ -764,7 +767,8 @@ function updateRoom() {
 
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json    
     var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];
-
+    var regimen = datosCuentaObjeto["regimen"];
+    // console.log("regimen",regimen);    
     alergenosIdHuesped = [];
     nombreAlergenosHuesped= [];
     alergenosHuesped= [];
@@ -804,7 +808,10 @@ function updateRoom() {
                             var idMenuCarta=objeto[i]["id"];
                             var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
                             var temporada=objeto[i]["TPV_Producto"]["temporada"];
-                            var precio=objeto[i]["precio"];
+                            var price = objeto[i]["precio"];
+                            var precioTI = objeto[i]["precioTI"];
+                            var precio = (regimen == "AI" || regimen == "MP") ? precioTI : price;
+
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
                             var modosProducto = JSON.stringify(objeto[i]["TPV_Producto"]["TPV_ProductoModos"]);
@@ -834,7 +841,7 @@ function updateRoom() {
                             resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;
                             
                             abrirModal=true;                                                                                             
-                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='spanNombrePlatilloScroll'><strong>"+nombreProducto+"</strong></div><span style='cursor: pointer;' class='label small "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span>  <span class='label "+colorAlergeno+"' id='cantCuentaClienteSpan"+idProducto+"'>0</span></div></div></div>";
+                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='spanNombrePlatilloScroll'><strong style='font-size: 11px!important;'>"+nombreProducto+"</strong></div><span style='cursor: pointer;' class='label small "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span>  <span class='label "+colorAlergeno+"' id='cantCuentaClienteSpan"+idProducto+"'>0</span></div></div></div>";
 
                         }
                     // listaProductos+="";                     
@@ -874,7 +881,8 @@ async function getProductosMasVendidos(){
     
     var datosCuentaObjeto = JSON.parse(localStorage.getItem(variableLS));// reconvierto el string a un objeto json
     var alergenosCuenta = datosCuentaObjeto["TPV_AlergenosCuenta"];        
-    // console.log("datosCuentaObjeto",datosCuentaObjeto);
+    var regimen= datosCuentaObjeto["regimen"];
+    // console.log("regimen",regimen);    
     if(idCuenta=="NO"){
         idCuenta = datosCuentaObjeto["id"];
     }
@@ -918,7 +926,11 @@ async function getProductosMasVendidos(){
                             var idMenuCarta=objeto[i]["id"];
                             var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
                             var temporada=objeto[i]["TPV_Producto"]["temporada"];
-                            var precio=objeto[i]["precio"];
+
+                            var price = objeto[i]["precio"];
+                            var precioTI = objeto[i]["precioTI"];
+                            var precio = (regimen == "AI" || regimen == "MP") ? precioTI : price;
+
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
                             var modosProducto = JSON.stringify(objeto[i]["TPV_Producto"]["TPV_ProductoModos"]);
@@ -948,7 +960,7 @@ async function getProductosMasVendidos(){
                             resultadoImg = ((imgProducto == "SIN IMAGEN") || (imgProducto == null)) ? imgDefault : imgFinal;
                             
                             abrirModal=true;                                                                                             
-                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='spanNombrePlatilloScroll'><strong>"+nombreProducto+"</strong></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span>  <span class='label "+colorAlergeno+"' id='cantCuentaClienteSpan"+idProducto+"'>0</span></div></div></div>";
+                            tumbnails+="<div class='col-xs-6 col-sm-3 col-md-3' id='tumbImg"+idProducto+"'><div class='thumbnail'><img src='"+resultadoImg+"' sytle='cursor: pointer;' data-toggle='tooltip' data-placement='top' title='"+nombreProducto+"' id='producto"+idProducto+"' idMenuCarta='"+idMenuCarta+"' idProducto='"+idProducto+"' alergenoMatch='"+alergenoHaceMatch+"' nombreAlergenosHuesped='"+nombreAlergenosMatch+"' nProducto='"+nombreProducto+"' precio='"+precio+"' temporada='"+temporada+"' style='cursor: pointer;' onclick='getModosProductoModal("+idProducto+","+idMenuCarta+","+modosProducto+", "+idCuenta+")'><div class='caption'><div class='spanNombrePlatilloScroll'><strong style='font-size: 11px!important;'>"+nombreProducto+"</strong></div><span style='cursor: pointer;' class='label "+colorAlergeno+"' onclick='verAlergenos("+idProducto+","+abrirModal+")'>Alergenos</span>  <span class='label "+colorAlergeno+"' id='cantCuentaClienteSpan"+idProducto+"'>0</span></div></div></div>";
 
                         }
                     // listaProductos+="";                     

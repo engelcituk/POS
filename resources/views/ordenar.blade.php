@@ -207,9 +207,6 @@
     @include('ordenar.partials.modalMetodoPago')
     @include('ordenar.partials.modalCargando')
     @include('ordenar.partials.modalTab')
-
-
-
 </div>
 
 @endsection

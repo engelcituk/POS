@@ -53,7 +53,7 @@
                                             </span>
                                             <div class="form-group label-floating">
                                                 <label class="control-label">Codigo producto</label>
-                                                <input id="codigoProducto" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="codigoProducto" required autofocus>
+                                                <input id="codigoProducto" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"  maxlength="20" name="codigoProducto" required autofocus>
                                                 @if ($errors->has('codigoProducto'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('codigoProducto') }}</strong>
