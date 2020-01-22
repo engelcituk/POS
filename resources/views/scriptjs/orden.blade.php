@@ -2435,10 +2435,15 @@ function tiempoOrden() {
     return tiempoElegido;
     
 }
-//para marcar los span a las categorias seleccionadas
-$(document).on("click", ".caption-slide", function(){    
-    $(".caption-slide").removeClass("slide-active");
-    $(this).addClass("slide-active");             
+//para marcar los p a las categorias seleccionadas
+$(document).on("click", ".slideItemCats", function(){
+    var id = parseInt($(this).attr("id").match(/\d+/));    
+    $(".caption-slide").each( function () {                
+        if($(this).hasClass("slide-active")){
+            $(this).removeClass("slide-active")
+        }
+        $("#itemCaption"+id).addClass("slide-active");        
+    });                    
 });
 //para marcar el boton seleccionado a la zona seleccionada
 $(document).on("click", "#sliderZonas button", function(){    

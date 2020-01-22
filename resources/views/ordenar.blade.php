@@ -189,16 +189,16 @@
                                 </div> --}}
                                 <div class="sliderCategorias">
                                     <div class="slides">
-                                        <div class="slideItemCats" onclick="getProductosMasVendidos()">
-                                            <div class="caption-slide slide-active">Más vendidos</div>	                         
+                                        <div class="slideItemCats" onclick="getProductosMasVendidos()" id="itemSlide0">
+                                            <p id="itemCaption0" class="caption-slide slide-active">Más vendidos</p>    
                                             <img src="{{asset('img/faces/masvendidos.png')}}" class="img-responsive-slide"> 
                                         </div>
                                         @foreach($categorias as $categoria)
                                             @php                                               
                                                 $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
                                             @endphp                                    
-                                        <div class="slideItemCats" onclick="GetProductosByCat({{$categoria->id}})">                 
-                                            <div class="caption-slide"> {{$categoria->name}} </div>
+                                        <div class="slideItemCats" onclick="GetProductosByCat({{$categoria->id}})" id="itemSlide{{$categoria->id}}">                 
+                                            <p id="itemCaption{{$categoria->id}}" class="caption-slide"> {{$categoria->name}} </p>
                                             <img src="{{asset($img)}}" class="img-responsive-slide">
                                         </div>                                                                        
                                         @endforeach                                       
