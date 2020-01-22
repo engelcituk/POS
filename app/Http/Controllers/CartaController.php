@@ -108,11 +108,9 @@ class CartaController extends Controller
         $idHotel = $this->idHotel;
         $restaurantes = new RestaurantesController();
         $restaurantes = $restaurantes->obtenerTodosLosRestaurantes($idHotel);
-
         
         $turnos = new TurnosController();
         $turnos = $turnos->obtenerTodosLosTurnos($idHotel);
-
 
         return view('cartas.partials.edit', compact('carta', 'datosPV','datosTurno', 'restaurantes', 'turnos'));       
     }

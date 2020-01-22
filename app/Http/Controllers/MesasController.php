@@ -54,11 +54,16 @@ class MesasController extends Controller
 
         return $mesas;       
     }
-    protected function create()
-    {        
-        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
-        $zonas = \App::call('App\Http\Controllers\ZonasController@obtenerTodasLasZonas');
-          
+    public function create()
+    {       
+        $idHotel = $this->idHotel;
+        
+        $restaurantes = new RestaurantesController();
+        $restaurantes = $restaurantes->obtenerTodosLosRestaurantes($idHotel);
+
+        $zonas = new ZonasController();
+        $zonas = $zonas->obtenerTodasLasZonas($idHotel);
+                  
         return view('mesas.partials.create', ['restaurantes' => $restaurantes, 'zonas' => $zonas]);        
     }
     public function show($id)
@@ -81,6 +86,8 @@ class MesasController extends Controller
         return view('mesas.partials.show', ['mesa' => $mesa, 'datosZonaMesa'=>$datosZonaMesa, 'datosRestaurantePV'=>$datosRestaurantePV, 'hotelRestaurante'=> $hotelRestaurante]);
     }
     public function edit($id){
+        
+        $idHotel = $this->idHotel;
 
         $idMesa = $id;
         $mesa = $this->obtenerUnaMesa($idMesa);//obtengo los datos de la mesa
@@ -89,9 +96,12 @@ class MesasController extends Controller
         
         $datosZona = new ZonasController(); //para obtener los datos de la zona
         $datosZonaMesa = $datosZona->obtenerUnaZona($idZona); //los datos de la zona lo envio a la vista
-        
-        $restaurantes = \App::call('App\Http\Controllers\RestaurantesController@obtenerTodosLosRestaurantes');
-        $zonas = \App::call('App\Http\Controllers\ZonasController@obtenerTodasLasZonas');
+                
+        $restaurantes = new RestaurantesController();
+        $restaurantes = $restaurantes->obtenerTodosLosRestaurantes($idHotel);
+
+        $zonas = new ZonasController();
+        $zonas = $zonas->obtenerTodasLasZonas($idHotel);
         // dd($restaurantes);
 
         return view('mesas.partials.edit', ['mesa'=> $mesa,'datosZonaMesa'=>$datosZonaMesa, 'restaurantes' => $restaurantes, 'zonas' => $zonas]); 

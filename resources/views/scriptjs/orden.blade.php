@@ -2436,11 +2436,9 @@ function tiempoOrden() {
     
 }
 //para marcar los span a las categorias seleccionadas
-$(document).on("click", ".productSlide", function(){    
-    $(".productSlide").children('p').removeClass("btn-success");
-    $(this).children('p').addClass("btn-success");
-    // $(".productSlide").children('p').addClass("btn-info");
-         
+$(document).on("click", ".caption-slide", function(){    
+    $(".caption-slide").removeClass("slide-active");
+    $(this).addClass("slide-active");             
 });
 //para marcar el boton seleccionado a la zona seleccionada
 $(document).on("click", "#sliderZonas button", function(){    

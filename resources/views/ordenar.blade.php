@@ -5,7 +5,11 @@
 <div class="content">
     
     <div class="container-fluid" id="moduloOrdenar">  
-        
+        <div class="row">
+            <div class="col-md-7">
+                
+            </div>
+        </div>
         <div class="row" id="zonaMesas">                                             
             <div class="col-md-12">
                 <div class="card">                    
@@ -48,8 +52,7 @@
                     <div class="card-content">                                               
                         {{-- <h4 class="card-title">Tomar Orden</h4> --}}
                        
-                        <div class="row">
-                            
+                        <div class="row">                            
                             <div class="col-md-5">
                                 <table class="table">
                                     <thead class="text-primary">
@@ -62,9 +65,7 @@
                                             </th>            
                                         </tr>
                                     </thead>
-                                </table>                                                                  
-                                                                        
-                                        
+                                </table>                                                                                                  
                                     <div class="well well-sm">
                                         <strong>Mesa: </strong><span id="nombreMesaSpan"></span> 
                                         <strong>Cliente: </strong><span id="clienteMesaSpan"></span> 
@@ -88,34 +89,30 @@
                                             <tfoot>                                                        
                                             </tfoot>
                                         </table>                                                
-                                    </div>
-
-                                                                        
-
-                            <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
-                                <div class="btn-group btn-group-justified" role="group" aria-label="...">
-                                    <div class="btn-group" role="group">
-                                        <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"></a>
-                                    </div>
-                                    <div class="btn-group" role="group" id="btnAddRoom">
-                                    <button type="button" class="btn btn-info" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"></button>                                                                   
-                                    </div> 
-                                    <div class="btn-group" role="group">      
-                                        <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "></button>
-                                    </div>
-                                </div>                                          
-                            </div>
-                            <div id="buttons2" style="text-transform:uppercase;" class="no-print">
-                                <div class="btn-group btn-group-justified" role="group">   
-                                    <div class="btn-group" role="group">
-                                        <a class="btn btn-block btn-success" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
-                                    </div>                                               
-                                    <div class="btn-group" role="group">
-                                        <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar cuenta</button>
-                                    </div>
-                                </div>                                          
-                            </div> 
-
+                                    </div>                                                                        
+                                <div id="buttons" style="padding-top:10px; text-transform:uppercase;" class="no-print">
+                                    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                                        <div class="btn-group" role="group">
+                                            <a class="btn btn-block btn-warning" id="btnAddDescuento" onclick="addDescuentoCuentaModal()"></a>
+                                        </div>
+                                        <div class="btn-group" role="group" id="btnAddRoom">
+                                        <button type="button" class="btn btn-info" id="btnAddRoomCuenta" data-dismiss="modal" onclick="asignarHabitacionModal()"></button>                                                                   
+                                        </div> 
+                                        <div class="btn-group" role="group">      
+                                            <button type="button" class="btn btn-success" id="btnEnviarCP" data-dismiss="modal" onclick="enviarCentroPrep() "></button>
+                                        </div>
+                                    </div>                                          
+                                </div>
+                                <div id="buttons2" style="text-transform:uppercase;" class="no-print">
+                                    <div class="btn-group btn-group-justified" role="group">   
+                                        <div class="btn-group" role="group">
+                                            <a class="btn btn-block btn-success" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
+                                        </div>                                               
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar cuenta</button>
+                                        </div>
+                                    </div>                                          
+                                </div> 
                                     
                             </div>
                             <div class="col-md-7" id="idMesaAddProducts">                                                                
@@ -145,15 +142,12 @@
                                 </div>
                                 
                                 <br>                                                                
-                                <div class="carousel slide" id="myCarousel">
+                                {{-- <div class="carousel slide" id="myCarousel">
                                     <div class="carousel-inner">
                                         <div class="item active">
                                             <div class="col-xs-3 productSlide" id="categoria_0" onclick="getProductosMasVendidos()">
-                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}" class="img-responsive">
-                                                
-                                                <p class="post-title btn-success" categoria="masVendidos">
-                                                            Más vendidos
-                                                </p>
+                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}" class="img-responsive">                                                
+                                                <p class="post-title btn-success" categoria="masVendidos">Más vendidos</p>
                                             </div>
                                         </div>
                                         @foreach($categorias as $categoria)
@@ -161,19 +155,56 @@
                                             $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
                                         @endphp
                                         <div class="item">
-                                            <div class="col-xs-3 productSlide" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})">
-                                                
-                                                    <img style="cursor: pointer;"  src="{{asset($img)}}" class="img-responsive">
-                                                    <p class="post-title">
-                                                        {{$categoria->name}}
-                                                    </p>
+                                            <div class="col-xs-3 productSlide" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})">                                                
+                                                <img style="cursor: pointer;"  src="{{asset($img)}}" class="img-responsive">
+                                                <p class="post-title">
+                                                    {{$categoria->name}}
+                                                </p>
                                             </div>
                                         </div>
                                         @endforeach
                                     </div>
                                     <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="fas fa-arrow-left flecha"></i></a>
                                     <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="fas fa-arrow-right flecha"></i></a>
+                                </div> --}}
+                                {{-- <div class="sliderCats">                    
+                                    <div class="slidesItems">
+                                        <div onclick="getProductosMasVendidos()">
+                                            <p class="caption-slide">Más vendidos</p>	     
+                                            <img src="{{asset('img/faces/masvendidos.png')}}" class="img-responsive-slide"> 
+                                                    
+                                        </div>                                        
+                                        @foreach($categorias as $categoria)
+                                            @php                                               
+                                                $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
+                                            @endphp
+                                        <div>
+                                            <div onclick="GetProductosByCat({{$categoria->id}})">                 
+                                                <p class="caption-slide"> {{$categoria->name}} </p>
+                                                <img src="{{asset($img)}}" class="img-responsive-slide">
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div> --}}
+                                <div class="sliderCategorias">
+                                    <div class="slides">
+                                        <div class="slideItemCats" onclick="getProductosMasVendidos()">
+                                            <div class="caption-slide slide-active">Más vendidos</div>	                         
+                                            <img src="{{asset('img/faces/masvendidos.png')}}" class="img-responsive-slide"> 
+                                        </div>
+                                        @foreach($categorias as $categoria)
+                                            @php                                               
+                                                $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
+                                            @endphp                                    
+                                        <div class="slideItemCats" onclick="GetProductosByCat({{$categoria->id}})">                 
+                                            <div class="caption-slide"> {{$categoria->name}} </div>
+                                            <img src="{{asset($img)}}" class="img-responsive-slide">
+                                        </div>                                                                        
+                                        @endforeach                                       
+                                    </div>                                    
                                 </div>
+                                
                                 <br>
                                 <span class="text-center"><i id="spinLoader" class="fas fa-spinner fa-spin fa-3x hidden"></i></span>
                                 {{-- <div id="lstProductos">
