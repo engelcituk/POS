@@ -125,7 +125,7 @@ class OrdenController extends Controller
     
     static public function obtenerMesasPorZona($idZona){
         $metodo="GET";        
-        $urlBase= "http://172.16.1.45/TPVApi/Mesas/GetMesasPorZonaActivas/{$idZona}";
+        $urlBase= "http://172.16.4.229/TPVApi/Mesas/GetMesasPorZonaActivas/{$idZona}";
         
         $cliente =  new Client();                
         $respuesta = $cliente->request($metodo, $urlBase);

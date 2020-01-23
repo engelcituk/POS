@@ -215,14 +215,29 @@ function imprimirDesglose(idPuntoVenta) {
                     var respuesta = JSON.parse(respuesta);
                     var ok = respuesta["ok"];                                                   
                     if(ok){
+                        var mensaje = respuesta["mensaje"];                                                   
+                        
                         var contenidoTicket = respuesta["ticket"];                
                         var maquinaImpresora = respuesta["printer"]
                         if(contenidoTicket != "" ){
                             imprimirTicketCuenta(contenidoTicket, maquinaImpresora);
                         }
-                    }                  
+
+                        swal({
+                            title: 'OK',
+                            text: mensaje,
+                            type: 'success',                            
+                        });
+                    }else {
+                        var mensaje = respuesta["mensaje"];
+                        swal({
+                            title: 'OK',
+                            text: mensaje,
+                            type: 'error',                            
+                        });
+                    }                 
                 },
-                error: function() { 
+                error: function(respuesta) {
                     console.log("respuesta controlador",respuesta);                    
 
                 }

@@ -54,6 +54,8 @@
                                         <th>% Descuento</th>
                                         <th>Total</th>
                                         <th>Fecha</th>
+                                        <th>Estado</th>
+
                                         <th class="disabled-sorting text-right">Herramientas</th>
                                     </tr>
                                 </thead>

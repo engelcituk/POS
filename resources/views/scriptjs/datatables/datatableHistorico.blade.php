@@ -57,6 +57,10 @@
                 name: 'fechaCierre',                
             },
             {
+                data: 'estado',
+                name: 'estado',                
+            },
+            {
                 data: 'acciones',
                 name: 'acciones',
                 orderable: false,

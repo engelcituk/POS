@@ -141,52 +141,7 @@
                                     </div>                                                                        
                                 </div>
                                 
-                                <br>                                                                
-                                {{-- <div class="carousel slide" id="myCarousel">
-                                    <div class="carousel-inner">
-                                        <div class="item active">
-                                            <div class="col-xs-3 productSlide" id="categoria_0" onclick="getProductosMasVendidos()">
-                                                <img style="cursor: pointer;" src="{{asset('img/faces/masvendidos.png')}}" class="img-responsive">                                                
-                                                <p class="post-title btn-success" categoria="masVendidos">Más vendidos</p>
-                                            </div>
-                                        </div>
-                                        @foreach($categorias as $categoria)
-                                        @php                                               
-                                            $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
-                                        @endphp
-                                        <div class="item">
-                                            <div class="col-xs-3 productSlide" id="categoria_{{$loop->iteration}}" onclick="GetProductosByCat({{$categoria->id}})">                                                
-                                                <img style="cursor: pointer;"  src="{{asset($img)}}" class="img-responsive">
-                                                <p class="post-title">
-                                                    {{$categoria->name}}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev"><i class="fas fa-arrow-left flecha"></i></a>
-                                    <a class="right carousel-control" href="#myCarousel" data-slide="next"><i class="fas fa-arrow-right flecha"></i></a>
-                                </div> --}}
-                                {{-- <div class="sliderCats">                    
-                                    <div class="slidesItems">
-                                        <div onclick="getProductosMasVendidos()">
-                                            <p class="caption-slide">Más vendidos</p>	     
-                                            <img src="{{asset('img/faces/masvendidos.png')}}" class="img-responsive-slide"> 
-                                                    
-                                        </div>                                        
-                                        @foreach($categorias as $categoria)
-                                            @php                                               
-                                                $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
-                                            @endphp
-                                        <div>
-                                            <div onclick="GetProductosByCat({{$categoria->id}})">                 
-                                                <p class="caption-slide"> {{$categoria->name}} </p>
-                                                <img src="{{asset($img)}}" class="img-responsive-slide">
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                </div> --}}
+                                <br>                                                                                                
                                 <div class="sliderCategorias">
                                     <div class="slides">
                                         <div class="slideItemCats" onclick="getProductosMasVendidos()" id="itemSlide0">
