@@ -231,7 +231,7 @@ function imprimirDesglose(idPuntoVenta) {
                     }else {
                         var mensaje = respuesta["mensaje"];
                         swal({
-                            title: 'OK',
+                            title: 'Oops',
                             text: mensaje,
                             type: 'error',                            
                         });

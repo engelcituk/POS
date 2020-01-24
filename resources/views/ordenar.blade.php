@@ -7,7 +7,7 @@
     <div class="container-fluid" id="moduloOrdenar">  
         <div class="row">
             <div class="col-md-7">
-                
+                                 
             </div>
         </div>
         <div class="row" id="zonaMesas">                                             
@@ -26,11 +26,100 @@
                                 @else
                                     <span class="hidden"  id="userOpenMesaSpanPermission">0</span>
                                 @endif
-                                <div id="sliderZonas" class="owl-carousel btnZonas">                                    
+                                <div class="carousel-wrap" style="text-align: center;">
+                                    <div class="owl-carousel owl-theme owl-carouselZonas">
+                                        @foreach($zonas as $zona)                                        
+                                            <div class="item">
+                                                <span class="img-text buttonZonas textZona" id="zonaBtn{{$zona->id}}" idZonaBtn="{{$zona->id}}" onclick="cambiarZona({{$zona->id}})">{{$zona->name}}</span>                           
+                                            </div>                                           
+                                        @endforeach 
+                                    </div>
+                                </div>
+                                {{-- <div id="sliderZonas" class="owl-carousel btnZonas">                                    
                                     @foreach($zonas as $zona)                                        
-                                        <button class="btn buttonZonas" id="zonaBtn{{$zona->id}}" idZonaBtn="{{$zona->id}}" onclick="cambiarZona({{$zona->id}})">{{$zona->name}}</button>                                             
+                                        <button class="btn buttonZonas" id="zonaBtn{{$zona->id}}" idZonaBtn="{{$zona->id}}" onclick="cambiarZona({{$zona->id}})">{{$zona->name}}</button>     
                                     @endforeach                                    
-                                </div>                                                                
+                                </div>                                                                 --}}
+                                {{-- <div class="carousel-wrap" style="text-align: center;">
+                                    <div class="owl-carousel owl-theme owl-carouselZonas">
+                                        <div class="item">
+                                            <span class="img-text">sports 3 especialidad cool</span>                           
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                           
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>           
+                                            
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                             
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>               
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                 
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                 
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                 
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                 
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                               
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                 
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                 
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                               
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                 
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span>                 
+                                        </div>
+                                        <div class="item">
+                                                
+                                                <span class="img-text">sports 3</span> 
+                                        </div>
+                                        <div class="item">
+                                            
+                                                <span class="img-text">sports 3</span>                 
+                                        </div>
+                                    </div>
+                                </div>  --}}
                             </div>                                                                           
                         </div>
                          <div id="zonasPV">
@@ -139,27 +228,25 @@
                                             <span class="btn btnTiempo btn-success btn-sm pull-right" id="tiempo1" tiempo="1"><i class="fas fa-clock"></i> 1</span> 
                                         </div>
                                     </div>                                                                        
-                                </div>
-                                
-                                <br>                                                                                                
-                                <div class="sliderCategorias">
-                                    <div class="slides">
-                                        <div class="slideItemCats" onclick="getProductosMasVendidos()" id="itemSlide0">
-                                            <p id="itemCaption0" class="caption-slide slide-active">Más vendidos</p>    
-                                            <img src="{{asset('img/faces/masvendidos.png')}}" class="img-responsive-slide"> 
+                                </div>                                
+                                <br>                                
+                                <div class="carousel-wrap" style="text-align: center;">
+                                    <div class="owl-carousel owl-theme owl-carouselCategorias">
+                                        <div class="item slideItemCats" onclick="getProductosMasVendidos()" id="itemSlide0">            
+                                            <span id="itemCaption0" class="img-text caption-slide img-text-active">Más vendidos</span>
+                                            <img src="{{asset('img/faces/masvendidos.png')}}"> 
                                         </div>
-                                        @foreach($categorias as $categoria)
+                                        @foreach ($categorias as $categoria)
                                             @php                                               
                                                 $img = ($categoria->imagen == "SIN IMAGEN") ? "img/faces/catSinFoto.png" : "storage/categorias/".$categoria->imagen;                                                
-                                            @endphp                                    
-                                        <div class="slideItemCats" onclick="GetProductosByCat({{$categoria->id}})" id="itemSlide{{$categoria->id}}">                 
-                                            <p id="itemCaption{{$categoria->id}}" class="caption-slide"> {{$categoria->name}} </p>
-                                            <img src="{{asset($img)}}" class="img-responsive-slide">
-                                        </div>                                                                        
-                                        @endforeach                                       
-                                    </div>                                    
-                                </div>
-                                
+                                            @endphp
+                                            <div class="item slideItemCats" onclick="GetProductosByCat({{$categoria->id}})" id="itemSlide{{$categoria->id}}">
+                                                <span id="itemCaption{{$categoria->id}}" class="img-text caption-slide">{{$categoria->name}}</span>
+                                                <img src="{{asset($img)}}">           
+                                            </div>                                                                                    
+                                        @endforeach
+                                    </div>
+                                </div>                                
                                 <br>
                                 <span class="text-center"><i id="spinLoader" class="fas fa-spinner fa-spin fa-3x hidden"></i></span>
                                 {{-- <div id="lstProductos">

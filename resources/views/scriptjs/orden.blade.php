@@ -208,13 +208,13 @@ function crearVariableZonaDefault(){
 
         $('#zonaElige option[value='+valDefault+']').attr('selected','selected');  
         //pinto el boton de acuerdo a lo que recibo de localstorage
-        $(".buttonZonas.btn-success").removeClass("btn-success");
-        $("#zonaBtn"+idZonaDefault).addClass("btn-success");  
+        $(".buttonZonas.img-text-active").removeClass("img-text-active");
+        $("#zonaBtn"+idZonaDefault).addClass("img-text-active");  
     }else {            
         //obtengo el botton con el primer valor y lo pinto en verde
         valor = btn.eq(0).attr("idZonaBtn"); 
-        $(".buttonZonas.btn-success").removeClass("btn-success");
-        $("#zonaBtn"+valor).addClass("btn-success");
+        $(".buttonZonas.img-text-active").removeClass("img-text-active");
+        $("#zonaBtn"+valor).addClass("img-text-active");
         //guardo la zona seleccionada en localstorage
         localStorage.setItem('zonaMesaSeleccionada', "zona"+valor);
     }
@@ -808,8 +808,8 @@ function updateRoom() {
                             var idMenuCarta=objeto[i]["id"];
                             var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
                             var temporada=objeto[i]["TPV_Producto"]["temporada"];
-                            var price = objeto[i]["precio"];
-                            var precioTI = objeto[i]["precioTI"];
+                            var price = objeto[i]["TPV_Producto"]["precio"];
+                            var precioTI = objeto[i]["TPV_Producto"]["precioTI"];
                             var precio = (regimen == "AI" || regimen == "MP") ? precioTI : price;
 
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
@@ -927,8 +927,8 @@ async function getProductosMasVendidos(){
                             var nombreProducto=objeto[i]["TPV_Producto"]["nombreProducto"];
                             var temporada=objeto[i]["TPV_Producto"]["temporada"];
 
-                            var price = objeto[i]["precio"];
-                            var precioTI = objeto[i]["precioTI"];
+                            var price = objeto[i]["TPV_Producto"]["precio"];
+                            var precioTI = objeto[i]["TPV_Producto"]["precioTI"];
                             var precio = (regimen == "AI" || regimen == "MP") ? precioTI : price;
 
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
@@ -2439,10 +2439,10 @@ function tiempoOrden() {
 $(document).on("click", ".slideItemCats", function(){
     var id = parseInt($(this).attr("id").match(/\d+/));    
     $(".caption-slide").each( function () {                
-        if($(this).hasClass("slide-active")){
-            $(this).removeClass("slide-active")
+        if($(this).hasClass("img-text-active")){
+            $(this).removeClass("img-text-active")
         }
-        $("#itemCaption"+id).addClass("slide-active");        
+        $("#itemCaption"+id).addClass("img-text-active");        
     });                    
 });
 //para marcar el boton seleccionado a la zona seleccionada

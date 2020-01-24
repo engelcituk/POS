@@ -19,7 +19,9 @@
     <link href="{{asset('css/demo.css')}}" rel="stylesheet" />
     {{-- estilos swtiches --}}
     <link href="{{asset('css/carousel.css')}}" rel="stylesheet"/>
-    <link href="{{asset('css/owl.carousel.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('css/oowl.carousel.min.css')}}" rel="stylesheet"/>
+    <link href="{{asset('css/oowl.theme.default.min.css')}}" rel="stylesheet"/>
+
     
     <link href="{{asset('css/estilo.css')}}" rel="stylesheet"/>
 	@if(request()->is('ordenar'))
@@ -55,7 +57,7 @@
     <script src="{{asset('js/select2.min.js')}}"></script>
     <script src="{{asset('js/bootstrap-timepicker.js')}}"></script> 
     {{-- <script src="{{asset('js/MultiCarousel.js')}}"></script>    --}}
-    <script src="{{asset('js/scriptSlider.js')}}"></script>
+    {{-- <script src="{{asset('js/scriptSlider.js')}}"></script> --}}
     <script src="{{asset('js/slider.js')}}"></script>
     
     
@@ -361,7 +363,7 @@
 <script src="{{asset('js/datatables.js')}}"></script>   
 @endif
 
-<script src="{{asset('js/owl.carousel.min.js')}}"></script>
+<script src="{{asset('js/oowl.carousel.js')}}"></script>
 
 <!-- Mirrored from demos.creative-tim.com/material-dashboard-pro/examples/dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Mar 2017 21:32:16 GMT -->
 @include('scriptjs/ticketRecibo')
