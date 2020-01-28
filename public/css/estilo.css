@@ -325,12 +325,7 @@
 
 }
 
-/* estilos carousel de categorias de cartas para tomar orden*/
-
-
-
-
-/* sojgsñlgkñgkfgñsfklgklñfsñsklg slider tests*/
+/* estilos carousel de categorias de cartas para tomar orden y botones de zonas*/
 
 .carousel-wrap {
     width: 90%;
@@ -365,11 +360,11 @@
   }
 
   .owl-carousel .prev-slide{
-      background: url(nav-icon.png) no-repeat scroll 0 0;
+      background: url(../img/nav-icon.png) no-repeat scroll 0 0;
       left: -30px;
   }
   .owl-carousel .next-slide{
-      background: url(nav-icon.png) no-repeat scroll -24px 0px;
+      background: url(../img/nav-icon.png) no-repeat scroll -24px 0px;
       right: -30px;
   }
   .owl-carousel .prev-slide:hover{

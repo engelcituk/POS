@@ -14,7 +14,7 @@
                         @csrf
                         <div class="row">
                             <div class="card-content">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons">create</i>
@@ -30,7 +30,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons">create</i>
@@ -46,7 +46,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">
                                             <i class="material-icons">create</i>
@@ -57,6 +57,22 @@
                                             @if ($errors->has('codHotel'))
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('codHotel') }}</strong>
+                                            </span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">create</i>
+                                        </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Cif hotel</label>
+                                            <input id="cif" type="text"  maxlength="20" class="form-control{{$errors->has('cif') ? ' is-invalid' : '' }}" name="cif" required>
+                                            @if ($errors->has('cif'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('cif') }}</strong>
                                             </span>
                                             @endif
                                         </div>

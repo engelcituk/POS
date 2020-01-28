@@ -33,7 +33,9 @@
                                         <th>Id</th>
                                         <th>Nombre</th>
                                         <th>Empresa</th> 
-                                        <th>codigo</th>
+                                        <th>Código</th>
+                                        <th>cif</th>
+
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
@@ -44,6 +46,8 @@
                                             <td>{{$hotel->name}}</td>
                                             <td>{{$hotel->empresa}}</td>
                                             <td>{{$hotel->codHotel}}</td>                                           
+                                            <td>{{$hotel->cif}}</td>                                           
+
                                             <td>                                                
                                                 @if($hotelPermisoLeer==1)
                                                     <a href="{{ route('hoteles.show', $hotel->id)}}" class="btn btn-xs btn-success"><i class="fas fa-eye"></i></a>                                                    

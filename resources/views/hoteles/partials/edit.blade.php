@@ -18,7 +18,7 @@
                         <div class="form-group label-floating">
                             <div class="row">
                                 <div class="card-content">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="material-icons">create</i>
@@ -29,7 +29,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="material-icons">create</i>
@@ -40,17 +40,28 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                    <div class="input-group">
-                                        <span class="input-group-addon">
-                                            <i class="material-icons">create</i>
-                                        </span>
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Codigo Hotel</label>
-                                            <input id="codHotel" type="text" class="form-control{{$errors->has('codHotel') ? ' is-invalid' : '' }}" name="codHotel"  value="{{$hotel->codHotel}}" required>               
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">create</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Codigo Hotel</label>
+                                                <input id="codHotel" type="text" class="form-control{{$errors->has('codHotel') ? ' is-invalid' : '' }}" name="codHotel"  value="{{$hotel->codHotel}}" required>               
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="material-icons">create</i>
+                                            </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Cif Hotel</label>
+                                                <input id="cif" type="text" maxlength="20" class="form-control{{$errors->has('cif') ? ' is-invalid' : '' }}" name="cif"  value="{{$hotel->cif}}" required>               
+                                            </div>
+                                        </div>
+                                    </div>
                                     <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
                                 </div>
                             </div>
