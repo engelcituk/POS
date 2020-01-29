@@ -45,9 +45,25 @@ class HotelesController extends Controller
 
         return $hoteles;
     }
-    protected function create()
+
+    public function obtenerZonasHorarias()//siel metodo es protected no lo puedo usar en otro lado, como en restaurantes
     {
-        return view('hoteles.partials.create');
+        //es una funcion que esta en el controller principal
+        $respuesta = $this->realizarPeticion('GET', $this->urlApi.'getTimeZone');
+
+        $datos = json_decode($respuesta);
+        
+        $ok = $datos->ok;
+                
+        $zonasHorarias = ($ok == true) ? $datos->Zonas : "";
+
+        return $zonasHorarias;
+    }
+    public function create()
+    {
+        $zonasHorarias = $this->obtenerZonasHorarias();
+        //   dd($zonasHorarias);      
+        return view('hoteles.partials.create', compact('zonasHorarias'));
     }
     public function show($id)
     {             
@@ -59,7 +75,9 @@ class HotelesController extends Controller
     {
         $idHotel = $id;
         $hotel = $this->obtenerUnHotel($idHotel);
-        return view('hoteles.partials.edit',['hotel' => $hotel]);
+        $zonasHorarias = $this->obtenerZonasHorarias();
+
+        return view('hoteles.partials.edit',['hotel' => $hotel,'zonasHorarias'=>$zonasHorarias]);
     }    
     //metodo que se ocupara para obtener el dato de un hotel, se ocupa para show y edit
     public function obtenerUnHotel($idHotel){
@@ -71,7 +89,7 @@ class HotelesController extends Controller
 
     static public function obtenerHotelSesion($idHotel){//funcion que uso desde la vista
         $metodo = "GET";
-        $urlBase = "http://172.16.1.45/TPVApi/Hoteles/GetHotel/{$idHotel}";
+        $urlBase = "http://172.16.4.229/TPVApi/Hoteles/GetHotel/{$idHotel}";
 
         $cliente =  new Client();
         $respuesta = $cliente->request($metodo, $urlBase);

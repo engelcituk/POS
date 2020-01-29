@@ -184,7 +184,7 @@ class OrdenController extends Controller
             $arrayAlergenos=array();
          }                       
         // return $alergenos;
-        $respuesta = $this->realizarPeticion('POST', $this->urlVenta.'AddCuenta', [
+        $respuesta = $this->realizarPeticion('POST', $this->urlVenta.'AddCuenta', [ 
             'form_params' => [
                 'idMesa' => $idMesa,
                 'idUsuarioAlta' => $idUsuario,

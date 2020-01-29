@@ -62,6 +62,26 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="fas fa-clock"></i>                                            
+                                        </span>
+                                        <div class="form-group">                                            
+                                            @if ($zonasHorarias!="")
+                                            <select class="form-control" name="zonaHoraria" required>
+                                                @foreach($zonasHorarias as $zh)
+                                                    <option value="{{ $zh->idZona }}" {{ old('zonaHoraria',$hotel->zonaHoraria ) == $zh->idZona ? 'selected': '' }}>{{ $zh->nombreZona }}</option>        
+                                                @endforeach
+                                            </select>  
+                                            @else
+                                                <select class="form-control" name="zonaHoraria" required>
+                                                    <option value="">Aun no hay zonas horarias</option>                           
+                                                </select> 
+                                            @endif 
+                                        </div>
+                                        </div>
+                                    </div>
                                     <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
                                 </div>
                             </div>
