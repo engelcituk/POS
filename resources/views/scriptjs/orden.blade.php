@@ -8,12 +8,15 @@ $(document ).ready(function() {
     window.onhashchange=function(){window.location.hash="inicio";}
 
     // var height = $(window).height();
-    // $('#zonaTomarOrden').height(height);
-        
+    // $('#zonaTomarOrden').height(height); 
 });
+hora = horaActual();
+console.log(hora);
+precio = precioAMostrar(hora);
+console.log(precio);
+console.log("08:00:45" < "09:01:45");
 // obtengo el valor permiso del usuario para abrir mesa 1 o 0
 var permisoUserOnlyOpenTable=parseInt($("#userOpenMesaSpanPermission").text());
-
 initZonas();
 ocurreCambiosMesa();
 
@@ -44,7 +47,7 @@ function initZonas(){
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
-    $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
+    $.connection.hub.url = 'http://172.16.1.45/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {                  
@@ -2743,6 +2746,42 @@ function sendToPrint(objeto){
             }
         })
     }
+}
+
+
+function precioAMostrar(horaActual) {
+    // let horaActual = horaActual();
+    let horaLimite = "23:00:00";
+    let regimen = "AI";    
+    let precioNormal=95;
+    let precioTI=45;
+    
+    precioTI = (horaActual >= horaLimite ) ? precioNormal : precioTI;
+    precio = (regimen == "AI" || regimen == "MP")? precioTI : precioNormal;
+
+    return precio;   
+
+}
+function horaActual(){
+    momentoActual = new Date()
+    hora = momentoActual.getHours()
+    minuto = momentoActual.getMinutes()
+    segundo = momentoActual.getSeconds()
+
+    str_segundo = new String (segundo)
+    if (str_segundo.length == 1)
+       segundo = "0" + segundo
+
+    str_minuto = new String (minuto)
+    if (str_minuto.length == 1)
+       minuto = "0" + minuto
+
+    str_hora = new String (hora)
+    if (str_hora.length == 1)
+       hora = "0" + hora
+
+    horaImprimible = hora + ":" + minuto + ":" + segundo
+    return horaImprimible ; 
 }
 </script>
 
