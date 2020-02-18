@@ -108,12 +108,15 @@
                                     </div>                                          
                                 </div>
                                 <div id="buttons2" style="text-transform:uppercase;" class="no-print">
-                                    <div class="btn-group btn-group-justified" role="group">   
+                                    <div class="btn-group btn-group-justified" role="group"> 
                                         <div class="btn-group" role="group">
-                                            <a class="btn btn-block btn-success" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-ticket-alt"></i> Ticket</a>
+                                            <a class="btn btn-block btn-info" id="btnPrintTicket" onclick="imprimirPreticket()"> <i class="fas fa-ticket-alt"></i> PreTicket</a>
+                                        </div>   
+                                        <div class="btn-group" role="group">
+                                            <a class="btn btn-block btn-success" id="btnPrintTicket" onclick="imprimirCuenta()"> <i class="fas fa-money-check-alt"></i> Cuenta</a>
                                         </div>                                               
                                         <div class="btn-group" role="group">
-                                            <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar cuenta</button>
+                                            <button class="btn btn-block btn-danger"  id="btnCerrarCuenta" onclick="cerrarCuentaModal()"> <i class="fas fa-window-close"></i> Cerrar</button>
                                         </div>
                                     </div>                                          
                                 </div> 

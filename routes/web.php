@@ -28,6 +28,8 @@ Route::post('ordenar/updatecuenta/{cuenta}', 'OrdenController@updateCuentaRoom')
 Route::post('ordenar/updatemesa', 'OrdenController@updateCuentaMesa')->name('ordenar.updatecuentamesa');
 Route::post('ordenar/enviarcuenta', 'OrdenController@enviarACentrosPrep')->name('ordenar.enviarcuenta');
 Route::post('ordenar/cerrarcuenta/{cuenta}', 'OrdenController@cerraCuenta')->name('ordenar.cerrarcuenta');
+Route::post('ordenar/cuentapreticket/{cuenta}', 'OrdenController@imprimirPreticket')->name('ordenar.cuentapreticket');
+
 Route::post('ordenar/addcuentaalergia', 'OrdenController@addCuentaAlergiaPax')->name('ordenar.cuentaalergia');
 Route::post('ordenar/cerrardia/{idpv}', 'OrdenController@cerrarDia')->name('ordenar.cerrardia');
 Route::get('obtener/productos', 'OrdenController@getProductosByCat')->name('obtener.productos');

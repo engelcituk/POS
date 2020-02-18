@@ -318,6 +318,14 @@ class OrdenController extends Controller
         return $respuesta;
         
     } 
+    public function imprimirPreticket($idCuenta){
+        $urlAdmin =$this->urlAdmin;
+        
+        $respuesta = $this->realizarPeticion('POST', $urlAdmin."imprimePreTicket/{$idCuenta}");
+       
+        return $respuesta;
+        
+    } 
     public function cerrarDia(Request $request,$idPV){
 
         $urlCerrarDia =$this->urlAdmin;
@@ -329,7 +337,6 @@ class OrdenController extends Controller
         $respuesta = $this->realizarPeticion('POST', $urlCerrarDia."cierreDia/{$idPV}/{$fecha}/{$idUsuario}/{$idCarta}");
 
         return $respuesta;
-
         
     }
     public function addCuentaAlergiaPax(Request $request){

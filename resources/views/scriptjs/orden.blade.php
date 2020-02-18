@@ -2385,6 +2385,63 @@ function imprimirCuenta() {
     }).catch(swal.noop);
 }
 
+ //funcion con sweetalert para reimprimir cuenta
+function imprimirPreticket() {
+    var idCuenta = $("#cuentaMesaSpan").text(); 
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+    swal({
+        title: '¿Seguro de generar el preticket?',
+        type: 'warning',
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: '¡Sí, imprimir!',
+        cancelButtonText: '¡No, desistir!'
+    }).then(function() {
+        $.ajax({
+            url: "{{ url('ordenar/cuentapreticket') }}" + '/'+idCuenta,
+            type: "POST",
+            data: {
+                '_method': 'POST',
+                '_token': csrf_token
+            },
+            beforeSend: function () {
+                
+                swal({
+                    title: 'Espere',
+                    text: 'Generando ticket',
+                    type : 'info',
+                    allowOutsideClick: false
+                });
+                swal.showLoading();
+            },
+            success: function(respuesta) {                
+                swal.close();
+                var respuesta = JSON.parse(respuesta);
+                var ok = respuesta["ok"];                
+                
+                console.log("respuesta controlador",respuesta);                    
+
+                if(ok){
+                    var contenidoTicket = respuesta["ticket"];                
+                    var maquinaImpresora = respuesta["printer"];
+                    var initialCode = respuesta["initialCode"];
+
+                    if(contenidoTicket != "" ){
+                        imprimirTicketCuenta(contenidoTicket, maquinaImpresora,initialCode);
+                    }
+                }
+            },
+            error: function(respuesta) {
+                swal.close();
+                respuesta = JSON.parse(respuesta);                
+                console.log("respuesta controlador",respuesta);                    
+
+            }
+        });
+    }).catch(swal.noop);
+}
+
  function cerrarDia(idPuntoVenta) {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      
