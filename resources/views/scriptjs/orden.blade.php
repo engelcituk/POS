@@ -10,11 +10,11 @@ $(document ).ready(function() {
     // var height = $(window).height();
     // $('#zonaTomarOrden').height(height); 
 });
-hora = horaActual();
-console.log(hora);
-precio = precioAMostrar(hora);
-console.log(precio);
-console.log("08:00:45" < "09:01:45");
+// hora = horaActual();
+// console.log(hora);
+// precio = precioAMostrar(hora);
+// console.log(precio);
+// console.log("08:00:45" < "09:01:45");
 // obtengo el valor permiso del usuario para abrir mesa 1 o 0
 var permisoUserOnlyOpenTable=parseInt($("#userOpenMesaSpanPermission").text());
 initZonas();
@@ -47,7 +47,7 @@ function initZonas(){
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
-    $.connection.hub.url = 'http://172.16.1.45/TPVApi/signalr/hubs';
+    $.connection.hub.url = 'http://localhost/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {                  
@@ -813,7 +813,7 @@ function updateRoom() {
                             var temporada=objeto[i]["TPV_Producto"]["temporada"];
                             var price = objeto[i]["TPV_Producto"]["precio"];
                             var precioTI = objeto[i]["TPV_Producto"]["precioTI"];
-                            var precio = (regimen == "AI" || regimen == "MP") ? precioTI : price;
+                            var precio = (regimen == "AI" || regimen == "MP") ? price : price;
 
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
@@ -932,7 +932,7 @@ async function getProductosMasVendidos(){
 
                             var price = objeto[i]["TPV_Producto"]["precio"];
                             var precioTI = objeto[i]["TPV_Producto"]["precioTI"];
-                            var precio = (regimen == "AI" || regimen == "MP") ? precioTI : price;
+                            var precio = (regimen == "AI" || regimen == "MP") ? price : price;
 
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
