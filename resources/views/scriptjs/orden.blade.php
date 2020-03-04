@@ -47,7 +47,7 @@ function initZonas(){
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
-    $.connection.hub.url = 'http://localhost/TPVApi/signalr/hubs';
+    $.connection.hub.url = 'http://10.10.99.34/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {                  
@@ -813,7 +813,7 @@ function updateRoom() {
                             var temporada=objeto[i]["TPV_Producto"]["temporada"];
                             var price = objeto[i]["TPV_Producto"]["precio"];
                             var precioTI = objeto[i]["TPV_Producto"]["precioTI"];
-                            var precio = (regimen == "AI" || regimen == "MP") ? price : price;
+                            var precio = (regimen == "AI") ? precioTI : price;
 
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
@@ -932,7 +932,7 @@ async function getProductosMasVendidos(){
 
                             var price = objeto[i]["TPV_Producto"]["precio"];
                             var precioTI = objeto[i]["TPV_Producto"]["precioTI"];
-                            var precio = (regimen == "AI" || regimen == "MP") ? price : price;
+                            var precio = (regimen == "AI" ) ? precioTI : price;
 
                             var imagen=objeto[i]["TPV_Producto"]["imagen"];
                             var alergenosP = objeto[i]["TPV_Producto"]["TPV_ProductoAlergeno"];
@@ -1994,7 +1994,7 @@ function asignarHabitacionModal(){
 
  $('#myModalAddRoom').on('hidden.bs.modal', function (e) {
      $(this).find('form')[0].reset();
-});
+}); 
  function enviarCentroPrep() {
      var csrf_token = $('meta[name="csrf-token"]').attr('content');
      var idPV = $("#idPVModalOrdenar").val();//obtengo el id de pv con el que se inició sesion  

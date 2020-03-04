@@ -37,7 +37,7 @@
                             <div class="row">
                                 <div class="card-content">                                                                     
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-grip-horizontal"></i>
@@ -52,7 +52,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-code"></i>
@@ -68,7 +68,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-file-signature"></i>
@@ -84,7 +84,7 @@
                                             </div>
                                         </div>
                                     </div>                                
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-file-signature"></i>
@@ -107,7 +107,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fab fa-gratipay"></i>
@@ -123,7 +123,7 @@
                                             </div> 
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-money-bill-alt"></i>
@@ -139,7 +139,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-money-bill-alt"></i>
@@ -155,7 +155,40 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if ($centrosP!="")
+                                       <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-grip-horizontal"></i>
+                                            </span>
+                                            <div class="form-group">
+                                                <label class="control-label">Centro productivo </label>
+                                                <select class="form-control listaCategoriaEdit" name="idCentroProd" required>
+                                                    <option value="">Elija centro productivo para el producto </option>
+                                                    @foreach($centrosP as $cp)
+                                                        <option value="{{ $cp->id }}" {{ old('idCentroProd',$producto->idCentroProd ) == $cp->id ? 'selected': '' }}>{{ $cp->codigo }}</option>  
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @else 
                                     <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-grip-horizontal"></i>
+                                            </span>
+                                            <div class="form-group">
+                                                <select class="form-control listaCategoriaEdit" name="idCentroProd" required>
+                                                    <option value=""> Sin centros productivos registrados aun</option>      
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    @endif                                                                         
+                                </div> 
+                                <div class="row">
+                                  <div class="col-md-3">
                                         <div class="form-group">
                                             Con propina
                                             <div class="radio">
@@ -220,8 +253,8 @@
                                                 @endphp
                                             </div>
                                         </div>
-                                    </div>
-                                </div>                                       
+                                    </div>  
+                                </div>                                      
                                 <div class="row">
                                     <h4>Seleccione un alergeno si el producto tiene alergenos</h4>
                                     @foreach($alergenos as $alergeno)
@@ -234,7 +267,7 @@
                                         $nombreAlergeno=$alergeno->name;
                                         $nombreProducto=$producto->nombreProducto;
                                     @endphp                              
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <div class="checkbox checkbox-group required">                              
                                                 <label class="labelCheckbox ">
                                                 <input type="checkbox" nombreProducto={{$nombreProducto}} nombreAlergeno="{{$nombreAlergeno}}" name="idAlergeno[]" id="checkAlergeno{{$idAlergeno}}" idProducto="{{$idProducto}}" value="{{$idAlergeno}}" {{$checked}} onclick="AddDeleteProductoAlergeno({{$idAlergeno}})"><strong>{{$nombreAlergeno}}</strong>
@@ -242,10 +275,7 @@
                                             </div>
                                         </div>                                         
                                     @endforeach 
-                                </div> 
-                                <div class="row">
-                                    
-                                </div>
+                                </div>                                 
                                 <button type="submit" class="btn btn-primary pull-right"> <i class="fas fa-save"></i> {{ __('Guardar') }}</button>
                                 </div>
                             </div>

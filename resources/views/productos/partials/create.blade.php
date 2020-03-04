@@ -140,7 +140,37 @@
                                                 @endif
                                             </div>
                                         </div>
-                                    </div>                                                                                          
+                                    </div>
+                                    @if ($centrosP!="")
+                                       <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-grip-horizontal"></i>
+                                            </span>
+                                            <div class="form-group">
+                                                <select class="form-control selectCategoria" name="idCentroProd" required>
+                                                    <option value="">Elija centro productivo para el producto </option>
+                                                    @foreach($centrosP as $cp)
+                                                        <option value="{{$cp->id}}">{{$cp->codigo}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @else 
+                                    <div class="col-md-4">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fas fa-grip-horizontal"></i>
+                                            </span>
+                                            <div class="form-group">
+                                                <select class="form-control selectCategoria" name="idCentroProd" required>
+                                                    <option value=""> Sin centros productivos registrados aun</option>      
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>                                        
+                                    @endif                                                                                       
                                     <div class="col-md-12 centerImg">                                   
                                         <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                             <div class="fileinput-preview fileinput-exists thumbnail"></div>

@@ -20,6 +20,7 @@ class ProductosController extends Controller
 
         $this->middleware('accesoProductosFiltro');
         $this->urlBase = $this->urlApiTPV()."Producto/";
+        $this->urlBaseCentroP = $this->urlApiTPV()."CentrosProd/";
         $this->urlBaseProductoAlergeno = $this->urlApiTPV()."ProductoAlergeno/";
         $this->urlPModo = $this->urlApiTPV()."ProductoModo/";
         $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
@@ -44,8 +45,9 @@ class ProductosController extends Controller
         $categorias= \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');
         $modos = \App::call('App\Http\Controllers\ModosController@obtenerTodosLosModos');
         $alergenos = \App::call( 'App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
-       
-        return view('productos.partials.create', compact('categorias','alergenos', 'modos'));  
+        $centrosP = $this->obtenerCentrosProductivo();
+        
+        return view('productos.partials.create', compact('categorias','alergenos', 'modos', 'centrosP'));  
     }
     public function AllProduct()
     {
@@ -59,7 +61,7 @@ class ProductosController extends Controller
     public function obtenerTodosLosProductos($idHotel){
         if($idHotel == null){
             //es una funcion que esta en el controller principal        
-            $respuesta = $this->realizarPeticion('GET', $this->urlBase.'GetProducto');                       
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProductosByHotel/1");                       
         } else {
             $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProductosByHotel/{$idHotel}");
         }       
@@ -86,8 +88,9 @@ class ProductosController extends Controller
 
         $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');        
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
-
         $producto = $this->obtenerUnProducto($idProducto);
+        $centrosP = $this->obtenerCentrosProductivo();
+
 
         $idCategoria = $producto->idCategoria;
         $categoriaProducto = new CategoriaController();
@@ -109,13 +112,19 @@ class ProductosController extends Controller
             $idAlergenosColeccion = new Collection([]);
          }
                                
-        return view('productos.partials.edit', compact('categorias',  'alergenos','producto', 'categoriaProducto', 'idAlergenosColeccion')); 
+        return view('productos.partials.edit', compact('categorias',  'alergenos','producto', 'categoriaProducto', 'idAlergenosColeccion','centrosP')); 
     }
     public function obtenerUnProducto($idProducto){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProducto/{$idProducto}");
         $datos = json_decode($respuesta);
         $producto = $datos->objeto;
         return $producto;
+    }
+    public function obtenerCentrosProductivo(){
+        $respuesta = $this->realizarPeticion('GET', $this->urlBaseCentroP."GetCentrosProd");
+        $datos = json_decode($respuesta);
+        $centrosProductivos = $datos->objeto;
+        return $centrosProductivos;
     }
     
     public function obtenerAlergenosProducto($idProducto){
@@ -143,8 +152,10 @@ class ProductosController extends Controller
         $precio = $request->get('precio');
         $precioTI = $request->get('precioTI');
         $complemento = $request->get('complemento');
-        $temporada = $request->get('temporada');
         $status = $request->get('status');
+        $temporada = $request->get('temporada');
+        $idCentroProd = $request->get('idCentroProd');
+
         
         // dd( $imagen);
        $mntPropina = ($montoPropina == NULL) ? 0 : $montoPropina;    
@@ -176,7 +187,9 @@ class ProductosController extends Controller
                 'complemento' => $complemento,
                 'imagen' => $nombreImg,
                 'status' => $status,
-                'temporada' => $temporada
+                'temporada' => $temporada,
+                'idCentroProd' => $idCentroProd,
+
 
             ]
         ]);
@@ -265,6 +278,8 @@ class ProductosController extends Controller
         $complemento = $request->get('complemento');
         $status = $request->get('status');
         $temporada = $request->get('temporada');
+        $idCentroProd = $request->get('idCentroProd');
+
 
         $nombreImgApi = $request->get('nombreImg');
         // dd(request()->all());
@@ -306,6 +321,8 @@ class ProductosController extends Controller
                 'imagen' => $nombreImg,
                 'status' => $status,
                 'temporada' => $temporada,
+                'idCentroProd' => $idCentroProd
+
             ]
         ]);        
         return redirect('/productos');

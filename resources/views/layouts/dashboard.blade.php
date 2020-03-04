@@ -49,7 +49,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>    
     <script src="{{asset('js/jquery.signalR-2.4.1.js')}}" type="text/javascript"></script>  
-    <script src="http://172.16.1.45/TPVApi/signalr/hubs"></script>  
+    <script src="http://10.10.99.34/TPVApi/signalr/hubs"></script>  
 
     
     <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
