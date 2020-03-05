@@ -14,7 +14,7 @@
                             @csrf
                             <div class="row">
                                 <div class="card-content">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-file-signature"></i>
@@ -30,7 +30,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user-edit"></i>
@@ -83,6 +83,15 @@
                                                 <strong>Estado</strong>
                                                 <label><input type="radio" name="status" value="True" checked=""><span class="circle"></span><span class="check"></span>Activado</label>
                                                 <label><input type="radio" name="status" value="False"><span class="circle"></span><span class="check"></span>Desactivado</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="radio">
+                                                <strong>Autoriza cargo hab.</strong>
+                                                <label><input type="radio" name="autorizaCargoHab" value="True" checked=""><span class="circle"></span><span class="check"></span>Sí</label>
+                                                <label><input type="radio" name="autorizaCargoHab" value="False"><span class="circle"></span><span class="check"></span>No</label>
                                             </div>
                                         </div>
                                     </div>

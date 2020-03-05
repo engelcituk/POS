@@ -205,6 +205,7 @@ class ApiUsuarioController extends Controller
                 'usuario' => $request->get('usuario'),
                 'password' => $password,
                 'status'=> $request->get('status'),
+                'autorizaCargoHab' => $request->get('autorizaCargoHab'),
                 'idRol' => $request->get('idRol')                               
             ]            
         ]);

@@ -18,7 +18,7 @@
                             <div class="row">
                                 {{-- <h4><strong>Rol del usuario: </strong>{{$rolUsuario->name}}</h4>  --}}
                                 <div class="card-content">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-file-signature"></i>
@@ -34,7 +34,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fas fa-user-edit"></i>
@@ -96,7 +96,23 @@
                                             @endphp
                                         </div>
                                     </div>
-                                </div>                                                                          
+                                </div>     
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <strong>Autoriza cargo habitación</strong>
+                                        <div class="radio">
+                                            @php
+                                            $estado= $usuario->autorizaCargoHab;//para obtener el estado de la impresora
+                                            $radios = ($estado == 1) ?
+                                            "<label><input type='radio' name='autorizaCargoHab' value='True' checked>Sí</label>
+                                            <label><input type='radio' name='autorizaCargoHab' value='False'>No</label>" :
+                                            "<label><input type='radio' name='autorizaCargoHab' value='True'>Sí</label>
+                                            <label><input type='radio' name='autorizaCargoHab' value='False' checked>No</label>";
+                                            echo $radios;
+                                            @endphp
+                                        </div>
+                                    </div>
+                                </div>                                                                     
                                                                       
                                     <button type="submit" class="btn btn-primary pull-right">{{ __('Guardar') }}</button>
                                 </div>
