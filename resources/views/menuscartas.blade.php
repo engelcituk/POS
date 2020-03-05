@@ -33,7 +33,7 @@
                                         <th>Carta</th>
                                         <th>Producto</th>
                                         <th>Precio</th>
-                                        <th>Centro</th>                                        
+                                        <th>CentroP</th>                                        
                                         <th class="disabled-sorting text-right">Acciones</th>
                                     </tr>
                                 </thead>
@@ -44,7 +44,7 @@
                                             <td>{{$mc->carta}}</td>                                           
                                             <td>{{$mc->producto}}</td>                                                         
                                             <td>{{$mc->precio}}</td> 
-                                            <td>{{$mc->centro}}</td> 
+                                            <td>{{$mc->centroProd}}</td> 
 
                                             <td>
                                                 @if ($mcPermisoLeer==1)

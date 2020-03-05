@@ -39,6 +39,8 @@
                                             <th>Producto</th>
                                             <th>Precio</th>
                                             <th>Centro Preparación</th>
+                                            <th>Centro productivo</th>
+
                                             <th></th>                
                                         </tr>
                                     </thead>
@@ -62,7 +64,15 @@
                                                             <option value="{{$cp->id}}">{{$cp->name}}</option>
                                                         @endforeach
                                                 </select>
-                                            </td>                                             
+                                            </td>
+                                            <td data-name="idCentroProd">
+                                            <select class="form-control" name="idCentroProd" required>
+                                                    <option value="">Centro productivo del producto </option>                                          
+                                                        @foreach($centrosP as $cpr)
+                                                            <option value="{{$cpr->id}}" {{ old('idCentroProd',$menucarta->idCentroProd ) == $cpr->id ? 'selected': '' }}>{{$cpr->codigo}}</option>
+                                                        @endforeach
+                                                </select>
+                                            </td>                                           
                                         </tr>                                   
                                     </tbody>
                                     </table>     

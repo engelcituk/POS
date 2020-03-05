@@ -47,7 +47,7 @@ function initZonas(){
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
-    $.connection.hub.url = 'http://10.10.99.34/TPVApi/signalr/hubs';
+    $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {                  

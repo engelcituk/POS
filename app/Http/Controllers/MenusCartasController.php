@@ -14,6 +14,7 @@ class MenusCartasController extends Controller{
     public function __construct(){
         $this->middleware('accesoMenusCartaFiltro');
         $this->urlBase = $this->urlApiTPV()."MenuCarta/";
+        $this->urlBaseCentroP = $this->urlApiTPV() . "CentrosProd/";
         $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
             $this->idHotel = session()->get('idHotel');
             return $next($request);
@@ -62,11 +63,13 @@ class MenusCartasController extends Controller{
         $centrosPreparacion = new CentrosPreparacionController();
         $centrosPreparacion = $centrosPreparacion->obtenerTodosLosCentrosDePreparacion($idHotel);
 
+        $centrosP = $this->obtenerCentrosProductivo();
+
         // $cartas = \App::call( 'App\Http\Controllers\CartaController@obtenerTodosLasCartas');
         // $productos = \App::call( 'App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
         // $centrosPreparacion = \App::call('App\Http\Controllers\CentrosPreparacionController@obtenerTodosLosCentrosDePreparacion');
 
-        return view('menuscartas.partials.create', compact('cartas', 'productos', 'centrosPreparacion')); 
+        return view('menuscartas.partials.create', compact('cartas', 'productos', 'centrosPreparacion', 'centrosP')); 
     }
 
     
@@ -140,13 +143,23 @@ class MenusCartasController extends Controller{
         $centrosPreparacion = new CentrosPreparacionController();
         $centrosPreparacion = $centrosPreparacion->obtenerTodosLosCentrosDePreparacion($idHotel);
 
+        $centrosP = $this->obtenerCentrosProductivo();
+
+
         // $cartas = \App::call('App\Http\Controllers\CartaController@obtenerTodosLasCartas');
         // $productos = \App::call('App\Http\Controllers\ProductosController@obtenerTodosLosProductos');
         // $centrosPreparacion = \App::call('App\Http\Controllers\CentrosPreparacionController@obtenerTodosLosCentrosDePreparacion');
 
-        return view('menuscartas.partials.edit', compact('cartas', 'productos', 'centrosPreparacion', 'menucarta','datosCarta', 'datosProducto', 'datosCP'));
+        return view('menuscartas.partials.edit', compact('cartas', 'productos', 'centrosPreparacion', 'menucarta','datosCarta', 'datosProducto', 'datosCP', 'centrosP'));
     }
 
+    public function obtenerCentrosProductivo()
+    {
+        $respuesta = $this->realizarPeticion('GET', $this->urlBaseCentroP . "GetCentrosProd");
+        $datos = json_decode($respuesta);
+        $centrosProductivos = $datos->objeto;
+        return $centrosProductivos;
+    }
     
     public function obtenerUnMenuCarta($idMenuCarta){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetMenuCarta/{$idMenuCarta}");

@@ -20,7 +20,7 @@ class ProductosController extends Controller
 
         $this->middleware('accesoProductosFiltro');
         $this->urlBase = $this->urlApiTPV()."Producto/";
-        $this->urlBaseCentroP = $this->urlApiTPV()."CentrosProd/";
+        // $this->urlBaseCentroP = $this->urlApiTPV()."CentrosProd/";
         $this->urlBaseProductoAlergeno = $this->urlApiTPV()."ProductoAlergeno/";
         $this->urlPModo = $this->urlApiTPV()."ProductoModo/";
         $this->middleware(function ($request, $next) { //obtengo el valor de la session idHotel            
@@ -61,7 +61,7 @@ class ProductosController extends Controller
     public function obtenerTodosLosProductos($idHotel){
         if($idHotel == null){
             //es una funcion que esta en el controller principal        
-            $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProductosByHotel/1");                       
+            $respuesta = $this->realizarPeticion('GET', $this->urlBase. 'GetProducto');                       
         } else {
             $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProductosByHotel/{$idHotel}");
         }       
@@ -120,12 +120,12 @@ class ProductosController extends Controller
         $producto = $datos->objeto;
         return $producto;
     }
-    public function obtenerCentrosProductivo(){
-        $respuesta = $this->realizarPeticion('GET', $this->urlBaseCentroP."GetCentrosProd");
-        $datos = json_decode($respuesta);
-        $centrosProductivos = $datos->objeto;
-        return $centrosProductivos;
-    }
+    // public function obtenerCentrosProductivo(){
+    //     $respuesta = $this->realizarPeticion('GET', $this->urlBaseCentroP."GetCentrosProd");
+    //     $datos = json_decode($respuesta);
+    //     $centrosProductivos = $datos->objeto;
+    //     return $centrosProductivos;
+    // }
     
     public function obtenerAlergenosProducto($idProducto){
         $respuesta = $this->realizarPeticion('GET', $this->urlBaseProductoAlergeno."GetAlergenosProducto/{$idProducto}");
@@ -154,7 +154,7 @@ class ProductosController extends Controller
         $complemento = $request->get('complemento');
         $status = $request->get('status');
         $temporada = $request->get('temporada');
-        $idCentroProd = $request->get('idCentroProd');
+        // $idCentroProd = $request->get('idCentroProd');
 
         
         // dd( $imagen);
@@ -187,8 +187,8 @@ class ProductosController extends Controller
                 'complemento' => $complemento,
                 'imagen' => $nombreImg,
                 'status' => $status,
-                'temporada' => $temporada,
-                'idCentroProd' => $idCentroProd,
+                'temporada' => $temporada
+                // 'idCentroProd' => $idCentroProd,
 
 
             ]
@@ -278,7 +278,7 @@ class ProductosController extends Controller
         $complemento = $request->get('complemento');
         $status = $request->get('status');
         $temporada = $request->get('temporada');
-        $idCentroProd = $request->get('idCentroProd');
+        // $idCentroProd = $request->get('idCentroProd');s
 
 
         $nombreImgApi = $request->get('nombreImg');
@@ -320,8 +320,8 @@ class ProductosController extends Controller
                 'complemento' => $complemento,
                 'imagen' => $nombreImg,
                 'status' => $status,
-                'temporada' => $temporada,
-                'idCentroProd' => $idCentroProd
+                'temporada' => $temporada
+                // 'idCentroProd' => $idCentroProd
 
             ]
         ]);        

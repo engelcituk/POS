@@ -155,7 +155,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if ($centrosP!="")
+                                    {{-- @if ($centrosP!="")
                                        <div class="col-md-3">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -185,7 +185,7 @@
                                             </div>
                                         </div>
                                     </div>                                        
-                                    @endif                                                                         
+                                    @endif                                                                          --}}
                                 </div> 
                                 <div class="row">
                                   <div class="col-md-3">

@@ -141,7 +141,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if ($centrosP!="")
+                                    {{-- @if ($centrosP!="")
                                        <div class="col-md-4">
                                         <div class="input-group">
                                             <span class="input-group-addon">
@@ -170,7 +170,7 @@
                                             </div>
                                         </div>
                                     </div>                                        
-                                    @endif                                                                                       
+                                    @endif                                                                                        --}}
                                     <div class="col-md-12 centerImg">                                   
                                         <div class="fileinput fileinput-new text-center" data-provides="fileinput">
                                             <div class="fileinput-preview fileinput-exists thumbnail"></div>

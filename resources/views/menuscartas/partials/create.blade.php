@@ -85,6 +85,20 @@
                                                             <option value="">No hay centros de preparacion</option>                           
                                                         </select> 
                                                     @endif                                                               
+                                                </td>
+                                                <td>
+                                                    @if ($centrosP!="")
+                                                        <select class="form-control" id="lstCPR1" name="idCentroProd[]" required>
+                                                            <option value="">Centros productivos</option>
+                                                                @foreach($centrosP as $cpr)
+                                                                    <option value="{{$cpr->id}}">{{$cpr->codigo}}</option>
+                                                                @endforeach
+                                                        </select>  
+                                                    @else
+                                                        <select class="form-control" id="lstCPR1" name="idCentroProd[]" required>
+                                                            <option value="">No hay centros productivos</option>                           
+                                                        </select> 
+                                                    @endif                                                               
                                                 </td>                                                     
                                                 <td>
                                                     <a class='btn btn-primary btn-sm addCloneTr'> <i class="fas fa-plus"></i></a> 
