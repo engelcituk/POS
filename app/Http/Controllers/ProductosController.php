@@ -89,7 +89,7 @@ class ProductosController extends Controller
         $categorias = \App::call('App\Http\Controllers\CategoriaController@obtenerTodasLasCategorias');        
         $alergenos = \App::call('App\Http\Controllers\AlergenoController@obtenerTodosLosAlergenos');
         $producto = $this->obtenerUnProducto($idProducto);
-        $centrosP = $this->obtenerCentrosProductivo();
+        // $centrosP = $this->obtenerCentrosProductivo();
 
 
         $idCategoria = $producto->idCategoria;
@@ -112,7 +112,7 @@ class ProductosController extends Controller
             $idAlergenosColeccion = new Collection([]);
          }
                                
-        return view('productos.partials.edit', compact('categorias',  'alergenos','producto', 'categoriaProducto', 'idAlergenosColeccion','centrosP')); 
+        return view('productos.partials.edit', compact('categorias',  'alergenos','producto', 'categoriaProducto', 'idAlergenosColeccion')); 
     }
     public function obtenerUnProducto($idProducto){
         $respuesta = $this->realizarPeticion('GET', $this->urlBase."GetProducto/{$idProducto}");

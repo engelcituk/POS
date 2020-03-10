@@ -197,7 +197,9 @@
     @include('ordenar.partials.modalAgregarDesc')
     @include('ordenar.partials.modalMetodoPago')
     @include('ordenar.partials.modalCargando')
-    @include('ordenar.partials.modalTab')
+    {{-- @include('ordenar.partials.modalTab') --}}
+    @include('ordenar.partials.modalAutoriza')
+
 </div>
 
 @endsection

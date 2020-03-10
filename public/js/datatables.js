@@ -390,5 +390,29 @@ $(document).ready(function() {
         }
     });
     $('.card .material-alergenos label').addClass('form-group');
+
+
+    //para el datatable de centrosProd
+    $('#centrosProd').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "Todos"]
+        ],
+        responsive: true,
+        language: {
+            sLengthMenu: "Mostrar _MENU_ registros",
+            search: "_INPUT_",
+            searchPlaceholder: "Buscar registros",
+            sInfo: "Mostrando _START_ registro(s) a _END_ de un total de _TOTAL_ registros",
+            oPaginate: {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            }
+        }
+    });
+    $('.card .material-centrosProd label').addClass('form-group');
 });
 

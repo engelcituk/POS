@@ -49,7 +49,7 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="{{asset('js/jquery-3.1.1.min.js')}}" type="text/javascript"></script>    
     <script src="{{asset('js/jquery.signalR-2.4.1.js')}}" type="text/javascript"></script>  
-    <script src="http://172.16.4.229/TPVApi/signalr/hubs"></script>  
+    <script src="http://172.16.1.45/TPVApi/signalr/hubs"></script>  
 
     
     <script src="{{asset('js/bootstrap.min.js')}}" type="text/javascript"></script>
@@ -359,7 +359,7 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
  <script src="{{asset('js/demo.js')}}"></script> 
 <!-- <script src="{{asset('js/init.js')}}"></script> -->
-@if(request()->is('hoteles') || request()->is('rolesapi') || request()->is('users') || request()->is('restaurantes') || request()->is('impresoras') || request()->is('centrospreparacion') || request()->is('turnos') || request()->is('zonas') || request()->is('mesas') || request()->is('cartas') || request()->is('categorias') || request()->is('productos') || request()->is('menuscartas') || request()->is('metodospago') || request()->is('modos') || request()->is('alergenos')) 
+@if(request()->is('hoteles') || request()->is('rolesapi') || request()->is('users') || request()->is('restaurantes') || request()->is('impresoras') || request()->is('centrospreparacion') || request()->is('centrosprod') || request()->is('turnos') || request()->is('zonas') || request()->is('mesas') || request()->is('cartas') || request()->is('categorias') || request()->is('productos') || request()->is('menuscartas') || request()->is('metodospago') || request()->is('modos') || request()->is('alergenos')) 
 <script src="{{asset('js/datatables.js')}}"></script>   
 @endif
 
@@ -403,9 +403,11 @@
     @include('scriptjs/validacionesImpresoras')
 
 @endif
-@if(request()->is('centrospreparacion'))
-    @include('scriptjs/datatables/datatableCentrosPrep')
+@if(request()->is('centrospreparacion'))    
     @include('scriptjs/sweetalerts/sweetalertCentroPreparacion') 
+@endif
+@if(request()->is('centrosprod'))    
+    @include('scriptjs/sweetalerts/sweetalertCentroProd') 
 @endif
 @if(request()->is('turnos'))
     @include('scriptjs/datatables/datatableTurnosPV')
@@ -415,8 +417,7 @@
     @include('scriptjs/validacionesTurnos') {{--validaciones  --}}
 @endif
 
-@if(request()->is('zonas'))
-    @include('scriptjs/datatables/datatableZonas')
+@if(request()->is('zonas'))    
     @include('scriptjs/sweetalerts/sweetalertZona')
 @endif
 @if(request()->is('mesas')) 

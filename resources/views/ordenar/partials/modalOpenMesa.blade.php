@@ -128,7 +128,7 @@
                       <div class="col-md-4">
                         <div class="checkbox checkbox-group required">                              
                               <label class="">
-                              <input type="checkbox" id="idAlergenoCheck" name="idAlergeno[]" value="{{$alergeno->id}}"><strong>{{$alergeno->name}}</strong>
+                              <input type="checkbox" id="idAlergenoCheck{{$alergeno->id}}" name="idAlergeno[]" value="{{$alergeno->id}}"><strong>{{$alergeno->name}}</strong>
                               </label>                                            
                           </div>
                       </div>                                         

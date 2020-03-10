@@ -12,6 +12,9 @@ Route::get('login/getpuntosventa/{hotel}', 'Auth\LoginController@obtenerPuntosVe
 Route::get('login/getcartas/{idpv}', 'Auth\LoginController@obtenerCartasPuntosVenta')->name('login.cartas');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+//endpoint para obtener los datos de un usuario que autorizar cobros
+Route::post('autoriza/{usuario}/{password}', 'Auth\LoginController@autorizaCobroUsuario')->name('login.autorizaCobroUsuario');
+
 
 Route::middleware(['filtroAcceso'])->group(function () {
 //ruta y controller que se usa cuando middleware verifica que user no tiene ningun permiso
@@ -232,5 +235,15 @@ Route::post('printrecibo', 'ReciboTicketController@createRecibo')->name('imprimi
 Route::post('printrecibo/imprimir', 'ReciboTicketController@imprimirRecibo')->name('imprimir.imprimirrecibo');
 Route::post('printrecibo/imprimir2', 'ReciboTicketController@imprimirRecibo2')->name('imprimir.imprimirrecibo2');
 
+
+//rutas de menu configuracion -->centros
+Route::get('all/centrosprod', 'CentrosProdController@AllHoteles')->name('all.centrosprod');
+Route::get('centrosprod', 'CentrosProdController@index')->name('centrosprod.index');
+Route::get('centrosprod/create', 'CentrosProdController@create')->name('centrosprod.create');
+Route::post('centrosprod/store', 'CentrosProdController@store')->name('centrosprod.store');
+Route::get('centrosprod/{hotel}', 'CentrosProdController@show')->name('centrosprod.show');
+Route::get('centrosprod/{hotel}/edit', 'CentrosProdController@edit')->name('centrosprod.edit');
+Route::post('centrosprod/actualizar', 'CentrosProdController@actualizar')->name('centrosprod.actualizar');
+Route::post('centrosprod/{hotel}', 'CentrosProdController@destroy')->name('centrosprod.destroy');
 
 });

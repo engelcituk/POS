@@ -94,6 +94,17 @@ class LoginController extends Controller
         $respuesta = json_decode($respuesta);        
         return $respuesta;
     }
+    // usado para loguera y ver si usuario tiene permiso para autorizar cargo habitacion 
+    public function autorizaCobroUsuario($usuario, $password)
+    {
+        $respuesta = $this->realizarPeticion('POST', $this->urlBase . 'login', [
+            'form_params' => [
+                'username' => $usuario,
+                'password' => $password
+            ]
+        ]);               
+        return $respuesta;
+    }
     
     public function obtenerListaPermisosUsuario($idUsuario){
 

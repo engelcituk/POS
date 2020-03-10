@@ -47,7 +47,7 @@ function initZonas(){
 function ocurreCambiosMesa(){
     // para el realtime
     var chat = $.connection.notificationHub; 
-    $.connection.hub.url = 'http://172.16.4.229/TPVApi/signalr/hubs';
+    $.connection.hub.url = 'http://172.16.1.45/TPVApi/signalr/hubs';
     $.connection.hub.start({ withCredentials: false }).done(function () {         
     });  
     chat.client.postToClient =  (data) => {                  
@@ -532,8 +532,12 @@ function validarCampoHabitacion(e) {
         e.preventDefault();
     }
 }
+// limpiar los valores de un modal cuando se ocultan
 $('#myModal').on('hidden.bs.modal', function (e) {
-         $(this).find('form')[0].reset();
+    $(this).find('form')[0].reset();
+});
+$('#modalAutoriza').on('hidden.bs.modal', function (e) {
+    $(this).find('form')[0].reset();
 });
 async function abrirCuenta() {
      var idMesa = $("#idMesaModal").val();     
@@ -2747,64 +2751,6 @@ function imprimirTicketCuenta(contenidoTicket,maquinaImpresora,initialCode) {
             }
         });
     } 
-function testPrint() {
-    objeto = [
-        {
-            string : 'este es el texto a imprimir 1',
-            impresora: 'impresora 1'
-
-        },
-        {
-            string : 'este es el texto a imprimir 2',
-            impresora: 'impresora 2'
-
-        },
-        {
-            string : 'este es el texto a imprimir 3',
-            impresora: 'impresora 3'
-
-        },
-        {
-            string : 'este es el texto a imprimir 4',
-            impresora: 'impresora 4'
-
-        },
-        {
-            string : 'este es el texto a imprimir 5',
-            impresora: 'impresora 5'
-
-        },
-    ]
-    sendToPrint(objeto); 
-}
-function sendToPrint(objeto){
-    var csrf_token = $('meta[name="csrf-token"]').attr('content');    
-
-    for(i =0;  i<objeto.length; i++){
-        var contenidoTicket=objeto[i]["string"];
-        var maquinaImpresora=objeto[i]["impresora"]; 
-                     
-        $.ajax({
-            url: "{{ url('printrecibo/imprimir2') }}",
-            type: "POST",
-            data: {
-                '_method': 'POST',                           
-                '_token': csrf_token,
-                'contenidoTicket': contenidoTicket,
-                'maquinaImpresora': maquinaImpresora
-            },
-            success: function(respuesta) {             
-                               
-                console.log(respuesta); 
-                                                    
-            },
-            error: function(respuesta) { 
-                console.log(respuesta); 
-            }
-        })
-    }
-}
-
 
 function precioAMostrar(horaActual) {
     // let horaActual = horaActual();
@@ -2839,6 +2785,51 @@ function horaActual(){
 
     horaImprimible = hora + ":" + minuto + ":" + segundo
     return horaImprimible ; 
+}
+function showModalAutorizaCobro(){
+    $('#modalAutoriza').modal({backdrop: 'static', keyboard: false });
+}
+function autorizarCobro(){
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');  
+    const usuario =  $('#usuarioModal').val();
+    const password =  $('#passwordModal').val();
+            
+    if( usuario.length > 0 && password.length > 0){
+        $.ajax({                    
+            url: "{{ url('autoriza') }}"+'/'+usuario+'/'+password,
+            type: "POST",
+            data: {
+                '_method': 'POST',                           
+                '_token': csrf_token
+            },
+            success: function(respuesta) {             
+                respuesta = JSON.parse(respuesta); 
+                var ok = respuesta["ok"];                                
+                if(ok){
+                    var usuario = respuesta["objeto"];
+                    // var autorizaCargoHab = usuario["autorizaCargoHab"];                    
+                    var autorizaCargoHab = true;
+                    if(autorizaCargoHab){
+                        $("#modalAutoriza").modal("hide"); // oculto modal de autorizacion    
+                        swal({
+                            title: 'Espere',
+                            text: 'Realizando el cobro',
+                            type : 'info',
+                            allowOutsideClick: false
+                        });
+                        swal.showLoading();
+                    } 
+                }                                                                                                   
+            },
+            error: function(respuesta) { 
+                respuesta = JSON.parse(respuesta);                
+
+                console.log(respuesta); 
+            }
+        });
+    }else{
+        swal("Oops", "Usuario y contraseña son obligatorios" ,  "error");                        
+    }
 }
 </script>
 
